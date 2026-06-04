@@ -8,60 +8,154 @@
 <title>Adega Thomas</title>
 
 <style>
+:root{
+  --vinho:#8b0f2f;
+  --vinho-escuro:#4b0718;
+  --fundo:#f7f1eb;
+  --card:#ffffff;
+  --texto:#21181a;
+  --muted:#7a6a66;
+  --borda:#eadbd4;
+}
+
+*{
+  box-sizing:border-box;
+}
+
 body{
-    font-family: Arial, sans-serif;
-    background:#f5f5f5;
-    margin:0;
-    padding:20px;
+  margin:0;
+  padding:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(180deg,#fff7f0,#f1e5dc);
+  color:var(--texto);
 }
 
 .container{
-    max-width:900px;
-    margin:auto;
+  max-width:920px;
+  margin:auto;
+  padding:22px;
 }
 
 h1{
-    color:#7b1128;
+  margin:0 0 18px;
+  font-size:42px;
+  color:white;
+  letter-spacing:-1px;
+}
+
+body::before{
+  content:"";
+  display:block;
+  height:190px;
+  background:linear-gradient(135deg,var(--vinho),var(--vinho-escuro));
+  border-radius:0 0 34px 34px;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:-1;
 }
 
 .card{
-    background:white;
-    border-radius:10px;
-    padding:15px;
-    margin-bottom:15px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
-}
-
-input, select{
-    width:100%;
-    padding:10px;
-    margin-top:5px;
-    margin-bottom:10px;
-    box-sizing:border-box;
-}
-
-button{
-    background:#7b1128;
-    color:white;
-    border:none;
-    padding:10px 15px;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-button:hover{
-    opacity:0.9;
+  background:rgba(255,255,255,0.96);
+  border:1px solid var(--borda);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 12px 26px rgba(70,25,20,0.10);
 }
 
 .total{
-    font-size:24px;
-    font-weight:bold;
-    color:#7b1128;
+  font-size:28px;
+  font-weight:900;
+  color:var(--vinho);
+}
+
+h2{
+  margin-top:0;
+  font-size:26px;
+  color:#1f1718;
+}
+
+input, select{
+  width:100%;
+  padding:15px;
+  margin-top:6px;
+  margin-bottom:13px;
+  border-radius:14px;
+  border:1px solid #d8c7bf;
+  background:#fff;
+  font-size:16px;
+}
+
+input:focus, select:focus{
+  outline:2px solid rgba(139,15,47,0.25);
+  border-color:var(--vinho);
+}
+
+button{
+  background:var(--vinho);
+  color:white;
+  border:none;
+  padding:13px 18px;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 14px rgba(139,15,47,0.25);
+}
+
+button:hover{
+  opacity:0.92;
 }
 
 .vinho{
-    border-bottom:1px solid #ddd;
-    padding:10px 0;
+  background:#fffaf7;
+  border:1px solid var(--borda);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.vinho strong{
+  display:block;
+  font-size:20px;
+  color:#1d1516;
+  margin-bottom:6px;
+}
+
+.vinho button{
+  margin-top:10px;
+  margin-right:8px;
+  min-width:58px;
+}
+
+.vinho button:nth-of-type(2){
+  background:#6b5a55;
+  box-shadow:none;
+}
+
+#listaVinhos{
+  margin-top:10px;
+}
+
+@media(max-width:600px){
+  .container{
+    padding:18px;
+  }
+
+  h1{
+    font-size:36px;
+  }
+
+  .card{
+    padding:18px;
+    border-radius:20px;
+  }
+
+  .total{
+    font-size:24px;
+  }
 }
 </style>
 </head>
