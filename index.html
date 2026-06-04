@@ -3,59 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Adega Thomas</title>
+
 <style>
 body{
-  font-family: Arial, sans-serif;
-  background:#f5f5f5;
-  margin:0;
-  padding:20px;
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:20px;
 }
+
 .container{
-  max-width:900px;
-  margin:auto;
+    max-width:900px;
+    margin:auto;
 }
+
 h1{
-  color:#7b1128;
+    color:#7b1128;
 }
+
 .card{
-  background:white;
-  padding:15px;
-  margin-bottom:10px;
-  border-radius:10px;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    background:white;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:15px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    margin-bottom:10px;
+    box-sizing:border-box;
+}
+
+button{
+    background:#7b1128;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
 .total{
-  font-size:22px;
-  font-weight:bold;
-  color:#7b1128;
+    font-size:24px;
+    font-weight:bold;
+    color:#7b1128;
+}
+
+.vinho{
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
 }
 </style>
 </head>
+
 <body>
+
 <div class="container">
-  <h1>🍷 Adega Thomas</h1>
 
-  <div class="card">
-    <div class="total">37 garrafas cadastradas</div>
-  </div>
+<h1>🍷 Adega Thomas</h1>
 
-  <div class="card">
-    <h3>Destaques da Adega</h3>
-    <ul>
-      <li>EPU 2017 (2 garrafas)</li>
-      <li>Sideral 2023 (3 garrafas)</li>
-      <li>1865 Gran Reserva Cabernet Sauvignon 2022 (2 garrafas)</li>
-      <li>Angélica Zapata Alta Cabernet Franc 2016</li>
-      <li>DV Catena Pinot Noir 2022</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>Status</h3>
-    <p>Primeira versão online da Adega Thomas.</p>
-    <p>Próximas versões terão cadastro, busca, edição e dashboard.</p>
-  </div>
+<div class="card">
+    <div class="total" id="totalGarrafas">
+        37 garrafas cadastradas
+    </div>
 </div>
-</body>
-</html>
+
+<div class="card">
+
+<h2>Novo vinho</h2>
+
+<input id="nome" placeholder="Nome do vinho">
+
+<input id="safra" placeholder="Safra">
+
+<select id="tipo">
+    <option>Tinto</option>
+    <option>Branco</option>
+    <option>Rosé</option>
+</select>
+
+<input id="quantidade" type="number" value="1">
+
+<button onclick="adicionarVinho()">
+Adicionar vinho
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Buscar</h2>
+
+<input id="busca"
+placeholder="Digite o nome do vinho"
+onkeyup="renderizar()">
+
+</div>
+
+<div class="card
