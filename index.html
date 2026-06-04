@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -109,4 +110,96 @@ onkeyup="renderizar()">
 
 </div>
 
-<div class="card
+<div class="card">
+
+<h2>Vinhos cadastrados</h2>
+
+<div id="listaVinhos"></div>
+
+</div>
+
+  <script>
+let vinhos = [
+ {nome:"Petit Chablis Allain Geoffroy", safra:"2022", tipo:"Branco", quantidade:1},
+ {nome:"Chablis Gérard Tremblay", safra:"2023", tipo:"Branco", quantidade:1},
+ {nome:"Garzón Estate Pinot Grigio", safra:"2024", tipo:"Branco", quantidade:2},
+ {nome:"Gustav Gewürztraminer", safra:"2025", tipo:"Branco", quantidade:2},
+ {nome:"Covela Rosé Dry", safra:"2019", tipo:"Rosé", quantidade:1},
+ {nome:"EPU", safra:"2017", tipo:"Tinto", quantidade:2},
+ {nome:"Angélica Zapata Alta Cabernet Franc", safra:"2016", tipo:"Tinto", quantidade:1},
+ {nome:"Marchese Antinori Chianti Classico Riserva", safra:"2020", tipo:"Tinto", quantidade:1},
+ {nome:"EQ Granite Pinot Noir", safra:"2022", tipo:"Tinto", quantidade:1},
+ {nome:"Sideral", safra:"2023", tipo:"Tinto", quantidade:3},
+ {nome:"Côtes du Rhône E. Guigal", safra:"2020", tipo:"Tinto", quantidade:1},
+ {nome:"Arboleda Syrah", safra:"2021", tipo:"Tinto", quantidade:1},
+ {nome:"Arboleda Brisa", safra:"2021", tipo:"Tinto", quantidade:2},
+ {nome:"Arboleda Pinot Noir", safra:"2024", tipo:"Tinto", quantidade:1},
+ {nome:"Cadus Malbec", safra:"2022", tipo:"Tinto", quantidade:1},
+ {nome:"Seleccion de Parcelas Chardonnay", safra:"2025", tipo:"Branco", quantidade:4},
+ {nome:"Gustav Riesling Trocken", safra:"2025", tipo:"Branco", quantidade:2},
+ {nome:"1865 Gran Reserva Cabernet Sauvignon", safra:"2022", tipo:"Tinto", quantidade:2},
+ {nome:"Bruce Jack Daily Brew Pinotage", safra:"2023", tipo:"Tinto", quantidade:1}
+];
+
+function salvar(){
+ localStorage.setItem("adegaThomas", JSON.stringify(vinhos));
+}
+
+function carregar(){
+ const dados = localStorage.getItem("adegaThomas");
+ if(dados){ vinhos = JSON.parse(dados); }
+}
+
+function total(){
+ return vinhos.reduce((s,v)=>s+v.quantidade,0);
+}
+
+function renderizar(){
+ let busca = document.getElementById("busca").value.toLowerCase();
+ let lista = document.getElementById("listaVinhos");
+ lista.innerHTML = "";
+
+ vinhos
+ .filter(v => v.nome.toLowerCase().includes(busca))
+ .forEach((v,i)=>{
+   lista.innerHTML += `
+   <div class="vinho">
+     <strong>${v.nome}</strong><br>
+     Safra: ${v.safra} | Tipo: ${v.tipo}<br>
+     Quantidade: ${v.quantidade}<br><br>
+     <button onclick="alterar(${i},1)">+1</button>
+     <button onclick="alterar(${i},-1)">-1</button>
+   </div>`;
+ });
+
+ document.getElementById("totalGarrafas").innerText =
+   total() + " garrafas cadastradas";
+}
+
+function alterar(i,valor){
+ vinhos[i].quantidade += valor;
+ if(vinhos[i].quantidade < 0) vinhos[i].quantidade = 0;
+ salvar();
+ renderizar();
+}
+
+function adicionarVinho(){
+ let nome = document.getElementById("nome").value;
+ let safra = document.getElementById("safra").value;
+ let tipo = document.getElementById("tipo").value;
+ let quantidade = parseInt(document.getElementById("quantidade").value);
+
+ if(!nome){ alert("Informe o nome do vinho"); return; }
+
+ vinhos.push({nome,safra,tipo,quantidade});
+ salvar();
+ renderizar();
+}
+
+carregar();
+renderizar();
+</script>
+
+</div>
+</body>
+</html>  
