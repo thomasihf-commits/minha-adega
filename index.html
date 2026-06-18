@@ -1,299 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Adega Thomas</title>
+<title>Adega Juliana</title>
 
 <style>
 :root{
-  --vinho:#8b0f2f;
-  --vinho-escuro:#4b0718;
-  --fundo:#f7f1eb;
+  --vinho:#85002b;
+  --vinho-escuro:#4d0018;
+  --vinho-claro:#b20a42;
+  --dourado:#d8b13f;
+  --rose:#ef8c8c;
+  --fundo:#fbf7f3;
   --card:#ffffff;
-  --texto:#21181a;
-  --muted:#7a6a66;
-  --borda:#eadbd4;
+  --texto:#1e1718;
+  --muted:#73676a;
+  --borda:#eee1db;
+  --sombra:0 10px 28px rgba(70,25,22,.10);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 body{
   margin:0;
-  padding:0;
-  font-family:Arial, sans-serif;
-  background:linear-gradient(180deg,#fff7f0,#f1e5dc);
+  font-family:Inter, Arial, sans-serif;
+  background:linear-gradient(180deg,#fffaf6,#f4ece7);
   color:var(--texto);
 }
 
-.container{
-  max-width:920px;
-  margin:auto;
-  padding:22px;
-}
-
-h1{
-  margin:0 0 18px;
-  font-size:42px;
-  color:white;
-  letter-spacing:-1px;
-}
-
-body::before{
-  content:"";
-  display:block;
-  height:190px;
+.app-header{
+  height:76px;
   background:linear-gradient(135deg,var(--vinho),var(--vinho-escuro));
-  border-radius:0 0 34px 34px;
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:-1;
-}
-
-.card{
-  background:rgba(255,255,255,0.96);
-  border:1px solid var(--borda);
-  border-radius:22px;
-  padding:22px;
-  margin-bottom:18px;
-  box-shadow:0 12px 26px rgba(70,25,20,0.10);
-}
-
-.total{
-  font-size:28px;
-  font-weight:900;
-  color:var(--vinho);
-}
-
-h2{
-  margin-top:0;
-  font-size:26px;
-  color:#1f1718;
-}
-
-input, select{
-  width:100%;
-  padding:15px;
-  margin-top:6px;
-  margin-bottom:13px;
-  border-radius:14px;
-  border:1px solid #d8c7bf;
-  background:#fff;
-  font-size:16px;
-}
-
-input:focus, select:focus{
-  outline:2px solid rgba(139,15,47,0.25);
-  border-color:var(--vinho);
-}
-
-button{
-  background:var(--vinho);
   color:white;
-  border:none;
-  padding:13px 18px;
-  border-radius:14px;
-  font-size:15px;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 6px 14px rgba(139,15,47,0.25);
-}
-
-button:hover{
-  opacity:0.92;
-}
-
-.vinho{
-  background:#fffaf7;
-  border:1px solid var(--borda);
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:12px;
-}
-
-.vinho strong{
-  display:block;
-  font-size:20px;
-  color:#1d1516;
-  margin-bottom:6px;
-}
-
-.vinho button{
-  margin-top:10px;
-  margin-right:8px;
-  min-width:58px;
-}
-
-.vinho button:nth-of-type(2){
-  background:#6b5a55;
-  box-shadow:none;
-}
-
-#listaVinhos{
-  margin-top:10px;
-}
-
-@media(max-width:600px){
-  .container{
-    padding:18px;
-  }
-
-  h1{
-    font-size:36px;
-  }
-
-  .card{
-    padding:18px;
-    border-radius:20px;
-  }
-
-  .total{
-    font-size:24px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>🍷 Adega Thomas</h1>
-
-<div class="card">
-    <div class="total" id="totalGarrafas">
-        37 garrafas cadastradas
-    </div>
-</div>
-
-<div class="card">
-
-<h2>Novo vinho</h2>
-
-<input id="nome" placeholder="Nome do vinho">
-
-<input id="safra" placeholder="Safra">
-
-<select id="tipo">
-    <option>Tinto</option>
-    <option>Branco</option>
-    <option>Rosé</option>
-</select>
-
-<input id="quantidade" type="number" value="1">
-
-<button onclick="adicionarVinho()">
-Adicionar vinho
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>Buscar</h2>
-
-<input id="busca"
-placeholder="Digite o nome do vinho"
-onkeyup="renderizar()">
-
-</div>
-
-<div class="card">
-
-<h2>Vinhos cadastrados</h2>
-
-<div id="listaVinhos"></div>
-
-</div>
-
-  <script>
-let vinhos = [
- {nome:"Petit Chablis Allain Geoffroy", safra:"2022", tipo:"Branco", quantidade:1},
- {nome:"Chablis Gérard Tremblay", safra:"2023", tipo:"Branco", quantidade:1},
- {nome:"Garzón Estate Pinot Grigio", safra:"2024", tipo:"Branco", quantidade:2},
- {nome:"Gustav Gewürztraminer", safra:"2025", tipo:"Branco", quantidade:2},
- {nome:"Covela Rosé Dry", safra:"2019", tipo:"Rosé", quantidade:1},
- {nome:"EPU", safra:"2017", tipo:"Tinto", quantidade:2},
- {nome:"Angélica Zapata Alta Cabernet Franc", safra:"2016", tipo:"Tinto", quantidade:1},
- {nome:"Marchese Antinori Chianti Classico Riserva", safra:"2020", tipo:"Tinto", quantidade:1},
- {nome:"EQ Granite Pinot Noir", safra:"2022", tipo:"Tinto", quantidade:1},
- {nome:"Sideral", safra:"2023", tipo:"Tinto", quantidade:3},
- {nome:"Côtes du Rhône E. Guigal", safra:"2020", tipo:"Tinto", quantidade:1},
- {nome:"Arboleda Syrah", safra:"2021", tipo:"Tinto", quantidade:1},
- {nome:"Arboleda Brisa", safra:"2021", tipo:"Tinto", quantidade:2},
- {nome:"Arboleda Pinot Noir", safra:"2024", tipo:"Tinto", quantidade:1},
- {nome:"Cadus Malbec", safra:"2022", tipo:"Tinto", quantidade:1},
- {nome:"Seleccion de Parcelas Chardonnay", safra:"2025", tipo:"Branco", quantidade:4},
- {nome:"Gustav Riesling Trocken", safra:"2025", tipo:"Branco", quantidade:2},
- {nome:"1865 Gran Reserva Cabernet Sauvignon", safra:"2022", tipo:"Tinto", quantidade:2},
- {nome:"Bruce Jack Daily Brew Pinotage", safra:"2023", tipo:"Tinto", quantidade:1}
-];
-
-function salvar(){
- localStorage.setItem("adegaThomas", JSON.stringify(vinhos));
-}
-
-function carregar(){
- const dados = localStorage.getItem("adegaThomas");
- if(dados){ vinhos = JSON.parse(dados); }
-}
-
-function total(){
- return vinhos.reduce((s,v)=>s+v.quantidade,0);
-}
-
-function renderizar(){
- let busca = document.getElementById("busca").value.toLowerCase();
- let lista = document.getElementById("listaVinhos");
- lista.innerHTML = "";
-
- vinhos
- .filter(v => v.nome.toLowerCase().includes(busca))
- .forEach((v,i)=>{
-   lista.innerHTML += `
-   <div class="vinho">
-     <strong>${v.nome}</strong><br>
-     Safra: ${v.safra} | Tipo: ${v.tipo}<br>
-     Quantidade: ${v.quantidade}<br><br>
-     <button onclick="alterar(${i},1)">+1</button>
-     <button onclick="alterar(${i},-1)">-1</button>
-   </div>`;
- });
-
- document.getElementById("totalGarrafas").innerText =
-   total() + " garrafas cadastradas";
-}
-
-function alterar(i,valor){
- vinhos[i].quantidade += valor;
- if(vinhos[i].quantidade < 0) vinhos[i].quantidade = 0;
- salvar();
- renderizar();
-}
-
-function adicionarVinho(){
- let nome = document.getElementById("nome").value;
- let safra = document.getElementById("safra").value;
- let tipo = document.getElementById("tipo").value;
- let quantidade = parseInt(document.getElementById("quantidade").value);
-
- if(!nome){ alert("Informe o nome do vinho"); return; }
-
- vinhos.push({nome,safra,tipo,quantidade});
- salvar();
- renderizar();
-}
-
-carregar();
-renderizar();
-</script>
-
-</div>
-</body>
-</html>  
+  display:flex;
+  align-items:center;
+  padding:0 34px;
+  gap:26px;
+  position:sticky;
+  top:0;
+  z-index:10;
