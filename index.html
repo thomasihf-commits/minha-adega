@@ -1536,9 +1536,23 @@ textarea{
 
   </button>
 
-  <button class="btn-secondary" onclick="configurarGithub()">
+<input
 
-  ⚙️ Configurar GitHub
+  id="githubTokenInput"
+
+  type="password"
+
+  placeholder="Token GitHub"
+
+  style="margin-top:4px"
+
+> 
+
+ 
+
+<button class="btn-secondary" onclick="configurarGithub()">
+
+  ⚙️ Salvar token
 
 </button>
 
@@ -2321,25 +2335,25 @@ function configurarGithub(){
 
  
 
-const atual = localStorage.getItem("githubToken") || "";
+const token = document.getElementById("githubTokenInput").value.trim();
 
  
 
-const token = prompt(
+if(!token){
 
-   "Informe seu GitHub Personal Access Token:",
+   alert("Informe o token do GitHub.");
 
-   atual
+   return;
 
-);
-
- 
-
-if(!token) return;
+}
 
  
 
 localStorage.setItem("githubToken", token);
+
+ 
+
+document.getElementById("githubTokenInput").value = "";
 
  
 
@@ -2418,6 +2432,130 @@ try{
    alert("Não foi possível carregar os dados.");
 
  
+
+}
+
+}
+
+ 
+
+async function salvarNaNuvem(){
+
+ 
+
+const token = localStorage.getItem("githubToken");
+
+ 
+
+if(!token){
+
+   alert("Configure o token do GitHub antes de salvar na nuvem.");
+
+   return;
+
+}
+
+ 
+
+try{
+
+   const urlApi =
+
+     https://api.github.com/repos/ +
+
+     GITHUB_OWNER + "/" +
+
+     GITHUB_REPO + "/contents/" +
+
+     GITHUB_FILE;
+
+ 
+
+   const consulta = await fetch(urlApi, {
+
+     headers:{
+
+       "Authorization":"Bearer " + token,
+
+       "Accept":"application/vnd.github+json"
+
+     }
+
+   });
+
+ 
+
+   if(!consulta.ok){
+
+     throw new Error("Não foi possível consultar o arquivo dados.json");
+
+   }
+
+ 
+
+   const arquivoAtual = await consulta.json();
+
+ 
+
+   const conteudo = {
+
+     versao:"1.0",
+
+     ultimaAtualizacao:new Date().toISOString(),
+
+     vinhos:vinhos
+
+   };
+
+ 
+
+   const resposta = await fetch(urlApi, {
+
+     method:"PUT",
+
+     headers:{
+
+       "Authorization":"Bearer " + token,
+
+       "Accept":"application/vnd.github+json",
+
+       "Content-Type":"application/json"
+
+     },
+
+     body:JSON.stringify({
+
+       message:"Atualização da Adega Juliana",
+
+       content:btoa(unescape(encodeURIComponent(JSON.stringify(conteudo,null,2)))),
+
+       sha:arquivoAtual.sha,
+
+       branch:GITHUB_BRANCH
+
+     })
+
+   });
+
+ 
+
+   if(!resposta.ok){
+
+     throw new Error("Erro ao salvar na nuvem");
+
+   }
+
+ 
+
+   alert("Adega salva na nuvem com sucesso.");
+
+ 
+
+}catch(e){
+
+   console.error(e);
+
+   alert("Não foi possível salvar na nuvem. Veja o console para detalhes.");
 
 }
 
@@ -3325,5 +3463,3 @@ renderizar();
  
 
 </body>
-
-</html>
