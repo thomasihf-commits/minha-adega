@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-20T23:54:05.940Z",
+  "ultimaAtualizacao": "2026-06-20T23:54:27.731Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -343,39 +343,6 @@
         "localizacao": "",
         "status": "Na adega"
       }
-    },
-    {
-      "nome": "Juliana pereira faro",
-      "safra": "1980",
-      "tipo": "Branco",
-      "quantidade": 1,
-      "detalhes": {
-        "produtor": "Almaviva",
-        "uva": "Cabernet Franc",
-        "pais": "França",
-        "regiao": "Borgonha",
-        "guarda": "Beber agora",
-        "notaVivino": 5,
-        "notas": ""
-      },
-      "controle": {},
-      "aquisicoes": [
-        {
-          "data": "2026-06-20",
-          "loja": "Cavaavca",
-          "quantidade": 1,
-          "valorUnitario": 200,
-          "compradoPor": "Juliana",
-          "presenteadoPor": "",
-          "localizacao": "Adega Principal",
-          "consumida": false,
-          "dataConsumo": "",
-          "eventoConsumo": "",
-          "observacaoConsumo": "",
-          "ocasiao": "",
-          "identificador": "Garrafa 1"
-        }
-      ]
     }
   ],
   "consumosExternos": []
