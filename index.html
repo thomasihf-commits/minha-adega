@@ -1,3465 +1,2507 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Adega Juliana</title>
 
- 
-
 <style>
-
 :root{
-
   --vinho:#85002b;
-
   --vinho-escuro:#4d0018;
-
   --vinho-claro:#b20a42;
-
   --dourado:#d8b13f;
-
   --rose:#ef8c8c;
-
   --fundo:#fbf7f3;
-
   --card:#ffffff;
-
   --texto:#1e1718;
-
   --muted:#73676a;
-
   --borda:#eee1db;
-
   --sombra:0 10px 28px rgba(70,25,22,.10);
-
 }
-
- 
 
 *{ box-sizing:border-box; }
 
- 
-
 body{
-
   margin:0;
-
   font-family:Inter, Arial, sans-serif;
-
   background:linear-gradient(180deg,#fffaf6,#f4ece7);
-
   color:var(--texto);
-
 }
-
- 
 
 .app-header{
-
   height:76px;
-
   background:linear-gradient(135deg,var(--vinho),var(--vinho-escuro));
-
   color:white;
-
   display:flex;
-
   align-items:center;
-
   padding:0 34px;
-
   gap:26px;
-
   position:sticky;
-
   top:0;
-
   z-index:10;
-
   box-shadow:0 8px 26px rgba(75,0,25,.22);
-
 }
-
- 
 
 .brand{
-
   display:flex;
-
   align-items:center;
-
   gap:13px;
-
   min-width:300px;
-
 }
-
- 
 
 .brand-icon{
-
   width:48px;
-
   height:48px;
-
   border-radius:50%;
-
   background:#fff;
-
   color:var(--vinho);
-
   display:grid;
-
   place-items:center;
-
   font-size:28px;
-
 }
-
- 
 
 h1{
-
   margin:0;
-
   font-size:32px;
-
   letter-spacing:-.5px;
-
   font-family:Georgia, 'Times New Roman', serif;
-
 }
-
- 
 
 .header-actions{
-
   margin-left:auto;
-
   display:flex;
-
   gap:14px;
-
   align-items:center;
-
 }
-
- 
 
 .search-top{
-
   width:310px;
-
   height:42px;
-
   border:1px solid rgba(255,255,255,.25);
-
   border-radius:18px;
-
   background:rgba(30,0,10,.28);
-
   color:white;
-
   padding:0 42px 0 16px;
-
   margin:0;
-
 }
-
- 
 
 .search-wrap{
-
   position:relative;
-
 }
-
- 
 
 .search-wrap::after{
-
   content:"🔍";
-
   position:absolute;
-
   right:14px;
-
   top:8px;
-
   opacity:.9;
-
 }
-
- 
 
 .search-top::placeholder{ color:rgba(255,255,255,.76); }
 
- 
-
 .btn-header{
-
   height:42px;
-
   border-radius:18px;
-
   border:1px solid rgba(255,255,255,.25);
-
   background:rgba(30,0,10,.22);
-
   color:white;
-
   font-weight:800;
-
   padding:0 18px;
-
   cursor:pointer;
-
 }
-
- 
 
 .btn-new{
-
   background:linear-gradient(135deg,#b20a42,#8b002b);
-
   border:none;
-
   box-shadow:0 8px 22px rgba(0,0,0,.18);
-
 }
-
- 
 
 .container{
-
   max-width:1260px;
-
   margin:26px auto 44px;
-
   padding:0 28px;
-
 }
-
- 
 
 .stats{
-
   display:grid;
-
   grid-template-columns:repeat(4,1fr);
-
   gap:22px;
-
   margin-bottom:28px;
-
 }
-
- 
 
 .stat{
-
   background:var(--card);
-
   border:1px solid var(--borda);
-
   border-radius:18px;
-
   min-height:116px;
-
   padding:20px;
-
   display:flex;
-
   align-items:center;
-
   gap:18px;
-
   box-shadow:var(--sombra);
-
   cursor:pointer;
-
   transition:.16s;
-
 }
-
- 
 
 .stat:hover{
-
   transform:translateY(-2px);
-
   border-color:rgba(133,0,43,.25);
-
 }
-
- 
 
 .stat-icon{
-
   width:74px;
-
   height:74px;
-
   border-radius:50%;
-
   display:grid;
-
   place-items:center;
-
   color:white;
-
   flex:0 0 auto;
-
 }
 
- 
-
 .stat-icon.total{ background:linear-gradient(135deg,var(--vinho),var(--vinho-escuro)); }
-
 .stat-icon.tinto{ background:linear-gradient(135deg,var(--vinho),#65001f); }
-
 .stat-icon.branco{ background:linear-gradient(135deg,#e1bf46,#bf8f20); }
-
 .stat-icon.rose{ background:linear-gradient(135deg,#f5a2a2,#e26f75); }
-
- 
 
 .stat-icon svg{ width:45px; height:45px; }
 
- 
-
 .stat small{
-
   display:block;
-
   font-weight:800;
-
   color:#2b2225;
-
   margin-bottom:8px;
-
 }
-
- 
 
 .stat strong{
-
   font-size:38px;
-
   margin-right:8px;
-
 }
-
- 
 
 .stat span{
-
   color:#463c3f;
-
   font-size:18px;
-
 }
-
- 
 
 .layout{
-
   display:grid;
-
   grid-template-columns:280px 1fr;
-
   gap:26px;
-
   align-items:start;
-
 }
-
- 
 
 .sidebar{
-
   background:#fff;
-
   border:1px solid var(--borda);
-
   border-radius:18px;
-
   padding:22px;
-
   box-shadow:var(--sombra);
-
   position:sticky;
-
   top:100px;
-
 }
-
- 
 
 .side-title{
-
   font-size:15px;
-
   font-weight:900;
-
   letter-spacing:.5px;
-
   margin:0 0 14px;
-
 }
-
- 
 
 .type-list{
-
   display:flex;
-
   flex-direction:column;
-
   gap:8px;
-
   margin-bottom:24px;
-
 }
-
- 
 
 .type-item{
-
   display:grid;
-
   grid-template-columns:18px minmax(0,1fr) 38px;
-
   align-items:center;
-
   gap:14px;
-
   padding:13px 14px;
-
   min-height:62px;
-
   border-radius:14px;
-
   cursor:pointer;
-
   border:1px solid transparent;
-
   font-size:18px;
-
   background:#fff;
-
 }
-
- 
 
 .type-item:hover{
-
   background:#fff7f4;
-
 }
-
- 
 
 .type-item.active{
-
   background:linear-gradient(135deg,var(--vinho),#a00035);
-
   color:white;
-
   box-shadow:0 8px 18px rgba(133,0,43,.18);
-
 }
-
- 
 
 .type-mini{
-
   width:18px;
-
   height:18px;
-
   border-radius:50%;
-
   display:block;
-
   flex:0 0 18px;
-
   background:#999;
-
   box-shadow:0 0 0 5px rgba(0,0,0,.035);
-
 }
-
- 
 
 .type-dot-todos{ background:var(--vinho); }
-
 .type-dot-tinto{ background:#650018; }
-
 .type-dot-branco{ background:#d6a93a; }
-
 .type-dot-rose{ background:#ee7778; }
-
 .type-dot-espumante{ background:#e5c44e; }
 
- 
-
 .type-item span{
-
   display:block;
-
   min-width:0;
-
   line-height:1.1;
-
 }
-
- 
 
 .type-item b{
-
   justify-self:end;
-
   min-width:28px;
-
   text-align:right;
-
   font-size:20px;
-
 }
-
- 
 
 .divider{
-
   height:1px;
-
   background:var(--borda);
-
   margin:20px 0;
-
 }
-
- 
 
 select, input, textarea{
-
   width:100%;
-
   border:1px solid #dfd0ca;
-
   border-radius:14px;
-
   padding:12px 14px;
-
   font-size:15px;
-
   background:#fff;
-
   margin:0;
-
 }
-
- 
 
 .modal-body input,
-
 .modal-body select,
-
 .modal-body textarea{
-
   min-height:46px;
-
 }
-
- 
 
 .main-title{
-
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
-
   margin-bottom:18px;
-
 }
-
- 
 
 .main-title h2{
-
   font-size:28px;
-
   margin:0;
-
 }
-
- 
 
 .lista{
-
   display:grid;
-
   gap:14px;
-
 }
-
- 
 
 .vinho{
-
   background:#fff;
-
   border:1px solid var(--borda);
-
   border-radius:20px;
-
   padding:18px 22px;
-
   min-height:136px;
-
   box-shadow:0 8px 20px rgba(70,25,22,.07);
-
   display:grid;
-
   grid-template-columns:1fr 104px 170px 28px;
-
   align-items:center;
-
   gap:22px;
-
   cursor:pointer;
-
   transition:.16s;
-
 }
-
- 
 
 .vinho:hover{
-
   transform:translateY(-2px);
-
   border-color:rgba(133,0,43,.25);
-
   box-shadow:0 12px 28px rgba(70,25,22,.11);
-
 }
-
- 
 
 .vinho strong{
-
   display:block;
-
   font-size:25px;
-
   line-height:1.15;
-
   margin-bottom:12px;
-
 }
-
- 
 
 .meta{
-
   color:#50464a;
-
   font-size:18px;
-
   margin-bottom:16px;
-
 }
-
- 
 
 .qtd-line{
-
   display:flex;
-
   align-items:center;
-
   gap:12px;
-
 }
-
- 
 
 .qtd-line label{
-
   font-size:15px;
-
   color:#3d3437;
-
 }
-
- 
 
 .qtd-input{
-
   width:58px;
-
   height:42px;
-
   padding:0;
-
   text-align:center;
-
   font-weight:900;
-
 }
-
- 
 
 .actions{
-
   display:flex;
-
   gap:10px;
-
   justify-content:flex-end;
-
 }
-
- 
 
 .btn-card{
-
   width:56px;
-
   height:46px;
-
   border:none;
-
   border-radius:12px;
-
   font-size:20px;
-
   font-weight:900;
-
   cursor:pointer;
-
 }
-
- 
 
 .btn-plus{
-
   background:var(--vinho);
-
   color:white;
-
 }
-
- 
 
 .btn-minus{
-
   background:#f0eeee;
-
   color:#3d3437;
-
 }
-
- 
 
 .arrow{
-
   font-size:34px;
-
   color:#241c1f;
-
 }
-
- 
 
 .wine-visual{
-
   display:grid;
-
   place-items:center;
-
 }
-
- 
 
 .wine-emoji{
-
   width:72px;
-
   height:72px;
-
   border-radius:22px;
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
   font-size:44px;
-
   background:#fff7f2;
-
   border:1px solid var(--borda);
-
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.7);
-
 }
-
- 
 
 .wine-emoji.rose{
-
   background:#fff1f1;
-
   border-color:#f0b5b5;
-
 }
-
- 
 
 .wine-emoji.branco{
-
   background:#fff9e8;
-
   border-color:#ead89a;
-
 }
-
- 
 
 .wine-emoji.espumante{
-
   background:#fffbea;
-
   border-color:#e7d47a;
-
 }
-
- 
 
 .modal-bg{
-
   position:fixed;
-
   inset:0;
-
   background:rgba(30,10,15,.58);
-
   display:none;
-
   align-items:center;
-
   justify-content:center;
-
   padding:22px;
-
   z-index:30;
-
 }
-
- 
 
 .modal{
-
   width:min(880px,100%);
-
   max-height:90vh;
-
   overflow:auto;
-
   background:#fff;
-
   border-radius:24px;
-
   box-shadow:0 30px 80px rgba(0,0,0,.32);
-
 }
-
- 
 
 .modal-header{
-
   padding:24px;
-
   color:white;
-
   background:linear-gradient(135deg,var(--vinho),var(--vinho-escuro));
-
 }
-
- 
 
 .modal-header h2{
-
   margin:0;
-
   font-size:28px;
-
 }
-
- 
 
 .modal-body{
-
   padding:22px;
-
 }
-
- 
 
 .detalhes-grid{
-
   display:grid;
-
   grid-template-columns:1fr 1fr;
-
   gap:14px;
-
 }
-
- 
 
 .detalhe-box{
-
   background:#fffaf7;
-
   border:1px solid var(--borda);
-
   border-radius:16px;
-
   padding:14px;
-
 }
-
- 
 
 .detalhe-box small{
-
   display:block;
-
   color:var(--muted);
-
   font-weight:900;
-
   margin-bottom:6px;
-
 }
-
- 
 
 textarea{
-
   min-height:100px;
-
   resize:vertical;
-
 }
-
- 
 
 .modal-actions{
-
   display:flex;
-
   justify-content:flex-end;
-
   gap:10px;
-
   padding:0 22px 22px;
-
 }
-
 .sidebar-actions{
-
   display:flex;
-
   flex-direction:column;
-
   gap:10px;
-
   margin-top:10px;
-
 }
-
- 
 
 .sidebar-actions-row{
-
   display:grid;
-
   grid-template-columns:1fr 1fr;
-
   gap:10px;
-
 }
-
- 
 
 .sidebar-actions .btn-secondary{
-
   width:100%;
-
   min-height:48px;
-
 }
-
- 
 
 .btn-history{
-
   background:#fff7f2;
-
   border:1px solid var(--borda);
-
   color:var(--vinho);
-
 }
-
- 
 
 .btn-secondary{
-
   background:#f0eeee;
-
   color:#332b2e;
-
   border:none;
-
   padding:13px 18px;
-
   border-radius:14px;
-
   font-weight:900;
-
   cursor:pointer;
-
 }
-
- 
 
 .btn-save{
-
   background:var(--vinho);
-
   color:white;
-
 }
-
- 
 
 .empty{
-
   background:#fff;
-
   border:1px dashed var(--borda);
-
   border-radius:18px;
-
   padding:30px;
-
   color:var(--muted);
-
   text-align:center;
-
 }
-
- 
 
 .fab{
-
   position:fixed;
-
   right:28px;
-
   bottom:28px;
-
   width:58px;
-
   height:58px;
-
   border-radius:50%;
-
   border:none;
-
   color:white;
-
   background:linear-gradient(135deg,var(--vinho),var(--vinho-escuro));
-
   box-shadow:0 16px 30px rgba(80,0,20,.25);
-
   font-size:28px;
-
   cursor:pointer;
-
   display:none;
-
 }
-
- 
 
 .form-group-title{
-
   font-size:13px;
-
   font-weight:900;
-
   letter-spacing:.4px;
-
   color:var(--vinho);
-
   margin:18px 0 10px;
-
   text-transform:uppercase;
-
 }
-
- 
 
 .form-row{
-
   display:grid;
-
   grid-template-columns:1fr 1fr;
-
   gap:14px;
-
   margin-bottom:14px;
-
 }
-
- 
 
 .form-full{
-
   margin-bottom:14px;
-
 }
-
- 
 
 .form-row-3{
-
   display:grid;
-
   grid-template-columns:1fr 1fr 1fr;
-
   gap:10px;
-
   margin-bottom:10px;
-
 }
-
- 
 
 .present-field{
-
   display:none;
-
 }
-
- 
 
 .purchase-list{
-
   display:grid;
-
   gap:10px;
-
   margin-top:10px;
-
 }
-
- 
 
 .purchase-card{
-
   background:#fffaf7;
-
   border:1px solid var(--borda);
-
   border-radius:16px;
-
   padding:14px;
-
 }
-
- 
 
 .purchase-card strong{
-
   display:block;
-
   margin-bottom:6px;
-
   color:#241b1e;
-
 }
-
- 
 
 .purchase-meta{
-
   color:#51474a;
-
   line-height:1.45;
-
 }
-
- 
 
 .purchase-total{
-
   background:#fff7f2;
-
   border:1px solid var(--borda);
-
   border-radius:16px;
-
   padding:14px;
-
   margin-top:12px;
-
 }
-
- 
 
 @media(max-width:1000px){
-
   .app-header{ padding:0 16px; gap:12px; }
-
   .brand{ min-width:auto; }
-
   .brand h1{ font-size:24px; }
-
   .search-top{ width:210px; }
-
   .stats{ grid-template-columns:repeat(2,1fr); }
-
   .layout{ grid-template-columns:1fr; }
-
   .sidebar{ position:static; }
-
   .vinho{ grid-template-columns:1fr 90px; }
-
   .actions,.arrow{ display:none; }
-
 }
-
- 
 
 @media(max-width:650px){
-
   .header-actions{ display:none; }
-
   .stats{ grid-template-columns:1fr; }
-
   .vinho{ grid-template-columns:1fr; text-align:left; }
-
   .wine-visual{ justify-self:center; }
-
   .detalhes-grid{ grid-template-columns:1fr; }
-
   .form-row,.form-row-3{ grid-template-columns:1fr; }
-
   .fab{ display:block; }
-
 }
-
- 
 
 .consume-line{
-
   margin-top:10px;
-
   display:flex;
-
   align-items:center;
-
   gap:8px;
-
   font-weight:800;
-
   color:#332b2e;
-
 }
-
- 
 
 .consume-line input{
-
   width:auto;
-
   transform:scale(1.15);
-
   margin:0;
-
 }
-
- 
 
 .consumida-badge{
-
   display:inline-block;
-
   margin-left:8px;
-
   padding:3px 8px;
-
   border-radius:999px;
-
   background:#efe1df;
-
   color:#7a3333;
-
   font-size:12px;
-
   font-weight:900;
-
 }
-
- 
 
 .titulo-vinho{
-
   display:flex;
-
   align-items:center;
-
   gap:10px;
-
   flex-wrap:wrap;
-
 }
 
- 
+.vivino-badge{
+  background:#f5e7b0;
+  color:#6b4c00;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:900;
+  border:1px solid #e0c96d;
+}
+
+.external-badge{
+  display:inline-block;
+  margin-left:8px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:#3b4a8f;
+  font-size:12px;
+  font-weight:900;
+}
+
+.btn-external{
+  background:#fffaf7;
+  border:1px solid var(--borda);
+  color:#332b2e;
+}
+
+
+
+/* ===============================
+   LAYOUT MINIMALISTA - CATÁLOGO
+   =============================== */
+body{
+  background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%);
+}
+
+.app-header{
+  height:66px;
+  padding:0 28px;
+  gap:18px;
+}
+
+.brand{ min-width:260px; }
+.brand-icon{ width:42px;height:42px;font-size:24px; }
+h1{ font-size:27px; }
+.search-top{ height:38px;width:300px;font-size:14px;border-radius:16px; }
+.btn-header{ height:38px;border-radius:16px;font-size:14px;padding:0 16px; }
+
+.container{
+  max-width:1160px;
+  margin:18px auto 38px;
+  padding:0 22px;
+}
+
+/* Remove o visual de dashboard e cria um resumo discreto */
+.stats{ display:none!important; }
+.summary-strip{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:18px;
+  padding:12px 16px;
+  box-shadow:0 6px 18px rgba(70,25,22,.07);
+  margin-bottom:12px;
+}
+.summary-main{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#2a2023;
+}
+.summary-main .summary-icon{ font-size:20px; }
+.summary-main strong{
+  color:var(--vinho);
+  font-size:26px;
+  line-height:1;
+}
+.summary-main span:last-child{
+  font-size:14px;
+  color:#5e5356;
+  font-weight:700;
+}
+.summary-items{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.summary-items span{
+  font-size:13px;
+  color:#5d5255;
+  background:#fff8f4;
+  border:1px solid var(--borda);
+  border-radius:999px;
+  padding:6px 10px;
+}
+.summary-items b{ color:var(--vinho); }
+
+/* Área de controle minimalista */
+.layout{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:12px!important;
+}
+.sidebar{
+  position:static!important;
+  top:auto!important;
+  background:rgba(255,255,255,.82);
+  border:1px solid var(--borda);
+  border-radius:18px;
+  padding:12px 14px;
+  box-shadow:0 5px 18px rgba(70,25,22,.06);
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px;
+}
+.side-title{ display:none!important; }
+.divider{ display:none!important; }
+
+.type-list{
+  order:1;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:wrap!important;
+  gap:8px!important;
+  margin:0!important;
+  flex:1 1 100%;
+}
+.type-item{
+  display:inline-flex!important;
+  width:auto!important;
+  flex:0 0 auto!important;
+  grid-template-columns:none!important;
+  min-height:34px!important;
+  padding:7px 12px!important;
+  border-radius:999px!important;
+  gap:8px!important;
+  font-size:14px!important;
+  line-height:1!important;
+  border:1px solid var(--borda)!important;
+  background:#fff;
+}
+.type-item.active{
+  background:linear-gradient(135deg,var(--vinho),#a00035)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+.type-mini{
+  width:9px!important;
+  height:9px!important;
+  flex:0 0 9px!important;
+  box-shadow:none!important;
+}
+.type-item b{
+  font-size:13px!important;
+  min-width:auto!important;
+  justify-self:auto!important;
+}
+
+#ordenacao{
+  order:2;
+  width:210px!important;
+  max-width:210px!important;
+  height:38px!important;
+  padding:8px 12px!important;
+  font-size:13px!important;
+  border-radius:13px!important;
+}
+.sidebar > .btn-header.btn-new{
+  order:3;
+  width:auto!important;
+  height:38px!important;
+  min-width:132px;
+  padding:0 16px!important;
+  border-radius:13px!important;
+}
+.sidebar-actions{
+  order:4;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin-top:0!important;
+  flex:1 1 auto;
+}
+.sidebar-actions-row{
+  display:flex!important;
+  grid-template-columns:none!important;
+  gap:8px!important;
+}
+.sidebar-actions .btn-secondary,
+.sidebar-actions .btn-header{
+  width:auto!important;
+  min-width:auto!important;
+  min-height:38px!important;
+  height:38px!important;
+  padding:8px 12px!important;
+  border-radius:13px!important;
+  font-size:13px!important;
+  white-space:nowrap;
+}
+#githubTokenInput{
+  width:180px!important;
+  height:38px!important;
+  min-height:38px!important;
+  padding:8px 12px!important;
+  border-radius:13px!important;
+  font-size:13px!important;
+  margin:0!important;
+}
+
+.main-title{
+  margin:2px 0 10px!important;
+}
+.main-title h2{
+  font-size:22px!important;
+  letter-spacing:-.2px;
+}
+.lista{ gap:8px!important; }
+
+/* Lista de vinhos estilo catálogo */
+.vinho{
+  min-height:70px!important;
+  padding:12px 15px!important;
+  border-radius:16px!important;
+  display:grid!important;
+  grid-template-columns:1fr 26px!important;
+  gap:10px!important;
+  box-shadow:0 4px 12px rgba(70,25,22,.055)!important;
+}
+.vinho:hover{
+  transform:none!important;
+  box-shadow:0 7px 18px rgba(70,25,22,.10)!important;
+}
+.vinho strong{
+  font-size:18px!important;
+  line-height:1.15!important;
+  margin:0!important;
+}
+.titulo-vinho{
+  gap:8px!important;
+  margin-bottom:4px!important;
+}
+.vivino-badge{
+  padding:3px 8px!important;
+  font-size:12px!important;
+}
+.meta{
+  font-size:13px!important;
+  margin:0 0 6px!important;
+  color:#64595c!important;
+}
+.qtd-line{
+  gap:7px!important;
+  color:#5d5356;
+}
+.qtd-line label{ font-size:12px!important; }
+.qtd-input{
+  width:42px!important;
+  height:28px!important;
+  border-radius:10px!important;
+  font-size:13px!important;
+}
+.wine-visual,.actions{ display:none!important; }
+.arrow{
+  display:block!important;
+  font-size:26px!important;
+  color:var(--vinho)!important;
+  justify-self:end!important;
+}
+
+.modal{ border-radius:20px!important; }
+.modal-header{ padding:18px 22px!important; }
+.modal-header h2{ font-size:24px!important; }
+.modal-body{ padding:18px!important; }
+.detalhe-box,.purchase-card,.purchase-total{
+  border-radius:14px!important;
+  padding:12px!important;
+}
+
+@media(max-width:760px){
+  .app-header{
+    height:auto!important;
+    min-height:62px!important;
+    padding:10px 14px!important;
+  }
+  .brand{ min-width:0!important; }
+  .brand h1{ font-size:22px!important; }
+  .header-actions{ display:none!important; }
+  .container{ padding:0 12px!important; margin-top:12px!important; }
+  .summary-strip{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:8px;
+    padding:12px;
+  }
+  .summary-items{ justify-content:flex-start; gap:6px; }
+  .summary-items span{ font-size:12px; padding:5px 8px; }
+  .sidebar{ padding:12px; gap:8px; }
+  .type-list{
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    padding-bottom:3px;
+  }
+  .type-item{ white-space:nowrap; }
+  #ordenacao{
+    order:2;
+    flex:1 1 100%;
+    width:100%!important;
+    max-width:none!important;
+  }
+  .sidebar > .btn-header.btn-new{
+    order:3;
+    flex:1 1 100%;
+    width:100%!important;
+  }
+  .sidebar-actions{
+    order:4;
+    display:grid!important;
+    grid-template-columns:1fr 1fr;
+    width:100%;
+  }
+  .sidebar-actions-row{ display:contents!important; }
+  .sidebar-actions .btn-secondary,
+  .sidebar-actions .btn-header{
+    width:100%!important;
+    font-size:12px!important;
+  }
+  #githubTokenInput{
+    width:100%!important;
+    grid-column:1 / -1;
+  }
+  .main-title h2{ font-size:20px!important; }
+  .vinho{
+    grid-template-columns:1fr 22px!important;
+    min-height:68px!important;
+    padding:11px 12px!important;
+  }
+  .vinho strong{ font-size:17px!important; }
+  .meta{ font-size:12px!important; }
+}
+
+
+
+/* ===============================
+   LAYOUT COM ABAS - ADEGA JULIANA
+   =============================== */
+body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
+.app-header{height:70px!important;padding:0 32px!important;}
+.brand{min-width:280px!important}.brand-icon{width:44px!important;height:44px!important;font-size:25px!important}h1{font-size:29px!important}
+.container{max-width:1180px!important;margin:0 auto 42px!important;padding:0 24px!important;}
+.app-tabs{height:74px;display:flex;align-items:center;justify-content:center;gap:48px;border-bottom:1px solid var(--borda);margin:0 -24px 22px;background:rgba(255,255,255,.72);backdrop-filter:blur(8px)}
+.tab{height:74px;border:0;background:transparent;color:#3b3336;font-size:15px;font-weight:900;padding:0 8px;cursor:pointer;position:relative;white-space:nowrap}
+.tab.active{color:var(--vinho)}.tab.active:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:999px;background:var(--vinho)}
+.summary-strip.pro{display:flex!important;align-items:center;justify-content:space-between;gap:20px;background:#fff;border:1px solid var(--borda);border-radius:16px;padding:18px 22px;box-shadow:0 8px 22px rgba(70,25,22,.07);margin-bottom:18px}
+.summary-main{display:flex;align-items:center;gap:15px}.summary-main .summary-icon{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#fff3f4;font-size:24px}.summary-main strong{font-size:40px;color:var(--vinho);line-height:1;margin-right:8px}.summary-main span{font-size:16px;color:#4b4245}.summary-main small{display:block;color:#6d6265;font-size:13px;margin-top:4px}.summary-items{display:flex;gap:26px;align-items:center;flex-wrap:wrap}.summary-items span{display:flex;align-items:center;gap:7px;font-size:14px;color:#4b4245}.summary-items b{font-size:20px;color:#1e1718}.dot{width:11px;height:11px;border-radius:50%;display:inline-block}.dot.tinto{background:#85002b}.dot.branco{background:#d8b13f}.dot.rose{background:#ef6d7d}.dot.espumante{background:#e5c44e}
+.catalog-panel{background:transparent;border:0;padding:0;margin-bottom:18px;box-shadow:none}.chips-row{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:10px!important;margin:0 0 14px!important}.type-item{display:inline-flex!important;align-items:center!important;grid-template-columns:none!important;width:auto!important;min-height:42px!important;padding:10px 17px!important;border-radius:999px!important;border:1px solid var(--borda)!important;background:#fff!important;font-size:15px!important;gap:9px!important;box-shadow:0 2px 8px rgba(70,25,22,.035)}.type-item.active{background:linear-gradient(135deg,var(--vinho),#a00035)!important;color:#fff!important}.type-mini{width:10px!important;height:10px!important;flex:0 0 10px!important;box-shadow:none!important}.type-item b{font-size:14px!important;min-width:auto!important;justify-self:auto!important}.toolbar-pro{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}.local-search{flex:1;min-width:280px}#ordenacao{width:220px!important;max-width:220px!important}.btn-secondary.compact{height:44px;white-space:nowrap}.local-search{position:relative}.local-search input{height:44px;border-radius:12px;font-size:14px;padding-right:42px}.local-search span{position:absolute;right:14px;top:11px;color:#6d6265}#ordenacao{height:44px!important;border-radius:12px!important;font-size:14px!important}.btn-secondary.compact{height:44px;border-radius:12px;background:#fff;border:1px solid var(--borda);font-size:14px;white-space:nowrap}.btn-secondary.icon-only{font-size:18px;letter-spacing:2px;padding:0 16px}.main-title.clean{margin:10px 0 12px!important}.main-title.clean h2{font-size:24px!important}
+.lista{gap:10px!important}.vinho{min-height:78px!important;padding:16px 18px!important;border-radius:14px!important;display:grid!important;grid-template-columns:26px 1fr auto 24px!important;gap:16px!important;box-shadow:0 5px 16px rgba(70,25,22,.055)!important}.vinho:hover{transform:none!important;box-shadow:0 9px 22px rgba(70,25,22,.10)!important}.wine-visual{display:grid!important;grid-column:1!important;grid-row:1!important;place-items:center!important}.wine-emoji{width:18px!important;height:18px!important;border-radius:50%!important;font-size:0!important;border:0!important;box-shadow:none!important;background:#85002b!important}.wine-emoji.branco{background:#d8b13f!important}.wine-emoji.rose{background:#ef6d7d!important}.wine-emoji.espumante{background:#e5c44e!important}.vinho>div:first-child{grid-column:2!important}.vinho strong{font-size:17px!important;margin:0!important;line-height:1.15!important}.titulo-vinho{gap:8px!important;margin-bottom:7px!important}.meta{font-size:13px!important;margin:0!important;color:#5d5356!important}.qtd-line{grid-column:3!important;grid-row:1!important;align-items:center!important;justify-content:flex-end!important;gap:10px!important}.qtd-line label{font-size:12px!important;color:#62575a!important}.qtd-input{width:50px!important;height:34px!important;border-radius:999px!important;background:#fbf6f4!important;color:var(--vinho)!important;font-size:15px!important}.actions{display:none!important}.arrow{display:block!important;grid-column:4!important;grid-row:1!important;align-self:center!important;justify-self:end!important;color:var(--vinho)!important;font-size:26px!important}.vivino-badge{padding:3px 8px!important;font-size:12px!important}.config-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.config-grid input{min-height:46px}.config-modal{width:min(620px,100%)!important}
+@media(max-width:800px){.toolbar-pro{display:flex;flex-direction:column;align-items:stretch}.toolbar-pro>*{width:100%!important;max-width:none!important}.app-header{height:auto!important;min-height:64px!important;padding:10px 14px!important}.brand{min-width:0!important}.brand h1{font-size:23px!important}.header-actions{display:none!important}.container{padding:0 14px!important}.app-tabs{margin:0 -14px 16px;height:58px;justify-content:flex-start;gap:20px;overflow-x:auto;padding:0 14px}.tab{height:58px;font-size:13px}.summary-strip.pro{align-items:flex-start;flex-direction:column;padding:14px}.summary-main strong{font-size:32px}.summary-items{gap:12px}.toolbar-pro{grid-template-columns:1fr;}.chips-row{flex-wrap:nowrap!important;overflow-x:auto!important;padding-bottom:3px}.type-item{white-space:nowrap}.vinho{grid-template-columns:20px 1fr 22px!important;gap:10px!important;padding:13px!important}.qtd-line{grid-column:2!important;grid-row:auto!important;justify-content:flex-start!important;margin-top:8px}.arrow{grid-column:3!important}.wine-visual{grid-column:1!important}.config-grid{grid-template-columns:1fr}}
+
+
+
+/* ===============================
+   AJUSTE FINAL - LISTA 2 COLUNAS
+   =============================== */
+.lista{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+
+.vinho{
+  min-height:58px!important;
+  padding:10px 12px!important;
+  border-radius:14px!important;
+  display:grid!important;
+  grid-template-columns:18px 1fr 18px!important;
+  gap:10px!important;
+  align-items:center!important;
+}
+
+.vinho strong{
+  font-size:15px!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+  margin:0!important;
+}
+
+.titulo-vinho{
+  gap:6px!important;
+  margin-bottom:4px!important;
+}
+
+.meta{
+  font-size:11.5px!important;
+  margin:0!important;
+  color:#675d60!important;
+  line-height:1.25!important;
+}
 
 .vivino-badge{
+  padding:2px 6px!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+}
 
-  background:#f5e7b0;
+.wine-visual{
+  display:grid!important;
+  grid-column:1!important;
+  grid-row:1!important;
+  place-items:center!important;
+}
 
-  color:#6b4c00;
+.wine-emoji{
+  width:12px!important;
+  height:12px!important;
+  min-width:12px!important;
+  border-radius:50%!important;
+  font-size:0!important;
+  border:0!important;
+  box-shadow:none!important;
+  background:#85002b!important;
+}
 
-  padding:4px 10px;
+.wine-emoji.branco{background:#d8b13f!important;}
+.wine-emoji.rose{background:#ef6d7d!important;}
+.wine-emoji.espumante{background:#e5c44e!important;}
 
-  border-radius:999px;
+.vinho>div:first-child{
+  grid-column:2!important;
+  min-width:0!important;
+}
 
+.qtd-line{
+  display:none!important;
+}
+
+.actions{
+  display:none!important;
+}
+
+.arrow{
+  display:block!important;
+  grid-column:3!important;
+  grid-row:1!important;
+  align-self:center!important;
+  justify-self:end!important;
+  font-size:20px!important;
+  color:var(--vinho)!important;
+}
+
+@media(max-width:760px){
+  .lista{
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+  }
+  .vinho{
+    min-height:56px!important;
+    padding:10px 11px!important;
+  }
+  .vinho strong{
+    font-size:15px!important;
+  }
+}
+
+/* Ajuste: ações ficam apenas no menu superior */
+.toolbar-pro{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:10px!important;
+  align-items:center!important;
+  margin-bottom:16px!important;
+}
+.toolbar-pro .local-search{
+  flex:1 1 420px!important;
+  min-width:260px!important;
+}
+.toolbar-pro #ordenacao{
+  flex:0 0 260px!important;
+  width:260px!important;
+  max-width:260px!important;
+}
+@media(max-width:800px){
+  .toolbar-pro .local-search,
+  .toolbar-pro #ordenacao{
+    flex:1 1 100%!important;
+    width:100%!important;
+    max-width:none!important;
+  }
+}
+
+
+
+/* Ajuste: manter somente o Buscar vinho do cabeçalho */
+.toolbar-pro{
+  display:flex!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  gap:10px!important;
+  margin-bottom:16px!important;
+}
+.toolbar-pro .local-search{
+  display:none!important;
+}
+.toolbar-pro #ordenacao{
+  width:260px!important;
+  max-width:260px!important;
+}
+@media(max-width:800px){
+  .toolbar-pro{
+    align-items:stretch!important;
+  }
+  .toolbar-pro #ordenacao{
+    width:100%!important;
+    max-width:none!important;
+  }
+}
+
+
+
+/* Ajuste: ordenação no título da lista */
+.toolbar-pro{
+  display:none!important;
+}
+.main-title.clean{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  margin:12px 0 12px!important;
+}
+.sort-inline{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex:0 0 auto;
+}
+.sort-inline span{
   font-size:13px;
+  color:#6b6063;
+  font-weight:800;
+}
+.sort-inline #ordenacao{
+  width:210px!important;
+  max-width:210px!important;
+  height:38px!important;
+  min-height:38px!important;
+  border-radius:12px!important;
+  font-size:13px!important;
+  padding:8px 12px!important;
+}
+@media(max-width:650px){
+  .main-title.clean{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+    gap:8px!important;
+  }
+  .sort-inline{
+    width:100%;
+  }
+  .sort-inline #ordenacao{
+    width:100%!important;
+    max-width:none!important;
+  }
+}
 
-  font-weight:900;
 
-  border:1px solid #e0c96d;
-
+/* ===============================
+   LOGO PREMIUM - MONOGRAMA AJ
+   =============================== */
+.brand-icon.brand-monogram{
+  background:linear-gradient(135deg,var(--vinho),var(--vinho-escuro))!important;
+  color:var(--dourado)!important;
+  border:2px solid rgba(216,177,63,.75)!important;
+  box-shadow:
+    0 8px 18px rgba(60,0,20,.22),
+    inset 0 0 0 2px rgba(255,255,255,.08)!important;
+  font-family:Georgia,'Times New Roman',serif!important;
+  font-size:18px!important;
+  font-weight:900!important;
+  letter-spacing:.5px!important;
+}
+.brand-icon.brand-monogram::after{
+  content:"";
+  position:absolute;
 }
 
 </style>
-
 </head>
-
- 
 
 <body>
 
- 
-
 <header class="app-header">
-
   <div class="brand">
-
-    <div class="brand-icon">🍇</div>
-
+    <div class="brand-icon brand-monogram">AJ</div>
     <h1>Adega Juliana</h1>
-
   </div>
-
- 
 
   <div class="header-actions">
-
     <div class="search-wrap">
-
       <input id="buscaTopo" class="search-top" placeholder="Buscar vinho..." oninput="renderizar()">
-
     </div>
-
     <button class="btn-header" onclick="document.getElementById('buscaTopo').focus()">⌯ Filtros</button>
-
     <button class="btn-header btn-new" onclick="abrirCadastro()">＋ Novo vinho</button>
-
   </div>
-
 </header>
-
- 
 
 <main class="container">
 
- 
+  <nav class="app-tabs">
+    <button class="tab active" onclick="mostrarAba('adega')">🍷 Adega</button>
+    <button class="tab" onclick="abrirHistoricoConsumo()">🕘 Histórico</button>
+    <button class="tab" onclick="abrirCadastroConsumoExterno()">🍽️ Consumo externo</button>
+    <button class="tab" onclick="abrirConfiguracoes()">⚙️ Configurações</button>
+  </nav>
 
-  <section class="stats">
-
-    <div class="stat" onclick="filtrarTodos()">
-
-      <div class="stat-icon total">
-
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4"><path d="M29 6h6v12c0 5 8 10 8 19v18c0 3-2 5-5 5H26c-3 0-5-2-5-5V37c0-9 8-14 8-19V6z"/><path d="M25 31h14"/></svg>
-
-      </div>
-
-      <div><small>Total de garrafas</small><strong id="totalGarrafas">0</strong><span>garrafas</span></div>
-
+  <section id="abaAdega" class="catalog-panel">
+    <div class="chips-row type-list">
+      <div class="type-item active" id="tipoTodos" onclick="filtrarTodos()"><div class="type-mini type-dot-todos"></div><span>Todos</span><b id="qtdTodos">0</b></div>
+      <div class="type-item" id="tipoTinto" onclick="filtrarPorTipo('Tinto')"><div class="type-mini type-dot-tinto"></div><span>Tintos</span><b id="qtdTintosMenu">0</b></div>
+      <div class="type-item" id="tipoBranco" onclick="filtrarPorTipo('Branco')"><div class="type-mini type-dot-branco"></div><span>Brancos</span><b id="qtdBrancosMenu">0</b></div>
+      <div class="type-item" id="tipoRosé" onclick="filtrarPorTipo('Rosé')"><div class="type-mini type-dot-rose"></div><span>Rosés</span><b id="qtdRosesMenu">0</b></div>
+      <div class="type-item" id="tipoEspumante" onclick="filtrarPorTipo('Espumante')"><div class="type-mini type-dot-espumante"></div><span>Espumantes</span><b id="qtdEspumantesMenu">0</b></div>
     </div>
 
- 
-
-    <div class="stat" onclick="filtrarPorTipo('Tinto')">
-
-      <div class="stat-icon tinto">
-
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4"><circle cx="24" cy="18" r="7"/><circle cx="40" cy="18" r="7"/><circle cx="32" cy="31" r="7"/><circle cx="24" cy="44" r="7"/><circle cx="40" cy="44" r="7"/></svg>
-
-      </div>
-
-      <div><small>Tintos</small><strong id="totalTintos">0</strong><span>garrafas</span></div>
-
-    </div>
-
- 
-
-    <div class="stat" onclick="filtrarPorTipo('Branco')">
-
-      <div class="stat-icon branco">
-
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4"><path d="M20 7h24l-4 28c-1 7-15 7-16 0L20 7z"/><path d="M32 39v16"/><path d="M22 57h20"/></svg>
-
-      </div>
-
-      <div><small>Brancos</small><strong id="totalBrancos">0</strong><span>garrafas</span></div>
-
-    </div>
-
- 
-
-    <div class="stat" onclick="filtrarPorTipo('Rosé')">
-
-      <div class="stat-icon rose">
-
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4"><path d="M20 7h24l-4 28c-1 7-15 7-16 0L20 7z"/><path d="M32 39v16"/><path d="M22 57h20"/></svg>
-
-      </div>
-
-      <div><small>Rosés</small><strong id="totalRoses">0</strong><span>garrafas</span></div>
-
-    </div>
 
   </section>
 
- 
-
-  <section class="layout">
-
-    <aside class="sidebar">
-
-      <p class="side-title">TIPOS</p>
-
-      <div class="type-list">
-
-        <div class="type-item active" id="tipoTodos" onclick="filtrarTodos()"><div class="type-mini type-dot-todos"></div><span>Todos</span><b id="qtdTodos">0</b></div>
-
-        <div class="type-item" id="tipoTinto" onclick="filtrarPorTipo('Tinto')"><div class="type-mini type-dot-tinto"></div><span>Tintos</span><b id="qtdTintosMenu">0</b></div>
-
-        <div class="type-item" id="tipoBranco" onclick="filtrarPorTipo('Branco')"><div class="type-mini type-dot-branco"></div><span>Brancos</span><b id="qtdBrancosMenu">0</b></div>
-
-        <div class="type-item" id="tipoRosé" onclick="filtrarPorTipo('Rosé')"><div class="type-mini type-dot-rose"></div><span>Rosés</span><b id="qtdRosesMenu">0</b></div>
-
-        <div class="type-item" id="tipoEspumante" onclick="filtrarPorTipo('Espumante')"><div class="type-mini type-dot-espumante"></div><span>Espumantes</span><b id="qtdEspumantesMenu">0</b></div>
-
+  <section>
+    <div class="main-title clean">
+      <h2>Lista de vinhos</h2>
+      <div class="sort-inline">
+        <span>Ordenar:</span>
+        <select id="ordenacao" onchange="renderizar()">
+          <option value="vivino">Nota Vivino</option>
+          <option value="safra-antiga">Safra: mais antiga</option>
+          <option value="safra-nova">Safra: mais nova</option>
+          <option value="nome">Nome</option>
+          <option value="quantidade">Quantidade</option>
+        </select>
       </div>
-
- 
-
-      <div class="divider"></div>
-
- 
-
-      <p class="side-title">ORDENAR POR</p>
-
-      <select id="ordenacao" onchange="renderizar()">
-
-                <option value="vivino">Nota Vivino</option>
-
-        <option value="safra-antiga">Safra: mais antiga</option>
-
-        <option value="safra-nova">Safra: mais nova</option>
-
-        <option value="nome">Nome</option>
-
-        <option value="quantidade">Quantidade</option>
-
-      </select>
-
- 
-
-      <div class="divider"></div>
-
- 
-
-      <button class="btn-header btn-new" style="width:100%;height:44px" onclick="abrirCadastro()">＋ Novo vinho</button>
-
- 
-
-      <div class="sidebar-actions">
-
-  <div class="sidebar-actions-row">
-
-    <button class="btn-secondary" onclick="exportarBackup()">Backup</button>
-
-    <button class="btn-secondary" onclick="document.getElementById('importar').click()">Importar</button>
-
-  </div>
-
- 
-
-  <button class="btn-secondary btn-history" onclick="abrirHistoricoConsumo()">
-
-    Histórico de consumo
-
-  </button>
-
-<input
-
-  id="githubTokenInput"
-
-  type="password"
-
-  placeholder="Token GitHub"
-
-  style="margin-top:4px"
-
-> 
-
- 
-
-<button class="btn-secondary" onclick="configurarGithub()">
-
-  ⚙️ Salvar token
-
-</button>
-
- 
-
-<button class="btn-secondary" onclick="carregarDaNuvem()">
-
-  ☁️ Carregar da nuvem
-
-</button>
-
- 
-
-<button class="btn-secondary btn-save" onclick="salvarNaNuvem()">
-
-  ☁️ Salvar na nuvem
-
-</button>
-
- 
-
-  <input id="importar" type="file" accept=".json" style="display:none" onchange="importarBackup(event)">
-
-</div>
-
-               
-
-                
-
-    </aside>
-
- 
-
-    <section>
-
-      <div class="main-title">
-
-        <h2>Lista de vinhos</h2>
-
-      </div>
-
-      <div id="listaVinhos" class="lista"></div>
-
-    </section>
-
+    </div>
+    <div id="listaVinhos" class="lista"></div>
   </section>
-
 </main>
-
- 
-
 <button class="fab" onclick="abrirCadastro()">＋</button>
 
- 
-
 <div id="modalCadastro" class="modal-bg" onclick="fecharCadastro()">
-
   <div class="modal" onclick="event.stopPropagation()">
-
     <div class="modal-header">
-
       <h2>Novo vinho</h2>
-
       <p>Cadastre o vinho e, separadamente, os dados da aquisição.</p>
-
     </div>
 
- 
-
     <div class="modal-body">
-
       <div class="form-row">
-
   <input id="nome" placeholder="Nome do vinho">
 
- 
-
   <input
-
     id="notaVivino"
-
     type="number"
-
     min="1"
-
     max="5"
-
     step="0.1"
-
     placeholder="Vivino"
-
   >
-
 </div>
-
- 
 
 <div class="form-row">
-
   <input id="safra" placeholder="Safra">
-
   <select id="tipo">
-
     <option>Tinto</option>
-
     <option>Branco</option>
-
     <option>Rosé</option>
-
     <option>Espumante</option>
-
   </select>
-
 </div>
-
- 
 
 <div class="form-full">
-
   <input id="produtor" placeholder="Produtor" list="listaProdutores">
-
 </div>
-
-
+ 
 <div class="form-row">
-
   <input id="uva" placeholder="Uva / corte" list="listaUvas">
-
   <input id="pais" placeholder="País" list="listaPaises">
-
 </div>
-
- 
 
 <div class="form-row">
-
   <input id="regiao" placeholder="Região" list="listaRegioes">
-
   <input id="potencialGuarda" placeholder="Potencial de guarda" list="listaGuarda">
-
 </div>
-
- 
 
       <p class="form-group-title">Aquisição</p>
 
- 
-
 <div class="form-row">
-
   <input id="quantidade" type="number" min="1" placeholder="Quantidade">
-
   <input id="dataCompra" type="date">
-
 </div>
-
- 
 
 <div class="form-full">
-
   <input id="loja" placeholder="Loja / origem">
-
 </div>
-
- 
 
 <div class="form-row">
-
   <input id="valorPago" type="number" min="0" step="0.01" placeholder="Valor unitário pago">
-
   <select id="compradoPor" onchange="togglePresenteadoPor()">
-
     <option>Thomas</option>
-
     <option>Juliana</option>
-
     <option>Presente</option>
-
   </select>
-
 </div>
 
- 
-
 <div class="form-full">
-
   <input id="presenteadoPor" class="present-field" placeholder="Quem deu o presente?">
-
 </div>
-
- 
 
 <div class="form-full">
-
   <input id="localizacao" placeholder="Localização desta aquisição / garrafa" list="listaLocalizacoes">
-
 </div>
-
- 
 
 <div class="consume-line">
-
   <input id="consumida" type="checkbox">
-
   <label for="consumida">Já foi consumida?</label>
-
 </div>
-
- 
 
 <div class="form-full">
-
   <input id="ocasiao" placeholder="Ocasião / observação da compra">
-
 </div>
-
 </div>
-
     <div class="modal-actions">
-
       <button class="btn-secondary" onclick="fecharCadastro()">Cancelar</button>
-
       <button class="btn-secondary btn-save" onclick="adicionarVinho()">Salvar vinho</button>
-
     </div>
-
   </div>
-
 </div>
-
 <datalist id="listaUvas">
-
   <option value="Cabernet Sauvignon">
-
   <option value="Cabernet Franc">
-
   <option value="Merlot">
-
   <option value="Malbec">
-
   <option value="Pinot Noir">
-
   <option value="Syrah">
-
   <option value="Tempranillo">
-
   <option value="Sangiovese">
-
   <option value="Nebbiolo">
-
   <option value="Carmenere">
-
   <option value="Petit Verdot">
-
   <option value="Touriga Nacional">
-
   <option value="Pinotage">
-
   <option value="Chardonnay">
-
   <option value="Sauvignon Blanc">
-
   <option value="Riesling">
-
   <option value="Gewürztraminer">
-
   <option value="Pinot Grigio">
-
   <option value="Blend bordalês">
-
   <option value="Blend Rhône">
-
 </datalist>
-
- 
 
 <datalist id="listaPaises">
-
   <option value="França">
-
   <option value="Itália">
-
   <option value="Espanha">
-
   <option value="Portugal">
-
   <option value="Alemanha">
-
   <option value="Chile">
-
   <option value="Argentina">
-
   <option value="Uruguai">
-
   <option value="Brasil">
-
   <option value="Estados Unidos">
-
   <option value="África do Sul">
-
   <option value="Austrália">
-
   <option value="Nova Zelândia">
-
 </datalist>
-
- 
 
 <datalist id="listaRegioes">
-
   <option value="Bordeaux">
-
   <option value="Borgonha">
-
   <option value="Chablis">
-
   <option value="Champagne">
-
   <option value="Rhône">
-
   <option value="Toscana">
-
   <option value="Piemonte">
-
   <option value="Rioja">
-
   <option value="Douro">
-
   <option value="Alentejo">
-
   <option value="Vinho Verde">
-
   <option value="Vale do Maipo">
-
   <option value="Vale de Casablanca">
-
   <option value="Vale do Aconcágua">
-
   <option value="Vale de Uco">
-
   <option value="Mendoza">
-
   <option value="Rheinhessen">
-
   <option value="Western Cape">
-
 </datalist>
-
- 
 
 <datalist id="listaProdutores">
-
   <option value="Catena Zapata">
-
   <option value="Almaviva">
-
   <option value="Arboleda">
-
   <option value="Matetic">
-
   <option value="Escorihuela Gascón">
-
   <option value="Garzón">
-
   <option value="Aveleda">
-
   <option value="Cartuxa">
-
   <option value="Bruce Jack">
-
   <option value="Gustav">
-
   <option value="E. Guigal">
-
   <option value="Antinori">
-
   <option value="Viña San Pedro">
-
   <option value="Di Leonardo">
-
   <option value="Cadus">
-
   <option value="Concha y Toro">
-
   <option value="Montes">
-
   <option value="Lapostolle">
-
 </datalist>
-
- 
 
 <datalist id="listaLocalizacoes">
-
   <option value="Adega Principal">
-
   <option value="1ª Prateleira">
-
   <option value="2ª Prateleira">
-
   <option value="3ª Prateleira">
-
   <option value="4ª Prateleira">
-
   <option value="Gaveta Inferior">
-
   <option value="Climatizada">
-
   <option value="Geladeira">
-
   <option value="Reserva Especial">
-
   <option value="Caixa">
-
 </datalist>
-
- 
 
 <datalist id="listaGuarda">
-
   <option value="Beber agora">
-
   <option value="1 a 3 anos">
-
   <option value="3 a 5 anos">
-
   <option value="5 a 10 anos">
-
   <option value="10+ anos">
-
 </datalist>
-
 <div id="modalDetalhes" class="modal-bg" onclick="fecharDetalhes()">
-
   <div class="modal" onclick="event.stopPropagation()">
-
     <div class="modal-header">
-
       <h2 id="modalNome">Vinho</h2>
-
       <p id="modalResumo"></p>
-
     </div>
-
     <div class="modal-body">
-
       <div class="detalhes-grid">
-
         <div class="detalhe-box"><small>Produtor</small><strong id="modalProdutor">-</strong></div>
-
         <div class="detalhe-box"><small>Uva</small><strong id="modalUva">-</strong></div>
-
         <div class="detalhe-box"><small>País</small><strong id="modalPais">-</strong></div>
-
         <div class="detalhe-box"><small>Região</small><strong id="modalRegiao">-</strong></div>
-
         <div class="detalhe-box"><small>Tipo</small><strong id="modalTipo">-</strong></div>
-
         <div class="detalhe-box"><small>Quantidade</small><strong id="modalQuantidade">-</strong></div>
-
       </div>
 
- 
-
       <p class="side-title" style="margin-top:18px">AQUISIÇÕES</p>
-
       <div id="modalAquisicoes" class="purchase-list"></div>
-
       <div id="modalResumoCompras" class="purchase-total"></div>
 
- 
-
       <p class="side-title" style="margin-top:18px">OBSERVAÇÕES / NOTAS</p>
-
       <textarea id="modalNotas" placeholder="Ex.: vinho encorpado, ideal para carnes, guardar para ocasião especial..."></textarea>
-
     </div>
-
     <div class="modal-actions">
-
       <button class="btn-secondary" onclick="fecharDetalhes()">Fechar</button>
-
       <button class="btn-secondary btn-save" onclick="salvarDetalhes()">Salvar detalhes</button>
-
     </div>
-
   </div>
-
 </div>
 
- 
 
-<div id="modalHistorico" class="modal-bg" onclick="fecharHistoricoConsumo()">
-
+<div id="modalConsumoExterno" class="modal-bg" onclick="fecharCadastroConsumoExterno()">
   <div class="modal" onclick="event.stopPropagation()">
-
     <div class="modal-header">
-
-      <h2>Histórico de consumo</h2>
-
-      <p>Garrafas já consumidas da Adega Juliana.</p>
-
+      <h2>Consumo externo</h2>
+      <p>Registre vinhos consumidos fora da sua adega.</p>
     </div>
-
- 
 
     <div class="modal-body">
+      <p class="form-group-title">Dados do vinho</p>
 
-      <div id="historicoResumo" class="purchase-total"></div>
+      <div class="form-row">
+        <input id="extNome" placeholder="Nome do vinho">
+        <input id="extNotaVivino" type="number" min="1" max="5" step="0.1" placeholder="Vivino">
+      </div>
 
-      <div id="historicoLista" class="purchase-list"></div>
+      <div class="form-row">
+        <input id="extSafra" placeholder="Safra">
+        <select id="extTipo">
+          <option>Tinto</option>
+          <option>Branco</option>
+          <option>Rosé</option>
+          <option>Espumante</option>
+        </select>
+      </div>
 
+      <div class="form-full">
+        <input id="extProdutor" placeholder="Produtor" list="listaProdutores">
+      </div>
+
+      <div class="form-row">
+        <input id="extUva" placeholder="Uva / corte" list="listaUvas">
+        <input id="extPais" placeholder="País" list="listaPaises">
+      </div>
+
+      <div class="form-row">
+        <input id="extRegiao" placeholder="Região" list="listaRegioes">
+        <input id="extValorPago" type="number" min="0" step="0.01" placeholder="Valor pago">
+      </div>
+
+      <p class="form-group-title">Consumo</p>
+
+      <div class="form-row">
+        <input id="extDataConsumo" type="date">
+        <input id="extLocal" placeholder="Local do consumo">
+      </div>
+
+      <div class="form-row">
+        <input id="extEvento" placeholder="Evento / ocasião">
+        <input id="extComQuem" placeholder="Com quem">
+      </div>
+
+      <div class="form-row">
+        <select id="extCompraria">
+          <option value="">Compraria para a adega?</option>
+          <option>Sim</option>
+          <option>Não</option>
+          <option>Talvez</option>
+        </select>
+        <input id="extQuantidade" type="number" min="1" placeholder="Quantidade" value="1">
+      </div>
+
+      <div class="form-full">
+        <textarea id="extObservacao" placeholder="Observações: harmonização, impressão pessoal, se vale comprar novamente..."></textarea>
+      </div>
     </div>
-
- 
 
     <div class="modal-actions">
-
-      <button class="btn-secondary" onclick="fecharHistoricoConsumo()">Fechar</button>
-
+      <button class="btn-secondary" onclick="fecharCadastroConsumoExterno()">Cancelar</button>
+      <button class="btn-secondary btn-save" onclick="adicionarConsumoExterno()">Salvar consumo</button>
     </div>
-
   </div>
-
 </div>
 
- 
+<div id="modalHistorico" class="modal-bg" onclick="fecharHistoricoConsumo()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Histórico de consumo</h2>
+      <p>Garrafas já consumidas da Adega Juliana.</p>
+    </div>
 
+    <div class="modal-body">
+      <div id="historicoResumo" class="purchase-total"></div>
+      <div id="historicoLista" class="purchase-list"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharHistoricoConsumo()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalConfiguracoes" class="modal-bg" onclick="fecharConfiguracoes()">
+  <div class="modal config-modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Configurações</h2>
+      <p>Backup, importação e sincronização da Adega Juliana.</p>
+    </div>
+    <div class="modal-body">
+      <div class="config-grid">
+        <button class="btn-secondary" onclick="exportarBackup()">Backup JSON</button>
+        <button class="btn-secondary" onclick="document.getElementById('importar').click()">Importar JSON</button>
+        <input id="githubTokenInput" type="password" placeholder="Token GitHub">
+        <button class="btn-secondary" onclick="configurarGithub()">⚙️ Salvar token</button>
+        <button class="btn-secondary" onclick="carregarDaNuvem()">☁️ Carregar da nuvem</button>
+        <button class="btn-secondary btn-save" onclick="salvarNaNuvem()">☁️ Salvar na nuvem</button>
+      </div>
+      <input id="importar" type="file" accept=".json" style="display:none" onchange="importarBackup(event)">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharConfiguracoes()">Fechar</button>
+    </div>
+  </div>
+</div>
 <script>
-
 const vinhosBase = [
-
-{nome:"Petit Chablis Allain Geoffroy", safra:"2022", tipo:"Branco", quantidade:1},
-
-{nome:"Chablis Gérard Tremblay", safra:"2023", tipo:"Branco", quantidade:1},
-
-{nome:"Garzón Estate Pinot Grigio", safra:"2024", tipo:"Branco", quantidade:2},
-
-{nome:"Gustav Gewürztraminer", safra:"2025", tipo:"Branco", quantidade:2},
-
-{nome:"Covela Rosé Dry", safra:"2019", tipo:"Rosé", quantidade:1},
-
-{nome:"EPU", safra:"2017", tipo:"Tinto", quantidade:2},
-
-{nome:"Angélica Zapata Alta Cabernet Franc", safra:"2016", tipo:"Tinto", quantidade:1},
-
-{nome:"Marchese Antinori Chianti Classico Riserva", safra:"2020", tipo:"Tinto", quantidade:1},
-
-{nome:"EQ Granite Pinot Noir", safra:"2022", tipo:"Tinto", quantidade:1},
-
-{nome:"Sideral", safra:"2023", tipo:"Tinto", quantidade:3},
-
-{nome:"Côtes du Rhône E. Guigal", safra:"2020", tipo:"Tinto", quantidade:1},
-
-{nome:"Arboleda Syrah", safra:"2021", tipo:"Tinto", quantidade:1},
-
-{nome:"Arboleda Brisa", safra:"2021", tipo:"Tinto", quantidade:2},
-
-{nome:"Arboleda Pinot Noir", safra:"2024", tipo:"Tinto", quantidade:1},
-
-{nome:"Cadus Malbec", safra:"2022", tipo:"Tinto", quantidade:1},
-
-{nome:"Seleccion de Parcelas Chardonnay", safra:"2025", tipo:"Branco", quantidade:4},
-
-{nome:"Gustav Riesling Trocken", safra:"2025", tipo:"Branco", quantidade:2},
-
-{nome:"1865 Gran Reserva Cabernet Sauvignon", safra:"2022", tipo:"Tinto", quantidade:2},
-
-{nome:"Bruce Jack Daily Brew Pinotage", safra:"2023", tipo:"Tinto", quantidade:1}
-
+ {nome:"Petit Chablis Allain Geoffroy", safra:"2022", tipo:"Branco", quantidade:1},
+ {nome:"Chablis Gérard Tremblay", safra:"2023", tipo:"Branco", quantidade:1},
+ {nome:"Garzón Estate Pinot Grigio", safra:"2024", tipo:"Branco", quantidade:2},
+ {nome:"Gustav Gewürztraminer", safra:"2025", tipo:"Branco", quantidade:2},
+ {nome:"Covela Rosé Dry", safra:"2019", tipo:"Rosé", quantidade:1},
+ {nome:"EPU", safra:"2017", tipo:"Tinto", quantidade:2},
+ {nome:"Angélica Zapata Alta Cabernet Franc", safra:"2016", tipo:"Tinto", quantidade:1},
+ {nome:"Marchese Antinori Chianti Classico Riserva", safra:"2020", tipo:"Tinto", quantidade:1},
+ {nome:"EQ Granite Pinot Noir", safra:"2022", tipo:"Tinto", quantidade:1},
+ {nome:"Sideral", safra:"2023", tipo:"Tinto", quantidade:3},
+ {nome:"Côtes du Rhône E. Guigal", safra:"2020", tipo:"Tinto", quantidade:1},
+ {nome:"Arboleda Syrah", safra:"2021", tipo:"Tinto", quantidade:1},
+ {nome:"Arboleda Brisa", safra:"2021", tipo:"Tinto", quantidade:2},
+ {nome:"Arboleda Pinot Noir", safra:"2024", tipo:"Tinto", quantidade:1},
+ {nome:"Cadus Malbec", safra:"2022", tipo:"Tinto", quantidade:1},
+ {nome:"Seleccion de Parcelas Chardonnay", safra:"2025", tipo:"Branco", quantidade:4},
+ {nome:"Gustav Riesling Trocken", safra:"2025", tipo:"Branco", quantidade:2},
+ {nome:"1865 Gran Reserva Cabernet Sauvignon", safra:"2022", tipo:"Tinto", quantidade:2},
+ {nome:"Bruce Jack Daily Brew Pinotage", safra:"2023", tipo:"Tinto", quantidade:1}
 ];
 
- 
-
 let vinhos = [];
-
 let filtroAtual = "";
-
 let vinhoSelecionado = null;
-
- 
+let consumosExternos = [];
 
 const GITHUB_OWNER = "thomasihf-commits";
-
 const GITHUB_REPO = "minha-adega";
-
 const GITHUB_BRANCH = "main";
-
 const GITHUB_FILE = "dados.json";
 
- 
-
 const detalhesPadrao = {
-
-"Petit Chablis Allain Geoffroy": {produtor:"Allain Geoffroy", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Branco seco, mineral, boa acidez. Combina bem com frutos do mar."},
-
-"Chablis Gérard Tremblay": {produtor:"Gérard Tremblay", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Chablis clássico, fresco e mineral."},
-
-"Garzón Estate Pinot Grigio": {produtor:"Bodega Garzón", uva:"Pinot Grigio", pais:"Uruguai", regiao:"Maldonado / Garzón", notas:"Branco leve, fresco e aromático."},
-
-"Gustav Gewürztraminer": {produtor:"Gustav", uva:"Gewürztraminer", pais:"Alemanha", regiao:"-", notas:"Branco aromático, floral e levemente exótico."},
-
-"Covela Rosé Dry": {produtor:"Quinta da Covela", uva:"-", pais:"Portugal", regiao:"Minho", notas:"Rosé seco, fresco e versátil."},
-
-"EPU": {produtor:"Viña Almaviva", uva:"Blend bordalês", pais:"Chile", regiao:"Puente Alto", notas:"Tinto chileno elegante, segundo vinho do Almaviva."},
-
-"Angélica Zapata Alta Cabernet Franc": {produtor:"Catena Zapata", uva:"Cabernet Franc", pais:"Argentina", regiao:"Mendoza", notas:"Tinto estruturado, com boa complexidade."},
-
-"Marchese Antinori Chianti Classico Riserva": {produtor:"Marchesi Antinori", uva:"Sangiovese", pais:"Itália", regiao:"Toscana / Chianti Classico", notas:"Tinto italiano clássico, boa acidez e gastronomia."},
-
-"EQ Granite Pinot Noir": {produtor:"Matetic Vineyards", uva:"Pinot Noir", pais:"Chile", regiao:"Valle de Casablanca", notas:"Pinot Noir elegante, fresco e mineral."},
-
-"Sideral": {produtor:"Viña San Pedro", uva:"Blend", pais:"Chile", regiao:"Valle del Cachapoal", notas:"Tinto chileno de bom corpo e boa presença."},
-
-"Côtes du Rhône E. Guigal": {produtor:"E. Guigal", uva:"Blend Rhône", pais:"França", regiao:"Côtes du Rhône", notas:"Tinto francês versátil, com frutas vermelhas e especiarias."},
-
-"Arboleda Syrah": {produtor:"Arboleda", uva:"Syrah", pais:"Chile", regiao:"Valle de Aconcagua", notas:"Tinto intenso, com notas de especiarias."},
-
-"Arboleda Brisa": {produtor:"Arboleda", uva:"Blend", pais:"Chile", regiao:"Valle de Aconcagua", notas:"Vinho chileno fresco e fácil de beber."},
-
-"Arboleda Pinot Noir": {produtor:"Arboleda", uva:"Pinot Noir", pais:"Chile", regiao:"Aconcagua Costa", notas:"Pinot Noir leve, fresco e elegante."},
-
-"Cadus Malbec": {produtor:"Cadus", uva:"Malbec", pais:"Argentina", regiao:"Valle de Uco / Tupungato", notas:"Malbec argentino, bom corpo e fruta madura."},
-
-"Seleccion de Parcelas Chardonnay": {produtor:"-", uva:"Chardonnay", pais:"Chile", regiao:"Vale Central", notas:"Branco Chardonnay. Completar produtor depois."},
-
-"Gustav Riesling Trocken": {produtor:"Gustav", uva:"Riesling", pais:"Alemanha", regiao:"Rheinhessen", notas:"Riesling seco, fresco e gastronômico."},
-
-"1865 Gran Reserva Cabernet Sauvignon": {produtor:"Viña San Pedro", uva:"Cabernet Sauvignon", pais:"Chile", regiao:"Valle del Maipo / Las Piedras", notas:"Tinto encorpado, clássico Cabernet chileno."},
-
-"Bruce Jack Daily Brew Pinotage": {produtor:"Bruce Jack", uva:"Pinotage", pais:"África do Sul", regiao:"Western Cape", notas:"Tinto sul-africano frutado e descontraído."}
-
+ "Petit Chablis Allain Geoffroy": {produtor:"Allain Geoffroy", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Branco seco, mineral, boa acidez. Combina bem com frutos do mar."},
+ "Chablis Gérard Tremblay": {produtor:"Gérard Tremblay", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Chablis clássico, fresco e mineral."},
+ "Garzón Estate Pinot Grigio": {produtor:"Bodega Garzón", uva:"Pinot Grigio", pais:"Uruguai", regiao:"Maldonado / Garzón", notas:"Branco leve, fresco e aromático."},
+ "Gustav Gewürztraminer": {produtor:"Gustav", uva:"Gewürztraminer", pais:"Alemanha", regiao:"-", notas:"Branco aromático, floral e levemente exótico."},
+ "Covela Rosé Dry": {produtor:"Quinta da Covela", uva:"-", pais:"Portugal", regiao:"Minho", notas:"Rosé seco, fresco e versátil."},
+ "EPU": {produtor:"Viña Almaviva", uva:"Blend bordalês", pais:"Chile", regiao:"Puente Alto", notas:"Tinto chileno elegante, segundo vinho do Almaviva."},
+ "Angélica Zapata Alta Cabernet Franc": {produtor:"Catena Zapata", uva:"Cabernet Franc", pais:"Argentina", regiao:"Mendoza", notas:"Tinto estruturado, com boa complexidade."},
+ "Marchese Antinori Chianti Classico Riserva": {produtor:"Marchesi Antinori", uva:"Sangiovese", pais:"Itália", regiao:"Toscana / Chianti Classico", notas:"Tinto italiano clássico, boa acidez e gastronomia."},
+ "EQ Granite Pinot Noir": {produtor:"Matetic Vineyards", uva:"Pinot Noir", pais:"Chile", regiao:"Valle de Casablanca", notas:"Pinot Noir elegante, fresco e mineral."},
+ "Sideral": {produtor:"Viña San Pedro", uva:"Blend", pais:"Chile", regiao:"Valle del Cachapoal", notas:"Tinto chileno de bom corpo e boa presença."},
+ "Côtes du Rhône E. Guigal": {produtor:"E. Guigal", uva:"Blend Rhône", pais:"França", regiao:"Côtes du Rhône", notas:"Tinto francês versátil, com frutas vermelhas e especiarias."},
+ "Arboleda Syrah": {produtor:"Arboleda", uva:"Syrah", pais:"Chile", regiao:"Valle de Aconcagua", notas:"Tinto intenso, com notas de especiarias."},
+ "Arboleda Brisa": {produtor:"Arboleda", uva:"Blend", pais:"Chile", regiao:"Valle de Aconcagua", notas:"Vinho chileno fresco e fácil de beber."},
+ "Arboleda Pinot Noir": {produtor:"Arboleda", uva:"Pinot Noir", pais:"Chile", regiao:"Aconcagua Costa", notas:"Pinot Noir leve, fresco e elegante."},
+ "Cadus Malbec": {produtor:"Cadus", uva:"Malbec", pais:"Argentina", regiao:"Valle de Uco / Tupungato", notas:"Malbec argentino, bom corpo e fruta madura."},
+ "Seleccion de Parcelas Chardonnay": {produtor:"-", uva:"Chardonnay", pais:"Chile", regiao:"Vale Central", notas:"Branco Chardonnay. Completar produtor depois."},
+ "Gustav Riesling Trocken": {produtor:"Gustav", uva:"Riesling", pais:"Alemanha", regiao:"Rheinhessen", notas:"Riesling seco, fresco e gastronômico."},
+ "1865 Gran Reserva Cabernet Sauvignon": {produtor:"Viña San Pedro", uva:"Cabernet Sauvignon", pais:"Chile", regiao:"Valle del Maipo / Las Piedras", notas:"Tinto encorpado, clássico Cabernet chileno."},
+ "Bruce Jack Daily Brew Pinotage": {produtor:"Bruce Jack", uva:"Pinotage", pais:"África do Sul", regiao:"Western Cape", notas:"Tinto sul-africano frutado e descontraído."}
 };
-
- 
 
 function salvar(){ localStorage.setItem("adegaJuliana", JSON.stringify(vinhos)); }
 
- 
+function salvarConsumosExternos(){
+ localStorage.setItem("adegaJulianaConsumosExternos", JSON.stringify(consumosExternos));
+}
+
+function carregarConsumosExternos(){
+ const salvo = localStorage.getItem("adegaJulianaConsumosExternos");
+ if(salvo){
+   try{
+     consumosExternos = JSON.parse(salvo);
+   }catch(e){
+     consumosExternos = [];
+   }
+ }else{
+   consumosExternos = [];
+ }
+}
+
+
 
 function abrirHistoricoConsumo(){
+ const consumos = [];
 
-const consumos = [];
-
- 
-
-vinhos.forEach(v=>{
-
+ vinhos.forEach(v=>{
    garantirEstrutura(v);
 
- 
-
    v.aquisicoes.forEach(a=>{
-
      if(a.consumida){
-
        consumos.push({
-
+         origem:"Adega",
          vinho: v.nome,
-
          safra: v.safra || "-",
-
          tipo: v.tipo || "-",
-
          produtor: v.detalhes?.produtor || "-",
-
          uva: v.detalhes?.uva || "-",
-
          pais: v.detalhes?.pais || "-",
-
          regiao: v.detalhes?.regiao || "-",
-
+         notaVivino: Number(v.detalhes?.notaVivino || 0),
          dataCompra: a.data || "",
-
          loja: a.loja || "-",
-
          quantidade: Number(a.quantidade || 0),
-
          valorUnitario: Number(a.valorUnitario || 0),
-
          compradoPor: a.compradoPor || "-",
-
          presenteadoPor: a.presenteadoPor || "",
-
          dataConsumo: a.dataConsumo || "",
-
          eventoConsumo: a.eventoConsumo || "",
-
-         observacaoConsumo: a.observacaoConsumo || ""
-
+         observacaoConsumo: a.observacaoConsumo || "",
+         localConsumo:"Casa / Adega Juliana",
+         comQuem:""
        });
-
      }
-
    });
+ });
 
-});
+ consumosExternos.forEach(c=>{
+   consumos.push({
+     origem:"Externo",
+     vinho:c.nome || "-",
+     safra:c.safra || "-",
+     tipo:c.tipo || "-",
+     produtor:c.produtor || "-",
+     uva:c.uva || "-",
+     pais:c.pais || "-",
+     regiao:c.regiao || "-",
+     notaVivino:Number(c.notaVivino || 0),
+     dataCompra:"",
+     loja:c.local || "-",
+     quantidade:Number(c.quantidade || 1),
+     valorUnitario:Number(c.valorPago || 0),
+     compradoPor:"Consumo externo",
+     presenteadoPor:"",
+     dataConsumo:c.dataConsumo || "",
+     eventoConsumo:c.evento || "",
+     observacaoConsumo:c.observacao || "",
+     localConsumo:c.local || "-",
+     comQuem:c.comQuem || "",
+     compraria:c.compraria || ""
+   });
+ });
 
- 
-
-consumos.sort((a,b)=>{
-
+ consumos.sort((a,b)=>{
    return String(b.dataConsumo || "").localeCompare(String(a.dataConsumo || ""));
+ });
 
-});
+ const totalGarrafas = consumos.reduce((s,c)=>s + Number(c.quantidade || 0),0);
+ const totalAdega = consumos.filter(c=>c.origem==="Adega").reduce((s,c)=>s + Number(c.quantidade || 0),0);
+ const totalExterno = consumos.filter(c=>c.origem==="Externo").reduce((s,c)=>s + Number(c.quantidade || 0),0);
+ const valorConsumido = consumos.reduce((s,c)=>s + Number(c.quantidade || 0) * Number(c.valorUnitario || 0),0);
 
- 
-
-const totalGarrafas = consumos.reduce((s,c)=>s + Number(c.quantidade || 0),0);
-
-const valorConsumido = consumos.reduce((s,c)=>s + Number(c.quantidade || 0) * Number(c.valorUnitario || 0),0);
-
- 
-
-document.getElementById("historicoResumo").innerHTML = `
-
+ document.getElementById("historicoResumo").innerHTML = `
    <strong>Resumo</strong><br>
-
    Garrafas consumidas: ${totalGarrafas}<br>
-
+   Da adega: ${totalAdega}<br>
+   Consumos externos: ${totalExterno}<br>
    Valor consumido conhecido: ${moeda(valorConsumido)}
+ `;
 
-`;
-
- 
-
-document.getElementById("historicoLista").innerHTML = consumos.length
-
+ document.getElementById("historicoLista").innerHTML = consumos.length
    ? consumos.map(c=>`
-
      <div class="purchase-card">
-
-       <strong>${c.dataConsumo || "Data não informada"} • ${c.vinho} ${c.safra}</strong>
-
+       <strong>
+         ${c.dataConsumo || "Data não informada"} • ${c.vinho} ${c.safra}
+         ${c.origem==="Externo" ? '<span class="external-badge">Externo</span>' : '<span class="consumida-badge">Adega</span>'}
+         ${c.notaVivino ? `<span class="vivino-badge">⭐ ${c.notaVivino.toFixed(1)}</span>` : ""}
+       </strong>
        <div class="purchase-meta">
-
          ${c.tipo} • ${c.pais} • ${c.regiao}<br>
-
          Produtor: ${c.produtor}<br>
-
          Uva/Corte: ${c.uva}<br>
-
          Quantidade: ${c.quantidade} garrafa${c.quantidade == 1 ? "" : "s"}<br>
-
-         Compra: ${c.dataCompra || "Data não informada"} • ${c.loja}<br>
-
-         Origem: ${c.compradoPor}${c.compradoPor==="Presente" && c.presenteadoPor ? " • Presente de " + c.presenteadoPor : ""}<br>
-
+         Local: ${c.localConsumo || c.loja || "-"}<br>
+         Origem: ${c.origem}${c.compradoPor && c.origem==="Adega" ? " • " + c.compradoPor : ""}${c.compradoPor==="Presente" && c.presenteadoPor ? " • Presente de " + c.presenteadoPor : ""}<br>
          Valor unitário: ${moeda(c.valorUnitario)}
-
          ${c.eventoConsumo ? "<br>Evento: " + c.eventoConsumo : ""}
-
+         ${c.comQuem ? "<br>Com quem: " + c.comQuem : ""}
+         ${c.compraria ? "<br>Compraria para a adega? " + c.compraria : ""}
          ${c.observacaoConsumo ? "<br>Observação: " + c.observacaoConsumo : ""}
-
        </div>
-
      </div>
-
    `).join("")
-
    : `<div class="empty">Nenhuma garrafa consumida registrada ainda.</div>`;
 
- 
-
-document.getElementById("modalHistorico").style.display = "flex";
-
+ document.getElementById("modalHistorico").style.display = "flex";
 }
-
- 
 
 function fecharHistoricoConsumo(){
-
-document.getElementById("modalHistorico").style.display = "none";
-
+ document.getElementById("modalHistorico").style.display = "none";
 }
 
- 
+
+function abrirCadastroConsumoExterno(){
+ limparConsumoExterno();
+ document.getElementById("modalConsumoExterno").style.display = "flex";
+ setTimeout(()=>document.getElementById("extNome").focus(),150);
+}
+
+function fecharCadastroConsumoExterno(){
+ document.getElementById("modalConsumoExterno").style.display = "none";
+}
+
+function limparConsumoExterno(){
+ ["extNome","extNotaVivino","extSafra","extProdutor","extUva","extPais","extRegiao","extValorPago","extLocal","extEvento","extComQuem","extObservacao"].forEach(id=>{
+   const el = document.getElementById(id);
+   if(el) el.value = "";
+ });
+ document.getElementById("extTipo").value = "Tinto";
+ document.getElementById("extCompraria").value = "";
+ document.getElementById("extQuantidade").value = "1";
+ document.getElementById("extDataConsumo").value = new Date().toISOString().split("T")[0];
+}
+
+function adicionarConsumoExterno(){
+ const nome = document.getElementById("extNome").value.trim();
+
+ if(!nome){
+   alert("Informe o nome do vinho consumido.");
+   return;
+ }
+
+ const consumo = {
+   id: "ext_" + Date.now(),
+   nome: nome,
+   safra: document.getElementById("extSafra").value.trim(),
+   tipo: document.getElementById("extTipo").value,
+   produtor: document.getElementById("extProdutor").value.trim() || "-",
+   uva: document.getElementById("extUva").value.trim() || "-",
+   pais: document.getElementById("extPais").value.trim() || "-",
+   regiao: document.getElementById("extRegiao").value.trim() || "-",
+   notaVivino: Number(document.getElementById("extNotaVivino").value || 0),
+   valorPago: Number(document.getElementById("extValorPago").value || 0),
+   dataConsumo: document.getElementById("extDataConsumo").value || "",
+   local: document.getElementById("extLocal").value.trim() || "-",
+   evento: document.getElementById("extEvento").value.trim(),
+   comQuem: document.getElementById("extComQuem").value.trim(),
+   compraria: document.getElementById("extCompraria").value,
+   quantidade: parseInt(document.getElementById("extQuantidade").value) || 1,
+   observacao: document.getElementById("extObservacao").value.trim()
+ };
+
+ consumosExternos.push(consumo);
+ salvarConsumosExternos();
+ fecharCadastroConsumoExterno();
+ abrirHistoricoConsumo();
+
+ alert("Consumo externo registrado.");
+}
+
 
 function configurarGithub(){
 
- 
+ const token = document.getElementById("githubTokenInput").value.trim();
 
-const token = document.getElementById("githubTokenInput").value.trim();
-
- 
-
-if(!token){
-
+ if(!token){
    alert("Informe o token do GitHub.");
-
    return;
+ }
 
+ localStorage.setItem("githubToken", token);
+
+ document.getElementById("githubTokenInput").value = "";
+
+ alert("Token salvo com sucesso.");
 }
-
- 
-
-localStorage.setItem("githubToken", token);
-
- 
-
-document.getElementById("githubTokenInput").value = "";
-
- 
-
-alert("Token salvo com sucesso.");
-
-}
-
- 
 
 async function carregarDaNuvem(){
 
- 
-
-try{
-
- 
+ try{
 
    const resposta = await fetch(
-
-     https://raw.githubusercontent.com/ +
-
+     "https://raw.githubusercontent.com/" +
      GITHUB_OWNER + "/" +
-
      GITHUB_REPO + "/" +
-
      GITHUB_BRANCH + "/" +
-
      GITHUB_FILE +
-
      "?t=" + Date.now()
-
    );
 
- 
-
    if(!resposta.ok){
-
      throw new Error("Erro ao carregar");
-
    }
-
- 
 
    const dados = await resposta.json();
 
- 
-
    vinhos = dados.vinhos || [];
-
- 
+   consumosExternos = dados.consumosExternos || [];
+   salvarConsumosExternos();
 
    enriquecerDetalhes();
 
- 
-
    salvar();
-
- 
 
    renderizar();
 
- 
-
    alert("Dados carregados da nuvem.");
 
- 
-
-}catch(e){
-
- 
+ }catch(e){
 
    console.error(e);
-
- 
 
    alert("Não foi possível carregar os dados.");
 
- 
-
+ }
 }
-
-}
-
- 
 
 async function salvarNaNuvem(){
 
- 
+ const token = localStorage.getItem("githubToken");
 
-const token = localStorage.getItem("githubToken");
-
- 
-
-if(!token){
-
+ if(!token){
    alert("Configure o token do GitHub antes de salvar na nuvem.");
-
    return;
+ }
 
-}
-
- 
-
-try{
-
+ try{
    const urlApi =
-
-     https://api.github.com/repos/ +
-
+     "https://api.github.com/repos/" +
      GITHUB_OWNER + "/" +
-
      GITHUB_REPO + "/contents/" +
-
      GITHUB_FILE;
 
- 
-
    const consulta = await fetch(urlApi, {
-
      headers:{
-
        "Authorization":"Bearer " + token,
-
        "Accept":"application/vnd.github+json"
-
      }
-
    });
 
- 
-
    if(!consulta.ok){
-
      throw new Error("Não foi possível consultar o arquivo dados.json");
-
    }
-
- 
 
    const arquivoAtual = await consulta.json();
 
- 
-
    const conteudo = {
-
      versao:"1.0",
-
      ultimaAtualizacao:new Date().toISOString(),
-
-     vinhos:vinhos
-
+     vinhos:vinhos,
+     consumosExternos:consumosExternos
    };
 
- 
-
    const resposta = await fetch(urlApi, {
-
      method:"PUT",
-
      headers:{
-
        "Authorization":"Bearer " + token,
-
        "Accept":"application/vnd.github+json",
-
        "Content-Type":"application/json"
-
      },
-
      body:JSON.stringify({
-
        message:"Atualização da Adega Juliana",
-
        content:btoa(unescape(encodeURIComponent(JSON.stringify(conteudo,null,2)))),
-
        sha:arquivoAtual.sha,
-
        branch:GITHUB_BRANCH
-
      })
-
    });
 
- 
-
    if(!resposta.ok){
-
      throw new Error("Erro ao salvar na nuvem");
-
    }
-
- 
 
    alert("Adega salva na nuvem com sucesso.");
 
- 
-
-}catch(e){
-
+ }catch(e){
    console.error(e);
-
    alert("Não foi possível salvar na nuvem. Veja o console para detalhes.");
-
+ }
 }
-
-}
-
- 
 
 function carregar(){
-
-const salvo = localStorage.getItem("adegaJuliana");
-
-if(salvo){
-
+ const salvo = localStorage.getItem("adegaJuliana");
+ if(salvo){
    try{
-
      vinhos = JSON.parse(salvo);
-
    }catch(e){
-
      vinhos = JSON.parse(JSON.stringify(vinhosBase));
-
    }
-
-}else{
-
+ }else{
    vinhos = JSON.parse(JSON.stringify(vinhosBase));
-
+ }
 }
-
-}
-
- 
 
 function garantirEstrutura(v){
-
-if(!v.detalhes){
-
+ if(!v.detalhes){
    v.detalhes = detalhesPadrao[v.nome] || {produtor:"-", uva:"-", pais:"-", regiao:"-", notas:""};
-
-}
-
-if(!v.aquisicoes){
-
+ }
+ if(!v.aquisicoes){
    v.aquisicoes = [];
-
-}
-
-if(!v.controle){
-
+ }
+ if(!v.controle){
    v.controle = {localizacao:"", status:"Na adega"};
-
+ }
+ return v;
 }
-
-return v;
-
-}
-
- 
 
 function recalcularQuantidadeAtual(v){
-
-if(!v.aquisicoes || !v.aquisicoes.length) return;
-
-v.quantidade = v.aquisicoes
-
+ if(!v.aquisicoes || !v.aquisicoes.length) return;
+ v.quantidade = v.aquisicoes
    .filter(a=>!a.consumida)
-
    .reduce((s,a)=>s+Number(a.quantidade||0),0);
-
 }
-
- 
 
 function enriquecerDetalhes(){
-
-vinhos.forEach(v=>{
-
+ vinhos.forEach(v=>{
    garantirEstrutura(v);
-
    v.aquisicoes.forEach(a=>{
-
      if(a.localizacao === undefined) a.localizacao = "";
-
      if(a.consumida === undefined) a.consumida = false;
-
    });
-
-});
-
-salvar();
-
+ });
+ salvar();
 }
-
- 
 
 function soma(tipo){
-
-return vinhos
-
+ return vinhos
   .filter(v=>!tipo || v.tipo===tipo)
-
   .reduce((s,v)=>s+Number(v.quantidade||0),0);
-
 }
-
- 
 
 function atualizarResumo(){
+ const setTxt = (id, valor) => { const el = document.getElementById(id); if(el) el.innerText = valor; };
+ setTxt("totalGarrafas", soma(""));
+ setTxt("totalTintos", soma("Tinto"));
+ setTxt("totalBrancos", soma("Branco"));
+ setTxt("totalRoses", soma("Rosé"));
+ setTxt("totalEspumantesTop", soma("Espumante"));
+ const totalRotulos = document.getElementById("totalRotulos");
+ if(totalRotulos) totalRotulos.innerText = vinhos.length + " rótulos diferentes";
 
-document.getElementById("totalGarrafas").innerText = soma("");
-
-document.getElementById("totalTintos").innerText = soma("Tinto");
-
-document.getElementById("totalBrancos").innerText = soma("Branco");
-
-document.getElementById("totalRoses").innerText = soma("Rosé");
-
- 
-
-document.getElementById("qtdTodos").innerText = soma("");
-
-document.getElementById("qtdTintosMenu").innerText = soma("Tinto");
-
-document.getElementById("qtdBrancosMenu").innerText = soma("Branco");
-
-document.getElementById("qtdRosesMenu").innerText = soma("Rosé");
-
-document.getElementById("qtdEspumantesMenu").innerText = soma("Espumante");
-
+ setTxt("qtdTodos", soma(""));
+ setTxt("qtdTintosMenu", soma("Tinto"));
+ setTxt("qtdBrancosMenu", soma("Branco"));
+ setTxt("qtdRosesMenu", soma("Rosé"));
+ setTxt("qtdEspumantesMenu", soma("Espumante"));
 }
-
- 
 
 function classeTipo(tipo){
-
-if(tipo==="Branco") return "branco";
-
-if(tipo==="Rosé") return "rose";
-
-if(tipo==="Espumante") return "espumante";
-
-return "tinto";
-
+ if(tipo==="Branco") return "branco";
+ if(tipo==="Rosé") return "rose";
+ if(tipo==="Espumante") return "espumante";
+ return "tinto";
 }
-
- 
 
 function iconeTipo(tipo){
-
-if(tipo==="Branco") return "🥂";
-
-if(tipo==="Espumante") return "🍾";
-
-return "🍷";
-
+ if(tipo==="Branco") return "🥂";
+ if(tipo==="Espumante") return "🍾";
+ return "🍷";
 }
-
- 
 
 function setMenuAtivo(){
-
-["Todos","Tinto","Branco","Rosé","Espumante"].forEach(t=>{
-
+ ["Todos","Tinto","Branco","Rosé","Espumante"].forEach(t=>{
    const id = "tipo" + t;
-
    const el = document.getElementById(id);
-
    if(el) el.classList.remove("active");
-
-});
-
-const ativo = filtroAtual ? document.getElementById("tipo"+filtroAtual) : document.getElementById("tipoTodos");
-
-if(ativo) ativo.classList.add("active");
-
+ });
+ const ativo = filtroAtual ? document.getElementById("tipo"+filtroAtual) : document.getElementById("tipoTodos");
+ if(ativo) ativo.classList.add("active");
 }
-
- 
 
 function renderizar(){
+ const busca = document.getElementById("buscaTopo").value.toLowerCase().trim();
+ const ordenacao = document.getElementById("ordenacao").value;
+ const lista = document.getElementById("listaVinhos");
 
-const busca = document.getElementById("buscaTopo").value.toLowerCase().trim();
-
-const ordenacao = document.getElementById("ordenacao").value;
-
-const lista = document.getElementById("listaVinhos");
-
- 
-
-let resultado = vinhos
-
+ let resultado = vinhos
   .map((v,index)=>({...v,index}))
-
   .filter(v=>{
-
     const texto = `${v.nome} ${v.safra} ${v.tipo} ${v.detalhes?.produtor || ""} ${v.detalhes?.uva || ""}`.toLowerCase();
-
     return (!filtroAtual || v.tipo===filtroAtual) && texto.includes(busca);
-
   });
 
- 
-
-resultado.sort((a,b)=>{
-
+ resultado.sort((a,b)=>{
    if(ordenacao==="safra-antiga") return Number(a.safra||0) - Number(b.safra||0);
-
    if(ordenacao==="safra-nova") return Number(b.safra||0) - Number(a.safra||0);
-
    if(ordenacao==="quantidade") return Number(b.quantidade||0) - Number(a.quantidade||0);
-
    if(ordenacao==="vivino") return Number(b.detalhes?.notaVivino || 0) - Number(a.detalhes?.notaVivino || 0);
-
    return a.nome.localeCompare(b.nome);
+ });
 
-});
-
- 
-
-lista.innerHTML = "";
-
-if(resultado.length===0){
-
+ lista.innerHTML = "";
+ if(resultado.length===0){
    lista.innerHTML = `<div class="empty">Nenhum vinho encontrado.</div>`;
-
    atualizarResumo();
-
    setMenuAtivo();
-
    return;
+ }
 
-}
-
- 
-
-resultado.forEach(v=>{
-
+ resultado.forEach(v=>{
    lista.innerHTML += `
-
    <div class="vinho" onclick="abrirDetalhes(${v.index})">
-
      <div>
-
       <div class="titulo-vinho">
-
   <strong>${v.nome}</strong>
 
- 
-
   ${
-
     v.detalhes?.notaVivino
-
       ? `<span class="vivino-badge">⭐ ${v.detalhes.notaVivino.toFixed(1)}</span>`
-
       : ""
-
   }
-
 </div>
-
-       <div class="meta">Safra ${v.safra || "-"} &nbsp;•&nbsp; ${v.tipo}</div>
-
-       <div class="qtd-line">
-
-         <label>Quantidade</label>
-
-         <input class="qtd-input" type="number" min="0" value="${v.quantidade}" onclick="event.stopPropagation()" onchange="definirQuantidade(${v.index}, this.value)">
-
-       </div>
-
+       <div class="meta">Safra ${v.safra || "-"} &nbsp;•&nbsp; ${v.tipo} &nbsp;•&nbsp; ${v.quantidade || 0} garrafa${Number(v.quantidade)==1 ? "" : "s"}</div>
      </div>
-
- 
 
      <div class="wine-visual">
-
        <div class="wine-emoji ${classeTipo(v.tipo)}">${iconeTipo(v.tipo)}</div>
-
      </div>
-
- 
 
      <div class="actions">
-
        <button class="btn-card btn-plus" onclick="event.stopPropagation(); alterar(${v.index},1)">+</button>
-
        <button class="btn-card btn-minus" onclick="event.stopPropagation(); alterar(${v.index},-1)">−</button>
-
      </div>
 
- 
-
      <div class="arrow">›</div>
-
    </div>`;
+ });
 
-});
-
- 
-
-atualizarResumo();
-
-setMenuAtivo();
-
+ atualizarResumo();
+ setMenuAtivo();
 }
-
- 
 
 function filtrarTodos(){
-
-filtroAtual = "";
-
-document.getElementById("buscaTopo").value = "";
-
-renderizar();
-
+ filtroAtual = "";
+ document.getElementById("buscaTopo").value = "";
+ renderizar();
 }
-
- 
 
 function filtrarPorTipo(tipo){
-
-filtroAtual = tipo;
-
-document.getElementById("buscaTopo").value = "";
-
-renderizar();
-
+ filtroAtual = tipo;
+ document.getElementById("buscaTopo").value = "";
+ renderizar();
 }
-
- 
 
 function definirQuantidade(i,valor){
-
-const q = parseInt(valor);
-
-vinhos[i].quantidade = isNaN(q) || q < 0 ? 0 : q;
-
-salvar();
-
-renderizar();
-
+ const q = parseInt(valor);
+ vinhos[i].quantidade = isNaN(q) || q < 0 ? 0 : q;
+ salvar();
+ renderizar();
 }
-
- 
 
 function alterar(i,valor){
-
-vinhos[i].quantidade = Number(vinhos[i].quantidade || 0) + valor;
-
-if(vinhos[i].quantidade < 0) vinhos[i].quantidade = 0;
-
-salvar();
-
-renderizar();
-
+ vinhos[i].quantidade = Number(vinhos[i].quantidade || 0) + valor;
+ if(vinhos[i].quantidade < 0) vinhos[i].quantidade = 0;
+ salvar();
+ renderizar();
 }
-
- 
 
 function abrirCadastro(){
 
+ limparFormulario();
  
-
-limparFormulario();
-
-
  document.getElementById("modalCadastro").style.display = "flex";
-
-setTimeout(()=>document.getElementById("nome").focus(),150);
-
+ setTimeout(()=>document.getElementById("nome").focus(),150);
 }
-
- 
 
 function fecharCadastro(){
-
-document.getElementById("modalCadastro").style.display = "none";
-
+ document.getElementById("modalCadastro").style.display = "none";
 }
-
- 
 
 function togglePresenteadoPor(){
-
-const origem = document.getElementById("compradoPor").value;
-
-const campo = document.getElementById("presenteadoPor");
-
-campo.style.display = origem === "Presente" ? "block" : "none";
-
-if(origem !== "Presente") campo.value = "";
-
+ const origem = document.getElementById("compradoPor").value;
+ const campo = document.getElementById("presenteadoPor");
+ campo.style.display = origem === "Presente" ? "block" : "none";
+ if(origem !== "Presente") campo.value = "";
 }
-
- 
 
 function moeda(valor){
-
-const n = Number(valor || 0);
-
-return n ? n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}) : "-";
-
+ const n = Number(valor || 0);
+ return n ? n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}) : "-";
 }
-
- 
 
 function criarAquisicaoAtual(){
+ const consumida = document.getElementById("consumida").checked;
 
-const consumida = document.getElementById("consumida").checked;
-
- 
-
-return {
-
+ return {
    data: document.getElementById("dataCompra").value || "",
-
    loja: document.getElementById("loja").value.trim() || "-",
-
    quantidade: 1,
-
    valorUnitario: Number(document.getElementById("valorPago").value || 0),
-
    compradoPor: document.getElementById("compradoPor").value,
-
    presenteadoPor: document.getElementById("presenteadoPor").value.trim(),
-
    localizacao: document.getElementById("localizacao").value.trim(),
-
    consumida: consumida,
-
    dataConsumo: consumida ? new Date().toISOString().slice(0,10) : "",
-
    eventoConsumo: "",
-
    observacaoConsumo: "",
-
    ocasiao: document.getElementById("ocasiao").value.trim()
-
-};
-
+ };
 }
-
- 
 
 function limparFormulario(){
-
-["nome","safra","produtor","uva","pais","regiao","potencialGuarda","loja","valorPago","presenteadoPor","ocasiao","localizacao","notaVivino"].forEach(id=>{
-
+ ["nome","safra","produtor","uva","pais","regiao","potencialGuarda","loja","valorPago","presenteadoPor","ocasiao","localizacao","notaVivino"].forEach(id=>{
    const el = document.getElementById(id);
-
    if(el) el.value = "";
-
-});
-
-document.getElementById("quantidade").value = "";
-
-document.getElementById("tipo").value = "";
-
-document.getElementById("compradoPor").value = "";
-
-document.getElementById("consumida").checked = false;
-
-document.getElementById("dataCompra").value =
-
+ });
+ document.getElementById("quantidade").value = "";
+ document.getElementById("tipo").value = "";
+ document.getElementById("compradoPor").value = "";
+ document.getElementById("consumida").checked = false;
+ document.getElementById("dataCompra").value =
    new Date().toISOString().split("T")[0];
 
- 
-
-togglePresenteadoPor();
-
+ togglePresenteadoPor();
 }
-
- 
 
 function adicionarVinho(){
+ const nome = document.getElementById("nome").value.trim();
+ const safra = document.getElementById("safra").value.trim();
+ const tipo = document.getElementById("tipo").value;
+ const quantidade = parseInt(document.getElementById("quantidade").value) || 1;
+   
 
-const nome = document.getElementById("nome").value.trim();
+ if(!nome){ alert("Informe o nome do vinho"); return; }
 
-const safra = document.getElementById("safra").value.trim();
-
-const tipo = document.getElementById("tipo").value;
-
-const quantidade = parseInt(document.getElementById("quantidade").value) || 1;
-
-  
-
- 
-
-if(!nome){ alert("Informe o nome do vinho"); return; }
-
- 
-
-const aquisicoesNovas = [];
-
- 
+ const aquisicoesNovas = [];
 
 for(let n = 1; n <= quantidade; n++){
-
   const aquisicao = criarAquisicaoAtual();
-
   aquisicao.quantidade = 1;
-
   aquisicao.identificador = `Garrafa ${n}`;
-
   aquisicoesNovas.push(aquisicao);
-
 }
-
- 
 
 const detalhes = {
-
    produtor: document.getElementById("produtor").value.trim() || "-",
-
    uva: document.getElementById("uva").value.trim() || "-",
-
    pais: document.getElementById("pais").value.trim() || "-",
-
    regiao: document.getElementById("regiao").value.trim() || "-",
-
    guarda: document.getElementById("potencialGuarda").value.trim() || "-",
-
    notaVivino: Number(document.getElementById("notaVivino").value || 0),
-
    notas: ""
-
 };
 
- 
-
-const existente = vinhos.find(v => v.nome.toLowerCase()===nome.toLowerCase() && String(v.safra)===String(safra));
-
-if(existente){
-
+ const existente = vinhos.find(v => v.nome.toLowerCase()===nome.toLowerCase() && String(v.safra)===String(safra));
+ if(existente){
    garantirEstrutura(existente);
-
 existente.aquisicoes.push(...aquisicoesNovas);
-
 recalcularQuantidadeAtual(existente);
 
- 
-
    ["produtor","uva","pais","regiao"].forEach(campo=>{
-
      if(detalhes[campo] && detalhes[campo] !== "-") existente.detalhes[campo] = detalhes[campo];
-
    });
-
-}else{
-
+ }else{
    const novoVinho = {nome,safra,tipo,quantidade,detalhes,controle:{},aquisicoes:aquisicoesNovas};
-
    recalcularQuantidadeAtual(novoVinho);
-
    vinhos.push(novoVinho);
+ }
 
+ salvar();
+ limparFormulario();
+ fecharCadastro();
+ renderizar();
 }
-
- 
-
-salvar();
-
-limparFormulario();
-
-fecharCadastro();
-
-renderizar();
-
-}
-
- 
 
 function abrirDetalhes(i){
+ vinhoSelecionado = i;
+ const v = garantirEstrutura(vinhos[i]);
 
-vinhoSelecionado = i;
+ document.getElementById("modalNome").innerText = v.nome;
+ document.getElementById("modalResumo").innerText = `Safra ${v.safra || "-"} • ${v.tipo}`;
+ document.getElementById("modalProdutor").innerText = v.detalhes.produtor || "-";
+ document.getElementById("modalUva").innerText = v.detalhes.uva || "-";
+ document.getElementById("modalPais").innerText = v.detalhes.pais || "-";
+ document.getElementById("modalRegiao").innerText = v.detalhes.regiao || "-";
+ document.getElementById("modalTipo").innerText = v.tipo || "-";
+ document.getElementById("modalQuantidade").innerText = `${v.quantidade} garrafa${v.quantidade == 1 ? "" : "s"}`;
+ document.getElementById("modalNotas").value = v.detalhes.notas || "";
 
-const v = garantirEstrutura(vinhos[i]);
-
- 
-
-document.getElementById("modalNome").innerText = v.nome;
-
-document.getElementById("modalResumo").innerText = `Safra ${v.safra || "-"} • ${v.tipo}`;
-
-document.getElementById("modalProdutor").innerText = v.detalhes.produtor || "-";
-
-document.getElementById("modalUva").innerText = v.detalhes.uva || "-";
-
-document.getElementById("modalPais").innerText = v.detalhes.pais || "-";
-
-document.getElementById("modalRegiao").innerText = v.detalhes.regiao || "-";
-
-document.getElementById("modalTipo").innerText = v.tipo || "-";
-
-document.getElementById("modalQuantidade").innerText = `${v.quantidade} garrafa${v.quantidade == 1 ? "" : "s"}`;
-
-document.getElementById("modalNotas").value = v.detalhes.notas || "";
-
- 
-
-const aquisicoes = v.aquisicoes || [];
-
-const totalPago = aquisicoes.reduce((s,a)=>s + Number(a.valorUnitario || 0) * Number(a.quantidade || 0),0);
-
-const totalQtdComprada = aquisicoes.reduce((s,a)=>s + Number(a.quantidade || 0),0);
-
-const totalConsumidas = aquisicoes.filter(a=>a.consumida).reduce((s,a)=>s + Number(a.quantidade || 0),0);
-
-const totalNaAdega = aquisicoes.length ? totalQtdComprada - totalConsumidas : Number(v.quantidade || 0);
-
- 
+ const aquisicoes = v.aquisicoes || [];
+ const totalPago = aquisicoes.reduce((s,a)=>s + Number(a.valorUnitario || 0) * Number(a.quantidade || 0),0);
+ const totalQtdComprada = aquisicoes.reduce((s,a)=>s + Number(a.quantidade || 0),0);
+ const totalConsumidas = aquisicoes.filter(a=>a.consumida).reduce((s,a)=>s + Number(a.quantidade || 0),0);
+ const totalNaAdega = aquisicoes.length ? totalQtdComprada - totalConsumidas : Number(v.quantidade || 0);
 
 document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
-
    ? aquisicoes.map((a,idx)=>`
-
      <div class="purchase-card">
-
        <strong>
-
          ${a.data || "Data não informada"} • ${a.loja || "-"}
-
          ${a.consumida ? '<span class="consumida-badge">Consumida</span>' : ""}
-
        </strong>
 
- 
-
        <div class="purchase-meta">
-
          Quantidade: ${a.quantidade || 0} garrafa${Number(a.quantidade)==1 ? "" : "s"}<br>
-
          Localização: ${a.localizacao || "-"}<br>
-
          Valor unitário: ${moeda(a.valorUnitario)}<br>
-
          Origem: ${a.compradoPor || "-"}${a.compradoPor==="Presente" && a.presenteadoPor ? " • Presente de " + a.presenteadoPor : ""}
-
          ${a.ocasiao ? "<br>Ocasião da compra: " + a.ocasiao : ""}
-
          ${a.consumida && a.dataConsumo ? "<br>Consumida em: " + a.dataConsumo : ""}
-
          ${a.consumida && a.eventoConsumo ? "<br>Evento: " + a.eventoConsumo : ""}
 
- 
-
          <div class="consume-line">
-
-           <input
-
-             type="checkbox"
-
-             ${a.consumida ? "checked" : ""}
-
+           <input 
+             type="checkbox" 
+             ${a.consumida ? "checked" : ""} 
              onchange="event.stopPropagation(); atualizarConsumo(${i}, ${idx}, this.checked)"
-
            >
-
            <span>Consumida</span>
-
          </div>
 
- 
-
          ${a.consumida ? `
-
            <div class="form-row" style="margin-top:10px">
-
-             <input
-
-               type="date"
-
-               value="${a.dataConsumo || ""}"
-
+             <input 
+               type="date" 
+               value="${a.dataConsumo || ""}" 
                onclick="event.stopPropagation()"
-
                onchange="event.stopPropagation(); atualizarDadosConsumo(${i}, ${idx}, 'dataConsumo', this.value)"
-
              >
 
- 
-
-             <input
-
-               placeholder="Evento do consumo"
-
-               value="${a.eventoConsumo || ""}"
-
+             <input 
+               placeholder="Evento do consumo" 
+               value="${a.eventoConsumo || ""}" 
                onclick="event.stopPropagation()"
-
                onchange="event.stopPropagation(); atualizarDadosConsumo(${i}, ${idx}, 'eventoConsumo', this.value)"
-
              >
-
            </div>
 
- 
-
-           <textarea
-
-             style="margin-top:8px;min-height:70px"
-
+           <textarea 
+             style="margin-top:8px;min-height:70px" 
              placeholder="Observações do consumo"
-
              onclick="event.stopPropagation()"
-
              onchange="event.stopPropagation(); atualizarDadosConsumo(${i}, ${idx}, 'observacaoConsumo', this.value)"
-
            >${a.observacaoConsumo || ""}</textarea>
-
          ` : ""}
-
        </div>
-
      </div>
-
    `).join("")
-
    : `<div class="empty">Nenhuma aquisição detalhada registrada para este vinho.</div>`;
 
- 
-
-document.getElementById("modalResumoCompras").innerHTML = `
-
+ document.getElementById("modalResumoCompras").innerHTML = `
    <strong>Resumo financeiro e estoque</strong><br>
-
    Quantidade registrada em aquisições: ${totalQtdComprada || 0}<br>
-
    Na adega: ${totalNaAdega || 0}<br>
-
    Consumidas: ${totalConsumidas || 0}<br>
-
    Valor total pago conhecido: ${moeda(totalPago)}
+ `;
 
-`;
-
- 
-
-document.getElementById("modalDetalhes").style.display = "flex";
-
+ document.getElementById("modalDetalhes").style.display = "flex";
 }
-
- 
 
 function atualizarConsumo(vinhoIndex, aquisicaoIndex, consumida){
+ const v = garantirEstrutura(vinhos[vinhoIndex]);
+ if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
 
-const v = garantirEstrutura(vinhos[vinhoIndex]);
+ const a = v.aquisicoes[aquisicaoIndex];
+ a.consumida = consumida;
 
-if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
-
- 
-
-const a = v.aquisicoes[aquisicaoIndex];
-
-a.consumida = consumida;
-
- 
-
-if(consumida && !a.dataConsumo){
-
+ if(consumida && !a.dataConsumo){
    a.dataConsumo = new Date().toISOString().slice(0,10);
+ }
 
-}
-
- 
-
-if(!consumida){
-
+ if(!consumida){
    a.dataConsumo = "";
-
    a.eventoConsumo = "";
-
    a.observacaoConsumo = "";
+ }
 
+ recalcularQuantidadeAtual(v);
+ salvar();
+ abrirDetalhes(vinhoIndex);
+ renderizar();
 }
-
- 
-
-recalcularQuantidadeAtual(v);
-
-salvar();
-
-abrirDetalhes(vinhoIndex);
-
-renderizar();
-
-}
-
- 
 
 function atualizarDadosConsumo(vinhoIndex, aquisicaoIndex, campo, valor){
+ const v = garantirEstrutura(vinhos[vinhoIndex]);
+ if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
 
-const v = garantirEstrutura(vinhos[vinhoIndex]);
-
-if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
-
- 
-
-v.aquisicoes[aquisicaoIndex][campo] = valor;
-
-salvar();
-
+ v.aquisicoes[aquisicaoIndex][campo] = valor;
+ salvar();
 }
-
- 
 
 function fecharDetalhes(){
-
-document.getElementById("modalDetalhes").style.display = "none";
-
-vinhoSelecionado = null;
-
+ document.getElementById("modalDetalhes").style.display = "none";
+ vinhoSelecionado = null;
 }
-
- 
 
 function salvarDetalhes(){
-
-if(vinhoSelecionado === null) return;
-
-garantirEstrutura(vinhos[vinhoSelecionado]);
-
-vinhos[vinhoSelecionado].detalhes.notas = document.getElementById("modalNotas").value.trim();
-
-salvar();
-
-fecharDetalhes();
-
+ if(vinhoSelecionado === null) return;
+ garantirEstrutura(vinhos[vinhoSelecionado]);
+ vinhos[vinhoSelecionado].detalhes.notas = document.getElementById("modalNotas").value.trim();
+ salvar();
+ fecharDetalhes();
 }
-
- 
 
 function exportarBackup(){
-
-const blob = new Blob([JSON.stringify(vinhos,null,2)], {type:"application/json"});
-
-const url = URL.createObjectURL(blob);
-
-const a = document.createElement("a");
-
-a.href = url;
-
-a.download = "backup-adega-juliana.json";
-
-a.click();
-
-URL.revokeObjectURL(url);
-
+ const backup = {
+   versao:"1.0",
+   dataBackup:new Date().toISOString(),
+   vinhos:vinhos,
+   consumosExternos:consumosExternos
+ };
+ const blob = new Blob([JSON.stringify(backup,null,2)], {type:"application/json"});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement("a");
+ a.href = url;
+ a.download = "backup-adega-juliana.json";
+ a.click();
+ URL.revokeObjectURL(url);
 }
-
- 
 
 function importarBackup(event){
-
-const arquivo = event.target.files[0];
-
-if(!arquivo) return;
-
-const reader = new FileReader();
-
-reader.onload = function(e){
-
+ const arquivo = event.target.files[0];
+ if(!arquivo) return;
+ const reader = new FileReader();
+ reader.onload = function(e){
    try{
-
      const dados = JSON.parse(e.target.result);
 
-     if(!Array.isArray(dados)) throw new Error();
-
-     vinhos = dados;
+     if(Array.isArray(dados)){
+       vinhos = dados;
+       consumosExternos = [];
+     }else{
+       vinhos = dados.vinhos || [];
+       consumosExternos = dados.consumosExternos || [];
+     }
 
      enriquecerDetalhes();
-
      salvar();
-
+     salvarConsumosExternos();
      renderizar();
-
      alert("Backup importado com sucesso!");
-
    }catch{
-
      alert("Arquivo inválido.");
-
    }
-
-};
-
-reader.readAsText(arquivo);
-
+ };
+ reader.readAsText(arquivo);
 }
 
- 
+
+function mostrarAba(aba){
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ if(aba === 'adega'){
+   const primeira = document.querySelector('.tab');
+   if(primeira) primeira.classList.add('active');
+ }
+}
+
+function abrirConfiguracoes(){
+ document.getElementById("modalConfiguracoes").style.display = "flex";
+}
+
+function fecharConfiguracoes(){
+ document.getElementById("modalConfiguracoes").style.display = "none";
+}
 
 carregar();
-
+carregarConsumosExternos();
 enriquecerDetalhes();
-
 togglePresenteadoPor();
-
 renderizar();
-
 </script>
 
- 
-
 </body>
+</html>
