@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-20T23:49:15.302Z",
+  "ultimaAtualizacao": "2026-06-20T23:52:49.127Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -343,69 +343,6 @@
         "localizacao": "",
         "status": "Na adega"
       }
-    },
-    {
-      "nome": "Luana  Aguiar",
-      "safra": "2010",
-      "tipo": "Tinto",
-      "quantidade": 3,
-      "detalhes": {
-        "produtor": "Almaviva",
-        "uva": "Cabernet Franc",
-        "pais": "Espanha",
-        "regiao": "Chablis",
-        "guarda": "Beber agora",
-        "notaVivino": 2,
-        "notas": ""
-      },
-      "controle": {},
-      "aquisicoes": [
-        {
-          "data": "2026-06-20",
-          "loja": "-",
-          "quantidade": 1,
-          "valorUnitario": 100,
-          "compradoPor": "Juliana",
-          "presenteadoPor": "",
-          "localizacao": "Adega Principal",
-          "consumida": false,
-          "dataConsumo": "",
-          "eventoConsumo": "",
-          "observacaoConsumo": "",
-          "ocasiao": "",
-          "identificador": "Garrafa 1"
-        },
-        {
-          "data": "2026-06-20",
-          "loja": "-",
-          "quantidade": 1,
-          "valorUnitario": 100,
-          "compradoPor": "Juliana",
-          "presenteadoPor": "",
-          "localizacao": "Adega Principal",
-          "consumida": false,
-          "dataConsumo": "",
-          "eventoConsumo": "",
-          "observacaoConsumo": "",
-          "ocasiao": "",
-          "identificador": "Garrafa 2"
-        },
-        {
-          "data": "2026-06-20",
-          "loja": "-",
-          "quantidade": 1,
-          "valorUnitario": 100,
-          "compradoPor": "Juliana",
-          "presenteadoPor": "",
-          "localizacao": "Adega Principal",
-          "consumida": false,
-          "dataConsumo": "",
-          "eventoConsumo": "",
-          "observacaoConsumo": "",
-          "ocasiao": "",
-          "identificador": "Garrafa 3"
-        }
-      ]
     }
   ],
   "consumosExternos": []
