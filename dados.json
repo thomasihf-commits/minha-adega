@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-20T20:41:25.086Z",
+  "ultimaAtualizacao": "2026-06-20T23:32:00.418Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -343,69 +343,6 @@
         "localizacao": "",
         "status": "Na adega"
       }
-    },
-    {
-      "nome": "Teste",
-      "safra": "2026",
-      "tipo": "Tinto",
-      "quantidade": 2,
-      "detalhes": {
-        "produtor": "Almaviva",
-        "uva": "Cabernet Franc",
-        "pais": "França",
-        "regiao": "Borgonha",
-        "guarda": "1 a 3 anos",
-        "notaVivino": 4.3,
-        "notas": ""
-      },
-      "controle": {},
-      "aquisicoes": [
-        {
-          "data": "2026-06-20",
-          "loja": "Gran cru",
-          "quantidade": 1,
-          "valorUnitario": 250,
-          "compradoPor": "Thomas",
-          "presenteadoPor": "",
-          "localizacao": "Adega Principal",
-          "consumida": true,
-          "dataConsumo": "2026-06-20",
-          "eventoConsumo": "Teste",
-          "observacaoConsumo": "Boa",
-          "ocasiao": "",
-          "identificador": "Garrafa 1"
-        },
-        {
-          "data": "2026-06-20",
-          "loja": "Gran cru",
-          "quantidade": 1,
-          "valorUnitario": 250,
-          "compradoPor": "Thomas",
-          "presenteadoPor": "",
-          "localizacao": "Adega Principal",
-          "consumida": false,
-          "dataConsumo": "",
-          "eventoConsumo": "",
-          "observacaoConsumo": "",
-          "ocasiao": "",
-          "identificador": "Garrafa 2"
-        },
-        {
-          "data": "2026-06-20",
-          "loja": "Gran cru",
-          "quantidade": 1,
-          "valorUnitario": 250,
-          "compradoPor": "Thomas",
-          "presenteadoPor": "",
-          "localizacao": "Adega Principal",
-          "consumida": false,
-          "dataConsumo": "",
-          "eventoConsumo": "",
-          "observacaoConsumo": "",
-          "ocasiao": "",
-          "identificador": "Garrafa 3"
-        }
-      ]
     }
   ],
   "consumosExternos": []
