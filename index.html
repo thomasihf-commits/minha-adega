@@ -1697,6 +1697,9 @@ let vinhos = [];
 let filtroAtual = "";
 let vinhoSelecionado = null;
 let consumosExternos = [];
+let salvandoNaNuvem = false;
+let carregandoDaNuvem = false;
+let intervaloSincronizacao = null;
 
 const GITHUB_OWNER = "thomasihf-commits";
 const GITHUB_REPO = "minha-adega";
@@ -1727,20 +1730,23 @@ const detalhesPadrao = {
 
 function salvar(){ localStorage.setItem("adegaJuliana", JSON.stringify(vinhos)); }
 
-function sincronizarSePossivel(){
+async function sincronizarSePossivel(){
  const token = localStorage.getItem("githubToken");
- if(!token) return;
- salvarNaNuvem(true);
+ if(!token) return false;
+ return await salvarNaNuvem(true);
 }
 
 async function iniciarSincronizacaoAutomatica(){
+ if(intervaloSincronizacao) clearInterval(intervaloSincronizacao);
  try{
    await carregarDaNuvem(true);
  }catch(e){
    console.warn("Sincronização inicial não realizada", e);
  }
- setInterval(()=>{
-   carregarDaNuvem(true);
+ intervaloSincronizacao = setInterval(()=>{
+   if(!salvandoNaNuvem && document.getElementById("modalDetalhes").style.display !== "flex"){
+     carregarDaNuvem(true);
+   }
  }, 120000);
 }
 
@@ -1951,22 +1957,54 @@ function configurarGithub(){
 
 async function carregarDaNuvem(silencioso=false){
 
+ if(salvandoNaNuvem) return false;
+ carregandoDaNuvem = true;
+
  try{
+   const token = localStorage.getItem("githubToken");
+   let dados;
 
-   const resposta = await fetch(
-     "https://raw.githubusercontent.com/" +
-     GITHUB_OWNER + "/" +
-     GITHUB_REPO + "/" +
-     GITHUB_BRANCH + "/" +
-     GITHUB_FILE +
-     "?t=" + Date.now()
-   );
+   if(token){
+     const urlApi =
+       "https://api.github.com/repos/" +
+       GITHUB_OWNER + "/" +
+       GITHUB_REPO + "/contents/" +
+       GITHUB_FILE +
+       "?ref=" + GITHUB_BRANCH +
+       "&t=" + Date.now();
 
-   if(!resposta.ok){
-     throw new Error("Erro ao carregar");
+     const respostaApi = await fetch(urlApi, {
+       headers:{
+         "Authorization":"Bearer " + token,
+         "Accept":"application/vnd.github+json"
+       },
+       cache:"no-store"
+     });
+
+     if(!respostaApi.ok){
+       throw new Error("Erro ao carregar dados.json pela API do GitHub");
+     }
+
+     const arquivo = await respostaApi.json();
+     const texto = decodeURIComponent(escape(atob(arquivo.content.replace(/\n/g,""))));
+     dados = JSON.parse(texto);
+   }else{
+     const resposta = await fetch(
+       "https://raw.githubusercontent.com/" +
+       GITHUB_OWNER + "/" +
+       GITHUB_REPO + "/" +
+       GITHUB_BRANCH + "/" +
+       GITHUB_FILE +
+       "?t=" + Date.now(),
+       {cache:"no-store"}
+     );
+
+     if(!resposta.ok){
+       throw new Error("Erro ao carregar");
+     }
+
+     dados = await resposta.json();
    }
-
-   const dados = await resposta.json();
 
    vinhos = dados.vinhos || [];
    consumosExternos = dados.consumosExternos || [];
@@ -1979,13 +2017,17 @@ async function carregarDaNuvem(silencioso=false){
    renderizar();
 
    if(!silencioso) alert("Dados carregados da nuvem.");
+   return true;
 
  }catch(e){
 
    console.error(e);
 
    if(!silencioso) alert("Não foi possível carregar os dados.");
+   return false;
 
+ }finally{
+   carregandoDaNuvem = false;
  }
 }
 
@@ -1994,22 +2036,24 @@ async function salvarNaNuvem(silencioso=false){
  const token = localStorage.getItem("githubToken");
 
  if(!token){
-   alert("Configure o token do GitHub antes de salvar na nuvem.");
-   return;
+   if(!silencioso) alert("Configure o token do GitHub antes de salvar na nuvem.");
+   return false;
  }
+
+ salvandoNaNuvem = true;
 
  try{
    const urlApi =
      "https://api.github.com/repos/" +
-     GITHUB_OWNER + "/" +
-     GITHUB_REPO + "/contents/" +
+     GITHUB_OWNER + "/" + GITHUB_REPO + "/contents/" +
      GITHUB_FILE;
 
-   const consulta = await fetch(urlApi, {
+   const consulta = await fetch(urlApi + "?ref=" + GITHUB_BRANCH + "&t=" + Date.now(), {
      headers:{
        "Authorization":"Bearer " + token,
        "Accept":"application/vnd.github+json"
-     }
+     },
+     cache:"no-store"
    });
 
    if(!consulta.ok){
@@ -2041,14 +2085,19 @@ async function salvarNaNuvem(silencioso=false){
    });
 
    if(!resposta.ok){
-     throw new Error("Erro ao salvar na nuvem");
+     const erro = await resposta.text();
+     throw new Error("Erro ao salvar na nuvem: " + erro);
    }
 
    if(!silencioso) alert("Adega salva na nuvem com sucesso.");
+   return true;
 
  }catch(e){
    console.error(e);
    if(!silencioso) alert("Não foi possível salvar na nuvem. Veja o console para detalhes.");
+   return false;
+ }finally{
+   salvandoNaNuvem = false;
  }
 }
 
@@ -2453,21 +2502,33 @@ function atualizarDadosConsumo(vinhoIndex, aquisicaoIndex, campo, valor){
 
  v.aquisicoes[aquisicaoIndex][campo] = valor;
  salvar();
+ sincronizarSePossivel();
 }
 
-function excluirVinho(){
+async function excluirVinho(){
  if(vinhoSelecionado === null) return;
  const v = vinhos[vinhoSelecionado];
  if(!v) return;
  const confirma = confirm(`Tem certeza que deseja excluir o vinho "${v.nome}"?\n\nEssa ação remove o vinho e todas as aquisições/consumos associados a ele.`);
  if(!confirma) return;
+
  vinhos.splice(vinhoSelecionado, 1);
  vinhoSelecionado = null;
  salvar();
- sincronizarSePossivel();
  fecharDetalhes();
  renderizar();
- alert("Vinho excluído com sucesso.");
+
+ const token = localStorage.getItem("githubToken");
+ if(token){
+   const salvou = await salvarNaNuvem(true);
+   if(salvou){
+     alert("Vinho excluído e sincronizado na nuvem.");
+   }else{
+     alert("Vinho excluído localmente, mas não consegui salvar na nuvem. Clique em Configurações > Salvar na nuvem antes de atualizar a página.");
+   }
+ }else{
+   alert("Vinho excluído localmente. Para não voltar após carregar a nuvem, configure o token e salve na nuvem.");
+ }
 }
 
 function fecharDetalhes(){
