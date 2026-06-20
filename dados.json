@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-20T23:33:04.242Z",
+  "ultimaAtualizacao": "2026-06-20T23:41:19.559Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -343,6 +343,54 @@
         "localizacao": "",
         "status": "Na adega"
       }
+    },
+    {
+      "nome": "Teste4",
+      "safra": "2026",
+      "tipo": "Tinto",
+      "quantidade": 2,
+      "detalhes": {
+        "produtor": "Almaviva",
+        "uva": "Cabernet Sauvignon",
+        "pais": "França",
+        "regiao": "Borgonha",
+        "guarda": "1 a 3 anos",
+        "notaVivino": 3,
+        "notas": ""
+      },
+      "controle": {},
+      "aquisicoes": [
+        {
+          "data": "2026-06-20",
+          "loja": "Gran cu",
+          "quantidade": 1,
+          "valorUnitario": 200,
+          "compradoPor": "Thomas",
+          "presenteadoPor": "",
+          "localizacao": "Adega Principal",
+          "consumida": false,
+          "dataConsumo": "",
+          "eventoConsumo": "",
+          "observacaoConsumo": "",
+          "ocasiao": "",
+          "identificador": "Garrafa 1"
+        },
+        {
+          "data": "2026-06-20",
+          "loja": "Gran cu",
+          "quantidade": 1,
+          "valorUnitario": 200,
+          "compradoPor": "Thomas",
+          "presenteadoPor": "",
+          "localizacao": "Adega Principal",
+          "consumida": false,
+          "dataConsumo": "",
+          "eventoConsumo": "",
+          "observacaoConsumo": "",
+          "ocasiao": "",
+          "identificador": "Garrafa 2"
+        }
+      ]
     }
   ],
   "consumosExternos": []
