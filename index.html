@@ -1264,6 +1264,17 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   position:absolute;
 }
 
+
+/* Botão de exclusão */
+.btn-danger{
+  background:#8b1e1e!important;
+  color:#fff!important;
+  border:none!important;
+}
+.btn-danger:hover{
+  filter:brightness(.95);
+}
+
 </style>
 </head>
 
@@ -1537,6 +1548,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       <textarea id="modalNotas" placeholder="Ex.: vinho encorpado, ideal para carnes, guardar para ocasião especial..."></textarea>
     </div>
     <div class="modal-actions">
+      <button class="btn-secondary btn-danger" onclick="excluirVinho()">Excluir vinho</button>
       <button class="btn-secondary" onclick="fecharDetalhes()">Fechar</button>
       <button class="btn-secondary btn-save" onclick="salvarDetalhes()">Salvar detalhes</button>
     </div>
@@ -1714,6 +1726,23 @@ const detalhesPadrao = {
 };
 
 function salvar(){ localStorage.setItem("adegaJuliana", JSON.stringify(vinhos)); }
+
+function sincronizarSePossivel(){
+ const token = localStorage.getItem("githubToken");
+ if(!token) return;
+ salvarNaNuvem(true);
+}
+
+async function iniciarSincronizacaoAutomatica(){
+ try{
+   await carregarDaNuvem(true);
+ }catch(e){
+   console.warn("Sincronização inicial não realizada", e);
+ }
+ setInterval(()=>{
+   carregarDaNuvem(true);
+ }, 120000);
+}
 
 function salvarConsumosExternos(){
  localStorage.setItem("adegaJulianaConsumosExternos", JSON.stringify(consumosExternos));
@@ -1895,6 +1924,7 @@ function adicionarConsumoExterno(){
 
  consumosExternos.push(consumo);
  salvarConsumosExternos();
+ sincronizarSePossivel();
  fecharCadastroConsumoExterno();
  abrirHistoricoConsumo();
 
@@ -1916,9 +1946,10 @@ function configurarGithub(){
  document.getElementById("githubTokenInput").value = "";
 
  alert("Token salvo com sucesso.");
+ iniciarSincronizacaoAutomatica();
 }
 
-async function carregarDaNuvem(){
+async function carregarDaNuvem(silencioso=false){
 
  try{
 
@@ -1947,18 +1978,18 @@ async function carregarDaNuvem(){
 
    renderizar();
 
-   alert("Dados carregados da nuvem.");
+   if(!silencioso) alert("Dados carregados da nuvem.");
 
  }catch(e){
 
    console.error(e);
 
-   alert("Não foi possível carregar os dados.");
+   if(!silencioso) alert("Não foi possível carregar os dados.");
 
  }
 }
 
-async function salvarNaNuvem(){
+async function salvarNaNuvem(silencioso=false){
 
  const token = localStorage.getItem("githubToken");
 
@@ -2013,11 +2044,11 @@ async function salvarNaNuvem(){
      throw new Error("Erro ao salvar na nuvem");
    }
 
-   alert("Adega salva na nuvem com sucesso.");
+   if(!silencioso) alert("Adega salva na nuvem com sucesso.");
 
  }catch(e){
    console.error(e);
-   alert("Não foi possível salvar na nuvem. Veja o console para detalhes.");
+   if(!silencioso) alert("Não foi possível salvar na nuvem. Veja o console para detalhes.");
  }
 }
 
@@ -2300,6 +2331,7 @@ recalcularQuantidadeAtual(existente);
  }
 
  salvar();
+ sincronizarSePossivel();
  limparFormulario();
  fecharCadastro();
  renderizar();
@@ -2410,6 +2442,7 @@ function atualizarConsumo(vinhoIndex, aquisicaoIndex, consumida){
 
  recalcularQuantidadeAtual(v);
  salvar();
+ sincronizarSePossivel();
  abrirDetalhes(vinhoIndex);
  renderizar();
 }
@@ -2422,6 +2455,21 @@ function atualizarDadosConsumo(vinhoIndex, aquisicaoIndex, campo, valor){
  salvar();
 }
 
+function excluirVinho(){
+ if(vinhoSelecionado === null) return;
+ const v = vinhos[vinhoSelecionado];
+ if(!v) return;
+ const confirma = confirm(`Tem certeza que deseja excluir o vinho "${v.nome}"?\n\nEssa ação remove o vinho e todas as aquisições/consumos associados a ele.`);
+ if(!confirma) return;
+ vinhos.splice(vinhoSelecionado, 1);
+ vinhoSelecionado = null;
+ salvar();
+ sincronizarSePossivel();
+ fecharDetalhes();
+ renderizar();
+ alert("Vinho excluído com sucesso.");
+}
+
 function fecharDetalhes(){
  document.getElementById("modalDetalhes").style.display = "none";
  vinhoSelecionado = null;
@@ -2432,6 +2480,7 @@ function salvarDetalhes(){
  garantirEstrutura(vinhos[vinhoSelecionado]);
  vinhos[vinhoSelecionado].detalhes.notas = document.getElementById("modalNotas").value.trim();
  salvar();
+ sincronizarSePossivel();
  fecharDetalhes();
 }
 
@@ -2501,6 +2550,7 @@ carregarConsumosExternos();
 enriquecerDetalhes();
 togglePresenteadoPor();
 renderizar();
+iniciarSincronizacaoAutomatica();
 </script>
 
 </body>
