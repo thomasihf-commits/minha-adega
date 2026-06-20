@@ -1,3 +1,412 @@
 {
-  "vinhos":[]
+  "versao": "1.0",
+  "ultimaAtualizacao": "2026-06-20T20:41:25.086Z",
+  "vinhos": [
+    {
+      "nome": "Petit Chablis Allain Geoffroy",
+      "safra": "2022",
+      "tipo": "Branco",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Allain Geoffroy",
+        "uva": "Chardonnay",
+        "pais": "FranÃ§a",
+        "regiao": "Borgonha / Chablis",
+        "notas": "Branco seco, mineral, boa acidez. Combina bem com frutos do mar."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Chablis GÃ©rard Tremblay",
+      "safra": "2023",
+      "tipo": "Branco",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "GÃ©rard Tremblay",
+        "uva": "Chardonnay",
+        "pais": "FranÃ§a",
+        "regiao": "Borgonha / Chablis",
+        "notas": "Chablis clÃ¡ssico, fresco e mineral."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "GarzÃ³n Estate Pinot Grigio",
+      "safra": "2024",
+      "tipo": "Branco",
+      "quantidade": 2,
+      "detalhes": {
+        "produtor": "Bodega GarzÃ³n",
+        "uva": "Pinot Grigio",
+        "pais": "Uruguai",
+        "regiao": "Maldonado / GarzÃ³n",
+        "notas": "Branco leve, fresco e aromÃ¡tico."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Gustav GewÃ¼rztraminer",
+      "safra": "2025",
+      "tipo": "Branco",
+      "quantidade": 2,
+      "detalhes": {
+        "produtor": "Gustav",
+        "uva": "GewÃ¼rztraminer",
+        "pais": "Alemanha",
+        "regiao": "-",
+        "notas": "Branco aromÃ¡tico, floral e levemente exÃ³tico."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Covela RosÃ© Dry",
+      "safra": "2019",
+      "tipo": "RosÃ©",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Quinta da Covela",
+        "uva": "-",
+        "pais": "Portugal",
+        "regiao": "Minho",
+        "notas": "RosÃ© seco, fresco e versÃ¡til."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "EPU",
+      "safra": "2017",
+      "tipo": "Tinto",
+      "quantidade": 2,
+      "detalhes": {
+        "produtor": "ViÃ±a Almaviva",
+        "uva": "Blend bordalÃªs",
+        "pais": "Chile",
+        "regiao": "Puente Alto",
+        "notas": "Tinto chileno elegante, segundo vinho do Almaviva."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "AngÃ©lica Zapata Alta Cabernet Franc",
+      "safra": "2016",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Catena Zapata",
+        "uva": "Cabernet Franc",
+        "pais": "Argentina",
+        "regiao": "Mendoza",
+        "notas": "Tinto estruturado, com boa complexidade."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Marchese Antinori Chianti Classico Riserva",
+      "safra": "2020",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Marchesi Antinori",
+        "uva": "Sangiovese",
+        "pais": "ItÃ¡lia",
+        "regiao": "Toscana / Chianti Classico",
+        "notas": "Tinto italiano clÃ¡ssico, boa acidez e gastronomia."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "EQ Granite Pinot Noir",
+      "safra": "2022",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Matetic Vineyards",
+        "uva": "Pinot Noir",
+        "pais": "Chile",
+        "regiao": "Valle de Casablanca",
+        "notas": "Pinot Noir elegante, fresco e mineral."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Sideral",
+      "safra": "2023",
+      "tipo": "Tinto",
+      "quantidade": 3,
+      "detalhes": {
+        "produtor": "ViÃ±a San Pedro",
+        "uva": "Blend",
+        "pais": "Chile",
+        "regiao": "Valle del Cachapoal",
+        "notas": "Tinto chileno de bom corpo e boa presenÃ§a."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "CÃ´tes du RhÃ´ne E. Guigal",
+      "safra": "2020",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "E. Guigal",
+        "uva": "Blend RhÃ´ne",
+        "pais": "FranÃ§a",
+        "regiao": "CÃ´tes du RhÃ´ne",
+        "notas": "Tinto francÃªs versÃ¡til, com frutas vermelhas e especiarias."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Arboleda Syrah",
+      "safra": "2021",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Arboleda",
+        "uva": "Syrah",
+        "pais": "Chile",
+        "regiao": "Valle de Aconcagua",
+        "notas": "Tinto intenso, com notas de especiarias."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Arboleda Brisa",
+      "safra": "2021",
+      "tipo": "Tinto",
+      "quantidade": 2,
+      "detalhes": {
+        "produtor": "Arboleda",
+        "uva": "Blend",
+        "pais": "Chile",
+        "regiao": "Valle de Aconcagua",
+        "notas": "Vinho chileno fresco e fÃ¡cil de beber."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Arboleda Pinot Noir",
+      "safra": "2024",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Arboleda",
+        "uva": "Pinot Noir",
+        "pais": "Chile",
+        "regiao": "Aconcagua Costa",
+        "notas": "Pinot Noir leve, fresco e elegante."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Cadus Malbec",
+      "safra": "2022",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Cadus",
+        "uva": "Malbec",
+        "pais": "Argentina",
+        "regiao": "Valle de Uco / Tupungato",
+        "notas": "Malbec argentino, bom corpo e fruta madura."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Seleccion de Parcelas Chardonnay",
+      "safra": "2025",
+      "tipo": "Branco",
+      "quantidade": 4,
+      "detalhes": {
+        "produtor": "-",
+        "uva": "Chardonnay",
+        "pais": "Chile",
+        "regiao": "Vale Central",
+        "notas": "Branco Chardonnay. Completar produtor depois."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Gustav Riesling Trocken",
+      "safra": "2025",
+      "tipo": "Branco",
+      "quantidade": 2,
+      "detalhes": {
+        "produtor": "Gustav",
+        "uva": "Riesling",
+        "pais": "Alemanha",
+        "regiao": "Rheinhessen",
+        "notas": "Riesling seco, fresco e gastronÃ´mico."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "1865 Gran Reserva Cabernet Sauvignon",
+      "safra": "2022",
+      "tipo": "Tinto",
+      "quantidade": 2,
+      "detalhes": {
+        "produtor": "ViÃ±a San Pedro",
+        "uva": "Cabernet Sauvignon",
+        "pais": "Chile",
+        "regiao": "Valle del Maipo / Las Piedras",
+        "notas": "Tinto encorpado, clÃ¡ssico Cabernet chileno."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Bruce Jack Daily Brew Pinotage",
+      "safra": "2023",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Bruce Jack",
+        "uva": "Pinotage",
+        "pais": "Ãfrica do Sul",
+        "regiao": "Western Cape",
+        "notas": "Tinto sul-africano frutado e descontraÃ­do."
+      },
+      "aquisicoes": [],
+      "controle": {
+        "localizacao": "",
+        "status": "Na adega"
+      }
+    },
+    {
+      "nome": "Teste",
+      "safra": "2026",
+      "tipo": "Tinto",
+      "quantidade": 2,
+      "detalhes": {
+        "produtor": "Almaviva",
+        "uva": "Cabernet Franc",
+        "pais": "França",
+        "regiao": "Borgonha",
+        "guarda": "1 a 3 anos",
+        "notaVivino": 4.3,
+        "notas": ""
+      },
+      "controle": {},
+      "aquisicoes": [
+        {
+          "data": "2026-06-20",
+          "loja": "Gran cru",
+          "quantidade": 1,
+          "valorUnitario": 250,
+          "compradoPor": "Thomas",
+          "presenteadoPor": "",
+          "localizacao": "Adega Principal",
+          "consumida": true,
+          "dataConsumo": "2026-06-20",
+          "eventoConsumo": "Teste",
+          "observacaoConsumo": "Boa",
+          "ocasiao": "",
+          "identificador": "Garrafa 1"
+        },
+        {
+          "data": "2026-06-20",
+          "loja": "Gran cru",
+          "quantidade": 1,
+          "valorUnitario": 250,
+          "compradoPor": "Thomas",
+          "presenteadoPor": "",
+          "localizacao": "Adega Principal",
+          "consumida": false,
+          "dataConsumo": "",
+          "eventoConsumo": "",
+          "observacaoConsumo": "",
+          "ocasiao": "",
+          "identificador": "Garrafa 2"
+        },
+        {
+          "data": "2026-06-20",
+          "loja": "Gran cru",
+          "quantidade": 1,
+          "valorUnitario": 250,
+          "compradoPor": "Thomas",
+          "presenteadoPor": "",
+          "localizacao": "Adega Principal",
+          "consumida": false,
+          "dataConsumo": "",
+          "eventoConsumo": "",
+          "observacaoConsumo": "",
+          "ocasiao": "",
+          "identificador": "Garrafa 3"
+        }
+      ]
+    }
+  ],
+  "consumosExternos": []
 }
