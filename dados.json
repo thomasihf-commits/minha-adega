@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-21T14:24:54.212Z",
+  "ultimaAtualizacao": "2026-06-21T14:25:44.597Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -461,6 +461,39 @@
           "loja": "Zap",
           "quantidade": 1,
           "valorUnitario": 250,
+          "compradoPor": "Thomas",
+          "presenteadoPor": "",
+          "localizacao": "Adega Principal",
+          "consumida": false,
+          "dataConsumo": "",
+          "eventoConsumo": "",
+          "observacaoConsumo": "",
+          "ocasiao": "",
+          "identificador": "Garrafa 1"
+        }
+      ]
+    },
+    {
+      "nome": "Teste guarda 3",
+      "safra": "2025",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Almaviva",
+        "uva": "Cabernet Franc",
+        "pais": "Itália",
+        "regiao": "Chablis",
+        "guarda": "Beber agora",
+        "notaVivino": 3.1,
+        "notas": ""
+      },
+      "controle": {},
+      "aquisicoes": [
+        {
+          "data": "2026-06-21",
+          "loja": "Zap",
+          "quantidade": 1,
+          "valorUnitario": 200,
           "compradoPor": "Thomas",
           "presenteadoPor": "",
           "localizacao": "Adega Principal",
