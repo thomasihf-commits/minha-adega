@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-21T14:53:22.216Z",
+  "ultimaAtualizacao": "2026-06-21T14:53:29.697Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -433,8 +433,8 @@
           "localizacao": "Reserva Especial",
           "consumida": true,
           "dataConsumo": "2026-06-21",
-          "eventoConsumo": "",
-          "observacaoConsumo": "",
+          "eventoConsumo": "Tqtqtq",
+          "observacaoConsumo": "Hahaha",
           "ocasiao": "",
           "identificador": "Garrafa 1"
         }
