@@ -1974,29 +1974,6 @@ let intervaloSincronizacao = null;
 const SUPABASE_URL = "https://ujspshfoydnwvxgzwcbq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_pkPfNfzEcP-xUZXGkrn3OQ_dHea_KEm";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-let modoSupabase = true;
-
-const detalhesPadrao = {
- "Petit Chablis Allain Geoffroy": {produtor:"Allain Geoffroy", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Branco seco, mineral, boa acidez. Combina bem com frutos do mar."},
- "Chablis Gérard Tremblay": {produtor:"Gérard Tremblay", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Chablis clássico, fresco e mineral."},
- "Garzón Estate Pinot Grigio": {produtor:"Bodega Garzón", uva:"Pinot Grigio", pais:"Uruguai", regiao:"Maldonado / Garzón", notas:"Branco leve, fresco e aromático."},
- "Gustav Gewürztraminer": {produtor:"Gustav", uva:"Gewürztraminer", pais:"Alemanha", regiao:"-", notas:"Branco aromático, floral e levemente exótico."},
- "Covela Rosé Dry": {produtor:"Quinta da Covela", uva:"-", pais:"Portugal", regiao:"Minho", notas:"Rosé seco, fresco e versátil."},
- "EPU": {produtor:"Viña Almaviva", uva:"Blend bordalês", pais:"Chile", regiao:"Puente Alto", notas:"Tinto chileno elegante, segundo vinho do Almaviva."},
- "Angélica Zapata Alta Cabernet Franc": {produtor:"Catena Zapata", uva:"Cabernet Franc", pais:"Argentina", regiao:"Mendoza", notas:"Tinto estruturado, com boa complexidade."},
- "Marchese Antinori Chianti Classico Riserva": {produtor:"Marchesi Antinori", uva:"Sangiovese", pais:"Itália", regiao:"Toscana / Chianti Classico", notas:"Tinto italiano clássico, boa acidez e gastronomia."},
- "EQ Granite Pinot Noir": {produtor:"Matetic Vineyards", uva:"Pinot Noir", pais:"Chile", regiao:"Valle de Casablanca", notas:"Pinot Noir elegante, fresco e mineral."},
- "Sideral": {produtor:"Viña San Pedro", uva:"Blend", pais:"Chile", regiao:"Valle del Cachapoal", notas:"Tinto chileno de bom corpo e boa presença."},
- "Côtes du Rhône E. Guigal": {produtor:"E. Guigal", uva:"Blend Rhône", pais:"França", regiao:"Côtes du Rhône", notas:"Tinto francês versátil, com frutas vermelhas e especiarias."},
- "Arboleda Syrah": {produtor:"Arboleda", uva:"Syrah", pais:"Chile", regiao:"Valle de Aconcagua", notas:"Tinto intenso, com notas de especiarias."},
- "Arboleda Brisa": {produtor:"Arboleda", uva:"Blend", pais:"Chile", regiao:"Valle de Aconcagua", notas:"Vinho chileno fresco e fácil de beber."},
- "Arboleda Pinot Noir": {produtor:"Arboleda", uva:"Pinot Noir", pais:"Chile", regiao:"Aconcagua Costa", notas:"Pinot Noir leve, fresco e elegante."},
- "Cadus Malbec": {produtor:"Cadus", uva:"Malbec", pais:"Argentina", regiao:"Valle de Uco / Tupungato", notas:"Malbec argentino, bom corpo e fruta madura."},
- "Seleccion de Parcelas Chardonnay": {produtor:"-", uva:"Chardonnay", pais:"Chile", regiao:"Vale Central", notas:"Branco Chardonnay. Completar produtor depois."},
- "Gustav Riesling Trocken": {produtor:"Gustav", uva:"Riesling", pais:"Alemanha", regiao:"Rheinhessen", notas:"Riesling seco, fresco e gastronômico."},
- "1865 Gran Reserva Cabernet Sauvignon": {produtor:"Viña San Pedro", uva:"Cabernet Sauvignon", pais:"Chile", regiao:"Valle del Maipo / Las Piedras", notas:"Tinto encorpado, clássico Cabernet chileno."},
- "Bruce Jack Daily Brew Pinotage": {produtor:"Bruce Jack", uva:"Pinotage", pais:"África do Sul", regiao:"Western Cape", notas:"Tinto sul-africano frutado e descontraído."}
-};
 
 
 function normalizarNumero(valor){
@@ -2024,7 +2001,7 @@ function mapearGarrafa(row){
 
 function mapearVinho(row){
  const aquisicoes = (row.garrafas || []).map(mapearGarrafa);
- const vinho = {
+ return {
    id: row.id,
    nome: row.nome || "",
    safra: row.safra ? String(row.safra) : "",
@@ -2043,7 +2020,6 @@ function mapearVinho(row){
    controle:{},
    aquisicoes
  };
- return vinho;
 }
 
 async function carregarDoSupabase(silencioso=true){
@@ -2081,8 +2057,6 @@ async function carregarDoSupabase(silencioso=true){
      observacao:c.observacao || ""
    }));
 
-   salvar();
-   salvarConsumosExternos();
    renderizar();
    if(!silencioso) alert("Dados carregados do Supabase.");
    return true;
@@ -2131,21 +2105,46 @@ async function atualizarVinhoSupabase(v){
 }
 
 
+const detalhesPadrao = {
+ "Petit Chablis Allain Geoffroy": {produtor:"Allain Geoffroy", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Branco seco, mineral, boa acidez. Combina bem com frutos do mar."},
+ "Chablis Gérard Tremblay": {produtor:"Gérard Tremblay", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Chablis clássico, fresco e mineral."},
+ "Garzón Estate Pinot Grigio": {produtor:"Bodega Garzón", uva:"Pinot Grigio", pais:"Uruguai", regiao:"Maldonado / Garzón", notas:"Branco leve, fresco e aromático."},
+ "Gustav Gewürztraminer": {produtor:"Gustav", uva:"Gewürztraminer", pais:"Alemanha", regiao:"-", notas:"Branco aromático, floral e levemente exótico."},
+ "Covela Rosé Dry": {produtor:"Quinta da Covela", uva:"-", pais:"Portugal", regiao:"Minho", notas:"Rosé seco, fresco e versátil."},
+ "EPU": {produtor:"Viña Almaviva", uva:"Blend bordalês", pais:"Chile", regiao:"Puente Alto", notas:"Tinto chileno elegante, segundo vinho do Almaviva."},
+ "Angélica Zapata Alta Cabernet Franc": {produtor:"Catena Zapata", uva:"Cabernet Franc", pais:"Argentina", regiao:"Mendoza", notas:"Tinto estruturado, com boa complexidade."},
+ "Marchese Antinori Chianti Classico Riserva": {produtor:"Marchesi Antinori", uva:"Sangiovese", pais:"Itália", regiao:"Toscana / Chianti Classico", notas:"Tinto italiano clássico, boa acidez e gastronomia."},
+ "EQ Granite Pinot Noir": {produtor:"Matetic Vineyards", uva:"Pinot Noir", pais:"Chile", regiao:"Valle de Casablanca", notas:"Pinot Noir elegante, fresco e mineral."},
+ "Sideral": {produtor:"Viña San Pedro", uva:"Blend", pais:"Chile", regiao:"Valle del Cachapoal", notas:"Tinto chileno de bom corpo e boa presença."},
+ "Côtes du Rhône E. Guigal": {produtor:"E. Guigal", uva:"Blend Rhône", pais:"França", regiao:"Côtes du Rhône", notas:"Tinto francês versátil, com frutas vermelhas e especiarias."},
+ "Arboleda Syrah": {produtor:"Arboleda", uva:"Syrah", pais:"Chile", regiao:"Valle de Aconcagua", notas:"Tinto intenso, com notas de especiarias."},
+ "Arboleda Brisa": {produtor:"Arboleda", uva:"Blend", pais:"Chile", regiao:"Valle de Aconcagua", notas:"Vinho chileno fresco e fácil de beber."},
+ "Arboleda Pinot Noir": {produtor:"Arboleda", uva:"Pinot Noir", pais:"Chile", regiao:"Aconcagua Costa", notas:"Pinot Noir leve, fresco e elegante."},
+ "Cadus Malbec": {produtor:"Cadus", uva:"Malbec", pais:"Argentina", regiao:"Valle de Uco / Tupungato", notas:"Malbec argentino, bom corpo e fruta madura."},
+ "Seleccion de Parcelas Chardonnay": {produtor:"-", uva:"Chardonnay", pais:"Chile", regiao:"Vale Central", notas:"Branco Chardonnay. Completar produtor depois."},
+ "Gustav Riesling Trocken": {produtor:"Gustav", uva:"Riesling", pais:"Alemanha", regiao:"Rheinhessen", notas:"Riesling seco, fresco e gastronômico."},
+ "1865 Gran Reserva Cabernet Sauvignon": {produtor:"Viña San Pedro", uva:"Cabernet Sauvignon", pais:"Chile", regiao:"Valle del Maipo / Las Piedras", notas:"Tinto encorpado, clássico Cabernet chileno."},
+ "Bruce Jack Daily Brew Pinotage": {produtor:"Bruce Jack", uva:"Pinotage", pais:"África do Sul", regiao:"Western Cape", notas:"Tinto sul-africano frutado e descontraído."}
+};
+
+function salvar(){
+ // Supabase é a única fonte de dados. Não gravamos vinhos no localStorage.
+}
+
+async function sincronizarSePossivel(){
+ return true;
+}
+
+async function iniciarSincronizacaoAutomatica(){
+ return true;
+}
+
 function salvarConsumosExternos(){
- localStorage.setItem("adegaJulianaConsumosExternos", JSON.stringify(consumosExternos));
+ // Mantido por compatibilidade. Supabase é a fonte de dados.
 }
 
 function carregarConsumosExternos(){
- const salvo = localStorage.getItem("adegaJulianaConsumosExternos");
- if(salvo){
-   try{
-     consumosExternos = JSON.parse(salvo);
-   }catch(e){
-     consumosExternos = [];
-   }
- }else{
-   consumosExternos = [];
- }
+ consumosExternos = [];
 }
 
 
@@ -2284,6 +2283,7 @@ function limparConsumoExterno(){
 async function adicionarConsumoExterno(){
  const nome = document.getElementById("extNome").value.trim();
  if(!nome){ alert("Informe o nome do vinho consumido."); return; }
+
  const consumo = {
    nome: nome,
    safra: document.getElementById("extSafra").value.trim(),
@@ -2302,6 +2302,7 @@ async function adicionarConsumoExterno(){
    quantidade: parseInt(document.getElementById("extQuantidade").value) || 1,
    observacao: document.getElementById("extObservacao").value.trim()
  };
+
  try{
    const {error} = await supabaseClient.from("consumos_externos").insert(consumo);
    if(error) throw error;
@@ -2315,21 +2316,22 @@ async function adicionarConsumoExterno(){
 }
 
 
-function configurarGithub(){ alert("A sincronização agora é feita pelo Supabase. Token GitHub não é mais necessário."); }
-async function carregarDaNuvem(silencioso=false){ return await carregarDoSupabase(silencioso); }
-async function salvarNaNuvem(silencioso=false){ if(!silencioso) alert("A Adega Juliana agora salva automaticamente no Supabase."); return true; }
+function configurarGithub(){
+ alert("A sincronização agora é feita pelo Supabase. Token GitHub não é mais necessário.");
+}
+
+async function carregarDaNuvem(silencioso=false){
+ return await carregarDoSupabase(silencioso);
+}
+
+async function salvarNaNuvem(silencioso=false){
+ if(!silencioso) alert("A Adega Juliana agora salva automaticamente no Supabase.");
+ return true;
+}
 
 function carregar(){
- const salvo = localStorage.getItem("adegaJuliana");
- if(salvo){
-   try{
-     vinhos = JSON.parse(salvo);
-   }catch(e){
-     vinhos = JSON.parse(JSON.stringify(vinhosBase));
-   }
- }else{
-   vinhos = JSON.parse(JSON.stringify(vinhosBase));
- }
+ vinhos = [];
+ consumosExternos = [];
 }
 
 function garantirEstrutura(v){
@@ -2777,10 +2779,12 @@ document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
 async function atualizarConsumo(vinhoIndex, aquisicaoIndex, consumida){
  const v = garantirEstrutura(vinhos[vinhoIndex]);
  if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
+
  const a = v.aquisicoes[aquisicaoIndex];
  a.consumida = consumida;
  if(consumida && !a.dataConsumo) a.dataConsumo = new Date().toISOString().slice(0,10);
  if(!consumida){ a.dataConsumo = ""; a.eventoConsumo = ""; a.observacaoConsumo = ""; }
+
  try{
    if(a.id){
      const {error} = await supabaseClient.from("garrafas").update({
@@ -2791,36 +2795,43 @@ async function atualizarConsumo(vinhoIndex, aquisicaoIndex, consumida){
      }).eq("id", a.id);
      if(error) throw error;
    }
-   recalcularQuantidadeAtual(v);
-   salvar();
+   await carregarDoSupabase(true);
    abrirDetalhes(vinhoIndex);
-   renderizar();
- }catch(e){ console.error(e); alert("Não foi possível atualizar o consumo."); }
+ }catch(e){
+   console.error(e);
+   alert("Não foi possível atualizar o consumo.");
+ }
 }
 
 async function atualizarDadosConsumo(vinhoIndex, aquisicaoIndex, campo, valor){
  const v = garantirEstrutura(vinhos[vinhoIndex]);
  if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
+
  const a = v.aquisicoes[aquisicaoIndex];
  a[campo] = valor;
  const mapa = {dataConsumo:"data_consumo", eventoConsumo:"evento_consumo", observacaoConsumo:"observacao_consumo"};
+
  try{
    if(a.id && mapa[campo]){
      const {error} = await supabaseClient.from("garrafas").update({[mapa[campo]]: valor || null}).eq("id", a.id);
      if(error) throw error;
    }
-   salvar();
- }catch(e){ console.error(e); alert("Não foi possível salvar os dados do consumo."); }
+ }catch(e){
+   console.error(e);
+   alert("Não foi possível salvar os dados do consumo.");
+ }
 }
 
 async function excluirVinho(){
  if(vinhoSelecionado === null) return;
  const v = vinhos[vinhoSelecionado];
  if(!v) return;
+
  const confirma = confirm(`Tem certeza que deseja excluir o vinho "${v.nome}"?
 
 Essa ação remove o vinho e todas as aquisições/consumos associados a ele.`);
  if(!confirma) return;
+
  try{
    if(v.id){
      const {error} = await supabaseClient.from("vinhos").delete().eq("id", v.id);
@@ -2830,7 +2841,10 @@ Essa ação remove o vinho e todas as aquisições/consumos associados a ele.`);
    fecharDetalhes();
    await carregarDoSupabase(true);
    alert("Vinho excluído do Supabase.");
- }catch(e){ console.error(e); alert("Não foi possível excluir o vinho no Supabase."); }
+ }catch(e){
+   console.error(e);
+   alert("Não foi possível excluir o vinho no Supabase.");
+ }
 }
 
 function fecharDetalhes(){
@@ -2842,12 +2856,15 @@ async function salvarDetalhes(){
  if(vinhoSelecionado === null) return;
  const v = garantirEstrutura(vinhos[vinhoSelecionado]);
  v.detalhes.notas = document.getElementById("modalNotas").value.trim();
+
  try{
    if(v.id) await atualizarVinhoSupabase(v);
-   salvar();
    fecharDetalhes();
-   renderizar();
- }catch(e){ console.error(e); alert("Não foi possível salvar os detalhes no Supabase."); }
+   await carregarDoSupabase(true);
+ }catch(e){
+   console.error(e);
+   alert("Não foi possível salvar os detalhes no Supabase.");
+ }
 }
 
 function exportarBackup(){
@@ -3098,11 +3115,28 @@ function fecharConfiguracoes(){
  document.getElementById("modalConfiguracoes").style.display = "none";
 }
 
-carregar();
-carregarConsumosExternos();
-togglePresenteadoPor();
-renderizar();
-iniciarSincronizacaoAutomatica();
+async function inicializarApp(){
+ carregar();
+ carregarConsumosExternos();
+ togglePresenteadoPor();
+ renderizar();
+
+ const ok = await carregarDoSupabase(true);
+ if(!ok){
+   const lista = document.getElementById("listaVinhos");
+   if(lista){
+     lista.innerHTML = `<div class="empty">Não foi possível carregar o Supabase. Verifique as policies, a chave pública e a conexão.</div>`;
+   }
+ }
+
+ setInterval(()=>{
+   if(document.visibilityState === "visible"){
+     carregarDoSupabase(true);
+   }
+ }, 120000);
+}
+
+inicializarApp();
 </script>
 
 </body>
