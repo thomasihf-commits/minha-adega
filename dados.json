@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-21T00:45:04.338Z",
+  "ultimaAtualizacao": "2026-06-21T00:59:49.779Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -348,7 +348,7 @@
       "nome": "Hhhhh",
       "safra": "2026",
       "tipo": "Branco",
-      "quantidade": 2,
+      "quantidade": 1,
       "detalhes": {
         "produtor": "Almaviva",
         "uva": "Cabernet Franc",
@@ -383,8 +383,8 @@
           "compradoPor": "Thomas",
           "presenteadoPor": "",
           "localizacao": "Adega Principal",
-          "consumida": false,
-          "dataConsumo": "",
+          "consumida": true,
+          "dataConsumo": "2026-06-21",
           "eventoConsumo": "",
           "observacaoConsumo": "",
           "ocasiao": "",
