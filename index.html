@@ -1489,16 +1489,6 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 }
 
 </style>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#85002b">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Adega Juliana">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 </head>
 
 <body>
@@ -1939,10 +1929,8 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       <div class="config-grid">
         <button class="btn-secondary" onclick="exportarBackup()">Backup JSON</button>
         <button class="btn-secondary" onclick="document.getElementById('importar').click()">Importar JSON</button>
-        <input id="githubTokenInput" type="password" placeholder="Token GitHub">
-        <button class="btn-secondary" onclick="configurarGithub()">⚙️ Salvar token</button>
-        <button class="btn-secondary" onclick="carregarDaNuvem()">☁️ Carregar da nuvem</button>
-        <button class="btn-secondary btn-save" onclick="salvarNaNuvem()">☁️ Salvar na nuvem</button>
+        <button class="btn-secondary" onclick="carregarDoSupabase(false)">☁️ Recarregar Supabase</button>
+        <button class="btn-secondary btn-save" onclick="alert('A Adega Juliana agora salva automaticamente no Supabase.')">☁️ Supabase ativo</button>
       </div>
       <input id="importar" type="file" accept=".json" style="display:none" onchange="importarBackup(event)">
     </div>
@@ -1951,6 +1939,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     </div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const vinhosBase = [
  {nome:"Petit Chablis Allain Geoffroy", safra:"2022", tipo:"Branco", quantidade:1},
@@ -1982,10 +1971,10 @@ let salvandoNaNuvem = false;
 let carregandoDaNuvem = false;
 let intervaloSincronizacao = null;
 
-const GITHUB_OWNER = "thomasihf-commits";
-const GITHUB_REPO = "minha-adega";
-const GITHUB_BRANCH = "main";
-const GITHUB_FILE = "dados.json";
+const SUPABASE_URL = "https://ujspshfoydnwvxgzwcbq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_pkPfNfzEcP-xUZXGkrn3OQ_dHea_KEm";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let modoSupabase = true;
 
 const detalhesPadrao = {
  "Petit Chablis Allain Geoffroy": {produtor:"Allain Geoffroy", uva:"Chardonnay", pais:"França", regiao:"Borgonha / Chablis", notas:"Branco seco, mineral, boa acidez. Combina bem com frutos do mar."},
@@ -2009,27 +1998,138 @@ const detalhesPadrao = {
  "Bruce Jack Daily Brew Pinotage": {produtor:"Bruce Jack", uva:"Pinotage", pais:"África do Sul", regiao:"Western Cape", notas:"Tinto sul-africano frutado e descontraído."}
 };
 
-function salvar(){ localStorage.setItem("adegaJuliana", JSON.stringify(vinhos)); }
 
-async function sincronizarSePossivel(){
- const token = localStorage.getItem("githubToken");
- if(!token) return false;
- return await salvarNaNuvem(true);
+function normalizarNumero(valor){
+ const n = Number(valor || 0);
+ return Number.isFinite(n) ? n : 0;
 }
 
-async function iniciarSincronizacaoAutomatica(){
- if(intervaloSincronizacao) clearInterval(intervaloSincronizacao);
+function mapearGarrafa(row){
+ return {
+   id: row.id,
+   data: row.data_compra || "",
+   loja: row.loja || "-",
+   quantidade: 1,
+   valorUnitario: normalizarNumero(row.valor_pago),
+   compradoPor: row.comprado_por || "-",
+   presenteadoPor: row.presenteado_por || "",
+   localizacao: row.localizacao || "",
+   consumida: !!row.consumida,
+   dataConsumo: row.data_consumo || "",
+   eventoConsumo: row.evento_consumo || "",
+   observacaoConsumo: row.observacao_consumo || "",
+   ocasiao: row.ocasiao || ""
+ };
+}
+
+function mapearVinho(row){
+ const aquisicoes = (row.garrafas || []).map(mapearGarrafa);
+ const vinho = {
+   id: row.id,
+   nome: row.nome || "",
+   safra: row.safra ? String(row.safra) : "",
+   tipo: row.tipo || "Tinto",
+   quantidade: aquisicoes.filter(a=>!a.consumida).reduce((s,a)=>s+Number(a.quantidade||1),0),
+   fotoUrl: row.foto_url || "",
+   detalhes:{
+     produtor: row.produtor || "-",
+     uva: row.uva || "-",
+     pais: row.pais || "-",
+     regiao: row.regiao || "-",
+     notaVivino: normalizarNumero(row.nota_vivino),
+     guarda: row.potencial_guarda || "-",
+     notas: row.notas || ""
+   },
+   controle:{},
+   aquisicoes
+ };
+ return vinho;
+}
+
+async function carregarDoSupabase(silencioso=true){
  try{
-   await carregarDaNuvem(true);
+   const {data:vinhosData, error:erroVinhos} = await supabaseClient
+     .from("vinhos")
+     .select("*, garrafas(*)")
+     .order("nome", {ascending:true});
+   if(erroVinhos) throw erroVinhos;
+
+   const {data:consumosData, error:erroConsumos} = await supabaseClient
+     .from("consumos_externos")
+     .select("*")
+     .order("data_consumo", {ascending:false});
+   if(erroConsumos) throw erroConsumos;
+
+   vinhos = (vinhosData || []).map(mapearVinho);
+   consumosExternos = (consumosData || []).map(c=>({
+     id:c.id,
+     nome:c.nome || "",
+     safra:c.safra || "",
+     tipo:c.tipo || "Tinto",
+     produtor:c.produtor || "-",
+     uva:c.uva || "-",
+     pais:c.pais || "-",
+     regiao:c.regiao || "-",
+     notaVivino:normalizarNumero(c.nota_vivino),
+     valorPago:normalizarNumero(c.valor_pago),
+     dataConsumo:c.data_consumo || "",
+     local:c.local || "-",
+     evento:c.evento || "",
+     comQuem:c.com_quem || "",
+     compraria:c.compraria || "",
+     quantidade:Number(c.quantidade || 1),
+     observacao:c.observacao || ""
+   }));
+
+   salvar();
+   salvarConsumosExternos();
+   renderizar();
+   if(!silencioso) alert("Dados carregados do Supabase.");
+   return true;
  }catch(e){
-   console.warn("Sincronização inicial não realizada", e);
+   console.error("Erro Supabase", e);
+   if(!silencioso) alert("Não foi possível carregar os dados do Supabase. Verifique as policies e a conexão.");
+   return false;
  }
- intervaloSincronizacao = setInterval(()=>{
-   if(!salvandoNaNuvem && document.getElementById("modalDetalhes").style.display !== "flex"){
-     carregarDaNuvem(true);
-   }
- }, 120000);
 }
+
+async function inserirGarrafas(vinhoId, aquisicoes){
+ if(!aquisicoes.length) return;
+ const linhas = aquisicoes.map(a=>({
+   vinho_id: vinhoId,
+   data_compra: a.data || null,
+   loja: a.loja || null,
+   valor_pago: normalizarNumero(a.valorUnitario),
+   comprado_por: a.compradoPor || null,
+   presenteado_por: a.presenteadoPor || null,
+   localizacao: a.localizacao || null,
+   ocasiao: a.ocasiao || null,
+   consumida: !!a.consumida,
+   data_consumo: a.dataConsumo || null,
+   evento_consumo: a.eventoConsumo || null,
+   observacao_consumo: a.observacaoConsumo || null
+ }));
+ const {error} = await supabaseClient.from("garrafas").insert(linhas);
+ if(error) throw error;
+}
+
+async function atualizarVinhoSupabase(v){
+ const {error} = await supabaseClient.from("vinhos").update({
+   nome: v.nome,
+   safra: v.safra ? Number(v.safra) : null,
+   tipo: v.tipo,
+   produtor: v.detalhes?.produtor || null,
+   uva: v.detalhes?.uva || null,
+   pais: v.detalhes?.pais || null,
+   regiao: v.detalhes?.regiao || null,
+   nota_vivino: normalizarNumero(v.detalhes?.notaVivino),
+   potencial_guarda: v.detalhes?.guarda || null,
+   notas: v.detalhes?.notas || null,
+   foto_url: v.fotoUrl || null
+ }).eq("id", v.id);
+ if(error) throw error;
+}
+
 
 function salvarConsumosExternos(){
  localStorage.setItem("adegaJulianaConsumosExternos", JSON.stringify(consumosExternos));
@@ -2181,16 +2281,10 @@ function limparConsumoExterno(){
  document.getElementById("extDataConsumo").value = new Date().toISOString().split("T")[0];
 }
 
-function adicionarConsumoExterno(){
+async function adicionarConsumoExterno(){
  const nome = document.getElementById("extNome").value.trim();
-
- if(!nome){
-   alert("Informe o nome do vinho consumido.");
-   return;
- }
-
+ if(!nome){ alert("Informe o nome do vinho consumido."); return; }
  const consumo = {
-   id: "ext_" + Date.now(),
    nome: nome,
    safra: document.getElementById("extSafra").value.trim(),
    tipo: document.getElementById("extTipo").value,
@@ -2198,189 +2292,32 @@ function adicionarConsumoExterno(){
    uva: document.getElementById("extUva").value.trim() || "-",
    pais: document.getElementById("extPais").value.trim() || "-",
    regiao: document.getElementById("extRegiao").value.trim() || "-",
-   notaVivino: Number(document.getElementById("extNotaVivino").value || 0),
-   valorPago: Number(document.getElementById("extValorPago").value || 0),
-   dataConsumo: document.getElementById("extDataConsumo").value || "",
+   nota_vivino: Number(document.getElementById("extNotaVivino").value || 0),
+   valor_pago: Number(document.getElementById("extValorPago").value || 0),
+   data_consumo: document.getElementById("extDataConsumo").value || null,
    local: document.getElementById("extLocal").value.trim() || "-",
    evento: document.getElementById("extEvento").value.trim(),
-   comQuem: document.getElementById("extComQuem").value.trim(),
+   com_quem: document.getElementById("extComQuem").value.trim(),
    compraria: document.getElementById("extCompraria").value,
    quantidade: parseInt(document.getElementById("extQuantidade").value) || 1,
    observacao: document.getElementById("extObservacao").value.trim()
  };
-
- consumosExternos.push(consumo);
- salvarConsumosExternos();
- sincronizarSePossivel();
- fecharCadastroConsumoExterno();
- abrirHistoricoConsumo();
-
- alert("Consumo externo registrado.");
-}
-
-
-function configurarGithub(){
-
- const token = document.getElementById("githubTokenInput").value.trim();
-
- if(!token){
-   alert("Informe o token do GitHub.");
-   return;
- }
-
- localStorage.setItem("githubToken", token);
-
- document.getElementById("githubTokenInput").value = "";
-
- alert("Token salvo com sucesso.");
- iniciarSincronizacaoAutomatica();
-}
-
-async function carregarDaNuvem(silencioso=false){
-
- if(salvandoNaNuvem) return false;
- carregandoDaNuvem = true;
-
  try{
-   const token = localStorage.getItem("githubToken");
-   let dados;
-
-   if(token){
-     const urlApi =
-       "https://api.github.com/repos/" +
-       GITHUB_OWNER + "/" +
-       GITHUB_REPO + "/contents/" +
-       GITHUB_FILE +
-       "?ref=" + GITHUB_BRANCH +
-       "&t=" + Date.now();
-
-     const respostaApi = await fetch(urlApi, {
-       headers:{
-         "Authorization":"Bearer " + token,
-         "Accept":"application/vnd.github+json"
-       },
-       cache:"no-store"
-     });
-
-     if(!respostaApi.ok){
-       throw new Error("Erro ao carregar dados.json pela API do GitHub");
-     }
-
-     const arquivo = await respostaApi.json();
-     const texto = decodeURIComponent(escape(atob(arquivo.content.replace(/\n/g,""))));
-     dados = JSON.parse(texto);
-   }else{
-     const resposta = await fetch(
-       "https://raw.githubusercontent.com/" +
-       GITHUB_OWNER + "/" +
-       GITHUB_REPO + "/" +
-       GITHUB_BRANCH + "/" +
-       GITHUB_FILE +
-       "?t=" + Date.now(),
-       {cache:"no-store"}
-     );
-
-     if(!resposta.ok){
-       throw new Error("Erro ao carregar");
-     }
-
-     dados = await resposta.json();
-   }
-
-   vinhos = dados.vinhos || [];
-   consumosExternos = dados.consumosExternos || [];
-   salvarConsumosExternos();
-
-   enriquecerDetalhes();
-
-   salvar();
-
-   renderizar();
-
-   if(!silencioso) alert("Dados carregados da nuvem.");
-   return true;
-
- }catch(e){
-
-   console.error(e);
-
-   if(!silencioso) alert("Não foi possível carregar os dados.");
-   return false;
-
- }finally{
-   carregandoDaNuvem = false;
- }
-}
-
-async function salvarNaNuvem(silencioso=false){
-
- const token = localStorage.getItem("githubToken");
-
- if(!token){
-   if(!silencioso) alert("Configure o token do GitHub antes de salvar na nuvem.");
-   return false;
- }
-
- salvandoNaNuvem = true;
-
- try{
-   const urlApi =
-     "https://api.github.com/repos/" +
-     GITHUB_OWNER + "/" + GITHUB_REPO + "/contents/" +
-     GITHUB_FILE;
-
-   const consulta = await fetch(urlApi + "?ref=" + GITHUB_BRANCH + "&t=" + Date.now(), {
-     headers:{
-       "Authorization":"Bearer " + token,
-       "Accept":"application/vnd.github+json"
-     },
-     cache:"no-store"
-   });
-
-   if(!consulta.ok){
-     throw new Error("Não foi possível consultar o arquivo dados.json");
-   }
-
-   const arquivoAtual = await consulta.json();
-
-   const conteudo = {
-     versao:"1.0",
-     ultimaAtualizacao:new Date().toISOString(),
-     vinhos:vinhos,
-     consumosExternos:consumosExternos
-   };
-
-   const resposta = await fetch(urlApi, {
-     method:"PUT",
-     headers:{
-       "Authorization":"Bearer " + token,
-       "Accept":"application/vnd.github+json",
-       "Content-Type":"application/json"
-     },
-     body:JSON.stringify({
-       message:"Atualização da Adega Juliana",
-       content:btoa(unescape(encodeURIComponent(JSON.stringify(conteudo,null,2)))),
-       sha:arquivoAtual.sha,
-       branch:GITHUB_BRANCH
-     })
-   });
-
-   if(!resposta.ok){
-     const erro = await resposta.text();
-     throw new Error("Erro ao salvar na nuvem: " + erro);
-   }
-
-   if(!silencioso) alert("Adega salva na nuvem com sucesso.");
-   return true;
-
+   const {error} = await supabaseClient.from("consumos_externos").insert(consumo);
+   if(error) throw error;
+   fecharCadastroConsumoExterno();
+   await carregarDoSupabase(true);
+   abrirHistoricoConsumo();
  }catch(e){
    console.error(e);
-   if(!silencioso) alert("Não foi possível salvar na nuvem. Veja o console para detalhes.");
-   return false;
- }finally{
-   salvandoNaNuvem = false;
+   alert("Não foi possível registrar o consumo externo no Supabase.");
  }
 }
+
+
+function configurarGithub(){ alert("A sincronização agora é feita pelo Supabase. Token GitHub não é mais necessário."); }
+async function carregarDaNuvem(silencioso=false){ return await carregarDoSupabase(silencioso); }
+async function salvarNaNuvem(silencioso=false){ if(!silencioso) alert("A Adega Juliana agora salva automaticamente no Supabase."); return true; }
 
 function carregar(){
  const salvo = localStorage.getItem("adegaJuliana");
@@ -2689,25 +2626,22 @@ function limparFormulario(){
  togglePresenteadoPor();
 }
 
-function adicionarVinho(){
+async function adicionarVinho(){
  const nome = document.getElementById("nome").value.trim();
  const safra = document.getElementById("safra").value.trim();
- const tipo = document.getElementById("tipo").value;
+ const tipo = document.getElementById("tipo").value || "Tinto";
  const quantidade = parseInt(document.getElementById("quantidade").value) || 1;
-   
-
  if(!nome){ alert("Informe o nome do vinho"); return; }
 
  const aquisicoesNovas = [];
+ for(let n = 1; n <= quantidade; n++){
+   const aquisicao = criarAquisicaoAtual();
+   aquisicao.quantidade = 1;
+   aquisicao.identificador = `Garrafa ${n}`;
+   aquisicoesNovas.push(aquisicao);
+ }
 
-for(let n = 1; n <= quantidade; n++){
-  const aquisicao = criarAquisicaoAtual();
-  aquisicao.quantidade = 1;
-  aquisicao.identificador = `Garrafa ${n}`;
-  aquisicoesNovas.push(aquisicao);
-}
-
-const detalhes = {
+ const detalhes = {
    produtor: document.getElementById("produtor").value.trim() || "-",
    uva: document.getElementById("uva").value.trim() || "-",
    pais: document.getElementById("pais").value.trim() || "-",
@@ -2715,28 +2649,39 @@ const detalhes = {
    guarda: document.getElementById("potencialGuarda").value.trim() || "-",
    notaVivino: Number(document.getElementById("notaVivino").value || 0),
    notas: ""
-};
+ };
 
- const existente = vinhos.find(v => v.nome.toLowerCase()===nome.toLowerCase() && String(v.safra)===String(safra));
- if(existente){
-   garantirEstrutura(existente);
-existente.aquisicoes.push(...aquisicoesNovas);
-recalcularQuantidadeAtual(existente);
-
-   ["produtor","uva","pais","regiao","guarda"].forEach(campo=>{
-     if(detalhes[campo] && detalhes[campo] !== "-") existente.detalhes[campo] = detalhes[campo];
-   });
- }else{
-   const novoVinho = {nome,safra,tipo,quantidade,detalhes,controle:{},aquisicoes:aquisicoesNovas};
-   recalcularQuantidadeAtual(novoVinho);
-   vinhos.push(novoVinho);
+ try{
+   const existente = vinhos.find(v => v.nome.toLowerCase()===nome.toLowerCase() && String(v.safra)===String(safra));
+   if(existente && existente.id){
+     garantirEstrutura(existente);
+     existente.tipo = tipo;
+     existente.detalhes = {...existente.detalhes, ...detalhes};
+     await atualizarVinhoSupabase(existente);
+     await inserirGarrafas(existente.id, aquisicoesNovas);
+   }else{
+     const {data, error} = await supabaseClient.from("vinhos").insert({
+       nome,
+       safra: safra ? Number(safra) : null,
+       tipo,
+       produtor: detalhes.produtor,
+       uva: detalhes.uva,
+       pais: detalhes.pais,
+       regiao: detalhes.regiao,
+       nota_vivino: detalhes.notaVivino,
+       potencial_guarda: detalhes.guarda,
+       notas: ""
+     }).select("id").single();
+     if(error) throw error;
+     await inserirGarrafas(data.id, aquisicoesNovas);
+   }
+   limparFormulario();
+   fecharCadastro();
+   await carregarDoSupabase(true);
+ }catch(e){
+   console.error(e);
+   alert("Não foi possível salvar o vinho no Supabase.");
  }
-
- salvar();
- sincronizarSePossivel();
- limparFormulario();
- fecharCadastro();
- renderizar();
 }
 
 function abrirDetalhes(i){
@@ -2829,63 +2774,63 @@ document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
  document.getElementById("modalDetalhes").style.display = "flex";
 }
 
-function atualizarConsumo(vinhoIndex, aquisicaoIndex, consumida){
+async function atualizarConsumo(vinhoIndex, aquisicaoIndex, consumida){
  const v = garantirEstrutura(vinhos[vinhoIndex]);
  if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
-
  const a = v.aquisicoes[aquisicaoIndex];
  a.consumida = consumida;
-
- if(consumida && !a.dataConsumo){
-   a.dataConsumo = new Date().toISOString().slice(0,10);
- }
-
- if(!consumida){
-   a.dataConsumo = "";
-   a.eventoConsumo = "";
-   a.observacaoConsumo = "";
- }
-
- recalcularQuantidadeAtual(v);
- salvar();
- sincronizarSePossivel();
- abrirDetalhes(vinhoIndex);
- renderizar();
+ if(consumida && !a.dataConsumo) a.dataConsumo = new Date().toISOString().slice(0,10);
+ if(!consumida){ a.dataConsumo = ""; a.eventoConsumo = ""; a.observacaoConsumo = ""; }
+ try{
+   if(a.id){
+     const {error} = await supabaseClient.from("garrafas").update({
+       consumida: !!a.consumida,
+       data_consumo: a.dataConsumo || null,
+       evento_consumo: a.eventoConsumo || null,
+       observacao_consumo: a.observacaoConsumo || null
+     }).eq("id", a.id);
+     if(error) throw error;
+   }
+   recalcularQuantidadeAtual(v);
+   salvar();
+   abrirDetalhes(vinhoIndex);
+   renderizar();
+ }catch(e){ console.error(e); alert("Não foi possível atualizar o consumo."); }
 }
 
-function atualizarDadosConsumo(vinhoIndex, aquisicaoIndex, campo, valor){
+async function atualizarDadosConsumo(vinhoIndex, aquisicaoIndex, campo, valor){
  const v = garantirEstrutura(vinhos[vinhoIndex]);
  if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
-
- v.aquisicoes[aquisicaoIndex][campo] = valor;
- salvar();
- sincronizarSePossivel();
+ const a = v.aquisicoes[aquisicaoIndex];
+ a[campo] = valor;
+ const mapa = {dataConsumo:"data_consumo", eventoConsumo:"evento_consumo", observacaoConsumo:"observacao_consumo"};
+ try{
+   if(a.id && mapa[campo]){
+     const {error} = await supabaseClient.from("garrafas").update({[mapa[campo]]: valor || null}).eq("id", a.id);
+     if(error) throw error;
+   }
+   salvar();
+ }catch(e){ console.error(e); alert("Não foi possível salvar os dados do consumo."); }
 }
 
 async function excluirVinho(){
  if(vinhoSelecionado === null) return;
  const v = vinhos[vinhoSelecionado];
  if(!v) return;
- const confirma = confirm(`Tem certeza que deseja excluir o vinho "${v.nome}"?\n\nEssa ação remove o vinho e todas as aquisições/consumos associados a ele.`);
+ const confirma = confirm(`Tem certeza que deseja excluir o vinho "${v.nome}"?
+
+Essa ação remove o vinho e todas as aquisições/consumos associados a ele.`);
  if(!confirma) return;
-
- vinhos.splice(vinhoSelecionado, 1);
- vinhoSelecionado = null;
- salvar();
- fecharDetalhes();
- renderizar();
-
- const token = localStorage.getItem("githubToken");
- if(token){
-   const salvou = await salvarNaNuvem(true);
-   if(salvou){
-     alert("Vinho excluído e sincronizado na nuvem.");
-   }else{
-     alert("Vinho excluído localmente, mas não consegui salvar na nuvem. Clique em Configurações > Salvar na nuvem antes de atualizar a página.");
+ try{
+   if(v.id){
+     const {error} = await supabaseClient.from("vinhos").delete().eq("id", v.id);
+     if(error) throw error;
    }
- }else{
-   alert("Vinho excluído localmente. Para não voltar após carregar a nuvem, configure o token e salve na nuvem.");
- }
+   vinhoSelecionado = null;
+   fecharDetalhes();
+   await carregarDoSupabase(true);
+   alert("Vinho excluído do Supabase.");
+ }catch(e){ console.error(e); alert("Não foi possível excluir o vinho no Supabase."); }
 }
 
 function fecharDetalhes(){
@@ -2893,13 +2838,16 @@ function fecharDetalhes(){
  vinhoSelecionado = null;
 }
 
-function salvarDetalhes(){
+async function salvarDetalhes(){
  if(vinhoSelecionado === null) return;
- garantirEstrutura(vinhos[vinhoSelecionado]);
- vinhos[vinhoSelecionado].detalhes.notas = document.getElementById("modalNotas").value.trim();
- salvar();
- sincronizarSePossivel();
- fecharDetalhes();
+ const v = garantirEstrutura(vinhos[vinhoSelecionado]);
+ v.detalhes.notas = document.getElementById("modalNotas").value.trim();
+ try{
+   if(v.id) await atualizarVinhoSupabase(v);
+   salvar();
+   fecharDetalhes();
+   renderizar();
+ }catch(e){ console.error(e); alert("Não foi possível salvar os detalhes no Supabase."); }
 }
 
 function exportarBackup(){
@@ -3152,19 +3100,10 @@ function fecharConfiguracoes(){
 
 carregar();
 carregarConsumosExternos();
-enriquecerDetalhes();
 togglePresenteadoPor();
 renderizar();
 iniciarSincronizacaoAutomatica();
 </script>
 
-
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(err => console.warn('Service Worker não registrado:', err));
-  });
-}
-</script>
 </body>
 </html>
