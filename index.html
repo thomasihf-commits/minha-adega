@@ -1275,6 +1275,187 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   filter:brightness(.95);
 }
 
+
+/* ===============================
+   ABA ESTATÍSTICAS - GRÁFICOS
+   =============================== */
+.aba-estatisticas{
+  display:none;
+}
+.stats-dashboard{
+  display:grid;
+  gap:16px;
+}
+.stats-kpis{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+.stats-kpi{
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 6px 18px rgba(70,25,22,.06);
+}
+.stats-kpi small{
+  display:block;
+  color:#6b6063;
+  font-weight:900;
+  margin-bottom:8px;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
+.stats-kpi strong{
+  display:block;
+  color:var(--vinho);
+  font-size:25px;
+  line-height:1.1;
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.chart-card{
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 8px 22px rgba(70,25,22,.07);
+  min-height:310px;
+}
+.chart-card h3{
+  margin:0 0 4px;
+  font-size:18px;
+  color:#271f22;
+}
+.chart-card p{
+  margin:0 0 16px;
+  font-size:13px;
+  color:#6d6265;
+}
+.chart-bars{
+  display:grid;
+  gap:10px;
+}
+.chart-row{
+  display:grid;
+  grid-template-columns:72px 1fr 52px;
+  gap:10px;
+  align-items:center;
+  font-size:12px;
+  color:#5d5356;
+}
+.chart-track{
+  height:13px;
+  background:#f5ebe7;
+  border-radius:999px;
+  overflow:hidden;
+  display:flex;
+}
+.chart-fill{
+  min-width:2px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--vinho),#a00035);
+}
+.chart-fill.secondary{
+  background:linear-gradient(135deg,#d8b13f,#b88f26);
+}
+.chart-fill.rosefill{
+  background:linear-gradient(135deg,#ef6d7d,#d35f6f);
+}
+.chart-dual{
+  display:grid;
+  gap:12px;
+}
+.dual-row{
+  display:grid;
+  grid-template-columns:72px 1fr 46px;
+  gap:10px;
+  align-items:center;
+  font-size:12px;
+  color:#5d5356;
+}
+.dual-track{
+  display:grid;
+  gap:4px;
+}
+.dual-bar{
+  height:9px;
+  border-radius:999px;
+  background:#f4e8e3;
+  overflow:hidden;
+}
+.dual-bar span{
+  display:block;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--vinho),#a00035);
+}
+.dual-bar.consumo span{
+  background:linear-gradient(135deg,#d8b13f,#b88f26);
+}
+.chart-legend{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:14px;
+  font-size:12px;
+  color:#6b6063;
+  font-weight:800;
+}
+.legend-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  display:inline-block;
+  margin-right:6px;
+  background:var(--vinho);
+}
+.legend-dot.gold{background:#d8b13f;}
+.stats-empty{
+  background:#fffaf7;
+  border:1px dashed var(--borda);
+  border-radius:14px;
+  padding:24px;
+  color:#74686b;
+  text-align:center;
+}
+.stats-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+.stats-table th,
+.stats-table td{
+  padding:9px 8px;
+  border-bottom:1px solid #f0e4df;
+  text-align:left;
+}
+.stats-table th{
+  color:#6b6063;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.stats-table td:last-child,
+.stats-table th:last-child{
+  text-align:right;
+  font-weight:900;
+  color:#3b3336;
+}
+@media(max-width:900px){
+  .stats-kpis{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .stats-grid{grid-template-columns:1fr;}
+}
+@media(max-width:560px){
+  .stats-kpis{grid-template-columns:1fr;}
+  .chart-row,.dual-row{grid-template-columns:58px 1fr 42px;}
+  .chart-card{padding:14px;}
+}
+
 </style>
 </head>
 
@@ -1299,6 +1480,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
   <nav class="app-tabs">
     <button class="tab active" onclick="mostrarAba('adega')">🍷 Adega</button>
+    <button class="tab" onclick="mostrarAba('estatisticas')">📊 Estatísticas</button>
     <button class="tab" onclick="abrirHistoricoConsumo()">🕘 Histórico</button>
     <button class="tab" onclick="abrirCadastroConsumoExterno()">🍽️ Consumo externo</button>
     <button class="tab" onclick="abrirConfiguracoes()">⚙️ Configurações</button>
@@ -1316,7 +1498,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
   </section>
 
-  <section>
+  <section id="secaoListaVinhos">
     <div class="main-title clean">
       <h2>Lista de vinhos</h2>
       <div class="sort-inline">
@@ -1331,6 +1513,54 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       </div>
     </div>
     <div id="listaVinhos" class="lista"></div>
+  </section>
+
+  <section id="abaEstatisticas" class="aba-estatisticas">
+    <div class="main-title clean">
+      <h2>Estatísticas da adega</h2>
+    </div>
+
+    <div class="stats-dashboard">
+      <div class="stats-kpis">
+        <div class="stats-kpi"><small>Valor investido</small><strong id="kpiValorInvestido">-</strong></div>
+        <div class="stats-kpi"><small>Valor em estoque</small><strong id="kpiValorEstoque">-</strong></div>
+        <div class="stats-kpi"><small>Garrafas compradas</small><strong id="kpiGarrafasCompradas">-</strong></div>
+        <div class="stats-kpi"><small>Garrafas consumidas</small><strong id="kpiGarrafasConsumidas">-</strong></div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="chart-card">
+          <h3>Compras x consumos por mês</h3>
+          <p>Quantidade de garrafas nos últimos 12 meses.</p>
+          <div id="graficoComprasConsumos" class="chart-dual"></div>
+          <div class="chart-legend"><span><i class="legend-dot"></i>Compras</span><span><i class="legend-dot gold"></i>Consumos</span></div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Valor comprado por mês</h3>
+          <p>Total gasto nas aquisições registradas.</p>
+          <div id="graficoValorCompras" class="chart-bars"></div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Consumo por país</h3>
+          <p>Garrafas consumidas agrupadas pelo país do vinho.</p>
+          <div id="graficoConsumoPais" class="chart-bars"></div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Resumo por tipo</h3>
+          <p>Estoque atual por estilo de vinho.</p>
+          <div id="graficoEstoqueTipo" class="chart-bars"></div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Top vinhos consumidos</h3>
+        <p>Ranking considerando consumos da adega e consumos externos.</p>
+        <div id="tabelaTopConsumidos"></div>
+      </div>
+    </div>
   </section>
 </main>
 <button class="fab" onclick="abrirCadastro()">＋</button>
@@ -2250,6 +2480,8 @@ function renderizar(){
 
  atualizarResumo();
  setMenuAtivo();
+ const abaEstatisticas = document.getElementById("abaEstatisticas");
+ if(abaEstatisticas && abaEstatisticas.style.display === "block") renderizarEstatisticas();
 }
 
 function filtrarTodos(){
@@ -2590,11 +2822,190 @@ function importarBackup(event){
 }
 
 
+
+function numeroMesLabel(chave){
+ const partes = String(chave || "").split("-");
+ if(partes.length !== 2) return "Sem data";
+ const nomes = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+ const mes = Number(partes[1]) - 1;
+ return (nomes[mes] || partes[1]) + "/" + partes[0].slice(2);
+}
+
+function chaveMes(data){
+ if(!data || !/^\d{4}-\d{2}/.test(String(data))) return "";
+ return String(data).slice(0,7);
+}
+
+function ultimosMeses(qtd=12){
+ const meses = [];
+ const hoje = new Date();
+ const base = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+ for(let i=qtd-1;i>=0;i--){
+   const d = new Date(base.getFullYear(), base.getMonth()-i, 1);
+   meses.push(d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"));
+ }
+ return meses;
+}
+
+function incrementarMapa(mapa, chave, valor){
+ if(!chave) return;
+ mapa[chave] = Number(mapa[chave] || 0) + Number(valor || 0);
+}
+
+function coletarMetricas(){
+ const comprasMes = {};
+ const consumosMes = {};
+ const valorComprasMes = {};
+ const consumoPais = {};
+ const estoqueTipo = {};
+ const topConsumidos = {};
+ let valorInvestido = 0;
+ let valorConsumido = 0;
+ let garrafasCompradas = 0;
+ let garrafasConsumidas = 0;
+
+ vinhos.forEach(v=>{
+   garantirEstrutura(v);
+   incrementarMapa(estoqueTipo, v.tipo || "Não informado", Number(v.quantidade || 0));
+
+   (v.aquisicoes || []).forEach(a=>{
+     const qtd = Number(a.quantidade || 0);
+     const valorUnitario = Number(a.valorUnitario || 0);
+     const valorTotal = qtd * valorUnitario;
+     const mesCompra = chaveMes(a.data);
+     garrafasCompradas += qtd;
+     valorInvestido += valorTotal;
+     incrementarMapa(comprasMes, mesCompra, qtd);
+     incrementarMapa(valorComprasMes, mesCompra, valorTotal);
+
+     if(a.consumida){
+       const mesConsumo = chaveMes(a.dataConsumo);
+       garrafasConsumidas += qtd;
+       valorConsumido += valorTotal;
+       incrementarMapa(consumosMes, mesConsumo, qtd);
+       incrementarMapa(consumoPais, v.detalhes?.pais || "Não informado", qtd);
+       incrementarMapa(topConsumidos, `${v.nome} ${v.safra || ""}`.trim(), qtd);
+     }
+   });
+ });
+
+ consumosExternos.forEach(c=>{
+   const qtd = Number(c.quantidade || 1);
+   const valorTotal = qtd * Number(c.valorPago || 0);
+   garrafasConsumidas += qtd;
+   valorConsumido += valorTotal;
+   incrementarMapa(consumosMes, chaveMes(c.dataConsumo), qtd);
+   incrementarMapa(consumoPais, c.pais || "Não informado", qtd);
+   incrementarMapa(topConsumidos, `${c.nome || "Vinho externo"} ${c.safra || ""}`.trim(), qtd);
+ });
+
+ return {
+   comprasMes, consumosMes, valorComprasMes, consumoPais, estoqueTipo, topConsumidos,
+   valorInvestido, valorConsumido,
+   valorEstoque: Math.max(valorInvestido - valorConsumido, 0),
+   garrafasCompradas, garrafasConsumidas
+ };
+}
+
+function renderBarChart(id, dados, opcoes={}){
+ const el = document.getElementById(id);
+ if(!el) return;
+ const entradas = Object.entries(dados).filter(([_,v])=>Number(v)>0);
+ if(!entradas.length){
+   el.innerHTML = `<div class="stats-empty">Ainda não há dados suficientes para este gráfico.</div>`;
+   return;
+ }
+ const ordenadas = opcoes.manterOrdem ? entradas : entradas.sort((a,b)=>Number(b[1])-Number(a[1])).slice(0, opcoes.limite || 8);
+ const max = Math.max(...ordenadas.map(([_,v])=>Number(v)),1);
+ el.innerHTML = ordenadas.map(([label,valor],idx)=>{
+   const largura = Math.max((Number(valor)/max)*100, 4);
+   const classe = idx % 3 === 1 ? "secondary" : idx % 3 === 2 ? "rosefill" : "";
+   const valorLabel = opcoes.moeda ? moeda(valor) : Number(valor).toLocaleString("pt-BR");
+   const labelFinal = opcoes.mes ? numeroMesLabel(label) : label;
+   return `
+     <div class="chart-row">
+       <span>${labelFinal}</span>
+       <div class="chart-track"><div class="chart-fill ${classe}" style="width:${largura}%"></div></div>
+       <strong>${valorLabel}</strong>
+     </div>`;
+ }).join("");
+}
+
+function renderDualChart(id, compras, consumos){
+ const el = document.getElementById(id);
+ if(!el) return;
+ const meses = ultimosMeses(12);
+ const max = Math.max(...meses.flatMap(m=>[Number(compras[m]||0), Number(consumos[m]||0)]),1);
+ const temDados = meses.some(m=>Number(compras[m]||0)>0 || Number(consumos[m]||0)>0);
+ if(!temDados){
+   el.innerHTML = `<div class="stats-empty">Cadastre datas de compra ou consumo para visualizar a evolução mensal.</div>`;
+   return;
+ }
+ el.innerHTML = meses.map(m=>{
+   const c = Number(compras[m] || 0);
+   const s = Number(consumos[m] || 0);
+   return `
+     <div class="dual-row">
+       <span>${numeroMesLabel(m)}</span>
+       <div class="dual-track">
+         <div class="dual-bar"><span style="width:${Math.max((c/max)*100, c ? 4 : 0)}%"></span></div>
+         <div class="dual-bar consumo"><span style="width:${Math.max((s/max)*100, s ? 4 : 0)}%"></span></div>
+       </div>
+       <strong>${c}/${s}</strong>
+     </div>`;
+ }).join("");
+}
+
+function renderTopConsumidos(id, dados){
+ const el = document.getElementById(id);
+ if(!el) return;
+ const top = Object.entries(dados).sort((a,b)=>Number(b[1])-Number(a[1])).slice(0,8);
+ if(!top.length){
+   el.innerHTML = `<div class="stats-empty">Nenhum consumo registrado ainda.</div>`;
+   return;
+ }
+ el.innerHTML = `
+   <table class="stats-table">
+     <thead><tr><th>Vinho</th><th>Garrafas</th></tr></thead>
+     <tbody>
+       ${top.map(([nome,qtd])=>`<tr><td>${nome}</td><td>${qtd}</td></tr>`).join("")}
+     </tbody>
+   </table>`;
+}
+
+function renderizarEstatisticas(){
+ const m = coletarMetricas();
+ const setTxt = (id, valor) => { const el = document.getElementById(id); if(el) el.innerText = valor; };
+ setTxt("kpiValorInvestido", moeda(m.valorInvestido));
+ setTxt("kpiValorEstoque", moeda(m.valorEstoque));
+ setTxt("kpiGarrafasCompradas", m.garrafasCompradas);
+ setTxt("kpiGarrafasConsumidas", m.garrafasConsumidas);
+
+ renderDualChart("graficoComprasConsumos", m.comprasMes, m.consumosMes);
+ const mesesValor = {};
+ ultimosMeses(12).forEach(mes=>mesesValor[mes] = Number(m.valorComprasMes[mes] || 0));
+ renderBarChart("graficoValorCompras", mesesValor, {moeda:true, mes:true, manterOrdem:true});
+ renderBarChart("graficoConsumoPais", m.consumoPais, {limite:8});
+ renderBarChart("graficoEstoqueTipo", m.estoqueTipo, {limite:8});
+ renderTopConsumidos("tabelaTopConsumidos", m.topConsumidos);
+}
+
 function mostrarAba(aba){
  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
- if(aba === 'adega'){
-   const primeira = document.querySelector('.tab');
-   if(primeira) primeira.classList.add('active');
+ const abaAdega = document.getElementById("abaAdega");
+ const secaoLista = document.getElementById("secaoListaVinhos");
+ const abaEstatisticas = document.getElementById("abaEstatisticas");
+
+ if(abaAdega) abaAdega.style.display = aba === "adega" ? "block" : "none";
+ if(secaoLista) secaoLista.style.display = aba === "adega" ? "block" : "none";
+ if(abaEstatisticas) abaEstatisticas.style.display = aba === "estatisticas" ? "block" : "none";
+
+ const tabs = document.querySelectorAll('.tab');
+ if(aba === 'estatisticas'){
+   if(tabs[1]) tabs[1].classList.add('active');
+   renderizarEstatisticas();
+ }else{
+   if(tabs[0]) tabs[0].classList.add('active');
  }
 }
 
