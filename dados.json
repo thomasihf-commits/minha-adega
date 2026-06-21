@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-21T00:59:49.779Z",
+  "ultimaAtualizacao": "2026-06-21T14:10:36.207Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -404,6 +404,39 @@
           "observacaoConsumo": "",
           "ocasiao": "",
           "identificador": "Garrafa 3"
+        }
+      ]
+    },
+    {
+      "nome": "Teste guarda",
+      "safra": "2020",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "Almaviva",
+        "uva": "Cabernet Franc",
+        "pais": "Portugal",
+        "regiao": "Borgonha",
+        "guarda": "3 a 5 anos",
+        "notaVivino": 4.1,
+        "notas": ""
+      },
+      "controle": {},
+      "aquisicoes": [
+        {
+          "data": "2026-06-21",
+          "loja": "Gran cru",
+          "quantidade": 1,
+          "valorUnitario": 250,
+          "compradoPor": "Thomas",
+          "presenteadoPor": "",
+          "localizacao": "Reserva Especial",
+          "consumida": false,
+          "dataConsumo": "",
+          "eventoConsumo": "",
+          "observacaoConsumo": "",
+          "ocasiao": "",
+          "identificador": "Garrafa 1"
         }
       ]
     }
