@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-21T14:10:36.207Z",
+  "ultimaAtualizacao": "2026-06-21T14:24:54.212Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -431,6 +431,39 @@
           "compradoPor": "Thomas",
           "presenteadoPor": "",
           "localizacao": "Reserva Especial",
+          "consumida": false,
+          "dataConsumo": "",
+          "eventoConsumo": "",
+          "observacaoConsumo": "",
+          "ocasiao": "",
+          "identificador": "Garrafa 1"
+        }
+      ]
+    },
+    {
+      "nome": "Teste potencial",
+      "safra": "2025",
+      "tipo": "Tinto",
+      "quantidade": 1,
+      "detalhes": {
+        "produtor": "-",
+        "uva": "Cabernet Franc",
+        "pais": "Espanha",
+        "regiao": "Chablis",
+        "guarda": "5 a 10 anos",
+        "notaVivino": 3.9,
+        "notas": ""
+      },
+      "controle": {},
+      "aquisicoes": [
+        {
+          "data": "2026-06-21",
+          "loja": "Zap",
+          "quantidade": 1,
+          "valorUnitario": 250,
+          "compradoPor": "Thomas",
+          "presenteadoPor": "",
+          "localizacao": "Adega Principal",
           "consumida": false,
           "dataConsumo": "",
           "eventoConsumo": "",
