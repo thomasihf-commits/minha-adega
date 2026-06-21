@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "ultimaAtualizacao": "2026-06-21T14:51:58.706Z",
+  "ultimaAtualizacao": "2026-06-21T14:53:22.216Z",
   "vinhos": [
     {
       "nome": "Petit Chablis Allain Geoffroy",
@@ -411,7 +411,7 @@
       "nome": "Teste guarda",
       "safra": "2020",
       "tipo": "Tinto",
-      "quantidade": 1,
+      "quantidade": 0,
       "detalhes": {
         "produtor": "Almaviva",
         "uva": "Cabernet Franc",
@@ -431,8 +431,8 @@
           "compradoPor": "Thomas",
           "presenteadoPor": "",
           "localizacao": "Reserva Especial",
-          "consumida": false,
-          "dataConsumo": "",
+          "consumida": true,
+          "dataConsumo": "2026-06-21",
           "eventoConsumo": "",
           "observacaoConsumo": "",
           "ocasiao": "",
