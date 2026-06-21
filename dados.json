@@ -10,7 +10,7 @@
       "detalhes": {
         "produtor": "Allain Geoffroy",
         "uva": "Chardonnay",
-        "pais": "FranÃ§a",
+        "pais": "França",
         "regiao": "Borgonha / Chablis",
         "notas": "Branco seco, mineral, boa acidez. Combina bem com frutos do mar."
       },
@@ -21,16 +21,16 @@
       }
     },
     {
-      "nome": "Chablis GÃ©rard Tremblay",
+      "nome": "Chablis Gérard Tremblay",
       "safra": "2023",
       "tipo": "Branco",
       "quantidade": 1,
       "detalhes": {
-        "produtor": "GÃ©rard Tremblay",
+        "produtor": "Gérard Tremblay",
         "uva": "Chardonnay",
-        "pais": "FranÃ§a",
+        "pais": "França",
         "regiao": "Borgonha / Chablis",
-        "notas": "Chablis clÃ¡ssico, fresco e mineral."
+        "notas": "Chablis clássico, fresco e mineral."
       },
       "aquisicoes": [],
       "controle": {
@@ -39,16 +39,16 @@
       }
     },
     {
-      "nome": "GarzÃ³n Estate Pinot Grigio",
+      "nome": "Garzón Estate Pinot Grigio",
       "safra": "2024",
       "tipo": "Branco",
       "quantidade": 2,
       "detalhes": {
-        "produtor": "Bodega GarzÃ³n",
+        "produtor": "Bodega Garzón",
         "uva": "Pinot Grigio",
         "pais": "Uruguai",
-        "regiao": "Maldonado / GarzÃ³n",
-        "notas": "Branco leve, fresco e aromÃ¡tico."
+        "regiao": "Maldonado / Garzón",
+        "notas": "Branco leve, fresco e aromático."
       },
       "aquisicoes": [],
       "controle": {
@@ -57,16 +57,16 @@
       }
     },
     {
-      "nome": "Gustav GewÃ¼rztraminer",
+      "nome": "Gustav Gewürztraminer",
       "safra": "2025",
       "tipo": "Branco",
       "quantidade": 2,
       "detalhes": {
         "produtor": "Gustav",
-        "uva": "GewÃ¼rztraminer",
+        "uva": "Gewürztraminer",
         "pais": "Alemanha",
         "regiao": "-",
-        "notas": "Branco aromÃ¡tico, floral e levemente exÃ³tico."
+        "notas": "Branco aromático, floral e levemente exótico."
       },
       "aquisicoes": [],
       "controle": {
@@ -75,16 +75,16 @@
       }
     },
     {
-      "nome": "Covela RosÃ© Dry",
+      "nome": "Covela Rosé Dry",
       "safra": "2019",
-      "tipo": "RosÃ©",
+      "tipo": "Rosé",
       "quantidade": 1,
       "detalhes": {
         "produtor": "Quinta da Covela",
         "uva": "-",
         "pais": "Portugal",
         "regiao": "Minho",
-        "notas": "RosÃ© seco, fresco e versÃ¡til."
+        "notas": "Rosé seco, fresco e versátil."
       },
       "aquisicoes": [],
       "controle": {
@@ -98,8 +98,8 @@
       "tipo": "Tinto",
       "quantidade": 2,
       "detalhes": {
-        "produtor": "ViÃ±a Almaviva",
-        "uva": "Blend bordalÃªs",
+        "produtor": "Viña Almaviva",
+        "uva": "Blend bordalês",
         "pais": "Chile",
         "regiao": "Puente Alto",
         "notas": "Tinto chileno elegante, segundo vinho do Almaviva."
@@ -111,7 +111,7 @@
       }
     },
     {
-      "nome": "AngÃ©lica Zapata Alta Cabernet Franc",
+      "nome": "Angélica Zapata Alta Cabernet Franc",
       "safra": "2016",
       "tipo": "Tinto",
       "quantidade": 1,
@@ -136,9 +136,9 @@
       "detalhes": {
         "produtor": "Marchesi Antinori",
         "uva": "Sangiovese",
-        "pais": "ItÃ¡lia",
+        "pais": "Itália",
         "regiao": "Toscana / Chianti Classico",
-        "notas": "Tinto italiano clÃ¡ssico, boa acidez e gastronomia."
+        "notas": "Tinto italiano clássico, boa acidez e gastronomia."
       },
       "aquisicoes": [],
       "controle": {
@@ -170,11 +170,11 @@
       "tipo": "Tinto",
       "quantidade": 3,
       "detalhes": {
-        "produtor": "ViÃ±a San Pedro",
+        "produtor": "Viña San Pedro",
         "uva": "Blend",
         "pais": "Chile",
         "regiao": "Valle del Cachapoal",
-        "notas": "Tinto chileno de bom corpo e boa presenÃ§a."
+        "notas": "Tinto chileno de bom corpo e boa presença."
       },
       "aquisicoes": [],
       "controle": {
@@ -183,16 +183,16 @@
       }
     },
     {
-      "nome": "CÃ´tes du RhÃ´ne E. Guigal",
+      "nome": "Côtes du Rhône E. Guigal",
       "safra": "2020",
       "tipo": "Tinto",
       "quantidade": 1,
       "detalhes": {
         "produtor": "E. Guigal",
-        "uva": "Blend RhÃ´ne",
-        "pais": "FranÃ§a",
-        "regiao": "CÃ´tes du RhÃ´ne",
-        "notas": "Tinto francÃªs versÃ¡til, com frutas vermelhas e especiarias."
+        "uva": "Blend Rhône",
+        "pais": "França",
+        "regiao": "Côtes du Rhône",
+        "notas": "Tinto francês versátil, com frutas vermelhas e especiarias."
       },
       "aquisicoes": [],
       "controle": {
@@ -228,7 +228,7 @@
         "uva": "Blend",
         "pais": "Chile",
         "regiao": "Valle de Aconcagua",
-        "notas": "Vinho chileno fresco e fÃ¡cil de beber."
+        "notas": "Vinho chileno fresco e fácil de beber."
       },
       "aquisicoes": [],
       "controle": {
@@ -300,7 +300,7 @@
         "uva": "Riesling",
         "pais": "Alemanha",
         "regiao": "Rheinhessen",
-        "notas": "Riesling seco, fresco e gastronÃ´mico."
+        "notas": "Riesling seco, fresco e gastronômico."
       },
       "aquisicoes": [],
       "controle": {
@@ -314,11 +314,11 @@
       "tipo": "Tinto",
       "quantidade": 2,
       "detalhes": {
-        "produtor": "ViÃ±a San Pedro",
+        "produtor": "Viña San Pedro",
         "uva": "Cabernet Sauvignon",
         "pais": "Chile",
         "regiao": "Valle del Maipo / Las Piedras",
-        "notas": "Tinto encorpado, clÃ¡ssico Cabernet chileno."
+        "notas": "Tinto encorpado, clássico Cabernet chileno."
       },
       "aquisicoes": [],
       "controle": {
@@ -334,9 +334,9 @@
       "detalhes": {
         "produtor": "Bruce Jack",
         "uva": "Pinotage",
-        "pais": "Ãfrica do Sul",
+        "pais": "África do Sul",
         "regiao": "Western Cape",
-        "notas": "Tinto sul-africano frutado e descontraÃ­do."
+        "notas": "Tinto sul-africano frutado e descontraído."
       },
       "aquisicoes": [],
       "controle": {
