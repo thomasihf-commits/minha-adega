@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adega Juliana - JPF</title>
+<title>Adega Juliana</title>
 
 <style>
 :root{
@@ -1277,6 +1277,38 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
 
 /* ===============================
+   POTENCIAL DE GUARDA
+   =============================== */
+.guarda-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:2px 7px;
+  border-radius:999px;
+  font-size:10.5px;
+  font-weight:900;
+  border:1px solid transparent;
+  white-space:nowrap;
+}
+.guarda-jovem{ background:#eef8ef; color:#276338; border-color:#cce8d0; }
+.guarda-pronto{ background:#fff7db; color:#7a5700; border-color:#ead483; }
+.guarda-limite{ background:#fff0e8; color:#9a421c; border-color:#edbfaa; }
+.guarda-passou{ background:#efe8e8; color:#6d2525; border-color:#d8baba; }
+.guarda-indefinido{ background:#f2f0ef; color:#62575a; border-color:#ded5d1; }
+.guarda-info{
+  display:block;
+  margin-top:4px;
+  color:#6b6063;
+  font-size:11px;
+  line-height:1.25;
+}
+.detalhe-box.guarda-destaque{
+  background:#fff7f2;
+  border-color:rgba(133,0,43,.18);
+}
+
+
+/* ===============================
    ABA ESTATÍSTICAS - GRÁFICOS
    =============================== */
 .aba-estatisticas{
@@ -1464,7 +1496,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 <header class="app-header">
   <div class="brand">
     <div class="brand-icon brand-monogram">AJ</div>
-    <h1>Adega Juliana - JPF</h1>
+    <h1>Adega Juliana</h1>
   </div>
 
   <div class="header-actions">
@@ -1768,6 +1800,8 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
         <div class="detalhe-box"><small>Região</small><strong id="modalRegiao">-</strong></div>
         <div class="detalhe-box"><small>Tipo</small><strong id="modalTipo">-</strong></div>
         <div class="detalhe-box"><small>Quantidade</small><strong id="modalQuantidade">-</strong></div>
+        <div class="detalhe-box guarda-destaque"><small>Potencial de guarda</small><strong id="modalPotencialGuarda">-</strong></div>
+        <div class="detalhe-box guarda-destaque"><small>Janela / status</small><strong id="modalStatusGuarda">-</strong><span id="modalTextoGuarda" class="guarda-info"></span></div>
       </div>
 
       <p class="side-title" style="margin-top:18px">AQUISIÇÕES</p>
@@ -2398,6 +2432,54 @@ function atualizarResumo(){
  setTxt("qtdEspumantesMenu", soma("Espumante"));
 }
 
+function extrairAnosGuarda(valor){
+ const texto = String(valor || "").toLowerCase().trim();
+ if(!texto || texto === "-" || texto === "não informado") return null;
+ if(texto.includes("beber agora")) return 0;
+ const numeros = texto.match(/\d+/g);
+ if(!numeros || !numeros.length) return null;
+ // Para faixas como "5 a 10 anos", usamos o maior número como limite de guarda.
+ return Math.max(...numeros.map(n=>Number(n)));
+}
+
+function calcularInfoGuarda(v){
+ const safra = Number(v?.safra || 0);
+ const guardaTexto = v?.detalhes?.guarda || v?.potencialGuarda || "";
+ const anosGuarda = extrairAnosGuarda(guardaTexto);
+ const anoAtual = new Date().getFullYear();
+
+ if(!safra || anosGuarda === null){
+   return {
+     classe:"guarda-indefinido",
+     icone:"⚪",
+     status:"Guarda não informada",
+     resumo:"Sem janela",
+     detalhe:"Informe a safra e o potencial de guarda para calcular a janela de consumo.",
+     limite:null
+   };
+ }
+
+ const limite = safra + anosGuarda;
+ const idade = Math.max(anoAtual - safra, 0);
+ const percentual = anosGuarda > 0 ? idade / anosGuarda : 1;
+
+ if(anoAtual > limite){
+   return {classe:"guarda-passou", icone:"⚫", status:"Passou do potencial", resumo:`até ${limite}`, detalhe:`Safra ${safra} + ${anosGuarda} ano${anosGuarda === 1 ? "" : "s"} de guarda. Potencial estimado até ${limite}.`, limite};
+ }
+ if(percentual >= .9){
+   return {classe:"guarda-limite", icone:"🔴", status:"Próximo do limite", resumo:`até ${limite}`, detalhe:`Safra ${safra} + ${anosGuarda} ano${anosGuarda === 1 ? "" : "s"} de guarda. Está próximo do limite estimado (${limite}).`, limite};
+ }
+ if(percentual >= .5){
+   return {classe:"guarda-pronto", icone:"🟡", status:"Pronto para consumo", resumo:`até ${limite}`, detalhe:`Safra ${safra} + ${anosGuarda} ano${anosGuarda === 1 ? "" : "s"} de guarda. Já está em boa janela de consumo, com limite estimado em ${limite}.`, limite};
+ }
+ return {classe:"guarda-jovem", icone:"🟢", status:"Jovem", resumo:`até ${limite}`, detalhe:`Safra ${safra} + ${anosGuarda} ano${anosGuarda === 1 ? "" : "s"} de guarda. Ainda está jovem, com limite estimado em ${limite}.`, limite};
+}
+
+function htmlBadgeGuarda(v){
+ const g = calcularInfoGuarda(v);
+ return `<span class="guarda-badge ${g.classe}" title="${g.detalhe}">${g.icone} ${g.status} • ${g.resumo}</span>`;
+}
+
 function classeTipo(tipo){
  if(tipo==="Branco") return "branco";
  if(tipo==="Rosé") return "rose";
@@ -2462,7 +2544,7 @@ function renderizar(){
       : ""
   }
 </div>
-       <div class="meta">Safra ${v.safra || "-"} &nbsp;•&nbsp; ${v.tipo} &nbsp;•&nbsp; ${v.quantidade || 0} garrafa${Number(v.quantidade)==1 ? "" : "s"}</div>
+       <div class="meta">Safra ${v.safra || "-"} &nbsp;•&nbsp; ${v.tipo} &nbsp;•&nbsp; ${v.quantidade || 0} garrafa${Number(v.quantidade)==1 ? "" : "s"} &nbsp;•&nbsp; ${htmlBadgeGuarda(v)}</div>
      </div>
 
      <div class="wine-visual">
@@ -2602,7 +2684,7 @@ const detalhes = {
 existente.aquisicoes.push(...aquisicoesNovas);
 recalcularQuantidadeAtual(existente);
 
-   ["produtor","uva","pais","regiao"].forEach(campo=>{
+   ["produtor","uva","pais","regiao","guarda"].forEach(campo=>{
      if(detalhes[campo] && detalhes[campo] !== "-") existente.detalhes[campo] = detalhes[campo];
    });
  }else{
@@ -2630,6 +2712,10 @@ function abrirDetalhes(i){
  document.getElementById("modalRegiao").innerText = v.detalhes.regiao || "-";
  document.getElementById("modalTipo").innerText = v.tipo || "-";
  document.getElementById("modalQuantidade").innerText = `${v.quantidade} garrafa${v.quantidade == 1 ? "" : "s"}`;
+ const infoGuarda = calcularInfoGuarda(v);
+ document.getElementById("modalPotencialGuarda").innerText = v.detalhes.guarda || "-";
+ document.getElementById("modalStatusGuarda").innerHTML = `<span class="guarda-badge ${infoGuarda.classe}">${infoGuarda.icone} ${infoGuarda.status}</span>`;
+ document.getElementById("modalTextoGuarda").innerText = infoGuarda.detalhe;
  document.getElementById("modalNotas").value = v.detalhes.notas || "";
 
  const aquisicoes = v.aquisicoes || [];
