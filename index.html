@@ -1576,6 +1576,32 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   .foto-actions{grid-template-columns:1fr;}
 }
 
+.ai-rotulo-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:10px;
+}
+.ai-status{
+  display:none;
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:12px;
+  padding:10px 12px;
+  color:#62575a;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.35;
+}
+.ai-status.ok{ color:#276338; border-color:#cce8d0; background:#eef8ef; }
+.ai-status.erro{ color:#8b1e1e; border-color:#e7c3c3; background:#fff1f1; }
+.btn-ai{
+  background:linear-gradient(135deg,#3d2430,#85002b)!important;
+  color:#fff!important;
+  border:none!important;
+}
+
+
 </style>
 </head>
 
@@ -1740,6 +1766,10 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 <div class="form-full foto-field">
   <label for="fotoVinho">📷 Foto do rótulo</label>
   <input id="fotoVinho" type="file" accept="image/*" capture="environment" onchange="previewFotoCadastro(event)">
+  <div class="ai-rotulo-actions">
+    <button type="button" class="btn-secondary btn-ai" onclick="lerRotuloComIA()">🤖 Ler rótulo com IA</button>
+    <div id="aiRotuloStatus" class="ai-status"></div>
+  </div>
   <img id="fotoPreviewCadastro" class="foto-preview" alt="Prévia da foto do vinho">
 </div>
 
@@ -1896,7 +1926,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     <div class="modal-body">
       <div id="modalFotoWrap" class="detalhe-foto-wrap"></div>
       <div class="foto-actions">
-        <input id="fotoDetalhe" type="file" accept="image/*" capture="environment" onchange="previewFotoDetalhe(event)">
+        <input id="fotoDetalhe" type="file" accept="image/*" capture="environment" onchange="previewFotoDetalhe(event); atualizarFotoDetalhe();">
         <button class="btn-secondary btn-save" onclick="atualizarFotoDetalhe()">Atualizar foto</button>
       </div>
       <div id="fotoPreviewDetalheWrap" class="detalhe-foto-wrap" style="display:none;margin-top:12px"></div>
@@ -2135,6 +2165,100 @@ function previewFotoCadastro(event){
  img.src = URL.createObjectURL(file);
  img.style.display = "block";
 }
+
+function setStatusIA(mensagem, tipo=""){
+ const el = document.getElementById("aiRotuloStatus");
+ if(!el) return;
+ el.innerText = mensagem || "";
+ el.className = "ai-status" + (tipo ? " " + tipo : "");
+ el.style.display = mensagem ? "block" : "none";
+}
+
+function preencherCampoSeVazio(id, valor){
+ const el = document.getElementById(id);
+ if(!el || valor === undefined || valor === null) return;
+ const texto = String(valor).trim();
+ if(!texto) return;
+ if(!String(el.value || "").trim()) el.value = texto;
+}
+
+function normalizarTipoIA(tipo){
+ const t = String(tipo || "").toLowerCase();
+ if(t.includes("branco")) return "Branco";
+ if(t.includes("ros")) return "Rosé";
+ if(t.includes("espum") || t.includes("champ")) return "Espumante";
+ if(t.includes("tinto") || t.includes("red")) return "Tinto";
+ return "";
+}
+
+async function chamarFunctionLerRotulo(imageUrl){
+ const {data, error} = await supabaseClient.functions.invoke("ler-rotulo", {
+   body: { imageUrl }
+ });
+ if(error) throw error;
+ return data;
+}
+
+async function lerRotuloComIA(){
+ const fotoInput = document.getElementById("fotoVinho");
+ const file = fotoInput?.files && fotoInput.files[0];
+
+ if(!file){
+   alert("Tire ou selecione uma foto do rótulo antes de usar a IA.");
+   return;
+ }
+
+ const btn = document.querySelector(".btn-ai");
+ const textoOriginal = btn ? btn.innerText : "";
+ if(btn){
+   btn.disabled = true;
+   btn.innerText = "🤖 Lendo rótulo...";
+ }
+
+ setStatusIA("Enviando foto e analisando rótulo com IA...");
+
+ try{
+   const nomeAtual = document.getElementById("nome").value.trim() || "rotulo";
+   const safraAtual = document.getElementById("safra").value.trim() || "sem-safra";
+
+   const imageUrl = await uploadFotoVinho(file, nomeAtual, safraAtual);
+   const resultado = await chamarFunctionLerRotulo(imageUrl);
+
+   if(!resultado || resultado.ok === false){
+     console.error("Resposta IA:", resultado);
+     setStatusIA("Não foi possível ler o rótulo. Veja o console para detalhes.", "erro");
+     alert("A IA não conseguiu ler o rótulo. Tente uma foto mais nítida e frontal.");
+     return;
+   }
+
+   const vinhoIA = resultado.vinho || resultado;
+
+   preencherCampoSeVazio("nome", vinhoIA.nome);
+   preencherCampoSeVazio("safra", vinhoIA.safra);
+   preencherCampoSeVazio("produtor", vinhoIA.produtor);
+   preencherCampoSeVazio("uva", vinhoIA.uva);
+   preencherCampoSeVazio("pais", vinhoIA.pais);
+   preencherCampoSeVazio("regiao", vinhoIA.regiao);
+
+   const tipoIA = normalizarTipoIA(vinhoIA.tipo);
+   if(tipoIA) document.getElementById("tipo").value = tipoIA;
+
+   const confianca = Number(vinhoIA.confianca || 0);
+   const obs = vinhoIA.observacoes ? ` Observação: ${vinhoIA.observacoes}` : "";
+   setStatusIA(`Rótulo lido com IA${confianca ? ` • confiança ${(confianca*100).toFixed(0)}%` : ""}.${obs}`, "ok");
+
+ }catch(e){
+   console.error(e);
+   setStatusIA("Erro ao chamar a IA. Verifique a Edge Function ler-rotulo.", "erro");
+   alert("Erro ao ler o rótulo com IA.");
+ }finally{
+   if(btn){
+     btn.disabled = false;
+     btn.innerText = textoOriginal || "🤖 Ler rótulo com IA";
+   }
+ }
+}
+
 
 function previewFotoDetalhe(event){
  const file = event.target.files && event.target.files[0];
@@ -2844,6 +2968,7 @@ function limparFormulario(){
    preview.src = "";
    preview.style.display = "none";
  }
+ setStatusIA("");
 
  togglePresenteadoPor();
 }
