@@ -1488,6 +1488,94 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   .chart-card{padding:14px;}
 }
 
+/* ===============================
+   FOTOS DOS VINHOS
+   =============================== */
+.foto-field{
+  background:#fffaf7;
+  border:1px dashed var(--borda);
+  border-radius:16px;
+  padding:14px;
+}
+.foto-field label{
+  display:block;
+  font-weight:900;
+  color:var(--vinho);
+  margin-bottom:8px;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
+.foto-field input{
+  background:#fff;
+}
+.foto-preview{
+  margin-top:10px;
+  width:100%;
+  max-height:220px;
+  object-fit:contain;
+  border-radius:14px;
+  border:1px solid var(--borda);
+  background:#fff;
+  display:none;
+}
+.wine-thumb{
+  width:34px;
+  height:44px;
+  border-radius:8px;
+  object-fit:cover;
+  border:1px solid var(--borda);
+  background:#fff7f2;
+  box-shadow:0 2px 8px rgba(70,25,22,.08);
+}
+.wine-thumb-placeholder{
+  width:12px!important;
+  height:12px!important;
+  min-width:12px!important;
+  border-radius:50%!important;
+  font-size:0!important;
+  border:0!important;
+  box-shadow:none!important;
+  background:#85002b!important;
+}
+.wine-thumb-placeholder.branco{background:#d8b13f!important;}
+.wine-thumb-placeholder.rose{background:#ef6d7d!important;}
+.wine-thumb-placeholder.espumante{background:#e5c44e!important;}
+.detalhe-foto-wrap{
+  margin-bottom:16px;
+  background:#fffaf7;
+  border:1px solid var(--borda);
+  border-radius:18px;
+  padding:14px;
+  text-align:center;
+}
+.detalhe-foto{
+  max-width:100%;
+  max-height:320px;
+  object-fit:contain;
+  border-radius:16px;
+  background:#fff;
+}
+.detalhe-sem-foto{
+  color:#6b6063;
+  font-weight:800;
+  padding:24px;
+}
+.foto-actions{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+  margin-top:12px;
+}
+.foto-actions input{
+  min-height:44px;
+}
+@media(max-width:760px){
+  .wine-thumb{width:32px;height:40px;}
+  .foto-actions{grid-template-columns:1fr;}
+}
+
 </style>
 </head>
 
@@ -1649,6 +1737,12 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   <input id="potencialGuarda" placeholder="Potencial de guarda" list="listaGuarda">
 </div>
 
+<div class="form-full foto-field">
+  <label for="fotoVinho">📷 Foto do rótulo</label>
+  <input id="fotoVinho" type="file" accept="image/*" capture="environment" onchange="previewFotoCadastro(event)">
+  <img id="fotoPreviewCadastro" class="foto-preview" alt="Prévia da foto do vinho">
+</div>
+
       <p class="form-group-title">Aquisição</p>
 
 <div class="form-row">
@@ -1800,6 +1894,12 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       <p id="modalResumo"></p>
     </div>
     <div class="modal-body">
+      <div id="modalFotoWrap" class="detalhe-foto-wrap"></div>
+      <div class="foto-actions">
+        <input id="fotoDetalhe" type="file" accept="image/*" capture="environment" onchange="previewFotoDetalhe(event)">
+        <button class="btn-secondary btn-save" onclick="atualizarFotoDetalhe()">Atualizar foto</button>
+      </div>
+      <div id="fotoPreviewDetalheWrap" class="detalhe-foto-wrap" style="display:none;margin-top:12px"></div>
       <div class="detalhes-grid">
         <div class="detalhe-box"><small>Produtor</small><strong id="modalProdutor">-</strong></div>
         <div class="detalhe-box"><small>Uva</small><strong id="modalUva">-</strong></div>
@@ -1979,6 +2079,118 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 function normalizarNumero(valor){
  const n = Number(valor || 0);
  return Number.isFinite(n) ? n : 0;
+}
+
+function limparNomeArquivo(valor){
+ return String(valor || "vinho")
+   .normalize("NFD")
+   .replace(/[\u0300-\u036f]/g,"")
+   .replace(/[^a-zA-Z0-9]+/g,"-")
+   .replace(/^-+|-+$/g,"")
+   .toLowerCase() || "vinho";
+}
+
+function extensaoArquivo(file){
+ const nome = file?.name || "";
+ const ext = nome.includes(".") ? nome.split(".").pop().toLowerCase() : "";
+ if(["jpg","jpeg","png","webp","gif"].includes(ext)) return ext;
+ if(file?.type === "image/png") return "png";
+ if(file?.type === "image/webp") return "webp";
+ return "jpg";
+}
+
+async function uploadFotoVinho(file, nome, safra){
+ if(!file) return "";
+ const ext = extensaoArquivo(file);
+ const caminho = `${limparNomeArquivo(nome)}-${limparNomeArquivo(safra || "sem-safra")}-${Date.now()}.${ext}`;
+
+ const {error:uploadError} = await supabaseClient
+   .storage
+   .from("fotos")
+   .upload(caminho, file, {
+     cacheControl:"3600",
+     upsert:false,
+     contentType:file.type || "image/jpeg"
+   });
+
+ if(uploadError) throw uploadError;
+
+ const {data} = supabaseClient
+   .storage
+   .from("fotos")
+   .getPublicUrl(caminho);
+
+ return data?.publicUrl || "";
+}
+
+function previewFotoCadastro(event){
+ const file = event.target.files && event.target.files[0];
+ const img = document.getElementById("fotoPreviewCadastro");
+ if(!img) return;
+ if(!file){
+   img.style.display = "none";
+   img.src = "";
+   return;
+ }
+ img.src = URL.createObjectURL(file);
+ img.style.display = "block";
+}
+
+function previewFotoDetalhe(event){
+ const file = event.target.files && event.target.files[0];
+ const wrap = document.getElementById("fotoPreviewDetalheWrap");
+ if(!wrap) return;
+ if(!file){
+   wrap.style.display = "none";
+   wrap.innerHTML = "";
+   return;
+ }
+ wrap.innerHTML = `<img class="detalhe-foto" src="${URL.createObjectURL(file)}" alt="Prévia da nova foto">`;
+ wrap.style.display = "block";
+}
+
+function htmlMiniaturaVinho(v){
+ if(v.fotoUrl){
+   return `<img class="wine-thumb" src="${v.fotoUrl}" alt="Foto de ${v.nome}" loading="lazy">`;
+ }
+ return `<div class="wine-thumb-placeholder ${classeTipo(v.tipo)}"></div>`;
+}
+
+function htmlFotoDetalhe(v){
+ if(v.fotoUrl){
+   return `<img class="detalhe-foto" src="${v.fotoUrl}" alt="Foto de ${v.nome}">`;
+ }
+ return `<div class="detalhe-sem-foto">📷 Nenhuma foto cadastrada para este vinho.</div>`;
+}
+
+async function atualizarFotoDetalhe(){
+ if(vinhoSelecionado === null) return;
+ const v = garantirEstrutura(vinhos[vinhoSelecionado]);
+ const input = document.getElementById("fotoDetalhe");
+ const file = input?.files && input.files[0];
+
+ if(!file){
+   alert("Selecione uma foto para atualizar.");
+   return;
+ }
+
+ try{
+   const url = await uploadFotoVinho(file, v.nome, v.safra);
+   v.fotoUrl = url;
+   await atualizarVinhoSupabase(v);
+   if(input) input.value = "";
+   const preview = document.getElementById("fotoPreviewDetalheWrap");
+   if(preview){
+     preview.style.display = "none";
+     preview.innerHTML = "";
+   }
+   await carregarDoSupabase(true);
+   abrirDetalhes(vinhoSelecionado);
+   renderizar();
+ }catch(e){
+   console.error(e);
+   alert("Não foi possível enviar a foto para o Supabase Storage. Verifique as policies do bucket fotos.");
+ }
 }
 
 function mapearGarrafa(row){
@@ -2526,7 +2738,7 @@ function renderizar(){
      </div>
 
      <div class="wine-visual">
-       <div class="wine-emoji ${classeTipo(v.tipo)}">${iconeTipo(v.tipo)}</div>
+       ${htmlMiniaturaVinho(v)}
      </div>
 
      <div class="actions">
@@ -2625,6 +2837,14 @@ function limparFormulario(){
  document.getElementById("dataCompra").value =
    new Date().toISOString().split("T")[0];
 
+ const foto = document.getElementById("fotoVinho");
+ if(foto) foto.value = "";
+ const preview = document.getElementById("fotoPreviewCadastro");
+ if(preview){
+   preview.src = "";
+   preview.style.display = "none";
+ }
+
  togglePresenteadoPor();
 }
 
@@ -2654,11 +2874,16 @@ async function adicionarVinho(){
  };
 
  try{
+   const fotoInput = document.getElementById("fotoVinho");
+   const fotoFile = fotoInput?.files && fotoInput.files[0];
+   const fotoUrl = fotoFile ? await uploadFotoVinho(fotoFile, nome, safra) : "";
+
    const existente = vinhos.find(v => v.nome.toLowerCase()===nome.toLowerCase() && String(v.safra)===String(safra));
    if(existente && existente.id){
      garantirEstrutura(existente);
      existente.tipo = tipo;
      existente.detalhes = {...existente.detalhes, ...detalhes};
+     if(fotoUrl) existente.fotoUrl = fotoUrl;
      await atualizarVinhoSupabase(existente);
      await inserirGarrafas(existente.id, aquisicoesNovas);
    }else{
@@ -2672,7 +2897,8 @@ async function adicionarVinho(){
        regiao: detalhes.regiao,
        nota_vivino: detalhes.notaVivino,
        potencial_guarda: detalhes.guarda,
-       notas: ""
+       notas: "",
+       foto_url: fotoUrl || null
      }).select("id").single();
      if(error) throw error;
      await inserirGarrafas(data.id, aquisicoesNovas);
@@ -2703,6 +2929,15 @@ function abrirDetalhes(i){
  document.getElementById("modalStatusGuarda").innerHTML = `<span class="guarda-badge ${infoGuarda.classe}">${infoGuarda.icone} ${infoGuarda.status}</span>`;
  document.getElementById("modalTextoGuarda").innerText = infoGuarda.detalhe;
  document.getElementById("modalNotas").value = v.detalhes.notas || "";
+ const modalFotoWrap = document.getElementById("modalFotoWrap");
+ if(modalFotoWrap) modalFotoWrap.innerHTML = htmlFotoDetalhe(v);
+ const fotoDetalhe = document.getElementById("fotoDetalhe");
+ if(fotoDetalhe) fotoDetalhe.value = "";
+ const previewDetalhe = document.getElementById("fotoPreviewDetalheWrap");
+ if(previewDetalhe){
+   previewDetalhe.style.display = "none";
+   previewDetalhe.innerHTML = "";
+ }
 
  const aquisicoes = v.aquisicoes || [];
  const totalPago = aquisicoes.reduce((s,a)=>s + Number(a.valorUnitario || 0) * Number(a.quantidade || 0),0);
