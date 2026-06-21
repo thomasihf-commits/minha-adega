@@ -1537,6 +1537,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
         <span>Ordenar:</span>
         <select id="ordenacao" onchange="renderizar()">
           <option value="vivino">Nota Vivino</option>
+          <option value="potencial-consumo">Potencial de consumo</option>
           <option value="safra-antiga">Safra: mais antiga</option>
           <option value="safra-nova">Safra: mais nova</option>
           <option value="nome">Nome</option>
@@ -2486,6 +2487,21 @@ function htmlBadgeGuarda(v){
  return `<span class="guarda-badge ${g.classe}" title="${g.detalhe}">${g.icone} ${g.status} • ${g.resumo}</span>`;
 }
 
+function prioridadeConsumo(v){
+ const g = calcularInfoGuarda(v);
+ const prioridadePorClasse = {
+   "guarda-passou": 1,
+   "guarda-limite": 2,
+   "guarda-pronto": 3,
+   "guarda-jovem": 4,
+   "guarda-indefinido": 5
+ };
+ return {
+   prioridade: prioridadePorClasse[g.classe] || 5,
+   limite: g.limite || 9999
+ };
+}
+
 function classeTipo(tipo){
  if(tipo==="Branco") return "branco";
  if(tipo==="Rosé") return "rose";
@@ -2522,6 +2538,13 @@ function renderizar(){
   });
 
  resultado.sort((a,b)=>{
+   if(ordenacao==="potencial-consumo"){
+     const pa = prioridadeConsumo(a);
+     const pb = prioridadeConsumo(b);
+     if(pa.prioridade !== pb.prioridade) return pa.prioridade - pb.prioridade;
+     if(pa.limite !== pb.limite) return pa.limite - pb.limite;
+     return Number(a.safra||9999) - Number(b.safra||9999);
+   }
    if(ordenacao==="safra-antiga") return Number(a.safra||0) - Number(b.safra||0);
    if(ordenacao==="safra-nova") return Number(b.safra||0) - Number(a.safra||0);
    if(ordenacao==="quantidade") return Number(b.quantidade||0) - Number(a.quantidade||0);
