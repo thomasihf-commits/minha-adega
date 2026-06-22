@@ -1662,6 +1662,20 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   color:#276338;
 }
 
+.rotulo-destino-actions{
+  display:none;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  width:100%;
+}
+.rotulo-destino-actions .btn-secondary{
+  width:100%;
+}
+@media(max-width:650px){
+  .rotulo-destino-actions{grid-template-columns:1fr;}
+}
+
+
 
 </style>
 </head>
@@ -2124,7 +2138,10 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     </div>
     <div class="modal-actions">
       <button class="btn-secondary" onclick="fecharLeitorRotulo()">Descartar</button>
-      <button id="btnCadastrarRotulo" class="btn-secondary btn-save" onclick="cadastrarAPartirDoRotulo()" style="display:none">Adicionar à adega</button>
+      <div id="rotuloDestinoActions" class="rotulo-destino-actions">
+        <button id="btnConsumoExternoRotulo" class="btn-secondary" onclick="consumoExternoAPartirDoRotulo()">🍽️ Consumo externo</button>
+        <button id="btnCadastrarRotulo" class="btn-secondary btn-save" onclick="cadastrarAPartirDoRotulo()">🍷 Adicionar à adega</button>
+      </div>
     </div>
   </div>
 </div>
@@ -2296,8 +2313,8 @@ function limparLeitorRotulo(){
  if(captura) captura.classList.remove("foto-capturada");
  const resultado = document.getElementById("rotuloResultado");
  if(resultado){ resultado.innerHTML = ""; resultado.style.display = "none"; }
- const btn = document.getElementById("btnCadastrarRotulo");
- if(btn) btn.style.display = "none";
+ const destino = document.getElementById("rotuloDestinoActions");
+ if(destino) destino.style.display = "none";
  setStatusRotulo("");
 }
 
@@ -2365,8 +2382,8 @@ function renderizarResultadoRotulo(vinhoIA){
      </div>
    </div>`;
  el.style.display = "block";
- const btn = document.getElementById("btnCadastrarRotulo");
- if(btn) btn.style.display = "inline-block";
+ const destino = document.getElementById("rotuloDestinoActions");
+ if(destino) destino.style.display = "grid";
 }
 
 async function analisarRotuloComIA(){
@@ -2394,7 +2411,7 @@ async function analisarRotuloComIA(){
 
    rotuloIAAtual = resultado.vinho || resultado;
    renderizarResultadoRotulo(rotuloIAAtual);
-   setStatusRotulo("✅ Rótulo identificado. Revise antes de adicionar à adega.", "ok");
+   setStatusRotulo("✅ Rótulo identificado. Escolha se deseja adicionar à adega ou registrar como consumo externo.", "ok");
  }catch(e){
    console.error(e);
    const detalhe = e?.message ? e.message : String(e);
@@ -2436,6 +2453,32 @@ function cadastrarAPartirDoRotulo(){
  const ocasiao = document.getElementById("ocasiao");
  if(ocasiao && vinhoIA.observacoes){
    ocasiao.value = `Pré-cadastro por IA: ${vinhoIA.observacoes}`;
+ }
+}
+
+function consumoExternoAPartirDoRotulo(){
+ if(!rotuloIAAtual){ alert("Analise um rótulo antes de registrar o consumo externo."); return; }
+
+ const vinhoIA = rotuloIAAtual;
+
+ fecharLeitorRotulo();
+ abrirCadastroConsumoExterno();
+
+ preencherCampo("extNome", vinhoIA.nome);
+ preencherCampo("extSafra", vinhoIA.safra);
+ preencherCampo("extProdutor", vinhoIA.produtor);
+ preencherCampo("extUva", vinhoIA.uva);
+ preencherCampo("extPais", vinhoIA.pais);
+ preencherCampo("extRegiao", vinhoIA.regiao);
+ preencherCampo("extNotaVivino", vinhoIA.vivino_estimado || vinhoIA.nota_vivino);
+ preencherCampo("extValorPago", vinhoIA.preco_estimado || "");
+
+ const tipoIA = normalizarTipoIA(vinhoIA.tipo);
+ if(tipoIA) document.getElementById("extTipo").value = tipoIA;
+
+ const observacao = document.getElementById("extObservacao");
+ if(observacao && vinhoIA.observacoes){
+   observacao.value = `Identificado por IA: ${vinhoIA.observacoes}`;
  }
 }
 
