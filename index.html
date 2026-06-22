@@ -1635,6 +1635,34 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 .rotulo-observacoes{margin-top:10px;color:#5f5356;font-size:13px;line-height:1.45;}
 @media(max-width:650px){.rotulo-grid{grid-template-columns:1fr;}}
 
+.rotulo-file-input{
+  position:absolute!important;
+  left:-9999px!important;
+  width:1px!important;
+  height:1px!important;
+  opacity:0!important;
+}
+.btn-camera{
+  width:100%;
+  min-height:52px;
+  border-radius:16px!important;
+  background:#fff!important;
+  border:1px solid var(--borda)!important;
+  color:var(--vinho)!important;
+  font-size:16px!important;
+}
+.rotulo-file-status{
+  margin-top:10px;
+  text-align:center;
+  color:#6b6063;
+  font-size:13px;
+  font-weight:800;
+}
+.rotulo-captura.foto-capturada .rotulo-file-status{
+  color:#276338;
+}
+
+
 </style>
 </head>
 
@@ -1661,7 +1689,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     <button class="tab active" onclick="mostrarAba('adega')">🍷 Adega</button>
     <button class="tab" onclick="mostrarAba('estatisticas')">📊 Estatísticas</button>
     <button class="tab" onclick="abrirHistoricoConsumo()">🕘 Histórico</button>
-    <button class="tab" onclick="abrirLeitorRotulo()">📷 Foto do Rótulo</button>
+    <button class="tab" onclick="abrirLeitorRotulo()">📷 Identificar Vinho</button>
     <button class="tab" onclick="abrirCadastroConsumoExterno()">🍽️ Consumo externo</button>
     <button class="tab" onclick="abrirConfiguracoes()">⚙️ Configurações</button>
   </nav>
@@ -2077,17 +2105,19 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 <div id="modalLeitorRotulo" class="modal-bg" onclick="fecharLeitorRotulo()">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-header">
-      <h2>Foto do Rótulo</h2>
-      <p>Fotografe ou escolha um rótulo para a IA identificar o vinho antes do cadastro.</p>
+      <h2>Identificar Vinho</h2>
+      <p>Fotografe um rótulo para identificar o vinho antes do cadastro.</p>
     </div>
     <div class="modal-body">
-      <div class="form-full foto-field">
+      <div class="form-full foto-field rotulo-captura">
         <label for="rotuloFoto">📷 Foto do rótulo</label>
-        <input id="rotuloFoto" type="file" accept="image/*" capture="environment" onchange="previewFotoRotulo(event)">
+        <input id="rotuloFoto" class="rotulo-file-input" type="file" accept="image/*" capture="environment" onchange="previewFotoRotulo(event)">
+        <button type="button" class="btn-secondary btn-camera" onclick="document.getElementById('rotuloFoto').click()">📷 Abrir câmera</button>
+        <div id="rotuloArquivoStatus" class="rotulo-file-status">Nenhuma foto capturada</div>
         <img id="rotuloPreview" class="rotulo-preview" alt="Prévia do rótulo">
       </div>
       <div class="rotulo-actions">
-        <button id="btnAnalisarRotulo" class="btn-secondary btn-ai" onclick="analisarRotuloComIA()">🤖 Analisar rótulo com IA</button>
+        <button id="btnAnalisarRotulo" class="btn-secondary btn-ai" onclick="analisarRotuloComIA()">🔍 Identificar vinho</button>
         <div id="rotuloStatus" class="rotulo-status"></div>
       </div>
       <div id="rotuloResultado" class="rotulo-resultado"></div>
@@ -2260,6 +2290,10 @@ function limparLeitorRotulo(){
  if(input) input.value = "";
  const preview = document.getElementById("rotuloPreview");
  if(preview){ preview.src = ""; preview.style.display = "none"; }
+ const statusArquivo = document.getElementById("rotuloArquivoStatus");
+ if(statusArquivo) statusArquivo.innerText = "Nenhuma foto capturada";
+ const captura = document.querySelector(".rotulo-captura");
+ if(captura) captura.classList.remove("foto-capturada");
  const resultado = document.getElementById("rotuloResultado");
  if(resultado){ resultado.innerHTML = ""; resultado.style.display = "none"; }
  const btn = document.getElementById("btnCadastrarRotulo");
@@ -2279,10 +2313,21 @@ function fecharLeitorRotulo(){
 function previewFotoRotulo(event){
  const file = event.target.files && event.target.files[0];
  const img = document.getElementById("rotuloPreview");
+ const statusArquivo = document.getElementById("rotuloArquivoStatus");
+ const captura = document.querySelector(".rotulo-captura");
  if(!img) return;
- if(!file){ img.src = ""; img.style.display = "none"; return; }
+ if(!file){
+   img.src = "";
+   img.style.display = "none";
+   if(statusArquivo) statusArquivo.innerText = "Nenhuma foto capturada";
+   if(captura) captura.classList.remove("foto-capturada");
+   return;
+ }
  img.src = URL.createObjectURL(file);
  img.style.display = "block";
+ if(statusArquivo) statusArquivo.innerText = "✅ Foto capturada";
+ if(captura) captura.classList.add("foto-capturada");
+ setStatusRotulo("");
 }
 
 function valorRotulo(valor, fallback="-"){
@@ -2327,35 +2372,35 @@ function renderizarResultadoRotulo(vinhoIA){
 async function analisarRotuloComIA(){
  const input = document.getElementById("rotuloFoto");
  const file = input?.files && input.files[0];
- if(!file){ alert("Tire ou selecione uma foto do rótulo."); return; }
+ if(!file){ alert("Fotografe um rótulo antes de identificar o vinho."); return; }
 
  const btn = document.getElementById("btnAnalisarRotulo");
  const textoOriginal = btn ? btn.innerText : "";
- if(btn){ btn.disabled = true; btn.innerText = "🤖 Analisando..."; }
+ if(btn){ btn.disabled = true; btn.innerText = "🔍 Identificando..."; }
 
  try{
-   setStatusRotulo("Enviando foto para o Supabase Storage...");
+   setStatusRotulo("🤖 Analisando rótulo...");
    const imageUrl = await uploadFotoVinho(file, "rotulo", "consulta");
    rotuloFotoUrlAtual = imageUrl;
 
-   setStatusRotulo("Foto enviada. Analisando rótulo com IA...");
+   setStatusRotulo("🤖 Analisando rótulo...");
    const resultado = await chamarFunctionLerRotulo(imageUrl);
 
    if(!resultado || resultado.ok === false){
      console.error("Resposta IA:", resultado);
-     setStatusRotulo("A IA não conseguiu interpretar o rótulo:\n" + JSON.stringify(resultado, null, 2), "erro");
+     setStatusRotulo("❌ Não foi possível identificar o rótulo.", "erro");
      return;
    }
 
    rotuloIAAtual = resultado.vinho || resultado;
    renderizarResultadoRotulo(rotuloIAAtual);
-   setStatusRotulo("Rótulo analisado com sucesso. Revise antes de adicionar à adega.", "ok");
+   setStatusRotulo("✅ Rótulo identificado. Revise antes de adicionar à adega.", "ok");
  }catch(e){
    console.error(e);
    const detalhe = e?.message ? e.message : String(e);
-   setStatusRotulo("Erro ao analisar rótulo:\n" + detalhe, "erro");
+   setStatusRotulo("❌ Não foi possível identificar o rótulo.", "erro");
  }finally{
-   if(btn){ btn.disabled = false; btn.innerText = textoOriginal || "🤖 Analisar rótulo com IA"; }
+   if(btn){ btn.disabled = false; btn.innerText = textoOriginal || "🔍 Identificar vinho"; }
  }
 }
 
