@@ -1677,6 +1677,99 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
 
 
+
+/* ===============================
+   RECOMENDAÇÕES DE CONSUMO
+   =============================== */
+.recomendacao-consumo-card{
+  display:none;
+  background:linear-gradient(135deg,#fff,#fff7f2);
+  border:1px solid rgba(133,0,43,.16);
+  border-radius:18px;
+  padding:14px 16px;
+  box-shadow:0 8px 22px rgba(70,25,22,.07);
+  margin-bottom:14px;
+}
+.recomendacao-consumo-card .rec-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:10px;
+}
+.recomendacao-consumo-card h3{
+  margin:0;
+  font-size:17px;
+  color:#271f22;
+}
+.recomendacao-consumo-card p{
+  margin:3px 0 0;
+  color:#6b6063;
+  font-size:12.5px;
+  line-height:1.35;
+}
+.rec-lista{
+  display:grid;
+  gap:8px;
+}
+.rec-item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+  background:#fff;
+  border:1px solid #f0e4df;
+  border-radius:13px;
+  padding:10px 12px;
+  cursor:pointer;
+}
+.rec-item:hover{border-color:rgba(133,0,43,.22);}
+.rec-item strong{
+  display:block;
+  font-size:14px;
+  color:#241b1e;
+  margin-bottom:3px;
+}
+.rec-item span{
+  display:block;
+  font-size:12px;
+  color:#62575a;
+}
+.rec-empty{
+  background:#fff;
+  border:1px dashed var(--borda);
+  border-radius:14px;
+  padding:14px;
+  color:#6b6063;
+  font-size:13px;
+  text-align:center;
+}
+.rec-ver-todos{
+  height:34px;
+  padding:0 12px!important;
+  border-radius:12px!important;
+  font-size:12px!important;
+  white-space:nowrap;
+}
+.rec-modal-lista{
+  display:grid;
+  gap:10px;
+}
+.rec-secao-titulo{
+  margin:16px 0 8px;
+  color:var(--vinho);
+  font-weight:900;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
+@media(max-width:650px){
+  .recomendacao-consumo-card{padding:13px;}
+  .recomendacao-consumo-card .rec-head{flex-direction:column;align-items:stretch;gap:8px;}
+  .rec-ver-todos{width:100%;}
+  .rec-item{grid-template-columns:1fr;}
+}
+
 </style>
 </head>
 
@@ -1720,6 +1813,17 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
   </section>
 
+  <section id="cardRecomendacoesConsumo" class="recomendacao-consumo-card">
+    <div class="rec-head">
+      <div>
+        <h3>🍷 Recomendações para abrir</h3>
+        <p id="textoResumoRecomendacoes">Vinhos priorizados pela janela de consumo.</p>
+      </div>
+      <button class="btn-secondary rec-ver-todos" onclick="abrirRecomendacoesConsumo()">Ver todos</button>
+    </div>
+    <div id="listaRecomendacoesConsumo" class="rec-lista"></div>
+  </section>
+
   <section id="secaoListaVinhos">
     <div class="main-title clean">
       <h2>Lista de vinhos</h2>
@@ -1727,6 +1831,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
         <span>Ordenar:</span>
         <select id="ordenacao" onchange="renderizar()">
           <option value="vivino">Nota Vivino</option>
+          <option value="consumo-recomendado">⭐ Consumo recomendado</option>
           <option value="potencial-consumo">Potencial de consumo</option>
           <option value="safra-antiga">Safra: mais antiga</option>
           <option value="safra-nova">Safra: mais nova</option>
@@ -2156,6 +2261,23 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
         <button id="btnConsumoExternoRotulo" class="btn-secondary" onclick="consumoExternoAPartirDoRotulo()">🍽️ Consumo externo</button>
         <button id="btnCadastrarRotulo" class="btn-secondary btn-save" onclick="cadastrarAPartirDoRotulo()">🍷 Adicionar à adega</button>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalRecomendacoesConsumo" class="modal-bg" onclick="fecharRecomendacoesConsumo()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Vinhos para abrir</h2>
+      <p>Priorização baseada na safra e no potencial de guarda informado.</p>
+    </div>
+    <div class="modal-body">
+      <div id="modalListaRecomendacoes" class="rec-modal-lista"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharRecomendacoesConsumo()">Fechar</button>
+      <button class="btn-secondary btn-save" onclick="selecionarOrdenacaoConsumo()">Ordenar adega assim</button>
     </div>
   </div>
 </div>
@@ -3136,6 +3258,88 @@ function setMenuAtivo(){
  if(ativo) ativo.classList.add("active");
 }
 
+
+function vinhosEmEstoqueOrdenadosPorConsumo(){
+ return vinhos
+   .map((v,index)=>({...v,index}))
+   .filter(v=>Number(v.quantidade || 0) > 0)
+   .map(v=>({ ...v, infoGuarda: calcularInfoGuarda(v), prioridadeInfo: prioridadeConsumo(v) }))
+   .filter(v=>v.infoGuarda.classe !== "guarda-indefinido")
+   .sort((a,b)=>{
+     if(a.prioridadeInfo.prioridade !== b.prioridadeInfo.prioridade) return a.prioridadeInfo.prioridade - b.prioridadeInfo.prioridade;
+     if(a.prioridadeInfo.limite !== b.prioridadeInfo.limite) return a.prioridadeInfo.limite - b.prioridadeInfo.limite;
+     return Number(a.safra || 9999) - Number(b.safra || 9999);
+   });
+}
+
+function htmlItemRecomendacao(v){
+ const g = v.infoGuarda || calcularInfoGuarda(v);
+ return `
+   <div class="rec-item" onclick="abrirDetalhes(${v.index})">
+     <div>
+       <strong>${v.nome} ${v.safra ? "• " + v.safra : ""}</strong>
+       <span>${v.tipo || "-"} • ${v.detalhes?.pais || "-"} • ${g.detalhe}</span>
+     </div>
+     <span class="guarda-badge ${g.classe}">${g.icone} ${g.status}</span>
+   </div>`;
+}
+
+function renderizarRecomendacoesConsumo(){
+ const card = document.getElementById("cardRecomendacoesConsumo");
+ const lista = document.getElementById("listaRecomendacoesConsumo");
+ const resumo = document.getElementById("textoResumoRecomendacoes");
+ if(!card || !lista) return;
+
+ const recomendados = vinhosEmEstoqueOrdenadosPorConsumo();
+ if(!recomendados.length){
+   card.style.display = "none";
+   return;
+ }
+
+ const prioritarios = recomendados.filter(v=>["guarda-passou","guarda-limite","guarda-pronto"].includes(v.infoGuarda.classe));
+ const base = prioritarios.length ? prioritarios : recomendados;
+ const top = base.slice(0,3);
+
+ card.style.display = "block";
+ if(resumo){
+   resumo.innerText = `${base.length} vinho${base.length === 1 ? "" : "s"} com recomendação de consumo pela janela de guarda.`;
+ }
+ lista.innerHTML = top.map(htmlItemRecomendacao).join("");
+}
+
+function abrirRecomendacoesConsumo(){
+ const el = document.getElementById("modalListaRecomendacoes");
+ if(!el) return;
+ const recomendados = vinhosEmEstoqueOrdenadosPorConsumo();
+ if(!recomendados.length){
+   el.innerHTML = `<div class="rec-empty">Nenhum vinho com safra e potencial de guarda suficientes para recomendação.</div>`;
+ }else{
+   const grupos = [
+     {titulo:"🔴 Mais urgentes", classes:["guarda-passou","guarda-limite"]},
+     {titulo:"🟡 Prontos para beber", classes:["guarda-pronto"]},
+     {titulo:"🟢 Ainda jovens", classes:["guarda-jovem"]}
+   ];
+   el.innerHTML = grupos.map(g=>{
+     const itens = recomendados.filter(v=>g.classes.includes(v.infoGuarda.classe));
+     if(!itens.length) return "";
+     return `<div class="rec-secao-titulo">${g.titulo}</div>` + itens.map(htmlItemRecomendacao).join("");
+   }).join("") || `<div class="rec-empty">Nenhum vinho recomendado no momento.</div>`;
+ }
+ document.getElementById("modalRecomendacoesConsumo").style.display = "flex";
+}
+
+function fecharRecomendacoesConsumo(){
+ document.getElementById("modalRecomendacoesConsumo").style.display = "none";
+}
+
+function selecionarOrdenacaoConsumo(){
+ const ordenacao = document.getElementById("ordenacao");
+ if(ordenacao) ordenacao.value = "consumo-recomendado";
+ fecharRecomendacoesConsumo();
+ mostrarAba("adega");
+ renderizar();
+}
+
 function renderizar(){
  const busca = document.getElementById("buscaTopo").value.toLowerCase().trim();
  const ordenacao = document.getElementById("ordenacao").value;
@@ -3149,7 +3353,7 @@ function renderizar(){
   });
 
  resultado.sort((a,b)=>{
-   if(ordenacao==="potencial-consumo"){
+   if(ordenacao==="potencial-consumo" || ordenacao==="consumo-recomendado"){
      const pa = prioridadeConsumo(a);
      const pb = prioridadeConsumo(b);
      if(pa.prioridade !== pb.prioridade) return pa.prioridade - pb.prioridade;
@@ -3168,6 +3372,7 @@ function renderizar(){
    lista.innerHTML = `<div class="empty">Nenhum vinho encontrado.</div>`;
    atualizarResumo();
    setMenuAtivo();
+   renderizarRecomendacoesConsumo();
    return;
  }
 
@@ -3202,6 +3407,7 @@ function renderizar(){
 
  atualizarResumo();
  setMenuAtivo();
+ renderizarRecomendacoesConsumo();
  const abaEstatisticas = document.getElementById("abaEstatisticas");
  if(abaEstatisticas && abaEstatisticas.style.display === "block") renderizarEstatisticas();
 }
@@ -3785,6 +3991,8 @@ function mostrarAba(aba){
 
  if(abaAdega) abaAdega.style.display = aba === "adega" ? "block" : "none";
  if(secaoLista) secaoLista.style.display = aba === "adega" ? "block" : "none";
+ const cardRecomendacoes = document.getElementById("cardRecomendacoesConsumo");
+ if(cardRecomendacoes) cardRecomendacoes.style.display = aba === "adega" && vinhosEmEstoqueOrdenadosPorConsumo().length ? "block" : "none";
  if(abaEstatisticas) abaEstatisticas.style.display = aba === "estatisticas" ? "block" : "none";
 
  const tabs = document.querySelectorAll('.tab');
