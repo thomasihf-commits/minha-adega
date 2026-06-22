@@ -1603,6 +1603,38 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 }
 
 
+
+/* ===============================
+   LEITOR DE RÓTULO COM IA
+   =============================== */
+.rotulo-preview{
+  width:100%;
+  max-height:300px;
+  object-fit:contain;
+  border-radius:16px;
+  border:1px solid var(--borda);
+  background:#fff;
+  display:none;
+  margin-top:12px;
+}
+.rotulo-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px;}
+.rotulo-status{
+  display:none;background:#fff;border:1px solid var(--borda);border-radius:12px;
+  padding:10px 12px;color:#62575a;font-size:13px;font-weight:800;
+  line-height:1.35;white-space:pre-wrap;
+}
+.rotulo-status.ok{color:#276338;border-color:#cce8d0;background:#eef8ef;}
+.rotulo-status.erro{color:#8b1e1e;border-color:#e7c3c3;background:#fff1f1;}
+.rotulo-resultado{display:none;margin-top:16px;}
+.rotulo-resultado-card{background:#fffaf7;border:1px solid var(--borda);border-radius:16px;padding:14px;}
+.rotulo-resultado-card h3{margin:0 0 10px;color:#241b1e;}
+.rotulo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.rotulo-info{background:#fff;border:1px solid #f0e4df;border-radius:12px;padding:10px;}
+.rotulo-info small{display:block;color:#6b6063;font-weight:900;margin-bottom:4px;font-size:11px;text-transform:uppercase;}
+.rotulo-info strong{color:#241b1e;font-size:14px;}
+.rotulo-observacoes{margin-top:10px;color:#5f5356;font-size:13px;line-height:1.45;}
+@media(max-width:650px){.rotulo-grid{grid-template-columns:1fr;}}
+
 </style>
 </head>
 
@@ -1629,6 +1661,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     <button class="tab active" onclick="mostrarAba('adega')">🍷 Adega</button>
     <button class="tab" onclick="mostrarAba('estatisticas')">📊 Estatísticas</button>
     <button class="tab" onclick="abrirHistoricoConsumo()">🕘 Histórico</button>
+    <button class="tab" onclick="abrirLeitorRotulo()">📷 Foto do Rótulo</button>
     <button class="tab" onclick="abrirCadastroConsumoExterno()">🍽️ Consumo externo</button>
     <button class="tab" onclick="abrirConfiguracoes()">⚙️ Configurações</button>
   </nav>
@@ -1764,17 +1797,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   <input id="potencialGuarda" placeholder="Potencial de guarda" list="listaGuarda">
 </div>
 
-<div class="form-full foto-field">
-  <label for="fotoVinho">📷 Foto do rótulo</label>
-  <input id="fotoVinho" type="file" accept="image/*" capture="environment" onchange="previewFotoCadastro(event)">
-  <div class="ai-rotulo-actions">
-    <button type="button" class="btn-secondary btn-ai" onclick="lerRotuloComIA()">🤖 Ler rótulo com IA</button>
-    <div id="aiRotuloStatus" class="ai-status"></div>
-  </div>
-  <img id="fotoPreviewCadastro" class="foto-preview" alt="Prévia da foto do vinho">
-</div>
-
-      <p class="form-group-title">Aquisição</p>
+<p class="form-group-title">Aquisição</p>
 
 <div class="form-row">
   <input id="quantidade" type="number" min="1" placeholder="Quantidade">
@@ -2050,6 +2073,32 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 </div>
 
 
+
+<div id="modalLeitorRotulo" class="modal-bg" onclick="fecharLeitorRotulo()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Foto do Rótulo</h2>
+      <p>Fotografe ou escolha um rótulo para a IA identificar o vinho antes do cadastro.</p>
+    </div>
+    <div class="modal-body">
+      <div class="form-full foto-field">
+        <label for="rotuloFoto">📷 Foto do rótulo</label>
+        <input id="rotuloFoto" type="file" accept="image/*" capture="environment" onchange="previewFotoRotulo(event)">
+        <img id="rotuloPreview" class="rotulo-preview" alt="Prévia do rótulo">
+      </div>
+      <div class="rotulo-actions">
+        <button id="btnAnalisarRotulo" class="btn-secondary btn-ai" onclick="analisarRotuloComIA()">🤖 Analisar rótulo com IA</button>
+        <div id="rotuloStatus" class="rotulo-status"></div>
+      </div>
+      <div id="rotuloResultado" class="rotulo-resultado"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharLeitorRotulo()">Descartar</button>
+      <button id="btnCadastrarRotulo" class="btn-secondary btn-save" onclick="cadastrarAPartirDoRotulo()" style="display:none">Adicionar à adega</button>
+    </div>
+  </div>
+</div>
+
 <div id="modalConfiguracoes" class="modal-bg" onclick="fecharConfiguracoes()">
   <div class="modal config-modal" onclick="event.stopPropagation()">
     <div class="modal-header">
@@ -2101,6 +2150,9 @@ let consumosExternos = [];
 let salvandoNaNuvem = false;
 let carregandoDaNuvem = false;
 let intervaloSincronizacao = null;
+let rotuloIAAtual = null;
+let rotuloFotoUrlAtual = "";
+let fotoUrlPreCadastro = "";
 
 const SUPABASE_URL = "https://ujspshfoydnwvxgzwcbq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_pkPfNfzEcP-xUZXGkrn3OQ_dHea_KEm";
@@ -2190,6 +2242,156 @@ function normalizarTipoIA(tipo){
  if(t.includes("espum") || t.includes("champ")) return "Espumante";
  if(t.includes("tinto") || t.includes("red")) return "Tinto";
  return "";
+}
+
+
+function setStatusRotulo(mensagem, tipo=""){
+ const el = document.getElementById("rotuloStatus");
+ if(!el) return;
+ el.innerText = mensagem || "";
+ el.className = "rotulo-status" + (tipo ? " " + tipo : "");
+ el.style.display = mensagem ? "block" : "none";
+}
+
+function limparLeitorRotulo(){
+ rotuloIAAtual = null;
+ rotuloFotoUrlAtual = "";
+ const input = document.getElementById("rotuloFoto");
+ if(input) input.value = "";
+ const preview = document.getElementById("rotuloPreview");
+ if(preview){ preview.src = ""; preview.style.display = "none"; }
+ const resultado = document.getElementById("rotuloResultado");
+ if(resultado){ resultado.innerHTML = ""; resultado.style.display = "none"; }
+ const btn = document.getElementById("btnCadastrarRotulo");
+ if(btn) btn.style.display = "none";
+ setStatusRotulo("");
+}
+
+function abrirLeitorRotulo(){
+ limparLeitorRotulo();
+ document.getElementById("modalLeitorRotulo").style.display = "flex";
+}
+
+function fecharLeitorRotulo(){
+ document.getElementById("modalLeitorRotulo").style.display = "none";
+}
+
+function previewFotoRotulo(event){
+ const file = event.target.files && event.target.files[0];
+ const img = document.getElementById("rotuloPreview");
+ if(!img) return;
+ if(!file){ img.src = ""; img.style.display = "none"; return; }
+ img.src = URL.createObjectURL(file);
+ img.style.display = "block";
+}
+
+function valorRotulo(valor, fallback="-"){
+ const texto = String(valor ?? "").trim();
+ return texto || fallback;
+}
+
+function renderizarResultadoRotulo(vinhoIA){
+ const el = document.getElementById("rotuloResultado");
+ if(!el) return;
+ const confianca = Number(vinhoIA.confianca || 0);
+ const vivino = vinhoIA.vivino_estimado || vinhoIA.nota_vivino || "";
+ const preco = vinhoIA.preco_estimado || vinhoIA.faixa_preco_estimada || "";
+
+ el.innerHTML = `
+   <div class="rotulo-resultado-card">
+     <h3>${valorRotulo(vinhoIA.nome, "Vinho identificado")}</h3>
+     <div class="rotulo-grid">
+       <div class="rotulo-info"><small>Safra</small><strong>${valorRotulo(vinhoIA.safra)}</strong></div>
+       <div class="rotulo-info"><small>Tipo</small><strong>${valorRotulo(vinhoIA.tipo)}</strong></div>
+       <div class="rotulo-info"><small>Produtor</small><strong>${valorRotulo(vinhoIA.produtor)}</strong></div>
+       <div class="rotulo-info"><small>Uva / corte</small><strong>${valorRotulo(vinhoIA.uva)}</strong></div>
+       <div class="rotulo-info"><small>País</small><strong>${valorRotulo(vinhoIA.pais)}</strong></div>
+       <div class="rotulo-info"><small>Região</small><strong>${valorRotulo(vinhoIA.regiao)}</strong></div>
+       <div class="rotulo-info"><small>Potencial</small><strong>${valorRotulo(vinhoIA.potencial_guarda_sugerido)}</strong></div>
+       <div class="rotulo-info"><small>Vivino estimado</small><strong>${valorRotulo(vivino)}</strong></div>
+       <div class="rotulo-info"><small>Preço estimado</small><strong>${valorRotulo(preco)}</strong></div>
+       <div class="rotulo-info"><small>Categoria</small><strong>${valorRotulo(vinhoIA.categoria)}</strong></div>
+       <div class="rotulo-info"><small>Teor alcoólico</small><strong>${valorRotulo(vinhoIA.teor_alcoolico)}</strong></div>
+       <div class="rotulo-info"><small>Volume</small><strong>${valorRotulo(vinhoIA.volume_ml)}</strong></div>
+     </div>
+     <div class="rotulo-observacoes">
+       ${confianca ? `<strong>Confiança:</strong> ${(confianca * 100).toFixed(0)}%<br>` : ""}
+       ${vinhoIA.observacoes ? `<strong>Observações:</strong> ${vinhoIA.observacoes}` : ""}
+     </div>
+   </div>`;
+ el.style.display = "block";
+ const btn = document.getElementById("btnCadastrarRotulo");
+ if(btn) btn.style.display = "inline-block";
+}
+
+async function analisarRotuloComIA(){
+ const input = document.getElementById("rotuloFoto");
+ const file = input?.files && input.files[0];
+ if(!file){ alert("Tire ou selecione uma foto do rótulo."); return; }
+
+ const btn = document.getElementById("btnAnalisarRotulo");
+ const textoOriginal = btn ? btn.innerText : "";
+ if(btn){ btn.disabled = true; btn.innerText = "🤖 Analisando..."; }
+
+ try{
+   setStatusRotulo("Enviando foto para o Supabase Storage...");
+   const imageUrl = await uploadFotoVinho(file, "rotulo", "consulta");
+   rotuloFotoUrlAtual = imageUrl;
+
+   setStatusRotulo("Foto enviada. Analisando rótulo com IA...");
+   const resultado = await chamarFunctionLerRotulo(imageUrl);
+
+   if(!resultado || resultado.ok === false){
+     console.error("Resposta IA:", resultado);
+     setStatusRotulo("A IA não conseguiu interpretar o rótulo:\n" + JSON.stringify(resultado, null, 2), "erro");
+     return;
+   }
+
+   rotuloIAAtual = resultado.vinho || resultado;
+   renderizarResultadoRotulo(rotuloIAAtual);
+   setStatusRotulo("Rótulo analisado com sucesso. Revise antes de adicionar à adega.", "ok");
+ }catch(e){
+   console.error(e);
+   const detalhe = e?.message ? e.message : String(e);
+   setStatusRotulo("Erro ao analisar rótulo:\n" + detalhe, "erro");
+ }finally{
+   if(btn){ btn.disabled = false; btn.innerText = textoOriginal || "🤖 Analisar rótulo com IA"; }
+ }
+}
+
+function preencherCampo(id, valor){
+ const el = document.getElementById(id);
+ if(!el || valor === undefined || valor === null) return;
+ el.value = String(valor).trim();
+}
+
+function cadastrarAPartirDoRotulo(){
+ if(!rotuloIAAtual){ alert("Analise um rótulo antes de iniciar o cadastro."); return; }
+
+ const vinhoIA = rotuloIAAtual;
+ const fotoUrl = rotuloFotoUrlAtual;
+
+ fecharLeitorRotulo();
+ abrirCadastro();
+
+ preencherCampo("nome", vinhoIA.nome);
+ preencherCampo("safra", vinhoIA.safra);
+ preencherCampo("produtor", vinhoIA.produtor);
+ preencherCampo("uva", vinhoIA.uva);
+ preencherCampo("pais", vinhoIA.pais);
+ preencherCampo("regiao", vinhoIA.regiao);
+ preencherCampo("potencialGuarda", vinhoIA.potencial_guarda_sugerido);
+ preencherCampo("notaVivino", vinhoIA.vivino_estimado || vinhoIA.nota_vivino);
+
+ const tipoIA = normalizarTipoIA(vinhoIA.tipo);
+ if(tipoIA) document.getElementById("tipo").value = tipoIA;
+
+ fotoUrlPreCadastro = fotoUrl || "";
+
+ const ocasiao = document.getElementById("ocasiao");
+ if(ocasiao && vinhoIA.observacoes){
+   ocasiao.value = `Pré-cadastro por IA: ${vinhoIA.observacoes}`;
+ }
 }
 
 async function chamarFunctionLerRotulo(imageUrl){
@@ -2989,6 +3191,7 @@ function limparFormulario(){
    preview.style.display = "none";
  }
  setStatusIA("");
+ fotoUrlPreCadastro = "";
 
  togglePresenteadoPor();
 }
@@ -3021,7 +3224,7 @@ async function adicionarVinho(){
  try{
    const fotoInput = document.getElementById("fotoVinho");
    const fotoFile = fotoInput?.files && fotoInput.files[0];
-   const fotoUrl = fotoFile ? await uploadFotoVinho(fotoFile, nome, safra) : "";
+   const fotoUrl = fotoFile ? await uploadFotoVinho(fotoFile, nome, safra) : (fotoUrlPreCadastro || "");
 
    const existente = vinhos.find(v => v.nome.toLowerCase()===nome.toLowerCase() && String(v.safra)===String(safra));
    if(existente && existente.id){
@@ -3048,6 +3251,7 @@ async function adicionarVinho(){
      if(error) throw error;
      await inserirGarrafas(data.id, aquisicoesNovas);
    }
+   fotoUrlPreCadastro = "";
    limparFormulario();
    fecharCadastro();
    await carregarDoSupabase(true);
