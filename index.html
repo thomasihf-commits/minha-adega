@@ -1770,6 +1770,76 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   .rec-item{grid-template-columns:1fr;}
 }
 
+
+/* ===============================
+   RECOMENDAÇÕES COMPACTAS / ACORDEÃO
+   =============================== */
+.recomendacao-consumo-card{
+  padding:10px 12px!important;
+  cursor:pointer;
+  transition:.18s ease;
+}
+.recomendacao-consumo-card .rec-head{
+  align-items:center!important;
+  margin-bottom:0!important;
+}
+.rec-title-wrap{
+  min-width:0;
+}
+.recomendacao-consumo-card h3{
+  font-size:15px!important;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+#recChevron{
+  font-size:12px;
+  color:var(--vinho);
+  display:inline-block;
+  width:14px;
+}
+.recomendacao-consumo-card p{
+  font-size:12px!important;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+}
+.recomendacao-consumo-card.rec-collapsed{
+  min-height:58px;
+}
+.recomendacao-consumo-card.rec-collapsed .rec-lista,
+.recomendacao-consumo-card.rec-collapsed .rec-ver-todos{
+  display:none!important;
+}
+.recomendacao-consumo-card.rec-expanded .rec-lista{
+  display:grid!important;
+  margin-top:10px;
+}
+.recomendacao-consumo-card.rec-expanded .rec-ver-todos{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+}
+@media(max-width:650px){
+  .recomendacao-consumo-card{
+    padding:9px 11px!important;
+    border-radius:14px!important;
+    margin-bottom:10px!important;
+  }
+  .recomendacao-consumo-card .rec-head{
+    flex-direction:row!important;
+    align-items:center!important;
+  }
+  .recomendacao-consumo-card.rec-expanded .rec-head{
+    align-items:flex-start!important;
+  }
+  .recomendacao-consumo-card.rec-expanded .rec-ver-todos{
+    width:auto!important;
+    min-width:78px;
+  }
+}
+
 </style>
 </head>
 
@@ -1813,13 +1883,13 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
   </section>
 
-  <section id="cardRecomendacoesConsumo" class="recomendacao-consumo-card">
+  <section id="cardRecomendacoesConsumo" class="recomendacao-consumo-card rec-collapsed" onclick="toggleRecomendacoesCard(event)">
     <div class="rec-head">
-      <div>
-        <h3>🍷 Recomendações para abrir</h3>
+      <div class="rec-title-wrap">
+        <h3><span id="recChevron">▶</span> 🍷 Consumo recomendado</h3>
         <p id="textoResumoRecomendacoes">Vinhos priorizados pela janela de consumo.</p>
       </div>
-      <button class="btn-secondary rec-ver-todos" onclick="abrirRecomendacoesConsumo()">Ver todos</button>
+      <button class="btn-secondary rec-ver-todos" onclick="event.stopPropagation(); abrirRecomendacoesConsumo()">Ver todos</button>
     </div>
     <div id="listaRecomendacoesConsumo" class="rec-lista"></div>
   </section>
@@ -3284,6 +3354,25 @@ function htmlItemRecomendacao(v){
    </div>`;
 }
 
+function toggleRecomendacoesCard(event){
+ const card = document.getElementById("cardRecomendacoesConsumo");
+ if(!card) return;
+ if(event && event.target && event.target.closest && event.target.closest(".rec-item")) return;
+ const expandido = card.classList.toggle("rec-expanded");
+ card.classList.toggle("rec-collapsed", !expandido);
+ const chevron = document.getElementById("recChevron");
+ if(chevron) chevron.innerText = expandido ? "▼" : "▶";
+}
+
+function recolherRecomendacoesCard(){
+ const card = document.getElementById("cardRecomendacoesConsumo");
+ if(!card) return;
+ card.classList.remove("rec-expanded");
+ card.classList.add("rec-collapsed");
+ const chevron = document.getElementById("recChevron");
+ if(chevron) chevron.innerText = "▶";
+}
+
 function renderizarRecomendacoesConsumo(){
  const card = document.getElementById("cardRecomendacoesConsumo");
  const lista = document.getElementById("listaRecomendacoesConsumo");
@@ -3301,8 +3390,14 @@ function renderizarRecomendacoesConsumo(){
  const top = base.slice(0,3);
 
  card.style.display = "block";
+ if(!card.classList.contains("rec-expanded")){
+   card.classList.add("rec-collapsed");
+ }
+ const urgentes = base.filter(v=>["guarda-passou","guarda-limite"].includes(v.infoGuarda.classe)).length;
  if(resumo){
-   resumo.innerText = `${base.length} vinho${base.length === 1 ? "" : "s"} com recomendação de consumo pela janela de guarda.`;
+   resumo.innerText = urgentes
+     ? `${base.length} vinho${base.length === 1 ? "" : "s"} recomendados • ${urgentes} urgente${urgentes === 1 ? "" : "s"}`
+     : `${base.length} vinho${base.length === 1 ? "" : "s"} na janela de consumo`;
  }
  lista.innerHTML = top.map(htmlItemRecomendacao).join("");
 }
