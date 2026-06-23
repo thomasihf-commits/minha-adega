@@ -3473,14 +3473,15 @@ function renderizarVinhosDesejados(){
  if(!card || !lista) return;
 
  const desejados = vinhosDesejados();
- if(!desejados.length){
-   card.style.display = "none";
-   return;
- }
-
  card.style.display = "block";
  if(!card.classList.contains("rec-expanded")){
    card.classList.add("rec-collapsed");
+ }
+
+ if(!desejados.length){
+   if(resumo) resumo.innerText = "Nenhum vinho desejado ainda. Marque 'Compraria para a adega? Sim' em um consumo externo.";
+   lista.innerHTML = `<div class="rec-empty">Nenhum vinho desejado ainda.</div>`;
+   return;
  }
 
  const top = desejados.slice(0,3);
@@ -4226,7 +4227,7 @@ function mostrarAba(aba){
  const cardRecomendacoes = document.getElementById("cardRecomendacoesConsumo");
  if(cardRecomendacoes) cardRecomendacoes.style.display = aba === "adega" && vinhosEmEstoqueOrdenadosPorConsumo().length ? "block" : "none";
  const cardDesejados = document.getElementById("cardVinhosDesejados");
- if(cardDesejados) cardDesejados.style.display = aba === "adega" && vinhosDesejados().length ? "block" : "none";
+ if(cardDesejados) cardDesejados.style.display = aba === "adega" ? "block" : "none";
  if(abaEstatisticas) abaEstatisticas.style.display = aba === "estatisticas" ? "block" : "none";
 
  const tabs = document.querySelectorAll('.tab');
