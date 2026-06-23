@@ -2240,6 +2240,740 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+
+/* ===============================
+   ESTATÍSTICAS MODERNAS - MOBILE APP
+   =============================== */
+.stats-modern-header{
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  margin:20px 0 14px!important;
+}
+.stats-modern-header .eyebrow{
+  display:block;
+  color:var(--vinho);
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.45px;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+.stats-modern-header h2{
+  margin:0;
+  font-size:32px;
+  letter-spacing:-.8px;
+  line-height:1;
+}
+.stats-pill{
+  display:inline-flex;
+  align-items:center;
+  height:30px;
+  padding:0 12px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--borda);
+  color:#6b6063;
+  font-size:12px;
+  font-weight:900;
+  box-shadow:0 5px 14px rgba(70,25,22,.05);
+  white-space:nowrap;
+}
+.stats-modern{
+  gap:14px!important;
+}
+.stats-hero-card{
+  position:relative;
+  overflow:hidden;
+  min-height:164px;
+  border-radius:26px;
+  padding:22px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 92% 10%, rgba(216,177,63,.34), transparent 34%),
+    linear-gradient(135deg,#970033 0%, #59001d 62%, #330011 100%);
+  box-shadow:0 18px 36px rgba(80,0,28,.24);
+}
+.stats-hero-card::after{
+  content:"";
+  position:absolute;
+  right:-44px;
+  bottom:-70px;
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  border:34px solid rgba(255,255,255,.07);
+}
+.stats-hero-top{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:rgba(255,255,255,.86);
+  font-size:13px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.38px;
+  margin-bottom:18px;
+}
+.stats-hero-icon{
+  width:34px;
+  height:34px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.18);
+  font-size:17px;
+}
+.stats-hero-card strong{
+  display:block;
+  font-size:38px;
+  line-height:1;
+  letter-spacing:-1px;
+  margin-bottom:10px;
+  position:relative;
+  z-index:1;
+}
+.stats-hero-card p{
+  margin:0;
+  color:rgba(255,255,255,.82);
+  font-size:14px;
+  font-weight:800;
+  position:relative;
+  z-index:1;
+}
+.stats-kpis-modern{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+.stats-kpis-modern .stats-kpi{
+  min-height:112px;
+  border-radius:20px!important;
+  padding:15px!important;
+  background:rgba(255,255,255,.92)!important;
+  box-shadow:0 10px 24px rgba(70,25,22,.07)!important;
+}
+.stats-kpis-modern .stats-kpi small{
+  margin-bottom:9px!important;
+  color:#776b6e!important;
+}
+.stats-kpis-modern .stats-kpi strong{
+  font-size:24px!important;
+  letter-spacing:-.4px;
+}
+.stats-kpis-modern .stats-kpi span{
+  display:block;
+  margin-top:7px;
+  color:#83777a;
+  font-size:11.5px;
+  font-weight:800;
+}
+.stats-insights-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.insight-card{
+  background:rgba(255,255,255,.94);
+  border:1px solid var(--borda);
+  border-radius:22px;
+  padding:16px;
+  box-shadow:0 10px 24px rgba(70,25,22,.065);
+}
+.insight-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
+.insight-head span{
+  color:#2a2225;
+  font-size:15px;
+  font-weight:950;
+}
+.insight-head b{
+  color:var(--vinho);
+  font-size:13px;
+  white-space:nowrap;
+}
+.insight-list{
+  display:grid;
+  gap:9px;
+}
+.insight-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+}
+.insight-row label{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#665b5e;
+  font-size:12.5px;
+  font-weight:900;
+  min-width:0;
+}
+.insight-row strong{
+  color:#2a2225;
+  font-size:13px;
+}
+.insight-track{
+  grid-column:1 / -1;
+  height:7px;
+  background:#f3e7e2;
+  border-radius:999px;
+  overflow:hidden;
+}
+.insight-fill{
+  display:block;
+  height:100%;
+  min-width:2px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--vinho),#a00035);
+}
+.insight-fill.gold{background:linear-gradient(135deg,#d8b13f,#b88f26);}
+.insight-fill.rose{background:linear-gradient(135deg,#ef6d7d,#d35f6f);}
+.insight-fill.green{background:linear-gradient(135deg,#54a86d,#2f7d48);}
+.insight-fill.red{background:linear-gradient(135deg,#e45645,#a8322b);}
+.stats-modern .chart-card{
+  border-radius:22px!important;
+  padding:18px!important;
+  min-height:260px!important;
+  background:rgba(255,255,255,.94)!important;
+  box-shadow:0 12px 28px rgba(70,25,22,.075)!important;
+}
+.stats-modern .chart-card h3{
+  font-size:17px!important;
+  letter-spacing:-.2px;
+}
+.stats-modern .chart-card p{
+  color:#7a6e71!important;
+  font-weight:700;
+}
+.stats-modern .chart-track,
+.stats-modern .dual-bar{
+  background:#f1e4df!important;
+}
+.stats-modern .chart-track{
+  height:12px!important;
+}
+.stats-modern .dual-bar{
+  height:10px!important;
+}
+.chart-featured{
+  grid-column:span 2;
+}
+@media(max-width:900px){
+  .stats-kpis-modern{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .stats-insights-grid{grid-template-columns:1fr;}
+  .chart-featured{grid-column:span 1;}
+}
+@media(max-width:560px){
+  .stats-modern-header{
+    margin-top:18px!important;
+    align-items:flex-start!important;
+  }
+  .stats-modern-header h2{font-size:30px;}
+  .stats-pill{display:none;}
+  .stats-hero-card{
+    min-height:150px;
+    border-radius:24px;
+    padding:20px;
+  }
+  .stats-hero-card strong{font-size:34px;}
+  .stats-kpis-modern{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  .stats-kpis-modern .stats-kpi{
+    min-height:104px;
+    padding:13px!important;
+  }
+  .stats-kpis-modern .stats-kpi strong{font-size:22px!important;}
+  .stats-modern .chart-card{
+    min-height:230px!important;
+    padding:15px!important;
+  }
+}
+
+
+/* ===============================
+   AJUSTE ESTATÍSTICAS - INVESTIMENTO LIMPO
+   =============================== */
+.stats-modern .chart-investimento{
+  min-height:auto!important;
+  padding-bottom:16px!important;
+}
+.month-spend-list{
+  display:grid;
+  gap:10px;
+  margin-top:12px;
+}
+.month-spend-row{
+  background:linear-gradient(135deg,#fffaf7,#fff4ef);
+  border:1px solid #f0e1da;
+  border-radius:16px;
+  padding:12px;
+  display:grid;
+  gap:9px;
+}
+.month-spend-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.month-spend-top span{
+  color:#64585c;
+  font-size:13px;
+  font-weight:950;
+}
+.month-spend-top strong{
+  color:var(--vinho);
+  font-size:15px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.month-spend-track{
+  height:9px;
+  background:#f1e2dc;
+  border-radius:999px;
+  overflow:hidden;
+}
+.month-spend-fill{
+  display:block;
+  height:100%;
+  min-width:3px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--vinho),#b0003c);
+}
+.month-spend-total{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:10px;
+  padding-top:12px;
+  border-top:1px solid #f0e1da;
+  color:#6b6063;
+  font-size:12px;
+  font-weight:900;
+}
+.month-spend-total strong{
+  color:#2a2225;
+  font-size:14px;
+}
+@media(max-width:560px){
+  .month-spend-row{padding:11px;}
+  .month-spend-top strong{font-size:14px;}
+}
+
+
+
+/* ===============================
+   AJUSTE ESTATÍSTICAS - MOVIMENTO MENSAL COMPACTO
+   =============================== */
+.month-movement-list{
+  display:grid;
+  gap:12px;
+  margin-top:14px;
+}
+.month-movement-row{
+  background:linear-gradient(135deg,#fffaf7,#fff5f1);
+  border:1px solid #f0e1da;
+  border-radius:18px;
+  padding:13px;
+  display:grid;
+  gap:10px;
+}
+.month-movement-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.month-movement-month{
+  display:grid;
+  gap:3px;
+}
+.month-movement-month strong{
+  color:#251d20;
+  font-size:15px;
+  line-height:1.1;
+}
+.month-movement-month span{
+  color:#7a6f72;
+  font-size:12px;
+  font-weight:850;
+}
+.month-movement-kpis{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.month-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  min-height:26px;
+  padding:0 9px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:950;
+  background:#fff;
+  border:1px solid #f0e1da;
+  color:#665b5e;
+  white-space:nowrap;
+}
+.month-chip.buy{color:var(--vinho);}
+.month-chip.consume{color:#8b6a13;}
+.month-movement-bars{
+  display:grid;
+  gap:7px;
+}
+.month-movement-bar{
+  height:10px;
+  border-radius:999px;
+  background:#f1e2dc;
+  overflow:hidden;
+}
+.month-movement-bar span{
+  display:block;
+  height:100%;
+  min-width:3px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--vinho),#b0003c);
+}
+.month-movement-bar.consumo span{
+  background:linear-gradient(135deg,#d8b13f,#b88f26);
+}
+.month-movement-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+.month-movement-summary div{
+  border-radius:16px;
+  background:#fffaf7;
+  border:1px solid #f0e1da;
+  padding:12px;
+}
+.month-movement-summary small{
+  display:block;
+  color:#7a6f72;
+  font-size:11px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.25px;
+  margin-bottom:4px;
+}
+.month-movement-summary strong{
+  color:#251d20;
+  font-size:18px;
+}
+.stats-modern .chart-movimento{
+  min-height:auto!important;
+}
+@media(max-width:560px){
+  .month-movement-row{padding:12px;border-radius:16px;}
+  .month-movement-top{align-items:stretch;flex-direction:column;gap:9px;}
+  .month-movement-kpis{justify-content:flex-start;}
+  .month-movement-summary{grid-template-columns:1fr 1fr;gap:8px;}
+  .month-movement-summary div{padding:10px;}
+  .month-movement-summary strong{font-size:16px;}
+}
+
+
+/* ===============================
+   ABA JANTAR / HARMONIZAÇÃO
+   =============================== */
+.aba-jantar{
+  display:none;
+}
+.jantar-header{
+  margin:20px 0 16px;
+}
+.jantar-header .eyebrow{
+  display:block;
+  color:var(--vinho);
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.45px;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+.jantar-header h2{
+  margin:0 0 8px;
+  font-size:32px;
+  letter-spacing:-.8px;
+  line-height:1.05;
+}
+.jantar-header p{
+  margin:0;
+  color:#6b6063;
+  font-size:14px;
+  font-weight:750;
+  line-height:1.45;
+}
+.jantar-search{
+  position:relative;
+  margin:16px 0 18px;
+}
+.jantar-search input{
+  height:54px;
+  border-radius:18px;
+  padding:0 46px 0 44px;
+  font-size:16px;
+  font-weight:800;
+  background:#fff;
+  box-shadow:0 8px 22px rgba(70,25,22,.06);
+}
+.jantar-search .search-ico{
+  position:absolute;
+  left:16px;
+  top:16px;
+  color:#7a6f72;
+  font-size:20px;
+}
+.jantar-search button{
+  position:absolute;
+  right:8px;
+  top:8px;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:14px;
+  background:#f6ece8;
+  color:#6b6063;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+}
+.jantar-section-title{
+  margin:18px 0 12px;
+  color:#2a2225;
+  font-size:18px;
+  font-weight:950;
+}
+.pratos-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+.prato-card{
+  position:relative;
+  overflow:hidden;
+  min-height:142px;
+  border:0;
+  border-radius:22px;
+  padding:0;
+  cursor:pointer;
+  background:#3a2229;
+  box-shadow:0 12px 26px rgba(70,25,22,.12);
+  text-align:left;
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+.prato-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 32px rgba(70,25,22,.16);
+}
+.prato-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:var(--img);
+  background-size:cover;
+  background-position:center;
+  transform:scale(1.02);
+}
+.prato-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.62));
+}
+.prato-card .prato-info{
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:13px;
+  z-index:1;
+  color:#fff;
+}
+.prato-card strong{
+  display:block;
+  font-size:17px;
+  line-height:1.08;
+  font-weight:950;
+  text-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+.prato-card span{
+  display:block;
+  margin-top:4px;
+  color:rgba(255,255,255,.84);
+  font-size:11.5px;
+  font-weight:800;
+  text-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+.harmonizacao-result{
+  display:none;
+  margin-top:18px;
+}
+.harmonizacao-hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:26px;
+  padding:20px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 88% 0%, rgba(216,177,63,.32), transparent 34%),
+    linear-gradient(135deg,#91002f 0%, #56001c 66%, #2f0010 100%);
+  box-shadow:0 16px 34px rgba(80,0,28,.22);
+  margin-bottom:14px;
+}
+.harmonizacao-hero h3{
+  margin:0 0 6px;
+  font-size:24px;
+  line-height:1.05;
+}
+.harmonizacao-hero p{
+  margin:0;
+  color:rgba(255,255,255,.82);
+  font-size:13px;
+  font-weight:800;
+  line-height:1.45;
+}
+.harmonizacao-lista{
+  display:grid;
+  gap:10px;
+}
+.harmonizacao-item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  align-items:center;
+  background:rgba(255,255,255,.94);
+  border:1px solid var(--borda);
+  border-radius:18px;
+  padding:13px 14px;
+  box-shadow:0 8px 20px rgba(70,25,22,.065);
+  cursor:pointer;
+}
+.harmonizacao-item:hover{
+  border-color:rgba(133,0,43,.22);
+}
+.harmonizacao-item strong{
+  display:block;
+  color:#241b1e;
+  font-size:15px;
+  margin-bottom:4px;
+}
+.harmonizacao-item span{
+  display:block;
+  color:#62575a;
+  font-size:12px;
+  line-height:1.35;
+  font-weight:750;
+}
+.harmonizacao-score{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:44px;
+  height:30px;
+  border-radius:999px;
+  background:#fff7db;
+  border:1px solid #ead483;
+  color:#7a5700;
+  font-size:12px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.harmonizacao-empty{
+  background:#fff;
+  border:1px dashed var(--borda);
+  border-radius:18px;
+  padding:22px;
+  color:#6b6063;
+  text-align:center;
+  font-size:13px;
+  font-weight:800;
+}
+.config-mini{
+  margin-top:18px;
+  text-align:center;
+}
+.config-mini button{
+  background:transparent;
+  border:0;
+  color:#7a6f72;
+  font-size:12px;
+  font-weight:900;
+  text-decoration:underline;
+  cursor:pointer;
+}
+@media(max-width:900px){
+  .pratos-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:650px){
+  .jantar-header h2{font-size:30px;}
+  .pratos-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+  .prato-card{
+    min-height:138px;
+    border-radius:18px;
+  }
+  .prato-card strong{font-size:16px;}
+  .harmonizacao-item{
+    grid-template-columns:1fr;
+  }
+  .harmonizacao-score{
+    justify-self:start;
+  }
+}
+
+
+/* ===============================
+   AJUSTE FINAL - SCORE HARMONIZAÇÃO
+   =============================== */
+.harmonizacao-item .harmonizacao-score{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:48px!important;
+  width:auto!important;
+  height:32px!important;
+  padding:0 12px!important;
+  border-radius:999px!important;
+  background:#fff7db!important;
+  border:1px solid #ead483!important;
+  color:#7a5700!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  align-self:center!important;
+  justify-self:end!important;
+}
+@media(max-width:650px){
+  .harmonizacao-item{
+    grid-template-columns:1fr auto!important;
+    align-items:center!important;
+  }
+  .harmonizacao-item .harmonizacao-score{
+    justify-self:end!important;
+    align-self:center!important;
+  }
+}
+
 </style>
 </head>
 
@@ -2268,6 +3002,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     <button class="tab" onclick="abrirHistoricoConsumo()">🕘 Histórico</button>
     <button class="tab" onclick="abrirLeitorRotulo()">📷 Identificar Vinho</button>
     <button class="tab" onclick="abrirCadastroConsumoExterno()">🍽️ Consumo externo</button>
+    <button class="tab" onclick="mostrarAba('jantar')">🍽️ Jantar</button>
     <button class="tab" onclick="abrirConfiguracoes()">⚙️ Configurações</button>
   </nav>
 
@@ -2325,27 +3060,51 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   </section>
 
   <section id="abaEstatisticas" class="aba-estatisticas">
-    <div class="main-title clean">
-      <h2>Estatísticas da adega</h2>
+    <div class="stats-modern-header">
+      <div>
+        <span class="eyebrow">Painel da adega</span>
+        <h2>Estatísticas</h2>
+      </div>
+      <span class="stats-pill">Atualizado agora</span>
     </div>
 
-    <div class="stats-dashboard">
-      <div class="stats-kpis">
-        <div class="stats-kpi"><small>Valor investido</small><strong id="kpiValorInvestido">-</strong></div>
-        <div class="stats-kpi"><small>Valor em estoque</small><strong id="kpiValorEstoque">-</strong></div>
-        <div class="stats-kpi"><small>Garrafas compradas</small><strong id="kpiGarrafasCompradas">-</strong></div>
-        <div class="stats-kpi"><small>Garrafas consumidas</small><strong id="kpiGarrafasConsumidas">-</strong></div>
+    <div class="stats-dashboard stats-modern">
+      <div class="stats-hero-card">
+        <div class="stats-hero-top">
+          <span class="stats-hero-icon">🍷</span>
+          <span>Patrimônio da adega</span>
+        </div>
+        <strong id="kpiValorInvestido">-</strong>
+        <p id="statsHeroResumo">-</p>
+      </div>
+
+      <div class="stats-kpis stats-kpis-modern">
+        <div class="stats-kpi"><small>Em estoque</small><strong id="kpiValorEstoque">-</strong><span>Valor ainda na adega</span></div>
+        <div class="stats-kpi"><small>Compradas</small><strong id="kpiGarrafasCompradas">-</strong><span>Total registrado</span></div>
+        <div class="stats-kpi"><small>Consumidas</small><strong id="kpiGarrafasConsumidas">-</strong><span>Adega + externo</span></div>
+        <div class="stats-kpi"><small>Ticket médio</small><strong id="kpiTicketMedio">-</strong><span>Por garrafa comprada</span></div>
+      </div>
+
+      <div class="stats-insights-grid">
+        <div class="insight-card">
+          <div class="insight-head"><span>Perfil da adega</span><b id="insightTotalEstoque">-</b></div>
+          <div id="statsPerfilTipos" class="insight-list"></div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-head"><span>Janela de consumo</span><b id="insightJanelaStatus">-</b></div>
+          <div id="statsJanelaConsumo" class="insight-list"></div>
+        </div>
       </div>
 
       <div class="stats-grid">
-        <div class="chart-card">
+        <div class="chart-card chart-featured chart-movimento">
           <h3>Compras x consumos por mês</h3>
-          <p>Quantidade de garrafas nos últimos 12 meses.</p>
+          <p>Movimento de garrafas nos últimos 12 meses.</p>
           <div id="graficoComprasConsumos" class="chart-dual"></div>
           <div class="chart-legend"><span><i class="legend-dot"></i>Compras</span><span><i class="legend-dot gold"></i>Consumos</span></div>
         </div>
 
-        <div class="chart-card">
+        <div class="chart-card chart-investimento">
           <h3>Valor comprado por mês</h3>
           <p>Total gasto nas aquisições registradas.</p>
           <div id="graficoValorCompras" class="chart-bars"></div>
@@ -2353,20 +3112,8 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
         <div class="chart-card">
           <h3>Consumo por país</h3>
-          <p>Garrafas consumidas agrupadas pelo país do vinho.</p>
+          <p>Garrafas consumidas agrupadas pelo país.</p>
           <div id="graficoConsumoPais" class="chart-bars"></div>
-        </div>
-
-        <div class="chart-card">
-          <h3>Resumo por tipo</h3>
-          <p>Estoque atual por estilo de vinho.</p>
-          <div id="graficoEstoqueTipo" class="chart-bars"></div>
-        </div>
-
-        <div class="chart-card">
-          <h3>Potencial de guarda</h3>
-          <p>Status das garrafas em estoque com base em safra + potencial de guarda.</p>
-          <div id="graficoPotencialGuarda" class="chart-bars"></div>
         </div>
       </div>
 
@@ -2377,6 +3124,30 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       </div>
     </div>
   </section>
+
+  <section id="abaJantar" class="aba-jantar">
+    <div class="jantar-header">
+      <span class="eyebrow">Harmonização</span>
+      <h2>🍷 Qual vinho abrir hoje?</h2>
+      <p>Escolha o prato e a Adega Juliana sugere os melhores vinhos do seu estoque.</p>
+    </div>
+
+    <div class="jantar-search">
+      <span class="search-ico">🔎</span>
+      <input id="buscaPrato" placeholder="Procurar prato..." oninput="renderizarPratosHarmonizacao()">
+      <button type="button" onclick="limparBuscaPrato()">×</button>
+    </div>
+
+    <div class="jantar-section-title">Ou escolha uma categoria</div>
+    <div id="listaPratosHarmonizacao" class="pratos-grid"></div>
+
+    <div id="resultadoHarmonizacao" class="harmonizacao-result"></div>
+
+    <div class="config-mini">
+      <button onclick="abrirConfiguracoes()">Configurações e backup</button>
+    </div>
+  </section>
+
 </main>
 <nav class="bottom-nav" aria-label="Menu principal">
   <button id="bottomAdega" class="active" onclick="mostrarAba('adega')" aria-label="Adega">
@@ -2403,11 +3174,11 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     </span>
     <span>Rótulo</span>
   </button>
-  <button id="bottomMais" onclick="abrirConfiguracoes()" aria-label="Mais">
+  <button id="bottomJantar" onclick="mostrarAba('jantar')" aria-label="Jantar">
     <span class="nav-ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 2l.04.04a2 2 0 1 1-2.83 2.83l-.04-.04a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1 1.63V21a2 2 0 1 1-4 0v-.07a1.8 1.8 0 0 0-1-1.63 1.8 1.8 0 0 0-2 .36l-.04.04a2 2 0 1 1-2.83-2.83l.04-.04a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.63-1H3a2 2 0 1 1 0-4h.07a1.8 1.8 0 0 0 1.63-1 1.8 1.8 0 0 0-.36-2l-.04-.04a2 2 0 1 1 2.83-2.83l.04.04a1.8 1.8 0 0 0 2 .36 1.8 1.8 0 0 0 1-1.63V3a2 2 0 1 1 4 0v.07a1.8 1.8 0 0 0 1 1.63 1.8 1.8 0 0 0 2-.36l.04-.04a2 2 0 1 1 2.83 2.83l-.04.04a1.8 1.8 0 0 0-.36 2 1.8 1.8 0 0 0 1.63 1H21a2 2 0 1 1 0 4h-.07a1.8 1.8 0 0 0-1.53 1Z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M7 3v8"/><path d="M4.5 3v8"/><path d="M9.5 3v8"/><path d="M4.5 11h5"/><path d="M7 11v10"/><path d="M16 3c2 1.8 3 4.1 3 7 0 2.2-.8 3.8-2.2 4.7V21"/><path d="M16 3v18"/></svg>
     </span>
-    <span>Mais</span>
+    <span>Jantar</span>
   </button>
 </nav>
 <button class="fab" onclick="abrirCadastro()">＋</button>
@@ -4195,6 +4966,7 @@ function renderizar(){
  renderizarRecomendacoesConsumo();
  renderizarVinhosDesejados();
  const abaEstatisticas = document.getElementById("abaEstatisticas");
+ const abaJantar = document.getElementById("abaJantar");
  if(abaEstatisticas && abaEstatisticas.style.display === "block") renderizarEstatisticas();
 }
 
@@ -4696,6 +5468,28 @@ function renderBarChart(id, dados, opcoes={}){
  }
  const ordenadas = opcoes.manterOrdem ? entradas : entradas.sort((a,b)=>Number(b[1])-Number(a[1])).slice(0, opcoes.limite || 8);
  const max = Math.max(...ordenadas.map(([_,v])=>Number(v)),1);
+
+ if(id === "graficoValorCompras"){
+   const mesesComValor = ordenadas.filter(([_,valor])=>Number(valor)>0).slice(-6);
+   const totalPeriodo = mesesComValor.reduce((s,[_,valor])=>s+Number(valor||0),0);
+   el.innerHTML = `
+     <div class="month-spend-list">
+       ${mesesComValor.map(([label,valor])=>{
+         const largura = Math.max((Number(valor)/max)*100, 5);
+         return `
+           <div class="month-spend-row">
+             <div class="month-spend-top">
+               <span>${numeroMesLabel(label)}</span>
+               <strong>${moeda(valor)}</strong>
+             </div>
+             <div class="month-spend-track"><span class="month-spend-fill" style="width:${largura}%"></span></div>
+           </div>`;
+       }).join("")}
+       <div class="month-spend-total"><span>Total no período exibido</span><strong>${moeda(totalPeriodo)}</strong></div>
+     </div>`;
+   return;
+ }
+
  el.innerHTML = ordenadas.map(([label,valor],idx)=>{
    const largura = Math.max((Number(valor)/max)*100, 4);
    const classe = idx % 3 === 1 ? "secondary" : idx % 3 === 2 ? "rosefill" : "";
@@ -4714,27 +5508,52 @@ function renderDualChart(id, compras, consumos){
  const el = document.getElementById(id);
  if(!el) return;
  const meses = ultimosMeses(12);
- const max = Math.max(...meses.flatMap(m=>[Number(compras[m]||0), Number(consumos[m]||0)]),1);
- const temDados = meses.some(m=>Number(compras[m]||0)>0 || Number(consumos[m]||0)>0);
- if(!temDados){
-   el.innerHTML = `<div class="stats-empty">Cadastre datas de compra ou consumo para visualizar a evolução mensal.</div>`;
+ const movimentos = meses
+   .map(m=>({mes:m, compras:Number(compras[m] || 0), consumos:Number(consumos[m] || 0)}))
+   .filter(x=>x.compras > 0 || x.consumos > 0);
+
+ if(!movimentos.length){
+   el.innerHTML = `<div class="stats-empty">Nenhuma compra ou consumo registrado nos últimos 12 meses.</div>`;
    return;
  }
- el.innerHTML = meses.map(m=>{
-   const c = Number(compras[m] || 0);
-   const s = Number(consumos[m] || 0);
-   return `
-     <div class="dual-row">
-       <span>${numeroMesLabel(m)}</span>
-       <div class="dual-track">
-         <div class="dual-bar"><span style="width:${Math.max((c/max)*100, c ? 4 : 0)}%"></span></div>
-         <div class="dual-bar consumo"><span style="width:${Math.max((s/max)*100, s ? 4 : 0)}%"></span></div>
-       </div>
-       <strong>${c}/${s}</strong>
-     </div>`;
- }).join("");
-}
 
+ const max = Math.max(...movimentos.flatMap(x=>[x.compras, x.consumos]),1);
+ const totalCompras = movimentos.reduce((s,x)=>s+x.compras,0);
+ const totalConsumos = movimentos.reduce((s,x)=>s+x.consumos,0);
+ const ultimos = movimentos.slice(-6);
+
+ el.innerHTML = `
+   <div class="month-movement-list">
+     ${ultimos.map(x=>{
+       const larguraCompra = Math.max((x.compras/max)*100, x.compras ? 5 : 0);
+       const larguraConsumo = Math.max((x.consumos/max)*100, x.consumos ? 5 : 0);
+       const texto = x.consumos
+         ? `${x.compras} compra${x.compras === 1 ? "" : "s"} • ${x.consumos} consumo${x.consumos === 1 ? "" : "s"}`
+         : `${x.compras} compra${x.compras === 1 ? "" : "s"} • nenhum consumo`;
+       return `
+         <div class="month-movement-row">
+           <div class="month-movement-top">
+             <div class="month-movement-month">
+               <strong>${numeroMesLabel(x.mes)}</strong>
+               <span>${texto}</span>
+             </div>
+             <div class="month-movement-kpis">
+               <span class="month-chip buy">● ${x.compras}</span>
+               <span class="month-chip consume">● ${x.consumos}</span>
+             </div>
+           </div>
+           <div class="month-movement-bars">
+             <div class="month-movement-bar"><span style="width:${larguraCompra}%"></span></div>
+             ${x.consumos ? `<div class="month-movement-bar consumo"><span style="width:${larguraConsumo}%"></span></div>` : ""}
+           </div>
+         </div>`;
+     }).join("")}
+     <div class="month-movement-summary">
+       <div><small>Compras no período</small><strong>${totalCompras}</strong></div>
+       <div><small>Consumos no período</small><strong>${totalConsumos}</strong></div>
+     </div>
+   </div>`;
+}
 function renderTopConsumidos(id, dados){
  const el = document.getElementById(id);
  if(!el) return;
@@ -4752,13 +5571,64 @@ function renderTopConsumidos(id, dados){
    </table>`;
 }
 
+function classeInsightTipo(label){
+ const l = String(label || "").toLowerCase();
+ if(l.includes("branco")) return "gold";
+ if(l.includes("ros")) return "rose";
+ if(l.includes("espum")) return "gold";
+ return "";
+}
+
+function classeInsightJanela(label){
+ const l = String(label || "").toLowerCase();
+ if(l.includes("passou") || l.includes("limite")) return "red";
+ if(l.includes("pronto")) return "gold";
+ if(l.includes("jovem")) return "green";
+ return "";
+}
+
+function renderInsightList(id, dados, classeFn){
+ const el = document.getElementById(id);
+ if(!el) return;
+ const entradas = Object.entries(dados || {}).filter(([_,v])=>Number(v)>0).sort((a,b)=>Number(b[1])-Number(a[1]));
+ if(!entradas.length){
+   el.innerHTML = `<div class="stats-empty" style="padding:12px;font-size:12px">Sem dados suficientes.</div>`;
+   return;
+ }
+ const total = entradas.reduce((s,[_,v])=>s+Number(v||0),0) || 1;
+ const max = Math.max(...entradas.map(([_,v])=>Number(v)),1);
+ el.innerHTML = entradas.slice(0,5).map(([label,valor])=>{
+   const largura = Math.max((Number(valor)/max)*100, 5);
+   const pct = Math.round((Number(valor)/total)*100);
+   const cls = classeFn ? classeFn(label) : "";
+   return `
+     <div class="insight-row">
+       <label>${label}</label>
+       <strong>${valor} • ${pct}%</strong>
+       <div class="insight-track"><span class="insight-fill ${cls}" style="width:${largura}%"></span></div>
+     </div>`;
+ }).join("");
+}
+
 function renderizarEstatisticas(){
  const m = coletarMetricas();
  const setTxt = (id, valor) => { const el = document.getElementById(id); if(el) el.innerText = valor; };
+ const ticketMedio = m.garrafasCompradas ? m.valorInvestido / m.garrafasCompradas : 0;
+ const totalEstoque = soma("");
+ const urgentes = vinhosEmEstoqueOrdenadosPorConsumo().filter(v=>["guarda-passou","guarda-limite"].includes(v.infoGuarda.classe)).length;
+ const prontos = vinhosEmEstoqueOrdenadosPorConsumo().filter(v=>v.infoGuarda.classe === "guarda-pronto").length;
+
  setTxt("kpiValorInvestido", moeda(m.valorInvestido));
  setTxt("kpiValorEstoque", moeda(m.valorEstoque));
  setTxt("kpiGarrafasCompradas", m.garrafasCompradas);
  setTxt("kpiGarrafasConsumidas", m.garrafasConsumidas);
+ setTxt("kpiTicketMedio", moeda(ticketMedio));
+ setTxt("statsHeroResumo", `${totalEstoque} garrafa${totalEstoque === 1 ? "" : "s"} em estoque • ${urgentes} urgente${urgentes === 1 ? "" : "s"} • ${prontos} pronta${prontos === 1 ? "" : "s"}`);
+ setTxt("insightTotalEstoque", `${totalEstoque} garrafas`);
+ setTxt("insightJanelaStatus", urgentes ? `${urgentes} urgentes` : "Em dia");
+
+ renderInsightList("statsPerfilTipos", m.estoqueTipo, classeInsightTipo);
+ renderInsightList("statsJanelaConsumo", m.guardaStatus, classeInsightJanela);
 
  renderDualChart("graficoComprasConsumos", m.comprasMes, m.consumosMes);
  const mesesValor = {};
@@ -4771,13 +5641,143 @@ function renderizarEstatisticas(){
 }
 
 
+
+const pratosHarmonizacao = [
+  {id:"cordeiro", nome:"Cordeiro", subtitulo:"Tintos estruturados", img:"url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80')", uvas:["cabernet","syrah","malbec","blend bordal","merlot","tempranillo"], tipos:["Tinto"], motivo:"cordeiro combina melhor com tintos estruturados, taninos presentes e boa intensidade."},
+  {id:"churrasco", nome:"Churrasco", subtitulo:"Malbec, Cabernet, Syrah", img:"url('https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=700&q=80')", uvas:["malbec","cabernet","syrah","tannat","pinotage"], tipos:["Tinto"], motivo:"carnes grelhadas pedem vinhos de corpo, fruta e taninos para acompanhar gordura e defumado."},
+  {id:"massa-molho-vermelho", nome:"Massa ao molho vermelho", subtitulo:"Tintos com acidez", img:"url('https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=80')", uvas:["sangiovese","chianti","cabernet franc","merlot","pinot noir"], tipos:["Tinto"], motivo:"molho vermelho combina com tintos gastronômicos, boa acidez e taninos moderados."},
+  {id:"risoto-cogumelos", nome:"Risoto de cogumelos", subtitulo:"Pinot Noir e brancos ricos", img:"url('https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=700&q=80')", uvas:["pinot noir","chardonnay","nebbiolo"], tipos:["Tinto","Branco"], motivo:"cogumelos pedem vinhos elegantes, terrosos ou brancos com textura."},
+  {id:"peixe", nome:"Peixe grelhado", subtitulo:"Brancos frescos", img:"url('https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=700&q=80')", uvas:["sauvignon","riesling","chardonnay","pinot grigio"], tipos:["Branco","Espumante"], motivo:"peixes leves combinam com brancos frescos, minerais e de boa acidez."},
+  {id:"salmao", nome:"Salmão", subtitulo:"Pinot Noir ou Chardonnay", img:"url('https://images.unsplash.com/photo-1485704686097-ed47f7263ca4?auto=format&fit=crop&w=700&q=80')", uvas:["pinot noir","chardonnay","riesling"], tipos:["Branco","Tinto","Rosé"], motivo:"salmão aceita brancos com corpo, rosés e tintos leves como Pinot Noir."},
+  {id:"japonesa", nome:"Comida japonesa", subtitulo:"Riesling, Sauvignon, Espumante", img:"url('https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=700&q=80')", uvas:["riesling","sauvignon","pinot grigio","chardonnay"], tipos:["Branco","Espumante"], motivo:"sushi e sashimi combinam com vinhos frescos, aromáticos e com boa acidez."},
+  {id:"queijo-suave", nome:"Queijo suave e macio", subtitulo:"Brancos e espumantes", img:"url('https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=700&q=80')", uvas:["chardonnay","sauvignon","riesling","pinot grigio"], tipos:["Branco","Espumante","Rosé"], motivo:"queijos suaves pedem vinhos frescos, cremosos ou espumantes."},
+  {id:"queijo-azul", nome:"Queijo azul", subtitulo:"Tintos intensos", img:"url('https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=700&q=80')", uvas:["syrah","cabernet","malbec","gewurztraminer"], tipos:["Tinto","Branco"], motivo:"queijo azul precisa de vinho intenso, aromático ou com boa estrutura."},
+  {id:"comida-apimentada", nome:"Comida apimentada", subtitulo:"Aromáticos e frescos", img:"url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=700&q=80')", uvas:["riesling","gewurztraminer","pinot grigio","sauvignon"], tipos:["Branco","Rosé","Espumante"], motivo:"pratos apimentados ficam melhores com vinhos aromáticos, frescos e de menor tanino."},
+  {id:"frango", nome:"Frango assado", subtitulo:"Brancos ou tintos leves", img:"url('https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=700&q=80')", uvas:["chardonnay","pinot noir","merlot","sauvignon"], tipos:["Branco","Tinto","Rosé"], motivo:"frango é versátil e combina com brancos de corpo médio ou tintos leves."},
+  {id:"sobremesa", nome:"Sobremesa", subtitulo:"Aromáticos e espumantes", img:"url('https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=80')", uvas:["riesling","gewurztraminer"], tipos:["Branco","Espumante"], motivo:"sobremesas pedem vinhos aromáticos, delicados ou espumantes leves."}
+];
+
+function renderizarPratosHarmonizacao(){
+ const lista = document.getElementById("listaPratosHarmonizacao");
+ if(!lista) return;
+ const termo = String(document.getElementById("buscaPrato")?.value || "").toLowerCase().trim();
+ const pratos = pratosHarmonizacao.filter(p=>{
+   const texto = `${p.nome} ${p.subtitulo} ${p.uvas.join(" ")} ${p.tipos.join(" ")}`.toLowerCase();
+   return !termo || texto.includes(termo);
+ });
+ lista.innerHTML = pratos.length ? pratos.map(p=>`
+   <button class="prato-card" style="--img:${p.img}" onclick="selecionarPratoHarmonizacao('${p.id}')">
+     <span class="prato-info">
+       <strong>${p.nome}</strong>
+       <span>${p.subtitulo}</span>
+     </span>
+   </button>
+ `).join("") : `<div class="harmonizacao-empty" style="grid-column:1/-1">Nenhum prato encontrado. Tente buscar por carne, peixe, queijo, massa ou sushi.</div>`;
+}
+
+function limparBuscaPrato(){
+ const el = document.getElementById("buscaPrato");
+ if(el) el.value = "";
+ renderizarPratosHarmonizacao();
+}
+
+function textoNormalizado(valor){
+ return String(valor || "")
+   .normalize("NFD")
+   .replace(/[\u0300-\u036f]/g,"")
+   .toLowerCase();
+}
+
+function pontuarVinhoParaPrato(v, prato){
+ garantirEstrutura(v);
+ let pontos = 0;
+ const uva = textoNormalizado(v.detalhes?.uva);
+ const nome = textoNormalizado(v.nome);
+ const tipo = v.tipo || "";
+ const notas = textoNormalizado(v.detalhes?.notas);
+ const produtor = textoNormalizado(v.detalhes?.produtor);
+ const texto = `${uva} ${nome} ${notas} ${produtor}`;
+
+ if(prato.tipos.includes(tipo)) pontos += 28;
+
+ prato.uvas.forEach(u=>{
+   if(texto.includes(textoNormalizado(u))) pontos += 24;
+ });
+
+ const nota = Number(v.detalhes?.notaVivino || 0);
+ if(nota >= 4.4) pontos += 16;
+ else if(nota >= 4.1) pontos += 11;
+ else if(nota >= 3.8) pontos += 6;
+
+ const info = calcularInfoGuarda(v);
+ if(info.classe === "guarda-pronto") pontos += 12;
+ if(info.classe === "guarda-limite") pontos += 10;
+ if(info.classe === "guarda-passou") pontos += 4;
+ if(info.classe === "guarda-jovem") pontos += 3;
+
+ if(Number(v.quantidade || 0) <= 0) pontos -= 100;
+
+ return pontos;
+}
+
+function motivoHarmonizacao(v, prato, pontos){
+ garantirEstrutura(v);
+ const uva = v.detalhes?.uva && v.detalhes.uva !== "-" ? v.detalhes.uva : v.tipo;
+ const nota = Number(v.detalhes?.notaVivino || 0);
+ const info = calcularInfoGuarda(v);
+ const partes = [];
+ partes.push(`${uva} combina com ${prato.nome.toLowerCase()}`);
+ if(nota) partes.push(`nota Vivino ${nota.toFixed(1)}`);
+ if(info.classe !== "guarda-indefinido") partes.push(info.status.toLowerCase());
+ return partes.join(" • ") + ".";
+}
+
+function selecionarPratoHarmonizacao(id){
+ const prato = pratosHarmonizacao.find(p=>p.id === id);
+ const box = document.getElementById("resultadoHarmonizacao");
+ if(!prato || !box) return;
+
+ const candidatos = vinhos
+   .map((v,index)=>({...v,index, pontos:pontuarVinhoParaPrato(v, prato)}))
+   .filter(v=>v.pontos > 0 && Number(v.quantidade || 0) > 0)
+   .sort((a,b)=>{
+     if(b.pontos !== a.pontos) return b.pontos - a.pontos;
+     return Number(b.detalhes?.notaVivino || 0) - Number(a.detalhes?.notaVivino || 0);
+   })
+   .slice(0,5);
+
+ const subtitulo = candidatos.length
+   ? `${candidatos.length} sugestão${candidatos.length === 1 ? "" : "ões"} encontrada${candidatos.length === 1 ? "" : "s"} na sua adega.`
+   : "Não encontrei uma combinação forte na sua adega para este prato.";
+
+ box.innerHTML = `
+   <div class="harmonizacao-hero">
+     <h3>${prato.nome}</h3>
+     <p>${prato.motivo}<br>${subtitulo}</p>
+   </div>
+   <div class="harmonizacao-lista">
+     ${candidatos.length ? candidatos.map((v,idx)=>`
+       <div class="harmonizacao-item" onclick="abrirDetalhes(${v.index})">
+         <div>
+           <strong>${idx === 0 ? "🥇 " : idx === 1 ? "🥈 " : idx === 2 ? "🥉 " : ""}${v.nome} ${v.safra ? "• " + v.safra : ""}</strong>
+           <span>${v.tipo} • ${v.detalhes?.pais || "-"} • ${motivoHarmonizacao(v, prato, v.pontos)}</span>
+         </div>
+         <span class="harmonizacao-score">${Math.min(99, Math.round(v.pontos))}%</span>
+       </div>
+     `).join("") : `<div class="harmonizacao-empty">Tente cadastrar uva/corte e nota Vivino nos vinhos para melhorar as sugestões.</div>`}
+   </div>`;
+ box.style.display = "block";
+ box.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
 function setBottomNavAtivo(aba){
  const mapa = {
    adega:"bottomAdega",
    estatisticas:"bottomStats",
    historico:"bottomHistorico",
    rotulo:"bottomRotulo",
-   mais:"bottomMais"
+   jantar:"bottomJantar",
+   mais:"bottomJantar"
  };
  Object.values(mapa).forEach(id=>{
    const el = document.getElementById(id);
@@ -4793,6 +5793,7 @@ function mostrarAba(aba){
  const abaAdega = document.getElementById("abaAdega");
  const secaoLista = document.getElementById("secaoListaVinhos");
  const abaEstatisticas = document.getElementById("abaEstatisticas");
+ const abaJantar = document.getElementById("abaJantar");
 
  if(abaAdega) abaAdega.style.display = aba === "adega" ? "block" : "none";
  if(secaoLista) secaoLista.style.display = aba === "adega" ? "block" : "none";
@@ -4801,18 +5802,24 @@ function mostrarAba(aba){
  const cardDesejados = document.getElementById("cardVinhosDesejados");
  if(cardDesejados) cardDesejados.style.display = aba === "adega" ? "block" : "none";
  if(abaEstatisticas) abaEstatisticas.style.display = aba === "estatisticas" ? "block" : "none";
+ if(abaJantar) abaJantar.style.display = aba === "jantar" ? "block" : "none";
+ const fab = document.querySelector(".fab");
+ if(fab) fab.style.display = aba === "adega" ? "" : "none";
 
  const tabs = document.querySelectorAll('.tab');
  if(aba === 'estatisticas'){
    if(tabs[1]) tabs[1].classList.add('active');
    renderizarEstatisticas();
+ }else if(aba === 'jantar'){
+   if(tabs[5]) tabs[5].classList.add('active');
+   renderizarPratosHarmonizacao();
  }else{
    if(tabs[0]) tabs[0].classList.add('active');
  }
 }
 
 function abrirConfiguracoes(){
- setBottomNavAtivo("mais");
+ // Configurações não ocupa mais item no rodapé; mantém a aba atual.
  document.getElementById("modalConfiguracoes").style.display = "flex";
 }
 
