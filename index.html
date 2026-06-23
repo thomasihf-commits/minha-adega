@@ -1862,6 +1862,111 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   white-space:nowrap;
 }
 
+
+/* ===============================
+   AJUSTE VISUAL - CARDS UNIFICADOS
+   =============================== */
+#cardRecomendacoesConsumo,
+#cardVinhosDesejados{
+  display:none;
+  background:linear-gradient(135deg,#fff,#fff7f2)!important;
+  border:1px solid rgba(133,0,43,.16)!important;
+  border-radius:18px!important;
+  padding:10px 12px!important;
+  box-shadow:0 8px 22px rgba(70,25,22,.07)!important;
+  margin-bottom:10px!important;
+  cursor:pointer;
+  transition:.18s ease;
+}
+#cardRecomendacoesConsumo .rec-head,
+#cardVinhosDesejados .rec-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  margin-bottom:0!important;
+}
+#cardRecomendacoesConsumo h3,
+#cardVinhosDesejados h3{
+  margin:0!important;
+  font-size:15px!important;
+  color:#271f22!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  font-weight:900!important;
+}
+#cardRecomendacoesConsumo p,
+#cardVinhosDesejados p{
+  margin:3px 0 0!important;
+  color:#6b6063!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  max-width:100%!important;
+}
+#recChevron,
+#wishlistChevron{
+  font-size:12px!important;
+  color:var(--vinho)!important;
+  display:inline-block!important;
+  width:14px!important;
+}
+#cardRecomendacoesConsumo.rec-collapsed,
+#cardVinhosDesejados.rec-collapsed{
+  min-height:58px!important;
+}
+#cardRecomendacoesConsumo.rec-collapsed .rec-lista,
+#cardRecomendacoesConsumo.rec-collapsed .rec-ver-todos,
+#cardVinhosDesejados.rec-collapsed .rec-lista,
+#cardVinhosDesejados.rec-collapsed .rec-ver-todos{
+  display:none!important;
+}
+#cardRecomendacoesConsumo.rec-expanded .rec-lista,
+#cardVinhosDesejados.rec-expanded .rec-lista{
+  display:grid!important;
+  margin-top:10px!important;
+}
+#cardRecomendacoesConsumo.rec-expanded .rec-ver-todos,
+#cardVinhosDesejados.rec-expanded .rec-ver-todos{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.wishlist-card{
+  background:linear-gradient(135deg,#fff,#fff7f2)!important;
+  border-color:rgba(133,0,43,.16)!important;
+}
+.wishlist-badge{
+  border-color:#ead483!important;
+  background:#fff7db!important;
+  color:#7a5700!important;
+}
+@media(max-width:650px){
+  #cardRecomendacoesConsumo,
+  #cardVinhosDesejados{
+    padding:9px 11px!important;
+    border-radius:14px!important;
+    margin-bottom:10px!important;
+  }
+  #cardRecomendacoesConsumo .rec-head,
+  #cardVinhosDesejados .rec-head{
+    flex-direction:row!important;
+    align-items:center!important;
+  }
+  #cardRecomendacoesConsumo.rec-expanded .rec-head,
+  #cardVinhosDesejados.rec-expanded .rec-head{
+    align-items:flex-start!important;
+  }
+  #cardRecomendacoesConsumo.rec-expanded .rec-ver-todos,
+  #cardVinhosDesejados.rec-expanded .rec-ver-todos{
+    width:auto!important;
+    min-width:78px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -1920,7 +2025,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     <div class="rec-head">
       <div class="rec-title-wrap">
         <h3><span id="wishlistChevron">▶</span> ❤️ Vinhos desejados</h3>
-        <p id="textoResumoVinhosDesejados">Vinhos marcados como “compraria para a adega”.</p>
+        <p id="textoResumoVinhosDesejados">Lista de vinhos que você compraria para a adega.</p>
       </div>
       <button class="btn-secondary rec-ver-todos" onclick="event.stopPropagation(); abrirVinhosDesejados()">Ver todos</button>
     </div>
@@ -3479,7 +3584,7 @@ function renderizarVinhosDesejados(){
  }
 
  if(!desejados.length){
-   if(resumo) resumo.innerText = "Nenhum vinho desejado ainda. Marque 'Compraria para a adega? Sim' em um consumo externo.";
+   if(resumo) resumo.innerText = "Nenhum vinho desejado ainda";
    lista.innerHTML = `<div class="rec-empty">Nenhum vinho desejado ainda.</div>`;
    return;
  }
