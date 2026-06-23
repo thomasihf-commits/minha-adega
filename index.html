@@ -397,7 +397,7 @@ select, input, textarea{
 
 .wine-emoji{
   width:72px;
-  height:72px;
+  height:58px;
   border-radius:22px;
   display:flex;
   align-items:center;
@@ -1299,7 +1299,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   display:block;
   margin-top:4px;
   color:#6b6063;
-  font-size:11px;
+  font-size:10px;
   line-height:1.25;
 }
 .detalhe-box.guarda-destaque{
@@ -1630,7 +1630,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 .rotulo-resultado-card h3{margin:0 0 10px;color:#241b1e;}
 .rotulo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .rotulo-info{background:#fff;border:1px solid #f0e4df;border-radius:12px;padding:10px;}
-.rotulo-info small{display:block;color:#6b6063;font-weight:900;margin-bottom:4px;font-size:11px;text-transform:uppercase;}
+.rotulo-info small{display:block;color:#6b6063;font-weight:900;margin-bottom:4px;font-size:10px;text-transform:uppercase;}
 .rotulo-info strong{color:#241b1e;font-size:14px;}
 .rotulo-observacoes{margin-top:10px;color:#5f5356;font-size:13px;line-height:1.45;}
 @media(max-width:650px){.rotulo-grid{grid-template-columns:1fr;}}
@@ -2116,6 +2116,130 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 }
 
 
+
+
+/* ===============================
+   MENU INFERIOR MOBILE - ÍCONES SVG
+   =============================== */
+.bottom-nav{
+  display:none;
+}
+
+@media(max-width:800px){
+  body{
+    padding-bottom:88px!important;
+  }
+
+  .app-tabs{
+    display:none!important;
+  }
+
+  .container{
+    margin-top:14px!important;
+  }
+
+  .bottom-nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:66px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    align-items:center;
+    background:linear-gradient(180deg,#fffaf7,#fff1ed);
+    border-top:1px solid rgba(133,0,43,.14);
+    border-left:0;
+    border-right:0;
+    border-bottom:0;
+    border-radius:22px 22px 0 0;
+    box-shadow:0 -8px 24px rgba(70,25,22,.14);
+    z-index:25;
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom));
+    backdrop-filter:blur(14px);
+  }
+
+  .bottom-nav button{
+    height:50px;
+    border:0;
+    background:transparent;
+    color:#7b7074;
+    font-size:10px;
+    font-weight:900;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    border-radius:18px;
+    cursor:pointer;
+    padding:0 2px;
+    position:relative;
+    transition:color .16s ease, background .16s ease, transform .16s ease;
+  }
+
+  .bottom-nav button::before{
+    content:"";
+    position:absolute;
+    top:2px;
+    width:22px;
+    height:3px;
+    border-radius:999px;
+    background:transparent;
+    transition:background .16s ease, width .16s ease;
+  }
+
+  .bottom-nav .nav-ico{
+    width:22px;
+    height:22px;
+    display:block;
+    color:currentColor;
+    opacity:.78;
+  }
+
+  .bottom-nav .nav-ico svg{
+    width:100%;
+    height:100%;
+    display:block;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .bottom-nav button.active{
+    color:var(--vinho);
+    background:linear-gradient(135deg,#fff5f7,#fff0f3);
+    box-shadow:0 4px 14px rgba(133,0,43,.08);
+    font-weight:950;
+  }
+
+  .bottom-nav button.active::before{
+    background:var(--vinho);
+    width:26px;
+  }
+
+  .bottom-nav button.active .nav-ico{
+    opacity:1;
+  }
+
+  .bottom-nav button:active{
+    transform:scale(.97);
+  }
+
+  .fab{
+    display:block!important;
+    right:22px!important;
+    bottom:82px!important;
+    width:62px!important;
+    height:62px!important;
+    font-size:34px!important;
+    z-index:24!important;
+  }
+}
+
 </style>
 </head>
 
@@ -2254,6 +2378,38 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     </div>
   </section>
 </main>
+<nav class="bottom-nav" aria-label="Menu principal">
+  <button id="bottomAdega" class="active" onclick="mostrarAba('adega')" aria-label="Adega">
+    <span class="nav-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M8 3h8l-1 7a4 4 0 0 1-3 3.85V20"/><path d="M9 20h6"/><path d="M8.35 8h7.3"/></svg>
+    </span>
+    <span>Adega</span>
+  </button>
+  <button id="bottomStats" onclick="mostrarAba('estatisticas')" aria-label="Estatísticas">
+    <span class="nav-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16V11"/><path d="M12 16V7"/><path d="M16 16v-4"/></svg>
+    </span>
+    <span>Stats</span>
+  </button>
+  <button id="bottomHistorico" onclick="abrirHistoricoConsumo()" aria-label="Histórico">
+    <span class="nav-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
+    </span>
+    <span>Histórico</span>
+  </button>
+  <button id="bottomRotulo" onclick="abrirLeitorRotulo()" aria-label="Rótulo">
+    <span class="nav-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M5 7h3l1.5-2h5L16 7h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="3.5"/></svg>
+    </span>
+    <span>Rótulo</span>
+  </button>
+  <button id="bottomMais" onclick="abrirConfiguracoes()" aria-label="Mais">
+    <span class="nav-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.8 1.8 0 0 0 .36 2l.04.04a2 2 0 1 1-2.83 2.83l-.04-.04a1.8 1.8 0 0 0-2-.36 1.8 1.8 0 0 0-1 1.63V21a2 2 0 1 1-4 0v-.07a1.8 1.8 0 0 0-1-1.63 1.8 1.8 0 0 0-2 .36l-.04.04a2 2 0 1 1-2.83-2.83l.04-.04a1.8 1.8 0 0 0 .36-2 1.8 1.8 0 0 0-1.63-1H3a2 2 0 1 1 0-4h.07a1.8 1.8 0 0 0 1.63-1 1.8 1.8 0 0 0-.36-2l-.04-.04a2 2 0 1 1 2.83-2.83l.04.04a1.8 1.8 0 0 0 2 .36 1.8 1.8 0 0 0 1-1.63V3a2 2 0 1 1 4 0v.07a1.8 1.8 0 0 0 1 1.63 1.8 1.8 0 0 0 2-.36l.04-.04a2 2 0 1 1 2.83 2.83l-.04.04a1.8 1.8 0 0 0-.36 2 1.8 1.8 0 0 0 1.63 1H21a2 2 0 1 1 0 4h-.07a1.8 1.8 0 0 0-1.53 1Z"/></svg>
+    </span>
+    <span>Mais</span>
+  </button>
+</nav>
 <button class="fab" onclick="abrirCadastro()">＋</button>
 
 <div id="modalCadastro" class="modal-bg" onclick="fecharCadastro()">
@@ -2829,6 +2985,7 @@ function limparLeitorRotulo(){
 }
 
 function abrirLeitorRotulo(){
+ setBottomNavAtivo("rotulo");
  limparLeitorRotulo();
  document.getElementById("modalLeitorRotulo").style.display = "flex";
 }
@@ -3390,6 +3547,7 @@ function carregarConsumosExternos(){
 
 
 function abrirHistoricoConsumo(){
+ setBottomNavAtivo("historico");
  const consumos = [];
 
  vinhos.forEach(v=>{
@@ -4612,8 +4770,26 @@ function renderizarEstatisticas(){
  renderTopConsumidos("tabelaTopConsumidos", m.topConsumidos);
 }
 
+
+function setBottomNavAtivo(aba){
+ const mapa = {
+   adega:"bottomAdega",
+   estatisticas:"bottomStats",
+   historico:"bottomHistorico",
+   rotulo:"bottomRotulo",
+   mais:"bottomMais"
+ };
+ Object.values(mapa).forEach(id=>{
+   const el = document.getElementById(id);
+   if(el) el.classList.remove("active");
+ });
+ const ativo = document.getElementById(mapa[aba] || mapa.adega);
+ if(ativo) ativo.classList.add("active");
+}
+
 function mostrarAba(aba){
  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ setBottomNavAtivo(aba);
  const abaAdega = document.getElementById("abaAdega");
  const secaoLista = document.getElementById("secaoListaVinhos");
  const abaEstatisticas = document.getElementById("abaEstatisticas");
@@ -4636,6 +4812,7 @@ function mostrarAba(aba){
 }
 
 function abrirConfiguracoes(){
+ setBottomNavAtivo("mais");
  document.getElementById("modalConfiguracoes").style.display = "flex";
 }
 
