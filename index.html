@@ -1967,6 +1967,20 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+
+.wishlist-outline-icon{
+  font-size:18px;
+  line-height:1;
+  color:var(--vinho);
+  font-weight:900;
+  display:inline-flex;
+  align-items:center;
+  transform:translateY(-1px);
+}
+@media(max-width:650px){
+  .wishlist-outline-icon{font-size:17px;}
+}
+
 /* ===============================
    BANDEIRA DO PAÍS NO CARD
    =============================== */
@@ -2051,7 +2065,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   <section id="cardVinhosDesejados" class="recomendacao-consumo-card rec-collapsed wishlist-card" onclick="toggleVinhosDesejadosCard(event)">
     <div class="rec-head">
       <div class="rec-title-wrap">
-        <h3><span id="wishlistChevron">▶</span> ❤️ Vinhos desejados</h3>
+        <h3><span id="wishlistChevron">▶</span> <span class="wishlist-outline-icon">♡</span> Vinhos desejados</h3>
         <p id="textoResumoVinhosDesejados">Lista de vinhos que você compraria para a adega.</p>
       </div>
       <button class="btn-secondary rec-ver-todos" onclick="event.stopPropagation(); abrirVinhosDesejados()">Ver todos</button>
@@ -2494,7 +2508,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       <button class="btn-secondary" onclick="fecharLeitorRotulo()">Descartar</button>
       <div id="rotuloDestinoActions" class="rotulo-destino-actions">
         <button id="btnConsumoExternoRotulo" class="btn-secondary" onclick="consumoExternoAPartirDoRotulo()">🍽️ Consumo externo</button>
-        <button id="btnWishlistRotulo" class="btn-secondary" onclick="adicionarWishlistAPartirDoRotulo()">❤️ Vinho desejado</button>
+        <button id="btnWishlistRotulo" class="btn-secondary" onclick="adicionarWishlistAPartirDoRotulo()">♡ Vinho desejado</button>
         <button id="btnCadastrarRotulo" class="btn-secondary btn-save" onclick="cadastrarAPartirDoRotulo()">🍷 Adicionar à adega</button>
       </div>
     </div>
@@ -2879,7 +2893,7 @@ async function adicionarWishlistAPartirDoRotulo(){
 
  const btn = document.getElementById("btnWishlistRotulo");
  const textoOriginal = btn ? btn.innerText : "";
- if(btn){ btn.disabled = true; btn.innerText = "❤️ Salvando..."; }
+ if(btn){ btn.disabled = true; btn.innerText = "♡ Salvando..."; }
 
  try{
    const tipoIA = normalizarTipoIA(vinhoIA.tipo) || vinhoIA.tipo || null;
@@ -2910,7 +2924,7 @@ async function adicionarWishlistAPartirDoRotulo(){
    setStatusRotulo("❌ Não foi possível adicionar aos vinhos desejados.", "erro");
    alert("Não foi possível adicionar aos vinhos desejados. Verifique a tabela/policies no Supabase.");
  }finally{
-   if(btn){ btn.disabled = false; btn.innerText = textoOriginal || "❤️ Vinho desejado"; }
+   if(btn){ btn.disabled = false; btn.innerText = textoOriginal || "♡ Vinho desejado"; }
  }
 }
 
@@ -3724,7 +3738,7 @@ function htmlItemVinhoDesejado(c){
        <strong>${nome}</strong>
        <span>${detalhes || "Vinho desejado"}<br>${data} • ${origem}</span>
      </div>
-     <span class="wishlist-badge">❤️ ${nota ? nota.toFixed(1) : "Desejado"}</span>
+     <span class="wishlist-badge">♡ ${nota ? nota.toFixed(1) : "Desejado"}</span>
    </div>`;
 }
 
