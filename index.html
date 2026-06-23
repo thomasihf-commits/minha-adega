@@ -2974,6 +2974,246 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+
+
+/* ===============================
+   LEITOR DE RÓTULO MODERNO
+   =============================== */
+.rotulo-modal{
+  width:min(680px,100%)!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+.rotulo-modal .modal-header{
+  padding:28px 28px 24px!important;
+  background:
+    radial-gradient(circle at 90% 8%, rgba(216,177,63,.30), transparent 32%),
+    linear-gradient(135deg,#970033 0%,#650020 58%,#360010 100%)!important;
+}
+.rotulo-modal .modal-header h2{
+  font-size:32px!important;
+  letter-spacing:-.7px!important;
+  line-height:1.05!important;
+}
+.rotulo-modal .modal-header p{
+  margin:12px 0 0!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:15px!important;
+  font-weight:750!important;
+  line-height:1.45!important;
+}
+.rotulo-modern-body{
+  padding:22px!important;
+}
+.rotulo-captura-card{
+  position:relative;
+  min-height:260px;
+  border-radius:26px;
+  border:1px dashed rgba(133,0,43,.24);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(216,177,63,.13), transparent 30%),
+    linear-gradient(135deg,#fffaf7,#fff3ef);
+  box-shadow:0 12px 28px rgba(70,25,22,.08);
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:22px;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.rotulo-captura-card:hover{
+  transform:translateY(-1px);
+  border-color:rgba(133,0,43,.38);
+  box-shadow:0 16px 34px rgba(70,25,22,.12);
+}
+.rotulo-captura-card .rotulo-empty-state{
+  display:grid;
+  place-items:center;
+  gap:10px;
+  color:#2a2225;
+}
+.rotulo-camera-big{
+  width:82px;
+  height:82px;
+  border-radius:28px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#fff,#fff1f4);
+  color:var(--vinho);
+  border:1px solid rgba(133,0,43,.14);
+  box-shadow:0 12px 24px rgba(80,0,28,.10);
+  font-size:38px;
+}
+.rotulo-empty-state h3{
+  margin:4px 0 0;
+  font-size:22px;
+  line-height:1.1;
+  letter-spacing:-.3px;
+}
+.rotulo-empty-state p{
+  margin:0;
+  max-width:360px;
+  color:#74686b;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.4;
+}
+.rotulo-file-status{
+  margin-top:0!important;
+  text-align:center!important;
+  color:#7a6f72!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
+.rotulo-captura-card.foto-capturada{
+  min-height:auto;
+  padding:12px;
+  border-style:solid;
+  background:#fff;
+}
+.rotulo-captura-card.foto-capturada .rotulo-empty-state{
+  display:none;
+}
+.rotulo-captura-card.foto-capturada .rotulo-preview{
+  display:block!important;
+}
+.rotulo-preview{
+  width:100%!important;
+  max-height:330px!important;
+  object-fit:contain!important;
+  border:0!important;
+  border-radius:20px!important;
+  background:#fff!important;
+  margin:0!important;
+}
+.rotulo-captura-card.foto-capturada .rotulo-file-status{
+  position:absolute;
+  left:16px;
+  top:16px;
+  background:rgba(39,99,56,.92);
+  color:#fff!important;
+  padding:7px 11px;
+  border-radius:999px;
+  font-size:10.5px!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.12);
+}
+.rotulo-actions{
+  margin-top:14px!important;
+}
+#btnAnalisarRotulo{
+  display:none!important;
+}
+.rotulo-status{
+  border-radius:18px!important;
+  padding:14px 16px!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  line-height:1.4!important;
+  box-shadow:0 8px 20px rgba(70,25,22,.06);
+}
+.rotulo-status:not(.ok):not(.erro){
+  background:#fffaf7!important;
+  border-color:#f0e1da!important;
+  color:#5f5356!important;
+}
+.rotulo-status:not(.ok):not(.erro)::before{
+  content:"";
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  border:3px solid #ead7cf;
+  border-top-color:var(--vinho);
+  display:inline-block;
+  vertical-align:-4px;
+  margin-right:9px;
+  animation:rotuloSpin .8s linear infinite;
+}
+@keyframes rotuloSpin{to{transform:rotate(360deg)}}
+.rotulo-resultado-card{
+  background:#fff!important;
+  border:1px solid rgba(133,0,43,.14)!important;
+  border-radius:24px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  box-shadow:0 14px 32px rgba(70,25,22,.10)!important;
+}
+.rotulo-result-hero{
+  padding:18px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 92% 0%, rgba(216,177,63,.30), transparent 34%),
+    linear-gradient(135deg,#8f002e,#4d0018);
+}
+.rotulo-result-hero h3{
+  margin:0 0 8px!important;
+  color:#fff!important;
+  font-size:24px!important;
+  line-height:1.1!important;
+  letter-spacing:-.4px;
+}
+.rotulo-result-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.rotulo-chip{
+  display:inline-flex;
+  align-items:center;
+  min-height:26px;
+  padding:0 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.90);
+  font-size:12px;
+  font-weight:950;
+}
+.rotulo-result-content{
+  padding:14px;
+}
+.rotulo-grid{
+  gap:8px!important;
+}
+.rotulo-info{
+  border-radius:14px!important;
+  background:#fffaf7!important;
+}
+.rotulo-observacoes{
+  background:#fffaf7;
+  border:1px solid #f0e4df;
+  border-radius:16px;
+  padding:12px;
+  margin-top:10px!important;
+}
+.rotulo-destino-actions{
+  gap:8px!important;
+}
+.rotulo-destino-actions .btn-secondary{
+  min-height:48px;
+  border-radius:15px!important;
+}
+.rotulo-modal .modal-actions{
+  align-items:center;
+  padding:0 22px 22px!important;
+}
+.rotulo-modal .modal-actions > .btn-secondary:first-child{
+  min-height:48px;
+  border-radius:15px!important;
+}
+@media(max-width:650px){
+  .rotulo-modal .modal-header{padding:24px 22px 22px!important;}
+  .rotulo-modal .modal-header h2{font-size:30px!important;}
+  .rotulo-modern-body{padding:18px!important;}
+  .rotulo-captura-card{min-height:240px;border-radius:22px;}
+  .rotulo-camera-big{width:74px;height:74px;border-radius:24px;font-size:34px;}
+  .rotulo-empty-state h3{font-size:21px;}
+  .rotulo-modal .modal-actions{flex-direction:column-reverse;align-items:stretch;}
+  .rotulo-destino-actions{grid-template-columns:1fr!important;}
+}
+
 </style>
 </head>
 
@@ -3520,17 +3760,20 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
 
 <div id="modalLeitorRotulo" class="modal-bg" onclick="fecharLeitorRotulo()">
-  <div class="modal" onclick="event.stopPropagation()">
+  <div class="modal rotulo-modal" onclick="event.stopPropagation()">
     <div class="modal-header">
-      <h2>Identificar Vinho</h2>
-      <p>Fotografe um rótulo para identificar o vinho antes do cadastro.</p>
+      <h2>🍷 Descobrir vinho</h2>
+      <p>Fotografe um rótulo e a Adega Juliana identifica automaticamente os dados antes do cadastro.</p>
     </div>
-    <div class="modal-body">
-      <div class="form-full foto-field rotulo-captura">
-        <label for="rotuloFoto">📷 Foto do rótulo</label>
+    <div class="modal-body rotulo-modern-body">
+      <div class="rotulo-captura-card rotulo-captura" onclick="document.getElementById('rotuloFoto').click()">
         <input id="rotuloFoto" class="rotulo-file-input" type="file" accept="image/*" capture="environment" onchange="previewFotoRotulo(event)">
-        <button type="button" class="btn-secondary btn-camera" onclick="document.getElementById('rotuloFoto').click()">📷 Abrir câmera</button>
-        <div id="rotuloArquivoStatus" class="rotulo-file-status">Nenhuma foto capturada</div>
+        <div class="rotulo-empty-state">
+          <div class="rotulo-camera-big">📷</div>
+          <h3>Toque para fotografar o rótulo</h3>
+          <p>Use uma foto frontal e bem iluminada para melhorar a identificação.</p>
+          <div id="rotuloArquivoStatus" class="rotulo-file-status">Nenhuma foto capturada</div>
+        </div>
         <img id="rotuloPreview" class="rotulo-preview" alt="Prévia do rótulo">
       </div>
       <div class="rotulo-actions">
@@ -3770,19 +4013,27 @@ function previewFotoRotulo(event){
  const img = document.getElementById("rotuloPreview");
  const statusArquivo = document.getElementById("rotuloArquivoStatus");
  const captura = document.querySelector(".rotulo-captura");
+ const resultado = document.getElementById("rotuloResultado");
+ const destino = document.getElementById("rotuloDestinoActions");
  if(!img) return;
  if(!file){
    img.src = "";
    img.style.display = "none";
    if(statusArquivo) statusArquivo.innerText = "Nenhuma foto capturada";
    if(captura) captura.classList.remove("foto-capturada");
+   if(resultado){ resultado.innerHTML = ""; resultado.style.display = "none"; }
+   if(destino) destino.style.display = "none";
+   setStatusRotulo("");
    return;
  }
  img.src = URL.createObjectURL(file);
  img.style.display = "block";
  if(statusArquivo) statusArquivo.innerText = "✅ Foto capturada";
  if(captura) captura.classList.add("foto-capturada");
- setStatusRotulo("");
+ if(resultado){ resultado.innerHTML = ""; resultado.style.display = "none"; }
+ if(destino) destino.style.display = "none";
+ setStatusRotulo("🍷 Identificando vinho...\nLendo nome, safra, produtor e país.");
+ setTimeout(()=>analisarRotuloComIA(), 250);
 }
 
 function valorRotulo(valor, fallback="-"){
@@ -3796,27 +4047,34 @@ function renderizarResultadoRotulo(vinhoIA){
  const confianca = Number(vinhoIA.confianca || 0);
  const vivino = vinhoIA.vivino_estimado || vinhoIA.nota_vivino || "";
  const preco = vinhoIA.preco_estimado || vinhoIA.faixa_preco_estimada || "";
+ const titulo = valorRotulo(vinhoIA.nome, "Vinho identificado");
+ const safra = valorRotulo(vinhoIA.safra, "Safra não informada");
+ const pais = valorRotulo(vinhoIA.pais, "País não informado");
+ const regiao = valorRotulo(vinhoIA.regiao, "Região não informada");
+ const tipo = valorRotulo(vinhoIA.tipo, "Tipo não informado");
 
  el.innerHTML = `
    <div class="rotulo-resultado-card">
-     <h3>${valorRotulo(vinhoIA.nome, "Vinho identificado")}</h3>
-     <div class="rotulo-grid">
-       <div class="rotulo-info"><small>Safra</small><strong>${valorRotulo(vinhoIA.safra)}</strong></div>
-       <div class="rotulo-info"><small>Tipo</small><strong>${valorRotulo(vinhoIA.tipo)}</strong></div>
-       <div class="rotulo-info"><small>Produtor</small><strong>${valorRotulo(vinhoIA.produtor)}</strong></div>
-       <div class="rotulo-info"><small>Uva / corte</small><strong>${valorRotulo(vinhoIA.uva)}</strong></div>
-       <div class="rotulo-info"><small>País</small><strong>${valorRotulo(vinhoIA.pais)}</strong></div>
-       <div class="rotulo-info"><small>Região</small><strong>${valorRotulo(vinhoIA.regiao)}</strong></div>
-       <div class="rotulo-info"><small>Potencial</small><strong>${valorRotulo(vinhoIA.potencial_guarda_sugerido)}</strong></div>
-       <div class="rotulo-info"><small>Vivino estimado</small><strong>${valorRotulo(vivino)}</strong></div>
-       <div class="rotulo-info"><small>Preço estimado</small><strong>${valorRotulo(preco)}</strong></div>
-       <div class="rotulo-info"><small>Categoria</small><strong>${valorRotulo(vinhoIA.categoria)}</strong></div>
-       <div class="rotulo-info"><small>Teor alcoólico</small><strong>${valorRotulo(vinhoIA.teor_alcoolico)}</strong></div>
-       <div class="rotulo-info"><small>Volume</small><strong>${valorRotulo(vinhoIA.volume_ml)}</strong></div>
+     <div class="rotulo-result-hero">
+       <h3>${titulo}</h3>
+       <div class="rotulo-result-meta">
+         <span class="rotulo-chip">${safra}</span>
+         <span class="rotulo-chip">${tipo}</span>
+         <span class="rotulo-chip">${pais}</span>
+         ${vivino ? `<span class="rotulo-chip">⭐ ${vivino}</span>` : ""}
+         ${confianca ? `<span class="rotulo-chip">${(confianca * 100).toFixed(0)}% confiança</span>` : ""}
+       </div>
      </div>
-     <div class="rotulo-observacoes">
-       ${confianca ? `<strong>Confiança:</strong> ${(confianca * 100).toFixed(0)}%<br>` : ""}
-       ${vinhoIA.observacoes ? `<strong>Observações:</strong> ${vinhoIA.observacoes}` : ""}
+     <div class="rotulo-result-content">
+       <div class="rotulo-grid">
+         <div class="rotulo-info"><small>Produtor</small><strong>${valorRotulo(vinhoIA.produtor)}</strong></div>
+         <div class="rotulo-info"><small>Uva / corte</small><strong>${valorRotulo(vinhoIA.uva)}</strong></div>
+         <div class="rotulo-info"><small>Região</small><strong>${regiao}</strong></div>
+         <div class="rotulo-info"><small>Potencial</small><strong>${valorRotulo(vinhoIA.potencial_guarda_sugerido)}</strong></div>
+         <div class="rotulo-info"><small>Preço estimado</small><strong>${valorRotulo(preco)}</strong></div>
+         <div class="rotulo-info"><small>Teor / volume</small><strong>${valorRotulo(vinhoIA.teor_alcoolico)} • ${valorRotulo(vinhoIA.volume_ml)}</strong></div>
+       </div>
+       ${vinhoIA.observacoes ? `<div class="rotulo-observacoes"><strong>Observações:</strong> ${vinhoIA.observacoes}</div>` : ""}
      </div>
    </div>`;
  el.style.display = "block";
@@ -3834,11 +4092,11 @@ async function analisarRotuloComIA(){
  if(btn){ btn.disabled = true; btn.innerText = "🔍 Identificando..."; }
 
  try{
-   setStatusRotulo("🤖 Analisando rótulo...");
+   setStatusRotulo("🍷 Identificando vinho...\nEnviando a foto e analisando o rótulo.");
    const imageUrl = await uploadFotoVinho(file, "rotulo", "consulta");
    rotuloFotoUrlAtual = imageUrl;
 
-   setStatusRotulo("🤖 Analisando rótulo...");
+   setStatusRotulo("🍷 Identificando vinho...\nLendo nome, safra, produtor e país.");
    const resultado = await chamarFunctionLerRotulo(imageUrl);
 
    if(!resultado || resultado.ok === false){
@@ -3849,7 +4107,7 @@ async function analisarRotuloComIA(){
 
    rotuloIAAtual = resultado.vinho || resultado;
    renderizarResultadoRotulo(rotuloIAAtual);
-   setStatusRotulo("✅ Rótulo identificado. Escolha se deseja adicionar à adega, consumo externo ou vinhos desejados.", "ok");
+   setStatusRotulo("✅ Vinho identificado. Escolha o que deseja fazer agora.", "ok");
  }catch(e){
    console.error(e);
    const detalhe = e?.message ? e.message : String(e);
