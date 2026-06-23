@@ -1840,6 +1840,28 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+
+/* ===============================
+   VINHOS DESEJADOS
+   =============================== */
+.wishlist-card{
+  background:linear-gradient(135deg,#fff,#fff5f7)!important;
+  border-color:rgba(133,0,43,.14)!important;
+}
+.wishlist-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:2px 7px;
+  border-radius:999px;
+  font-size:10.5px;
+  font-weight:900;
+  border:1px solid #f0cbd3;
+  background:#fff0f4;
+  color:#85002b;
+  white-space:nowrap;
+}
+
 </style>
 </head>
 
@@ -1892,6 +1914,17 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       <button class="btn-secondary rec-ver-todos" onclick="event.stopPropagation(); abrirRecomendacoesConsumo()">Ver todos</button>
     </div>
     <div id="listaRecomendacoesConsumo" class="rec-lista"></div>
+  </section>
+
+  <section id="cardVinhosDesejados" class="recomendacao-consumo-card rec-collapsed wishlist-card" onclick="toggleVinhosDesejadosCard(event)">
+    <div class="rec-head">
+      <div class="rec-title-wrap">
+        <h3><span id="wishlistChevron">▶</span> ❤️ Vinhos desejados</h3>
+        <p id="textoResumoVinhosDesejados">Vinhos marcados como “compraria para a adega”.</p>
+      </div>
+      <button class="btn-secondary rec-ver-todos" onclick="event.stopPropagation(); abrirVinhosDesejados()">Ver todos</button>
+    </div>
+    <div id="listaVinhosDesejados" class="rec-lista"></div>
   </section>
 
   <section id="secaoListaVinhos">
@@ -2348,6 +2381,21 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     <div class="modal-actions">
       <button class="btn-secondary" onclick="fecharRecomendacoesConsumo()">Fechar</button>
       <button class="btn-secondary btn-save" onclick="selecionarOrdenacaoConsumo()">Ordenar adega assim</button>
+    </div>
+  </div>
+</div>
+
+<div id="modalVinhosDesejados" class="modal-bg" onclick="fecharVinhosDesejados()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Vinhos desejados</h2>
+      <p>Lista gerada a partir dos consumos externos marcados como “Compraria para a adega”.</p>
+    </div>
+    <div class="modal-body">
+      <div id="modalListaVinhosDesejados" class="rec-modal-lista"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharVinhosDesejados()">Fechar</button>
     </div>
   </div>
 </div>
@@ -3373,6 +3421,93 @@ function recolherRecomendacoesCard(){
  if(chevron) chevron.innerText = "▶";
 }
 
+
+function vinhosDesejados(){
+ return (consumosExternos || [])
+   .filter(c=>String(c.compraria || "").toLowerCase() === "sim")
+   .sort((a,b)=>{
+     const notaB = Number(b.notaVivino || 0);
+     const notaA = Number(a.notaVivino || 0);
+     if(notaB !== notaA) return notaB - notaA;
+     return String(b.dataConsumo || "").localeCompare(String(a.dataConsumo || ""));
+   });
+}
+
+function htmlItemVinhoDesejado(c){
+ const nome = `${c.nome || "Vinho"} ${c.safra ? "• " + c.safra : ""}`;
+ const detalhes = [
+   c.tipo || "-",
+   c.produtor && c.produtor !== "-" ? c.produtor : "",
+   c.pais && c.pais !== "-" ? c.pais : "",
+   c.regiao && c.regiao !== "-" ? c.regiao : ""
+ ].filter(Boolean).join(" • ");
+
+ const origem = c.local && c.local !== "-" ? c.local : "Consumo externo";
+ const data = c.dataConsumo ? `Consumido em ${c.dataConsumo}` : "Data não informada";
+ const nota = Number(c.notaVivino || 0);
+
+ return `
+   <div class="rec-item">
+     <div>
+       <strong>${nome}</strong>
+       <span>${detalhes || "Consumo externo"}<br>${data} • ${origem}</span>
+     </div>
+     <span class="wishlist-badge">❤️ ${nota ? nota.toFixed(1) : "Desejado"}</span>
+   </div>`;
+}
+
+function toggleVinhosDesejadosCard(event){
+ const card = document.getElementById("cardVinhosDesejados");
+ if(!card) return;
+ if(event && event.target && event.target.closest && event.target.closest(".rec-item")) return;
+ const expandido = card.classList.toggle("rec-expanded");
+ card.classList.toggle("rec-collapsed", !expandido);
+ const chevron = document.getElementById("wishlistChevron");
+ if(chevron) chevron.innerText = expandido ? "▼" : "▶";
+}
+
+function renderizarVinhosDesejados(){
+ const card = document.getElementById("cardVinhosDesejados");
+ const lista = document.getElementById("listaVinhosDesejados");
+ const resumo = document.getElementById("textoResumoVinhosDesejados");
+ if(!card || !lista) return;
+
+ const desejados = vinhosDesejados();
+ if(!desejados.length){
+   card.style.display = "none";
+   return;
+ }
+
+ card.style.display = "block";
+ if(!card.classList.contains("rec-expanded")){
+   card.classList.add("rec-collapsed");
+ }
+
+ const top = desejados.slice(0,3);
+ const ultimo = desejados[0];
+ if(resumo){
+   resumo.innerText = `${desejados.length} vinho${desejados.length === 1 ? "" : "s"} desejado${desejados.length === 1 ? "" : "s"}${ultimo?.nome ? " • Último: " + ultimo.nome : ""}`;
+ }
+ lista.innerHTML = top.map(htmlItemVinhoDesejado).join("");
+}
+
+function abrirVinhosDesejados(){
+ const el = document.getElementById("modalListaVinhosDesejados");
+ if(!el) return;
+
+ const desejados = vinhosDesejados();
+ if(!desejados.length){
+   el.innerHTML = `<div class="rec-empty">Nenhum vinho desejado ainda. Marque “Compraria para a adega? Sim” em um consumo externo.</div>`;
+ }else{
+   el.innerHTML = desejados.map(htmlItemVinhoDesejado).join("");
+ }
+ document.getElementById("modalVinhosDesejados").style.display = "flex";
+}
+
+function fecharVinhosDesejados(){
+ document.getElementById("modalVinhosDesejados").style.display = "none";
+}
+
 function renderizarRecomendacoesConsumo(){
  const card = document.getElementById("cardRecomendacoesConsumo");
  const lista = document.getElementById("listaRecomendacoesConsumo");
@@ -3468,6 +3603,7 @@ function renderizar(){
    atualizarResumo();
    setMenuAtivo();
    renderizarRecomendacoesConsumo();
+   renderizarVinhosDesejados();
    return;
  }
 
@@ -3503,6 +3639,7 @@ function renderizar(){
  atualizarResumo();
  setMenuAtivo();
  renderizarRecomendacoesConsumo();
+ renderizarVinhosDesejados();
  const abaEstatisticas = document.getElementById("abaEstatisticas");
  if(abaEstatisticas && abaEstatisticas.style.display === "block") renderizarEstatisticas();
 }
@@ -4088,6 +4225,8 @@ function mostrarAba(aba){
  if(secaoLista) secaoLista.style.display = aba === "adega" ? "block" : "none";
  const cardRecomendacoes = document.getElementById("cardRecomendacoesConsumo");
  if(cardRecomendacoes) cardRecomendacoes.style.display = aba === "adega" && vinhosEmEstoqueOrdenadosPorConsumo().length ? "block" : "none";
+ const cardDesejados = document.getElementById("cardVinhosDesejados");
+ if(cardDesejados) cardDesejados.style.display = aba === "adega" && vinhosDesejados().length ? "block" : "none";
  if(abaEstatisticas) abaEstatisticas.style.display = aba === "estatisticas" ? "block" : "none";
 
  const tabs = document.querySelectorAll('.tab');
