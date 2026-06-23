@@ -1967,6 +1967,33 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+/* ===============================
+   BANDEIRA DO PAÍS NO CARD
+   =============================== */
+.vinho{
+  position:relative!important;
+}
+.flag-card{
+  position:absolute;
+  top:6px;
+  right:8px;
+  font-size:16px;
+  line-height:1;
+  opacity:.95;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.10));
+  pointer-events:none;
+}
+.vinho .arrow{
+  margin-right:12px!important;
+}
+@media(max-width:760px){
+  .flag-card{
+    top:6px;
+    right:8px;
+    font-size:15px;
+  }
+}
+
 </style>
 </head>
 
@@ -3544,6 +3571,44 @@ function prioridadeConsumo(v){
  };
 }
 
+
+function normalizarTextoPais(valor){
+ return String(valor || "")
+   .normalize("NFD")
+   .replace(/[\u0300-\u036f]/g,"")
+   .toLowerCase()
+   .trim();
+}
+
+function bandeiraPais(pais){
+ const p = normalizarTextoPais(pais);
+ const mapa = {
+   "franca":"🇫🇷",
+   "italia":"🇮🇹",
+   "espanha":"🇪🇸",
+   "portugal":"🇵🇹",
+   "alemanha":"🇩🇪",
+   "chile":"🇨🇱",
+   "argentina":"🇦🇷",
+   "uruguai":"🇺🇾",
+   "brasil":"🇧🇷",
+   "estados unidos":"🇺🇸",
+   "eua":"🇺🇸",
+   "usa":"🇺🇸",
+   "africa do sul":"🇿🇦",
+   "australia":"🇦🇺",
+   "nova zelandia":"🇳🇿"
+ };
+ return mapa[p] || "";
+}
+
+function htmlBandeiraPais(v){
+ const pais = v?.detalhes?.pais || v?.pais || "";
+ const flag = bandeiraPais(pais);
+ return flag ? `<span class="flag-card" title="${pais}">${flag}</span>` : "";
+}
+
+
 function classeTipo(tipo){
  if(tipo==="Branco") return "branco";
  if(tipo==="Rosé") return "rose";
@@ -3818,6 +3883,7 @@ function renderizar(){
  resultado.forEach(v=>{
    lista.innerHTML += `
    <div class="vinho" onclick="abrirDetalhes(${v.index})">
+     ${htmlBandeiraPais(v)}
      <div>
       <div class="titulo-vinho">
   <strong>${v.nome}</strong>
