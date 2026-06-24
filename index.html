@@ -2146,7 +2146,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     width:100%;
     height:66px;
     display:grid;
-    grid-template-columns:repeat(5,1fr);
+    grid-template-columns:repeat(6,1fr);
     align-items:center;
     background:linear-gradient(180deg,#fffaf7,#fff1ed);
     border-top:1px solid rgba(133,0,43,.14);
@@ -2165,7 +2165,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     border:0;
     background:transparent;
     color:#7b7074;
-    font-size:10px;
+    font-size:9.5px;
     font-weight:900;
     display:flex;
     flex-direction:column;
@@ -2191,8 +2191,8 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 
   .bottom-nav .nav-ico{
-    width:22px;
-    height:22px;
+    width:21px;
+    height:21px;
     display:block;
     color:currentColor;
     opacity:.78;
@@ -3568,6 +3568,345 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   .hist-title{font-size:17px;}
 }
 
+
+/* ===============================
+   ADEGA 3D - PRATELEIRAS CLICÁVEIS
+   =============================== */
+.aba-adega3d{display:none;}
+.adega3d-header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:14px;
+  margin:20px 0 16px;
+}
+.adega3d-header .eyebrow{
+  display:block;
+  color:var(--vinho);
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.45px;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+.adega3d-header h2{
+  margin:0;
+  font-size:32px;
+  letter-spacing:-.8px;
+  line-height:1.05;
+}
+.adega3d-header p{
+  margin:7px 0 0;
+  color:#6b6063;
+  font-size:14px;
+  font-weight:750;
+  line-height:1.45;
+}
+.adega3d-pill{
+  display:inline-flex;
+  align-items:center;
+  height:32px;
+  padding:0 12px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--borda);
+  color:var(--vinho);
+  font-size:12px;
+  font-weight:950;
+  box-shadow:0 5px 14px rgba(70,25,22,.05);
+  white-space:nowrap;
+}
+.adega3d-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 330px;
+  gap:14px;
+  align-items:start;
+}
+.adega3d-rack-card{
+  background:linear-gradient(135deg,#fffaf7,#fff3ef);
+  border:1px solid rgba(133,0,43,.14);
+  border-radius:26px;
+  padding:14px;
+  box-shadow:0 16px 34px rgba(70,25,22,.10);
+}
+.adega3d-toolbar{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+.adega3d-toolbar select{
+  width:190px;
+  height:40px;
+  min-height:40px;
+  border-radius:14px;
+  font-size:13px;
+  font-weight:850;
+  margin:0;
+}
+.adega3d-legend{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  color:#6b6063;
+  font-size:11.5px;
+  font-weight:900;
+}
+.adega3d-legend span{display:inline-flex;align-items:center;gap:5px;}
+.adega3d-dot{width:9px;height:9px;border-radius:50%;display:inline-block;background:#85002b;}
+.adega3d-dot.branco{background:#d8b13f;}.adega3d-dot.rose{background:#ef6d7d;}.adega3d-dot.espumante{background:#d9d4c8;}
+.adega3d-rack{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  padding:20px 14px 18px;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,210,120,.18), transparent 20%),
+    radial-gradient(circle at 82% 38%, rgba(255,190,90,.12), transparent 23%),
+    linear-gradient(90deg, rgba(30,12,3,.72), transparent 6%, transparent 94%, rgba(30,12,3,.72)),
+    linear-gradient(135deg,#2b1609,#5d351b 38%,#2b1609 100%);
+  box-shadow:inset 0 0 0 2px rgba(255,225,170,.08), inset 0 22px 34px rgba(0,0,0,.32);
+}
+.adega3d-rack::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 2px,transparent 2px 18px);
+  mix-blend-mode:screen;
+}
+.adega3d-shelf{
+  position:relative;
+  min-height:94px;
+  margin:0 0 12px;
+  padding:16px 12px 18px 44px;
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.02));
+}
+.adega3d-shelf:last-child{margin-bottom:0;}
+.adega3d-shelf::after{
+  content:"";
+  position:absolute;
+  left:18px;
+  right:12px;
+  bottom:5px;
+  height:16px;
+  border-radius:8px;
+  background:linear-gradient(180deg,#b78345,#6e431f 70%,#3d210f);
+  box-shadow:0 8px 16px rgba(0,0,0,.42), inset 0 2px 0 rgba(255,230,160,.25);
+}
+.shelf-number{
+  position:absolute;
+  left:8px;
+  top:32px;
+  z-index:3;
+  width:28px;
+  height:28px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:rgba(70,39,18,.88);
+  color:#fff3df;
+  font-size:13px;
+  font-weight:950;
+  border:1px solid rgba(255,220,150,.22);
+  box-shadow:0 6px 14px rgba(0,0,0,.20);
+}
+.shelf-label{
+  position:absolute;
+  left:44px;
+  top:6px;
+  z-index:3;
+  color:rgba(255,244,225,.86);
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.2px;
+}
+.bottle-row{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+  align-items:end;
+}
+.bottle-slot{
+  height:60px;
+  border:0;
+  background:transparent;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  border-radius:16px;
+  position:relative;
+}
+.bottle-slot:focus-visible{outline:2px solid #f0c36d;outline-offset:3px;}
+.bottle-slot.selected .bottle-css{filter:drop-shadow(0 0 9px rgba(255,182,64,.95));}
+.bottle-css{
+  position:relative;
+  width:66px;
+  height:26px;
+  transform:rotate(-12deg);
+  border-radius:18px 8px 8px 18px;
+  background:linear-gradient(180deg,#3a0509,#130506 45%,#040303 100%);
+  box-shadow:0 10px 12px rgba(0,0,0,.38), inset 10px 0 14px rgba(255,255,255,.18), inset -7px 0 10px rgba(0,0,0,.32);
+  transition:transform .16s ease, filter .16s ease;
+}
+.bottle-slot:hover .bottle-css{transform:rotate(-12deg) translateY(-3px);}
+.bottle-css::before{
+  content:"";
+  position:absolute;
+  left:-13px;
+  top:6px;
+  width:22px;
+  height:14px;
+  border-radius:9px 3px 3px 9px;
+  background:linear-gradient(180deg,var(--cap,#8a1d23),#421015);
+  box-shadow:inset 4px 0 5px rgba(255,255,255,.18);
+}
+.bottle-css::after{
+  content:"";
+  position:absolute;
+  left:28px;
+  top:4px;
+  width:24px;
+  height:18px;
+  border-radius:6px;
+  background:linear-gradient(180deg,#f4e6c4,#c8ae76);
+  opacity:.95;
+  box-shadow:inset 0 0 0 1px rgba(105,76,36,.22);
+}
+.bottle-css.tipo-branco{background:linear-gradient(180deg,#f5edb6,#a79945 48%,#5b5726 100%);}
+.bottle-css.tipo-rose{background:linear-gradient(180deg,#f2a0a9,#a33f58 52%,#4d1423 100%);}
+.bottle-css.tipo-espumante{background:linear-gradient(180deg,#d4d1c7,#8d887c 48%,#3c3933 100%);}
+.bottle-css.tipo-branco::before{--cap:#d8b13f;background:linear-gradient(180deg,#e8cf66,#8f6d16);}
+.bottle-css.tipo-rose::before{--cap:#ef6d7d;background:linear-gradient(180deg,#f08a96,#9f3141);}
+.bottle-css.tipo-espumante::before{--cap:#d8d2c3;background:linear-gradient(180deg,#f1eadb,#9f9787);}
+.bottle-empty{
+  width:58px;
+  height:24px;
+  border-radius:999px;
+  border:1px dashed rgba(255,236,204,.22);
+  opacity:.35;
+  transform:rotate(-12deg);
+}
+.adega3d-side-card{
+  position:sticky;
+  top:92px;
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--borda);
+  border-radius:26px;
+  box-shadow:0 14px 32px rgba(70,25,22,.10);
+  padding:18px;
+}
+.adega3d-detail-empty{
+  min-height:260px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:#75696c;
+  font-weight:850;
+  line-height:1.45;
+}
+.adega3d-detail-head{
+  display:grid;
+  grid-template-columns:64px 1fr;
+  gap:13px;
+  align-items:center;
+  margin-bottom:14px;
+}
+.adega3d-detail-head .wine-thumb,
+.adega3d-detail-head .hist-thumb-placeholder{
+  width:58px!important;
+  height:74px!important;
+}
+.adega3d-detail-head h3{
+  margin:0 0 6px;
+  font-size:20px;
+  line-height:1.12;
+  letter-spacing:-.3px;
+}
+.adega3d-detail-meta{
+  color:#62575a;
+  font-size:13px;
+  font-weight:850;
+  line-height:1.38;
+}
+.adega3d-detail-badges{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 14px;}
+.adega3d-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.adega3d-detail-box{
+  background:#fffaf7;
+  border:1px solid #f0e4df;
+  border-radius:15px;
+  padding:10px;
+}
+.adega3d-detail-box small{display:block;color:#776b6e;font-size:10px;font-weight:950;text-transform:uppercase;margin-bottom:4px;}
+.adega3d-detail-box strong{display:block;color:#2a2225;font-size:13px;line-height:1.25;}
+.adega3d-actions{display:grid;gap:8px;}
+.adega3d-actions .btn-secondary{min-height:46px;border-radius:15px!important;}
+@media(max-width:900px){
+  .adega3d-layout{grid-template-columns:1fr;}
+  .adega3d-side-card{position:static;}
+}
+@media(max-width:650px){
+  .adega3d-header{align-items:flex-start;flex-direction:column;margin-top:16px;}
+  .adega3d-header h2{font-size:30px;}
+  .adega3d-pill{display:none;}
+  .adega3d-rack-card{padding:10px;border-radius:22px;}
+  .adega3d-toolbar{align-items:flex-start;flex-direction:column;}
+  .adega3d-toolbar select{width:100%;}
+  .adega3d-rack{padding:16px 9px;border-radius:20px;}
+  .adega3d-shelf{min-height:82px;padding:14px 8px 16px 34px;margin-bottom:9px;border-radius:16px;}
+  .shelf-number{left:5px;top:28px;width:24px;height:24px;border-radius:8px;font-size:12px;}
+  .shelf-label{left:36px;font-size:10px;}
+  .bottle-row{gap:3px;}
+  .bottle-slot{height:52px;}
+  .bottle-css{width:48px;height:21px;}
+  .bottle-css::before{left:-10px;top:5px;width:17px;height:11px;}
+  .bottle-css::after{left:20px;top:3px;width:18px;height:15px;border-radius:5px;}
+  .adega3d-detail-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:390px){
+  .bottle-css{width:42px;height:20px;}
+  .bottle-css::after{left:18px;width:16px;}
+}
+
+
+/* ===============================
+   CORREÇÃO SCROLL - LEITOR DE RÓTULO
+   =============================== */
+#modalLeitorRotulo{
+  align-items:flex-start!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  padding:14px!important;
+}
+#modalLeitorRotulo .rotulo-modal{
+  max-height:none!important;
+  overflow:visible!important;
+  margin:0 auto 18px!important;
+}
+#modalLeitorRotulo .rotulo-modern-body{
+  overflow:visible!important;
+}
+@media(max-width:650px){
+  #modalLeitorRotulo{
+    padding:10px!important;
+  }
+  #modalLeitorRotulo .rotulo-modal{
+    width:100%!important;
+    border-radius:24px!important;
+    margin-bottom:82px!important;
+  }
+  #modalLeitorRotulo .rotulo-preview{
+    max-height:220px!important;
+  }
+}
+
 </style>
 </head>
 
@@ -3593,6 +3932,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   <nav class="app-tabs">
     <button class="tab active" onclick="mostrarAba('adega')">🍷 Adega</button>
     <button class="tab" onclick="mostrarAba('estatisticas')">📊 Estatísticas</button>
+    <button class="tab" onclick="mostrarAba('adega3d')">🍷 Adega 3D</button>
     <button class="tab" onclick="abrirHistoricoConsumo()">🕘 Histórico</button>
     <button class="tab" onclick="abrirLeitorRotulo()">📷 Identificar Vinho</button>
     <button class="tab" onclick="abrirCadastroConsumoExterno()">🍽️ Consumo externo</button>
@@ -3742,6 +4082,43 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     </div>
   </section>
 
+
+  <section id="abaAdega3D" class="aba-adega3d">
+    <div class="adega3d-header">
+      <div>
+        <span class="eyebrow">Visualização da adega</span>
+        <h2>🍷 Adega 3D</h2>
+        <p>Veja suas garrafas organizadas em prateleiras. Toque em uma garrafa para abrir os detalhes.</p>
+      </div>
+      <span id="adega3dResumoPill" class="adega3d-pill">29 garrafas • 6 prateleiras</span>
+    </div>
+
+    <div class="adega3d-layout">
+      <div class="adega3d-rack-card">
+        <div class="adega3d-toolbar">
+          <select id="filtroAdega3D" onchange="renderizarAdega3D()">
+            <option value="">Todas prateleiras</option>
+            <option value="Tinto">Tintos</option>
+            <option value="Branco">Brancos</option>
+            <option value="Rosé">Rosés</option>
+            <option value="Espumante">Espumantes</option>
+          </select>
+          <div class="adega3d-legend">
+            <span><i class="adega3d-dot"></i>Tinto</span>
+            <span><i class="adega3d-dot branco"></i>Branco</span>
+            <span><i class="adega3d-dot rose"></i>Rosé</span>
+            <span><i class="adega3d-dot espumante"></i>Espumante</span>
+          </div>
+        </div>
+        <div id="adega3dRack" class="adega3d-rack"></div>
+      </div>
+
+      <aside id="adega3dDetalhe" class="adega3d-side-card">
+        <div class="adega3d-detail-empty">Selecione uma garrafa na prateleira para ver os detalhes.</div>
+      </aside>
+    </div>
+  </section>
+
 </main>
 <nav class="bottom-nav" aria-label="Menu principal">
   <button id="bottomAdega" class="active" onclick="mostrarAba('adega')" aria-label="Adega">
@@ -3767,6 +4144,12 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       <svg viewBox="0 0 24 24"><path d="M5 7h3l1.5-2h5L16 7h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="3.5"/></svg>
     </span>
     <span>Rótulo</span>
+  </button>
+  <button id="bottomAdega3D" onclick="mostrarAba('adega3d')" aria-label="Adega 3D">
+    <span class="nav-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 3 4 7.2l8 4.2 8-4.2L12 3Z"/><path d="M4 7.2v9.2l8 4.6 8-4.6V7.2"/><path d="M12 11.4V21"/></svg>
+    </span>
+    <span>3D</span>
   </button>
   <button id="bottomJantar" onclick="mostrarAba('jantar')" aria-label="Jantar">
     <span class="nav-ico" aria-hidden="true">
@@ -4434,6 +4817,10 @@ function renderizarResultadoRotulo(vinhoIA){
  el.style.display = "block";
  const destino = document.getElementById("rotuloDestinoActions");
  if(destino) destino.style.display = "grid";
+ setTimeout(()=>{
+   const modal = document.getElementById("modalLeitorRotulo");
+   if(modal) modal.scrollTo({ top: modal.scrollHeight, behavior: "smooth" });
+ }, 120);
 }
 
 async function analisarRotuloComIA(){
@@ -5647,7 +6034,10 @@ function renderizar(){
  renderizarVinhosDesejados();
  const abaEstatisticas = document.getElementById("abaEstatisticas");
  const abaJantar = document.getElementById("abaJantar");
+ const abaAdega3D = document.getElementById("abaAdega3D");
  if(abaEstatisticas && abaEstatisticas.style.display === "block") renderizarEstatisticas();
+ const abaAdega3DAtual = document.getElementById("abaAdega3D");
+ if(abaAdega3DAtual && abaAdega3DAtual.style.display === "block") renderizarAdega3D();
 }
 
 function filtrarTodos(){
@@ -6473,12 +6863,121 @@ function selecionarPratoHarmonizacao(id){
  box.scrollIntoView({behavior:"smooth", block:"start"});
 }
 
+
+function garrafasAdega3D(){
+ const filtro = document.getElementById("filtroAdega3D")?.value || "";
+ const itens = [];
+ vinhos.forEach((v,index)=>{
+   garantirEstrutura(v);
+   const qtd = Number(v.quantidade || 0);
+   if(qtd <= 0) return;
+   if(filtro && v.tipo !== filtro) return;
+   for(let n=1; n<=qtd; n++){
+     itens.push({vinho:v, index, numero:n});
+   }
+ });
+ return itens;
+}
+
+function classeTipoAdega3D(tipo){
+ if(tipo === "Branco") return "tipo-branco";
+ if(tipo === "Rosé") return "tipo-rose";
+ if(tipo === "Espumante") return "tipo-espumante";
+ return "tipo-tinto";
+}
+
+function renderizarAdega3D(){
+ const rack = document.getElementById("adega3dRack");
+ if(!rack) return;
+ const garrafas = garrafasAdega3D();
+ const porPrateleira = 5;
+ const totalPrateleiras = Math.max(1, Math.ceil(garrafas.length / porPrateleira));
+ const pill = document.getElementById("adega3dResumoPill");
+ if(pill) pill.innerText = `${garrafas.length} garrafa${garrafas.length === 1 ? "" : "s"} • ${totalPrateleiras} prateleira${totalPrateleiras === 1 ? "" : "s"}`;
+
+ if(!garrafas.length){
+   rack.innerHTML = `<div class="harmonizacao-empty">Nenhuma garrafa em estoque para exibir na Adega 3D.</div>`;
+   const detalhe = document.getElementById("adega3dDetalhe");
+   if(detalhe) detalhe.innerHTML = `<div class="adega3d-detail-empty">Nenhuma garrafa encontrada para este filtro.</div>`;
+   return;
+ }
+
+ let html = "";
+ for(let p=0; p<totalPrateleiras; p++){
+   const inicio = p * porPrateleira;
+   const itens = garrafas.slice(inicio, inicio + porPrateleira);
+   html += `<div class="adega3d-shelf">
+     <div class="shelf-number">${p+1}</div>
+     <div class="shelf-label">Prateleira ${p+1}</div>
+     <div class="bottle-row">`;
+   for(let pos=0; pos<porPrateleira; pos++){
+     const item = itens[pos];
+     if(item){
+       const v = item.vinho;
+       const titulo = `${v.nome} ${v.safra ? "• " + v.safra : ""}`;
+       html += `<button class="bottle-slot" id="bottle3d-${inicio+pos}" title="${titulo}" onclick="selecionarGarrafa3D(${item.index}, ${p+1}, ${pos+1}, 'bottle3d-${inicio+pos}')">
+         <span class="bottle-css ${classeTipoAdega3D(v.tipo)}"></span>
+       </button>`;
+     }else{
+       html += `<div class="bottle-slot"><span class="bottle-empty"></span></div>`;
+     }
+   }
+   html += `</div></div>`;
+ }
+ rack.innerHTML = html;
+
+ const selecionadaAtual = document.querySelector(".bottle-slot.selected");
+ if(!selecionadaAtual && garrafas[0]) selecionarGarrafa3D(garrafas[0].index, 1, 1, "bottle3d-0", false);
+}
+
+function selecionarGarrafa3D(index, prateleira, posicao, elementId, scroll=true){
+ document.querySelectorAll(".bottle-slot.selected").forEach(el=>el.classList.remove("selected"));
+ const el = document.getElementById(elementId);
+ if(el) el.classList.add("selected");
+ const v = garantirEstrutura(vinhos[index]);
+ const detalhe = document.getElementById("adega3dDetalhe");
+ if(!detalhe) return;
+ const flag = bandeiraPais(v.detalhes?.pais || "");
+ const nota = Number(v.detalhes?.notaVivino || 0);
+ const info = calcularInfoGuarda(v);
+ const thumb = v.fotoUrl
+   ? `<img class="wine-thumb" src="${v.fotoUrl}" alt="Foto de ${v.nome}" loading="lazy">`
+   : `<div class="hist-thumb-placeholder">${iconeTipo(v.tipo)}</div>`;
+ detalhe.innerHTML = `
+   <div class="adega3d-detail-head">
+     ${thumb}
+     <div>
+       <h3>${v.nome} ${v.safra ? "• " + v.safra : ""}</h3>
+       <div class="adega3d-detail-meta">${flag ? flag + " " : ""}${v.detalhes?.pais || "-"} • ${v.tipo || "-"}<br>Prateleira ${prateleira} • Posição ${posicao}</div>
+     </div>
+   </div>
+   <div class="adega3d-detail-badges">
+     ${nota ? `<span class="hist-badge star">⭐ ${nota.toFixed(1)}</span>` : ""}
+     <span class="hist-badge adega">${v.quantidade || 0} garrafa${Number(v.quantidade) === 1 ? "" : "s"}</span>
+     <span class="guarda-badge ${info.classe}">${info.icone} ${info.status}</span>
+   </div>
+   <div class="adega3d-detail-grid">
+     <div class="adega3d-detail-box"><small>Produtor</small><strong>${v.detalhes?.produtor || "-"}</strong></div>
+     <div class="adega3d-detail-box"><small>Uva / corte</small><strong>${v.detalhes?.uva || "-"}</strong></div>
+     <div class="adega3d-detail-box"><small>Região</small><strong>${v.detalhes?.regiao || "-"}</strong></div>
+     <div class="adega3d-detail-box"><small>Safra</small><strong>${v.safra || "-"}</strong></div>
+     <div class="adega3d-detail-box"><small>Potencial</small><strong>${v.detalhes?.guarda || "-"}</strong></div>
+     <div class="adega3d-detail-box"><small>Janela</small><strong>${info.resumo || "-"}</strong></div>
+   </div>
+   <div class="adega3d-actions">
+     <button class="btn-secondary" onclick="abrirDetalhes(${index})">👁️ Ver detalhes completos</button>
+     <button class="btn-secondary btn-save" onclick="abrirDetalhes(${index})">🍷 Registrar consumo</button>
+   </div>`;
+ if(scroll && window.innerWidth <= 900) detalhe.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
 function setBottomNavAtivo(aba){
  const mapa = {
    adega:"bottomAdega",
    estatisticas:"bottomStats",
    historico:"bottomHistorico",
    rotulo:"bottomRotulo",
+   adega3d:"bottomAdega3D",
    jantar:"bottomJantar",
    mais:"bottomJantar"
  };
@@ -6497,6 +6996,7 @@ function mostrarAba(aba){
  const secaoLista = document.getElementById("secaoListaVinhos");
  const abaEstatisticas = document.getElementById("abaEstatisticas");
  const abaJantar = document.getElementById("abaJantar");
+ const abaAdega3D = document.getElementById("abaAdega3D");
 
  if(abaAdega) abaAdega.style.display = aba === "adega" ? "block" : "none";
  if(secaoLista) secaoLista.style.display = aba === "adega" ? "block" : "none";
@@ -6506,6 +7006,7 @@ function mostrarAba(aba){
  if(cardDesejados) cardDesejados.style.display = aba === "adega" ? "block" : "none";
  if(abaEstatisticas) abaEstatisticas.style.display = aba === "estatisticas" ? "block" : "none";
  if(abaJantar) abaJantar.style.display = aba === "jantar" ? "block" : "none";
+ if(abaAdega3D) abaAdega3D.style.display = aba === "adega3d" ? "block" : "none";
  const fab = document.querySelector(".fab");
  if(fab) fab.style.display = aba === "adega" ? "" : "none";
 
@@ -6513,8 +7014,11 @@ function mostrarAba(aba){
  if(aba === 'estatisticas'){
    if(tabs[1]) tabs[1].classList.add('active');
    renderizarEstatisticas();
+ }else if(aba === 'adega3d'){
+   if(tabs[2]) tabs[2].classList.add('active');
+   renderizarAdega3D();
  }else if(aba === 'jantar'){
-   if(tabs[5]) tabs[5].classList.add('active');
+   if(tabs[6]) tabs[6].classList.add('active');
    renderizarPratosHarmonizacao();
  }else{
    if(tabs[0]) tabs[0].classList.add('active');
