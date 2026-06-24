@@ -2976,6 +2976,145 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 
 
 
+
+
+/* ===============================
+   HARMONIZAÇÃO - RESULTADO MODERNO
+   =============================== */
+.harmonizacao-lista{
+  gap:12px!important;
+}
+.harmonizacao-item{
+  position:relative!important;
+  grid-template-columns:46px 1fr 76px!important;
+  gap:12px!important;
+  align-items:center!important;
+  padding:12px 13px!important;
+  border-radius:20px!important;
+}
+.harmonizacao-thumb{
+  width:42px;
+  height:54px;
+  border-radius:12px;
+  object-fit:cover;
+  background:#fff7f2;
+  border:1px solid var(--borda);
+  box-shadow:0 4px 12px rgba(70,25,22,.10);
+}
+.harmonizacao-thumb-placeholder{
+  width:42px;
+  height:54px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#fff7f2,#f3e5df);
+  border:1px solid var(--borda);
+  color:var(--vinho);
+  font-size:22px;
+}
+.harmonizacao-main{
+  min-width:0;
+}
+.harmonizacao-title{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-bottom:5px;
+}
+.harmonizacao-title strong{
+  margin:0!important;
+  font-size:15px!important;
+  line-height:1.18!important;
+}
+.harmonizacao-flag{
+  font-size:16px;
+  line-height:1;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.10));
+}
+.harmonizacao-vivino{
+  display:inline-flex;
+  align-items:center;
+  min-height:22px;
+  padding:0 8px;
+  border-radius:999px;
+  background:#fff7db;
+  border:1px solid #ead483;
+  color:#7a5700;
+  font-size:11px;
+  font-weight:950;
+}
+.harmonizacao-motivo{
+  display:block!important;
+  color:#62575a!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+  font-weight:750!important;
+}
+.harmonizacao-tags{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+.harmonizacao-tag{
+  display:inline-flex;
+  align-items:center;
+  min-height:22px;
+  padding:0 8px;
+  border-radius:999px;
+  background:#fffaf7;
+  border:1px solid #f0e4df;
+  color:#6b6063;
+  font-size:10.5px;
+  font-weight:900;
+}
+.harmonizacao-score-wrap{
+  display:grid;
+  justify-items:end;
+  gap:6px;
+}
+.harmonizacao-score-label{
+  color:#7a5700;
+  font-size:12px;
+  font-weight:950;
+}
+.harmonizacao-score-bar{
+  width:68px;
+  height:7px;
+  border-radius:999px;
+  background:#f3e5c4;
+  overflow:hidden;
+}
+.harmonizacao-score-bar span{
+  display:block;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--vinho),#b0003c);
+}
+.harmonizacao-rank{
+  font-size:18px;
+  line-height:1;
+}
+@media(max-width:650px){
+  .harmonizacao-item{
+    grid-template-columns:44px 1fr 64px!important;
+    gap:10px!important;
+    padding:12px!important;
+  }
+  .harmonizacao-thumb,
+  .harmonizacao-thumb-placeholder{
+    width:40px;
+    height:52px;
+  }
+  .harmonizacao-title strong{
+    font-size:14.5px!important;
+  }
+  .harmonizacao-score-bar{
+    width:56px;
+  }
+}
+
 /* ===============================
    LEITOR DE RÓTULO MODERNO
    =============================== */
@@ -3212,6 +3351,221 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   .rotulo-empty-state h3{font-size:21px;}
   .rotulo-modal .modal-actions{flex-direction:column-reverse;align-items:stretch;}
   .rotulo-destino-actions{grid-template-columns:1fr!important;}
+}
+
+
+/* ===============================
+   HISTÓRICO MODERNO
+   =============================== */
+.historico-resumo-modern{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  background:linear-gradient(135deg,#fff,#fff7f2)!important;
+  border:1px solid rgba(133,0,43,.14)!important;
+  border-radius:22px!important;
+  padding:14px!important;
+  box-shadow:0 10px 24px rgba(70,25,22,.07)!important;
+  margin-bottom:14px!important;
+}
+.hist-resumo-item{
+  background:#fff;
+  border:1px solid #f0e4df;
+  border-radius:16px;
+  padding:12px;
+  min-height:72px;
+}
+.hist-resumo-item small{
+  display:block;
+  color:#776b6e;
+  font-size:10.5px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.25px;
+  margin-bottom:6px;
+}
+.hist-resumo-item strong{
+  display:block;
+  color:var(--vinho);
+  font-size:21px;
+  line-height:1;
+}
+.historico-lista-modern{
+  display:grid!important;
+  gap:12px!important;
+}
+.historico-card{
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--borda);
+  border-radius:22px;
+  padding:14px;
+  box-shadow:0 10px 24px rgba(70,25,22,.07);
+}
+.hist-card-head{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:12px;
+  align-items:start;
+  margin-bottom:12px;
+}
+.hist-thumb{
+  width:48px;
+  height:60px;
+  border-radius:14px;
+  object-fit:cover;
+  background:#fff7f2;
+  border:1px solid var(--borda);
+  box-shadow:0 5px 14px rgba(70,25,22,.10);
+}
+.hist-thumb-placeholder{
+  width:48px;
+  height:60px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#fff7f2,#f3e5df);
+  border:1px solid var(--borda);
+  color:var(--vinho);
+  font-size:23px;
+}
+.hist-title-wrap{
+  min-width:0;
+}
+.hist-date{
+  display:block;
+  color:var(--vinho);
+  font-size:11px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.25px;
+  margin-bottom:4px;
+}
+.hist-title{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+  color:#241b1e;
+  font-size:18px;
+  line-height:1.12;
+  font-weight:950;
+  letter-spacing:-.25px;
+}
+.hist-meta{
+  margin-top:7px;
+  color:#655a5d;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.35;
+}
+.hist-badges{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.hist-badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:24px;
+  padding:0 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:950;
+  white-space:nowrap;
+  background:#fffaf7;
+  border:1px solid #f0e4df;
+  color:#6b6063;
+}
+.hist-badge.external{background:#eef2ff;border-color:#d9defa;color:#3b4a8f;}
+.hist-badge.adega{background:#fff0f3;border-color:#ecc6d0;color:var(--vinho);}
+.hist-badge.star{background:#fff7db;border-color:#ead483;color:#7a5700;}
+.hist-info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-bottom:10px;
+}
+.hist-info-box{
+  background:#fffaf7;
+  border:1px solid #f0e4df;
+  border-radius:15px;
+  padding:10px;
+}
+.hist-info-box small{
+  display:block;
+  color:#776b6e;
+  font-size:10px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.2px;
+  margin-bottom:4px;
+}
+.hist-info-box strong{
+  display:block;
+  color:#2a2225;
+  font-size:13px;
+  line-height:1.25;
+}
+.hist-buy-decision{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:30px;
+  padding:0 11px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:950;
+  margin:2px 0 10px;
+}
+.hist-buy-decision.sim{background:#eef8ef;color:#276338;border:1px solid #cce8d0;}
+.hist-buy-decision.nao{background:#fff1f1;color:#8b1e1e;border:1px solid #e7c3c3;}
+.hist-buy-decision.talvez{background:#fff7db;color:#7a5700;border:1px solid #ead483;}
+.hist-observacao{
+  border-top:1px solid #f0e4df;
+  padding-top:10px;
+  margin-top:4px;
+}
+.hist-observacao details{
+  background:#fffaf7;
+  border:1px solid #f0e4df;
+  border-radius:15px;
+  padding:10px 12px;
+}
+.hist-observacao summary{
+  color:#2a2225;
+  font-size:13px;
+  font-weight:950;
+  cursor:pointer;
+}
+.hist-observacao p{
+  margin:9px 0 0;
+  color:#5f5356;
+  font-size:13px;
+  line-height:1.45;
+  font-weight:700;
+}
+@media(max-width:700px){
+  .historico-resumo-modern{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    padding:12px!important;
+  }
+  .hist-card-head{
+    grid-template-columns:auto 1fr;
+  }
+  .hist-badges{
+    grid-column:1 / -1;
+    justify-content:flex-start;
+  }
+  .hist-info-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+@media(max-width:430px){
+  .hist-info-grid{
+    grid-template-columns:1fr;
+  }
+  .hist-title{font-size:17px;}
 }
 
 </style>
@@ -4575,6 +4929,91 @@ function carregarConsumosExternos(){
 
 
 
+
+function formatarDataHistorico(data){
+ if(!data) return "Data não informada";
+ const partes = String(data).split("-");
+ if(partes.length === 3) return `${partes[2]}/${partes[1]}/${partes[0]}`;
+ return data;
+}
+
+function htmlThumbHistorico(c){
+ if(c.fotoUrl){
+   return `<img class="hist-thumb" src="${c.fotoUrl}" alt="Foto de ${c.vinho}" loading="lazy">`;
+ }
+ return `<div class="hist-thumb-placeholder">${iconeTipo(c.tipo)}</div>`;
+}
+
+function classeComprariaHistorico(valor){
+ const v = String(valor || "").toLowerCase();
+ if(v === "sim") return "sim";
+ if(v === "não" || v === "nao") return "nao";
+ if(v === "talvez") return "talvez";
+ return "";
+}
+
+function htmlComprariaHistorico(valor){
+ if(!valor) return "";
+ const classe = classeComprariaHistorico(valor);
+ const icone = classe === "sim" ? "🟢" : classe === "nao" ? "🔴" : "🟡";
+ const texto = classe === "sim" ? "Compraria para a adega" : classe === "nao" ? "Não compraria" : "Talvez compraria";
+ return `<div class="hist-buy-decision ${classe}">${icone} ${texto}</div>`;
+}
+
+function htmlHistoricoCard(c){
+ const flag = bandeiraPais(c.pais);
+ const titulo = `${c.vinho || "-"} ${c.safra && c.safra !== "-" ? "• " + c.safra : ""}`;
+ const origemBadge = c.origem === "Externo"
+   ? `<span class="hist-badge external">Externo</span>`
+   : `<span class="hist-badge adega">Adega</span>`;
+ const notaBadge = c.notaVivino ? `<span class="hist-badge star">⭐ ${Number(c.notaVivino).toFixed(1)}</span>` : "";
+ const valor = moeda(c.valorUnitario);
+ const local = c.localConsumo || c.loja || "-";
+ const evento = c.eventoConsumo || "-";
+ const comQuem = c.comQuem || "-";
+ const observacao = c.observacaoConsumo || "";
+
+ return `
+   <div class="historico-card">
+     <div class="hist-card-head">
+       ${htmlThumbHistorico(c)}
+       <div class="hist-title-wrap">
+         <span class="hist-date">${formatarDataHistorico(c.dataConsumo)}</span>
+         <div class="hist-title">${flag ? `<span title="${c.pais}">${flag}</span>` : ""}<span>${titulo}</span></div>
+         <div class="hist-meta">${c.tipo || "-"} • ${c.pais || "-"} • ${c.regiao || "-"}</div>
+       </div>
+       <div class="hist-badges">
+         ${origemBadge}
+         ${notaBadge}
+       </div>
+     </div>
+
+     <div class="hist-info-grid">
+       <div class="hist-info-box"><small>Produtor</small><strong>${c.produtor || "-"}</strong></div>
+       <div class="hist-info-box"><small>Uva / corte</small><strong>${c.uva || "-"}</strong></div>
+       <div class="hist-info-box"><small>Quantidade</small><strong>${c.quantidade} garrafa${c.quantidade == 1 ? "" : "s"}</strong></div>
+       <div class="hist-info-box"><small>Local</small><strong>${local}</strong></div>
+       <div class="hist-info-box"><small>Evento</small><strong>${evento}</strong></div>
+       <div class="hist-info-box"><small>Com quem</small><strong>${comQuem}</strong></div>
+       <div class="hist-info-box"><small>Valor unitário</small><strong>${valor}</strong></div>
+       <div class="hist-info-box"><small>Origem</small><strong>${c.origem}${c.compradoPor && c.origem==="Adega" ? " • " + c.compradoPor : ""}</strong></div>
+       <div class="hist-info-box"><small>Loja / compra</small><strong>${c.loja || "-"}</strong></div>
+     </div>
+
+     ${htmlComprariaHistorico(c.compraria)}
+
+     ${observacao ? `
+       <div class="hist-observacao">
+         <details>
+           <summary>📝 Observações da degustação</summary>
+           <p>${observacao}</p>
+         </details>
+       </div>
+     ` : ""}
+   </div>`;
+}
+
+
 function abrirHistoricoConsumo(){
  setBottomNavAtivo("historico");
  const consumos = [];
@@ -4594,6 +5033,7 @@ function abrirHistoricoConsumo(){
          pais: v.detalhes?.pais || "-",
          regiao: v.detalhes?.regiao || "-",
          notaVivino: Number(v.detalhes?.notaVivino || 0),
+         fotoUrl: v.fotoUrl || "",
          dataCompra: a.data || "",
          loja: a.loja || "-",
          quantidade: Number(a.quantidade || 0),
@@ -4621,6 +5061,7 @@ function abrirHistoricoConsumo(){
      pais:c.pais || "-",
      regiao:c.regiao || "-",
      notaVivino:Number(c.notaVivino || 0),
+     fotoUrl:c.fotoUrl || "",
      dataCompra:"",
      loja:c.local || "-",
      quantidade:Number(c.quantidade || 1),
@@ -4646,36 +5087,17 @@ function abrirHistoricoConsumo(){
  const valorConsumido = consumos.reduce((s,c)=>s + Number(c.quantidade || 0) * Number(c.valorUnitario || 0),0);
 
  document.getElementById("historicoResumo").innerHTML = `
-   <strong>Resumo</strong><br>
-   Garrafas consumidas: ${totalGarrafas}<br>
-   Da adega: ${totalAdega}<br>
-   Consumos externos: ${totalExterno}<br>
-   Valor consumido conhecido: ${moeda(valorConsumido)}
+   <div class="historico-resumo-modern">
+     <div class="hist-resumo-item"><small>Garrafas</small><strong>${totalGarrafas}</strong></div>
+     <div class="hist-resumo-item"><small>Da adega</small><strong>${totalAdega}</strong></div>
+     <div class="hist-resumo-item"><small>Externos</small><strong>${totalExterno}</strong></div>
+     <div class="hist-resumo-item"><small>Valor conhecido</small><strong>${moeda(valorConsumido)}</strong></div>
+   </div>
  `;
 
+ document.getElementById("historicoLista").className = "purchase-list historico-lista-modern";
  document.getElementById("historicoLista").innerHTML = consumos.length
-   ? consumos.map(c=>`
-     <div class="purchase-card">
-       <strong>
-         ${c.dataConsumo || "Data não informada"} • ${c.vinho} ${c.safra}
-         ${c.origem==="Externo" ? '<span class="external-badge">Externo</span>' : '<span class="consumida-badge">Adega</span>'}
-         ${c.notaVivino ? `<span class="vivino-badge">⭐ ${c.notaVivino.toFixed(1)}</span>` : ""}
-       </strong>
-       <div class="purchase-meta">
-         ${c.tipo} • ${c.pais} • ${c.regiao}<br>
-         Produtor: ${c.produtor}<br>
-         Uva/Corte: ${c.uva}<br>
-         Quantidade: ${c.quantidade} garrafa${c.quantidade == 1 ? "" : "s"}<br>
-         Local: ${c.localConsumo || c.loja || "-"}<br>
-         Origem: ${c.origem}${c.compradoPor && c.origem==="Adega" ? " • " + c.compradoPor : ""}${c.compradoPor==="Presente" && c.presenteadoPor ? " • Presente de " + c.presenteadoPor : ""}<br>
-         Valor unitário: ${moeda(c.valorUnitario)}
-         ${c.eventoConsumo ? "<br>Evento: " + c.eventoConsumo : ""}
-         ${c.comQuem ? "<br>Com quem: " + c.comQuem : ""}
-         ${c.compraria ? "<br>Compraria para a adega? " + c.compraria : ""}
-         ${c.observacaoConsumo ? "<br>Observação: " + c.observacaoConsumo : ""}
-       </div>
-     </div>
-   `).join("")
+   ? consumos.map(htmlHistoricoCard).join("")
    : `<div class="empty">Nenhuma garrafa consumida registrada ainda.</div>`;
 
  document.getElementById("modalHistorico").style.display = "flex";
@@ -6014,15 +6436,38 @@ function selecionarPratoHarmonizacao(id){
      <p>${prato.motivo}<br>${subtitulo}</p>
    </div>
    <div class="harmonizacao-lista">
-     ${candidatos.length ? candidatos.map((v,idx)=>`
+     ${candidatos.length ? candidatos.map((v,idx)=>{
+       const score = Math.min(99, Math.round(v.pontos));
+       const nota = Number(v.detalhes?.notaVivino || 0);
+       const info = calcularInfoGuarda(v);
+       const flag = bandeiraPais(v.detalhes?.pais || "");
+       const rank = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : "";
+       const thumb = v.fotoUrl
+         ? `<img class="harmonizacao-thumb" src="${v.fotoUrl}" alt="Foto de ${v.nome}" loading="lazy">`
+         : `<div class="harmonizacao-thumb-placeholder">${iconeTipo(v.tipo)}</div>`;
+       return `
        <div class="harmonizacao-item" onclick="abrirDetalhes(${v.index})">
-         <div>
-           <strong>${idx === 0 ? "🥇 " : idx === 1 ? "🥈 " : idx === 2 ? "🥉 " : ""}${v.nome} ${v.safra ? "• " + v.safra : ""}</strong>
-           <span>${v.tipo} • ${v.detalhes?.pais || "-"} • ${motivoHarmonizacao(v, prato, v.pontos)}</span>
+         ${thumb}
+         <div class="harmonizacao-main">
+           <div class="harmonizacao-title">
+             ${rank ? `<span class="harmonizacao-rank">${rank}</span>` : ""}
+             <strong>${v.nome} ${v.safra ? "• " + v.safra : ""}</strong>
+             ${flag ? `<span class="harmonizacao-flag" title="${v.detalhes?.pais || ""}">${flag}</span>` : ""}
+             ${nota ? `<span class="harmonizacao-vivino">⭐ ${nota.toFixed(1)}</span>` : ""}
+           </div>
+           <span class="harmonizacao-motivo">${motivoHarmonizacao(v, prato, v.pontos)}</span>
+           <div class="harmonizacao-tags">
+             <span class="harmonizacao-tag">${v.tipo || "-"}</span>
+             <span class="harmonizacao-tag">${v.detalhes?.uva || "Uva não informada"}</span>
+             ${info.classe !== "guarda-indefinido" ? `<span class="harmonizacao-tag">${info.icone} ${info.status}</span>` : ""}
+           </div>
          </div>
-         <span class="harmonizacao-score">${Math.min(99, Math.round(v.pontos))}%</span>
-       </div>
-     `).join("") : `<div class="harmonizacao-empty">Tente cadastrar uva/corte e nota Vivino nos vinhos para melhorar as sugestões.</div>`}
+         <div class="harmonizacao-score-wrap">
+           <span class="harmonizacao-score-label">${score}%</span>
+           <div class="harmonizacao-score-bar"><span style="width:${score}%"></span></div>
+         </div>
+       </div>`;
+     }).join("") : `<div class="harmonizacao-empty">Tente cadastrar uva/corte e nota Vivino nos vinhos para melhorar as sugestões.</div>`}
    </div>`;
  box.style.display = "block";
  box.scrollIntoView({behavior:"smooth", block:"start"});
