@@ -3752,6 +3752,12 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   justify-content:space-between;
   margin-bottom:12px;
 }
+.adega3d-selects{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
 .adega3d-toolbar select{
   width:190px;
   height:40px;
@@ -3760,6 +3766,9 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   font-size:13px;
   font-weight:850;
   margin:0;
+}
+#selectAdega3D{
+  width:260px;
 }
 .adega3d-legend{
   display:flex;
@@ -3974,7 +3983,9 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   .adega3d-pill{display:none;}
   .adega3d-rack-card{padding:10px;border-radius:22px;}
   .adega3d-toolbar{align-items:flex-start;flex-direction:column;}
-  .adega3d-toolbar select{width:100%;}
+  .adega3d-selects{width:100%;display:grid;grid-template-columns:1fr;}
+  .adega3d-toolbar select,
+  #selectAdega3D{width:100%;}
   .adega3d-rack{padding:16px 9px;border-radius:20px;}
   .adega3d-shelf{min-height:82px;padding:14px 8px 16px 34px;margin-bottom:9px;border-radius:16px;}
   .shelf-number{left:5px;top:28px;width:24px;height:24px;border-radius:8px;font-size:12px;}
@@ -4753,6 +4764,130 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+
+
+/* ===============================
+   POSIÇÃO REAL DA GARRAFA NA ADEGA
+   =============================== */
+.garrafa-posicao-card{
+  margin-top:12px;
+  display:grid;
+  gap:8px;
+}
+.garrafa-posicao-toggle{
+  width:100%;
+  min-height:40px;
+  border:1px solid rgba(133,0,43,.12);
+  border-radius:999px;
+  background:linear-gradient(135deg,#fffaf7,#fff3ef);
+  color:#4b4245;
+  padding:0 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  cursor:pointer;
+  font-size:12.5px;
+  font-weight:900;
+  text-align:left;
+}
+.garrafa-posicao-toggle:hover{
+  border-color:rgba(133,0,43,.22);
+  background:linear-gradient(135deg,#fff7f2,#fff0eb);
+}
+.garrafa-posicao-toggle-main{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+}
+.garrafa-posicao-pin{
+  width:25px;
+  height:25px;
+  border-radius:10px;
+  display:inline-grid;
+  place-items:center;
+  flex:0 0 auto;
+  color:var(--vinho);
+  background:#fff;
+  border:1px solid #f0e4df;
+  font-size:13px;
+}
+.garrafa-posicao-texto{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.garrafa-posicao-chevron{
+  color:var(--vinho);
+  font-size:12px;
+  flex:0 0 auto;
+  transition:transform .16s ease;
+}
+.garrafa-posicao-card.expanded .garrafa-posicao-chevron{
+  transform:rotate(90deg);
+}
+.garrafa-posicao-panel{
+  display:none;
+  padding:12px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fffaf7,#fff3ef);
+  border:1px solid rgba(133,0,43,.12);
+}
+.garrafa-posicao-card.expanded .garrafa-posicao-panel{
+  display:grid;
+  gap:10px;
+}
+.garrafa-posicao-panel small{
+  display:block;
+  color:var(--vinho);
+  font-size:11px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.25px;
+}
+.garrafa-posicao-grid{
+  display:grid;
+  grid-template-columns:1fr 120px auto;
+  gap:8px;
+  align-items:center;
+}
+.garrafa-posicao-grid select{
+  min-height:40px!important;
+  height:40px!important;
+  border-radius:13px!important;
+  padding:8px 11px!important;
+  font-size:13px!important;
+  margin:0!important;
+}
+.btn-salvar-posicao{
+  min-height:40px!important;
+  height:40px!important;
+  border-radius:13px!important;
+  padding:0 13px!important;
+  white-space:nowrap;
+  color:#fff!important;
+  background:linear-gradient(135deg,var(--vinho),#a00035)!important;
+}
+.garrafa-posicao-resumo{
+  color:#62575a;
+  font-size:12px;
+  font-weight:850;
+  line-height:1.35;
+}
+.garrafa-posicao-resumo b{
+  color:#2a2225;
+}
+@media(max-width:650px){
+  .garrafa-posicao-grid{
+    grid-template-columns:1fr;
+  }
+  .btn-salvar-posicao{
+    width:100%;
+  }
+}
+
 /* ===============================
    PRIVACIDADE DOS VALORES
    =============================== */
@@ -4829,6 +4964,118 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     border-radius:14px;
     font-size:17px;
   }
+}
+
+
+/* ===============================
+   MINHAS ADEGAS - CADASTRO
+   =============================== */
+.adegas-modal{
+  width:min(720px,100%)!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+.adegas-modal{
+  max-height:90vh!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+.adegas-modal .modal-body{
+  flex:1 1 auto!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+.adegas-modal .modal-header{
+  padding:24px!important;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(216,177,63,.28), transparent 34%),
+    linear-gradient(135deg,#970033,#4d0018)!important;
+}
+.adegas-modal .modal-header h2{
+  font-size:28px!important;
+  letter-spacing:-.45px!important;
+}
+.adegas-modal .modal-header p{
+  margin:8px 0 0!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:14px!important;
+  font-weight:750!important;
+  line-height:1.4!important;
+}
+.adegas-form-card{
+  background:linear-gradient(135deg,#fffaf7,#fff3ef);
+  border:1px solid rgba(133,0,43,.12);
+  border-radius:22px;
+  padding:14px;
+  margin-bottom:14px;
+}
+.adegas-lista{
+  display:grid;
+  gap:10px;
+}
+.adega-card{
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:20px;
+  padding:14px;
+  box-shadow:0 8px 20px rgba(70,25,22,.055);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  align-items:start;
+}
+.adega-card h3{
+  margin:0 0 6px;
+  color:#241b1e;
+  font-size:17px;
+  line-height:1.15;
+}
+.adega-card p{
+  margin:0;
+  color:#62575a;
+  font-size:12.5px;
+  font-weight:800;
+  line-height:1.45;
+}
+.adega-card-actions{
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+.adega-icon-btn{
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:13px;
+  background:#fff7f2;
+  color:var(--vinho);
+  font-size:15px;
+  font-weight:950;
+  cursor:pointer;
+  display:inline-grid;
+  place-items:center;
+}
+.adega-icon-btn.danger{
+  background:#fff1f1;
+  color:#8b1e1e;
+}
+.adega-capacidade-badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:24px;
+  padding:0 9px;
+  border-radius:999px;
+  background:#fff7db;
+  border:1px solid #ead483;
+  color:#7a5700;
+  font-size:11px;
+  font-weight:950;
+  margin-top:8px;
+}
+@media(max-width:650px){
+  .adega-card{grid-template-columns:1fr;}
+  .adega-card-actions{justify-content:flex-start;}
+  .adegas-modal .modal-actions{display:grid!important;grid-template-columns:1fr!important;}
 }
 
 </style>
@@ -5040,13 +5287,18 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     <div class="adega3d-layout">
       <div class="adega3d-rack-card">
         <div class="adega3d-toolbar">
-          <select id="filtroAdega3D" onchange="renderizarAdega3D()">
-            <option value="">Todas prateleiras</option>
-            <option value="Tinto">Tintos</option>
-            <option value="Branco">Brancos</option>
-            <option value="Rosé">Rosés</option>
-            <option value="Espumante">Espumantes</option>
-          </select>
+          <div class="adega3d-selects">
+            <select id="selectAdega3D" onchange="renderizarAdega3D()">
+              <option value="">Carregando adegas...</option>
+            </select>
+            <select id="filtroAdega3D" onchange="renderizarAdega3D()">
+              <option value="">Todos os tipos</option>
+              <option value="Tinto">Tintos</option>
+              <option value="Branco">Brancos</option>
+              <option value="Rosé">Rosés</option>
+              <option value="Espumante">Espumantes</option>
+            </select>
+          </div>
           <div class="adega3d-legend">
             <span><i class="adega3d-dot"></i>Tinto</span>
             <span><i class="adega3d-dot branco"></i>Branco</span>
@@ -5590,12 +5842,47 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
         <button class="btn-secondary" onclick="exportarBackup()">Backup JSON</button>
         <button class="btn-secondary" onclick="document.getElementById('importar').click()">Importar JSON</button>
         <button class="btn-secondary" onclick="carregarDoSupabase(false)">☁️ Recarregar Supabase</button>
+        <button class="btn-secondary" onclick="abrirCadastroAdegas()">🍷 Minhas adegas</button>
         <button class="btn-secondary btn-save" onclick="alert('A Adega Juliana agora salva automaticamente no Supabase.')">☁️ Supabase ativo</button>
       </div>
       <input id="importar" type="file" accept=".json" style="display:none" onchange="importarBackup(event)">
     </div>
     <div class="modal-actions">
       <button class="btn-secondary" onclick="fecharConfiguracoes()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div id="modalAdegas" class="modal-bg" onclick="fecharCadastroAdegas()">
+  <div class="modal adegas-modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>🍷 Minhas adegas</h2>
+      <p>Cadastre suas adegas climatizadas, capacidade e organização de prateleiras.</p>
+    </div>
+    <div class="modal-body">
+      <div class="adegas-form-card">
+        <input id="adegaIdEditando" type="hidden">
+        <div class="form-full">
+          <input id="adegaNome" placeholder="Nome da adega. Ex.: Adega climatizada da sala">
+        </div>
+        <div class="form-row-3">
+          <input id="adegaCapacidade" type="number" min="1" placeholder="Capacidade">
+          <input id="adegaPrateleiras" type="number" min="1" placeholder="Prateleiras">
+          <input id="adegaGarrafasPrateleira" type="number" min="1" placeholder="Garrafas/prateleira">
+        </div>
+        <div class="form-full">
+          <textarea id="adegaObservacoes" placeholder="Observações. Ex.: fica na sala, comporta 29 garrafas, última prateleira com 4..."></textarea>
+        </div>
+        <div class="modal-actions" style="padding:0;justify-content:flex-end">
+          <button class="btn-secondary" type="button" onclick="limparFormularioAdega()">Limpar</button>
+          <button class="btn-secondary btn-save" type="button" onclick="salvarAdega()">✓ Salvar adega</button>
+        </div>
+      </div>
+      <p class="form-group-title">Adegas cadastradas</p>
+      <div id="listaAdegas" class="adegas-lista"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharCadastroAdegas()">Fechar</button>
     </div>
   </div>
 </div>
@@ -5762,6 +6049,8 @@ let filtroAtual = "";
 let vinhoSelecionado = null;
 let consumosExternos = [];
 let vinhosDesejadosTabela = [];
+let adegas = [];
+let adega3DSelecionadaId = localStorage.getItem("aj_adega3d_selecionada_id") || "";
 let salvandoNaNuvem = false;
 let carregandoDaNuvem = false;
 let intervaloSincronizacao = null;
@@ -6321,6 +6610,8 @@ function mapearGarrafa(row){
    compradoPor: row.comprado_por || "-",
    presenteadoPor: row.presenteado_por || "",
    localizacao: row.localizacao || "",
+   adegaId: row.adega_id || "",
+   posicaoAdega: row.posicao_adega || "",
    consumida: !!row.consumida,
    dataConsumo: row.data_consumo || "",
    eventoConsumo: row.evento_consumo || "",
@@ -6372,6 +6663,186 @@ function mapearVinhoDesejadoSupabase(row){
  };
 }
 
+
+function mapearAdegaSupabase(row){
+ return {
+   id: row.id,
+   nome: row.nome || "",
+   capacidade: Number(row.capacidade || 0),
+   prateleiras: Number(row.prateleiras || 1),
+   garrafasPorPrateleira: Number(row.garrafas_por_prateleira || 1),
+   observacoes: row.observacoes || "",
+   ativa: row.ativa !== false,
+   createdAt: row.created_at || ""
+ };
+}
+
+async function carregarAdegasSupabase(){
+ const {data, error} = await supabaseClient
+   .from("adegas")
+   .select("*")
+   .order("created_at", {ascending:true});
+ if(error) throw error;
+ adegas = (data || []).map(mapearAdegaSupabase);
+ renderizarListaAdegas();
+ renderizarSelectAdegas3D();
+ return adegas;
+}
+
+function renderizarSelectAdegas3D(){
+ const select = document.getElementById("selectAdega3D");
+ if(!select) return;
+ const ativas = adegas.filter(a=>a.ativa !== false);
+ if(!ativas.length){
+   select.innerHTML = `<option value="">Adega padrão visual</option>`;
+   select.value = "";
+   return;
+ }
+ if(!adega3DSelecionadaId || !ativas.some(a=>String(a.id) === String(adega3DSelecionadaId))){
+   adega3DSelecionadaId = String(ativas[0].id);
+   localStorage.setItem("aj_adega3d_selecionada_id", adega3DSelecionadaId);
+ }
+ select.innerHTML = ativas.map(a=>`<option value="${a.id}">${a.nome || "Adega"} • ${Number(a.capacidade || 0)} lugares</option>`).join("");
+ select.value = adega3DSelecionadaId;
+}
+
+function obterAdega3DSelecionada(){
+ const select = document.getElementById("selectAdega3D");
+ if(select){
+   adega3DSelecionadaId = select.value || adega3DSelecionadaId || "";
+   if(adega3DSelecionadaId) localStorage.setItem("aj_adega3d_selecionada_id", adega3DSelecionadaId);
+ }
+ return adegas.find(a=>String(a.id) === String(adega3DSelecionadaId)) || adegas.find(a=>a.ativa !== false) || null;
+}
+
+function abrirCadastroAdegas(){
+ fecharConfiguracoes();
+ limparFormularioAdega(false);
+ renderizarListaAdegas();
+ carregarAdegasSupabase().catch(e=>{
+   console.error(e);
+   mostrarMensagem("Não foi possível carregar as adegas. Verifique se a tabela adegas foi criada no Supabase e se as policies foram liberadas.", {tipo:"erro", titulo:"Erro ao carregar adegas"});
+ });
+ const modal = document.getElementById("modalAdegas");
+ if(modal) modal.style.display = "flex";
+}
+
+function fecharCadastroAdegas(){
+ const modal = document.getElementById("modalAdegas");
+ if(modal) modal.style.display = "none";
+}
+
+function limparFormularioAdega(focar=true){
+ const campos = ["adegaIdEditando","adegaNome","adegaCapacidade","adegaPrateleiras","adegaGarrafasPrateleira","adegaObservacoes"];
+ campos.forEach(id=>{ const el = document.getElementById(id); if(el) el.value = ""; });
+ const prat = document.getElementById("adegaPrateleiras");
+ const gpp = document.getElementById("adegaGarrafasPrateleira");
+ if(prat) prat.value = "6";
+ if(gpp) gpp.value = "5";
+ if(focar){ const nome = document.getElementById("adegaNome"); if(nome) nome.focus(); }
+}
+
+function renderizarListaAdegas(){
+ const lista = document.getElementById("listaAdegas");
+ if(!lista) return;
+ if(!adegas.length){
+   lista.innerHTML = `<div class="empty">Nenhuma adega cadastrada ainda.</div>`;
+   return;
+ }
+ lista.innerHTML = adegas.map(a=>{
+   const capacidade = Number(a.capacidade || 0);
+   const prateleiras = Number(a.prateleiras || 0);
+   const gpp = Number(a.garrafasPorPrateleira || 0);
+   const obs = a.observacoes ? `<br>${a.observacoes}` : "";
+   return `<div class="adega-card">
+     <div>
+       <h3>${a.nome || "Adega sem nome"}</h3>
+       <p>${prateleiras} prateleira${prateleiras === 1 ? "" : "s"} • ${gpp} garrafa${gpp === 1 ? "" : "s"} por prateleira${obs}</p>
+       <span class="adega-capacidade-badge">Capacidade: ${capacidade} garrafa${capacidade === 1 ? "" : "s"}</span>
+     </div>
+     <div class="adega-card-actions">
+       <button class="adega-icon-btn" title="Editar adega" onclick="editarAdega('${a.id}')">✎</button>
+       <button class="adega-icon-btn danger" title="Excluir adega" onclick="excluirAdega('${a.id}')">🗑</button>
+     </div>
+   </div>`;
+ }).join("");
+}
+
+function editarAdega(id){
+ const a = adegas.find(x=>String(x.id) === String(id));
+ if(!a) return;
+ const set = (idCampo, valor)=>{ const el = document.getElementById(idCampo); if(el) el.value = valor ?? ""; };
+ set("adegaIdEditando", a.id);
+ set("adegaNome", a.nome);
+ set("adegaCapacidade", a.capacidade);
+ set("adegaPrateleiras", a.prateleiras);
+ set("adegaGarrafasPrateleira", a.garrafasPorPrateleira);
+ set("adegaObservacoes", a.observacoes);
+ const nome = document.getElementById("adegaNome");
+ if(nome) nome.focus();
+}
+
+async function salvarAdega(){
+ const id = document.getElementById("adegaIdEditando")?.value || "";
+ const nome = (document.getElementById("adegaNome")?.value || "").trim();
+ const capacidade = Number(document.getElementById("adegaCapacidade")?.value || 0);
+ const prateleiras = Number(document.getElementById("adegaPrateleiras")?.value || 0);
+ const garrafasPorPrateleira = Number(document.getElementById("adegaGarrafasPrateleira")?.value || 0);
+ const observacoes = (document.getElementById("adegaObservacoes")?.value || "").trim();
+
+ if(!nome){ alert("Informe o nome da adega."); return; }
+ if(!capacidade || capacidade < 1){ alert("Informe uma capacidade válida para a adega."); return; }
+ if(!prateleiras || prateleiras < 1){ alert("Informe a quantidade de prateleiras."); return; }
+ if(!garrafasPorPrateleira || garrafasPorPrateleira < 1){ alert("Informe quantas garrafas cabem por prateleira."); return; }
+
+ const payload = {
+   nome,
+   capacidade,
+   prateleiras,
+   garrafas_por_prateleira: garrafasPorPrateleira,
+   observacoes: observacoes || null,
+   ativa: true
+ };
+
+ try{
+   if(id){
+     const {error} = await supabaseClient.from("adegas").update(payload).eq("id", id);
+     if(error) throw error;
+   }else{
+     const {error} = await supabaseClient.from("adegas").insert(payload);
+     if(error) throw error;
+   }
+   await carregarAdegasSupabase();
+   limparFormularioAdega(false);
+   mostrarMensagem("Adega salva com sucesso.", {tipo:"sucesso", titulo:"Adega salva", icone:"🍷"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível salvar a adega. Verifique a tabela adegas e as permissões no Supabase.", {tipo:"erro", titulo:"Erro ao salvar adega"});
+ }
+}
+
+async function excluirAdega(id){
+ const a = adegas.find(x=>String(x.id) === String(id));
+ const ok = await confirmarAdega(`Deseja excluir a adega "${a?.nome || "selecionada"}"?\n\nNesta fase, isso remove apenas o cadastro da adega, não remove vinhos ou garrafas.`, {
+   titulo:"Excluir adega",
+   confirmar:"Excluir",
+   cancelar:"Cancelar",
+   perigo:true,
+   icone:"🗑️"
+ });
+ if(!ok) return;
+ try{
+   const {error} = await supabaseClient.from("adegas").delete().eq("id", id);
+   if(error) throw error;
+   await carregarAdegasSupabase();
+   limparFormularioAdega(false);
+   mostrarMensagem("Adega excluída com sucesso.", {tipo:"sucesso", titulo:"Adega excluída", icone:"🗑️"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível excluir a adega.", {tipo:"erro", titulo:"Erro ao excluir adega"});
+ }
+}
+
 async function carregarWishlistSupabase(){
  const {data, error} = await supabaseClient
    .from("vinhos_desejados")
@@ -6403,6 +6874,12 @@ async function carregarDoSupabase(silencioso=true){
      .eq("status", "desejado")
      .order("created_at", {ascending:false});
    if(erroWishlist) throw erroWishlist;
+
+   try{
+     await carregarAdegasSupabase();
+   }catch(erroAdegas){
+     console.warn("Não foi possível carregar adegas", erroAdegas);
+   }
 
    vinhos = (vinhosData || []).map(mapearVinho);
    consumosExternos = (consumosData || []).map(c=>({
@@ -6447,6 +6924,8 @@ async function inserirGarrafas(vinhoId, aquisicoes){
    comprado_por: a.compradoPor || null,
    presenteado_por: a.presenteadoPor || null,
    localizacao: a.localizacao || null,
+   adega_id: a.adegaId || null,
+   posicao_adega: a.posicaoAdega || null,
    ocasiao: a.ocasiao || null,
    consumida: !!a.consumida,
    data_consumo: a.dataConsumo || null,
@@ -7477,6 +7956,170 @@ async function adicionarVinho(){
  }
 }
 
+
+function letraPrateleira(idx){
+ const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+ const n = Number(idx || 0);
+ if(n < letras.length) return letras[n];
+ return `P${n+1}`;
+}
+
+function gerarPosicoesAdega(adega){
+ if(!adega) return [];
+ const capacidade = Math.max(0, Number(adega.capacidade || 0));
+ const prateleiras = Math.max(1, Number(adega.prateleiras || 1));
+ const porPrateleira = Math.max(1, Number(adega.garrafasPorPrateleira || Math.ceil((capacidade || 1) / prateleiras)));
+ const posicoes = [];
+ let contador = 0;
+ for(let p=0; p<prateleiras; p++){
+   const letra = letraPrateleira(p);
+   for(let s=1; s<=porPrateleira; s++){
+     contador++;
+     if(capacidade && contador > capacidade) break;
+     posicoes.push(`${letra}${s}`);
+   }
+ }
+ return posicoes;
+}
+
+function htmlOptionsAdegasSelecionada(valorAtual=""){
+ const ativas = adegas.filter(a=>a.ativa !== false);
+ const options = [`<option value="">Sem adega definida</option>`];
+ ativas.forEach(a=>{
+   const selected = String(a.id) === String(valorAtual || "") ? " selected" : "";
+   options.push(`<option value="${a.id}"${selected}>${a.nome || "Adega"}</option>`);
+ });
+ return options.join("");
+}
+
+function htmlOptionsPosicoesAdega(adegaId, valorAtual=""){
+ const adega = adegas.find(a=>String(a.id) === String(adegaId || ""));
+ const options = [`<option value="">Sem posição</option>`];
+ gerarPosicoesAdega(adega).forEach(pos=>{
+   const selected = String(pos) === String(valorAtual || "") ? " selected" : "";
+   options.push(`<option value="${pos}"${selected}>${pos}</option>`);
+ });
+ return options.join("");
+}
+
+function nomeAdegaPorId(id){
+ const a = adegas.find(x=>String(x.id) === String(id || ""));
+ return a?.nome || "Sem adega definida";
+}
+
+function atualizarOpcoesPosicaoGarrafa(idx){
+ const adegaSelect = document.getElementById(`garrafaAdega_${idx}`);
+ const posSelect = document.getElementById(`garrafaPosicao_${idx}`);
+ if(!adegaSelect || !posSelect) return;
+ const posicaoAtual = posSelect.value || "";
+ posSelect.innerHTML = htmlOptionsPosicoesAdega(adegaSelect.value, posicaoAtual);
+}
+
+function posicaoOcupadaEmOutraGarrafa(adegaId, posicao, garrafaIdIgnorada){
+ if(!adegaId || !posicao) return null;
+ for(const v of vinhos){
+   garantirEstrutura(v);
+   for(const a of (v.aquisicoes || [])){
+     if(a.consumida) continue;
+     if(garrafaIdIgnorada && String(a.id || "") === String(garrafaIdIgnorada)) continue;
+     if(String(a.adegaId || "") === String(adegaId) && String(a.posicaoAdega || "") === String(posicao)){
+       return {vinho:v, garrafa:a};
+     }
+   }
+ }
+ return null;
+}
+
+async function salvarPosicaoGarrafa(vinhoIndex, aquisicaoIndex){
+ const v = garantirEstrutura(vinhos[vinhoIndex]);
+ const a = v?.aquisicoes?.[aquisicaoIndex];
+ if(!v || !a || !a.id){
+   mostrarMensagem("Não foi possível identificar esta garrafa para salvar a posição.", {tipo:"erro", titulo:"Erro ao salvar posição", icone:"❌"});
+   return;
+ }
+ const adegaId = document.getElementById(`garrafaAdega_${aquisicaoIndex}`)?.value || "";
+ const posicao = document.getElementById(`garrafaPosicao_${aquisicaoIndex}`)?.value || "";
+ if(posicao && !adegaId){
+   mostrarMensagem("Escolha a adega antes de informar a posição da garrafa.", {tipo:"aviso", titulo:"Adega não informada", icone:"⚠️"});
+   return;
+ }
+ const ocupada = posicaoOcupadaEmOutraGarrafa(adegaId, posicao, a.id);
+ if(ocupada){
+   mostrarMensagem(`A posição ${posicao} já está ocupada por ${ocupada.vinho.nome}${ocupada.vinho.safra ? " • " + ocupada.vinho.safra : ""}.`, {tipo:"aviso", titulo:"Posição ocupada", icone:"⚠️"});
+   return;
+ }
+ try{
+   const {error} = await supabaseClient
+     .from("garrafas")
+     .update({adega_id: adegaId || null, posicao_adega: posicao || null})
+     .eq("id", a.id);
+   if(error) throw error;
+   await carregarDoSupabase(true);
+   const novoIndex = vinhos.findIndex(item=>String(item.id) === String(v.id));
+   if(novoIndex >= 0) abrirDetalhes(novoIndex);
+   renderizarAdega3D();
+   mostrarMensagem("A posição da garrafa foi salva com sucesso.", {tipo:"sucesso", titulo:"Posição salva", icone:"🍷", botao:"OK"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível salvar a posição da garrafa no Supabase.", {tipo:"erro", titulo:"Erro ao salvar posição", icone:"❌"});
+ }
+}
+
+async function salvarPosicoesGarrafasDetalhe(v){
+ const atualizacoes = [];
+ (v.aquisicoes || []).forEach((a,idx)=>{
+   if(!a.id) return;
+   const adegaId = document.getElementById(`garrafaAdega_${idx}`)?.value || "";
+   const posicao = document.getElementById(`garrafaPosicao_${idx}`)?.value || "";
+   if(String(a.adegaId || "") === String(adegaId) && String(a.posicaoAdega || "") === String(posicao)) return;
+   atualizacoes.push({id:a.id, adegaId, posicao});
+ });
+ for(const item of atualizacoes){
+   const {error} = await supabaseClient
+     .from("garrafas")
+     .update({adega_id:item.adegaId || null, posicao_adega:item.posicao || null})
+     .eq("id", item.id);
+   if(error) throw error;
+ }
+}
+
+function toggleEditorPosicaoGarrafa(idx){
+ const card = document.getElementById(`garrafaPosicaoCard_${idx}`);
+ if(!card) return;
+ card.classList.toggle("expanded");
+}
+
+function htmlEditorPosicaoGarrafa(a, idx){
+ const adegaNome = a.adegaId ? nomeAdegaPorId(a.adegaId) : "Sem adega definida";
+ const posicao = a.posicaoAdega || "Sem posição";
+ const resumo = a.adegaId || a.posicaoAdega
+   ? `${adegaNome}${a.posicaoAdega ? " • " + posicao : ""}`
+   : "Definir posição";
+ return `
+   <div id="garrafaPosicaoCard_${idx}" class="garrafa-posicao-card">
+     <button type="button" class="garrafa-posicao-toggle" onclick="event.stopPropagation(); toggleEditorPosicaoGarrafa(${idx})" title="Editar posição da garrafa">
+       <span class="garrafa-posicao-toggle-main">
+         <span class="garrafa-posicao-pin">📍</span>
+         <span class="garrafa-posicao-texto">${resumo}</span>
+       </span>
+       <span class="garrafa-posicao-chevron">▶</span>
+     </button>
+     <div class="garrafa-posicao-panel">
+       <small>Posição real da garrafa</small>
+       <div class="garrafa-posicao-grid">
+         <select id="garrafaAdega_${idx}" onchange="atualizarOpcoesPosicaoGarrafa(${idx})">
+           ${htmlOptionsAdegasSelecionada(a.adegaId)}
+         </select>
+         <select id="garrafaPosicao_${idx}">
+           ${htmlOptionsPosicoesAdega(a.adegaId, a.posicaoAdega)}
+         </select>
+         <button type="button" class="btn-secondary btn-salvar-posicao" onclick="event.stopPropagation(); salvarPosicaoGarrafa(${vinhoSelecionado}, ${idx})">Salvar posição</button>
+       </div>
+       <div class="garrafa-posicao-resumo">Atual: <b>${adegaNome}</b>${a.posicaoAdega ? ` • posição <b>${posicao}</b>` : ""}</div>
+     </div>
+   </div>`;
+}
+
 function abrirDetalhes(i){
  vinhoSelecionado = i;
  const v = garantirEstrutura(vinhos[i]);
@@ -7527,6 +8170,7 @@ document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
          Valor unitário: ${moeda(a.valorUnitario)}<br>
          Origem: ${a.compradoPor || "-"}${a.compradoPor==="Presente" && a.presenteadoPor ? " • Presente de " + a.presenteadoPor : ""}
          ${a.ocasiao ? "<br>Ocasião da compra: " + a.ocasiao : ""}
+         ${!a.consumida ? htmlEditorPosicaoGarrafa(a, idx) : (a.adegaId || a.posicaoAdega ? `<div class="garrafa-posicao-resumo" style="margin-top:10px">Posição antes do consumo: <b>${nomeAdegaPorId(a.adegaId)}</b>${a.posicaoAdega ? " • " + a.posicaoAdega : ""}</div>` : "")}
          ${a.consumida ? `
            <div class="consumo-status-card">
              <strong>✅ Consumida${a.dataConsumo ? " em " + a.dataConsumo : ""}</strong>
@@ -7835,7 +8479,10 @@ async function salvarDetalhes(){
  v.detalhes.notas = document.getElementById("modalNotas").value.trim();
 
  try{
-   if(v.id) await atualizarVinhoSupabase(v);
+   if(v.id){
+     await atualizarVinhoSupabase(v);
+     await salvarPosicoesGarrafasDetalhe(v);
+   }
    fecharDetalhes();
    await carregarDoSupabase(true);
  }catch(e){
@@ -7850,7 +8497,8 @@ function exportarBackup(){
    dataBackup:new Date().toISOString(),
    vinhos:vinhos,
    consumosExternos:consumosExternos,
-   vinhosDesejados:vinhosDesejadosTabela
+   vinhosDesejados:vinhosDesejadosTabela,
+   adegas:adegas
  };
  const blob = new Blob([JSON.stringify(backup,null,2)], {type:"application/json"});
  const url = URL.createObjectURL(blob);
@@ -8319,19 +8967,47 @@ function selecionarPratoHarmonizacao(id){
 }
 
 
-function garrafasAdega3D(){
+function indicePosicaoAdega(posicao, adega){
+ const texto = String(posicao || "").trim().toUpperCase();
+ if(!texto || !adega) return -1;
+ const match = texto.match(/^([A-Z]+)(\d+)$/);
+ if(!match) return -1;
+ const letras = match[1];
+ const numero = Number(match[2]);
+ const porPrateleira = Math.max(1, Number(adega.garrafasPorPrateleira || 5));
+ let prateleira = 0;
+ if(letras.length === 1){
+   prateleira = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(letras);
+ }else if(letras.startsWith("P")){
+   prateleira = Number(letras.slice(1)) - 1;
+ }
+ if(prateleira < 0 || !numero) return -1;
+ return prateleira * porPrateleira + (numero - 1);
+}
+
+function garrafasAdega3D(adega, capacidadeVisual){
  const filtro = document.getElementById("filtroAdega3D")?.value || "";
- const itens = [];
+ const slots = Array.from({length:capacidadeVisual}, ()=>null);
+ const semPosicao = [];
+ if(!adega){
+   return {slots, total:0, semPosicao};
+ }
  vinhos.forEach((v,index)=>{
    garantirEstrutura(v);
-   const qtd = Number(v.quantidade || 0);
-   if(qtd <= 0) return;
    if(filtro && v.tipo !== filtro) return;
-   for(let n=1; n<=qtd; n++){
-     itens.push({vinho:v, index, numero:n});
-   }
+   (v.aquisicoes || []).forEach((a,aquisicaoIndex)=>{
+     if(a.consumida) return;
+     if(String(a.adegaId || "") !== String(adega.id || "")) return;
+     const item = {vinho:v, index, aquisicaoIndex, garrafa:a};
+     const slotIndex = indicePosicaoAdega(a.posicaoAdega, adega);
+     if(slotIndex >= 0 && slotIndex < capacidadeVisual && !slots[slotIndex]){
+       slots[slotIndex] = item;
+     }else{
+       semPosicao.push(item);
+     }
+   });
  });
- return itens;
+ return {slots, total:slots.filter(Boolean).length + semPosicao.length, semPosicao};
 }
 
 function classeTipoAdega3D(tipo){
@@ -8344,36 +9020,58 @@ function classeTipoAdega3D(tipo){
 function renderizarAdega3D(){
  const rack = document.getElementById("adega3dRack");
  if(!rack) return;
- const garrafas = garrafasAdega3D();
- const porPrateleira = 5;
- const totalPrateleiras = Math.max(1, Math.ceil(garrafas.length / porPrateleira));
- const pill = document.getElementById("adega3dResumoPill");
- if(pill) pill.innerText = `${garrafas.length} garrafa${garrafas.length === 1 ? "" : "s"} • ${totalPrateleiras} prateleira${totalPrateleiras === 1 ? "" : "s"}`;
 
- if(!garrafas.length){
-   rack.innerHTML = `<div class="harmonizacao-empty">Nenhuma garrafa em estoque para exibir na Adega 3D.</div>`;
+ // Importante: quando o usuário troca a adega no combo, o valor selecionado
+ // precisa ser salvo antes de reconstruirmos as opções do select.
+ // Sem isso, renderizarSelectAdegas3D() voltava para a adega anterior.
+ const selectAtual = document.getElementById("selectAdega3D");
+ if(selectAtual && selectAtual.value){
+   adega3DSelecionadaId = String(selectAtual.value);
+   localStorage.setItem("aj_adega3d_selecionada_id", adega3DSelecionadaId);
+ }
+
+ renderizarSelectAdegas3D();
+ const adega = obterAdega3DSelecionada();
+ const porPrateleira = Math.max(1, Number(adega?.garrafasPorPrateleira || 5));
+ const capacidadeInformada = Math.max(0, Number(adega?.capacidade || 0));
+ const totalPrateleiras = Math.max(1, Number(adega?.prateleiras || Math.ceil((capacidadeInformada || 1) / porPrateleira)));
+ const capacidadeVisual = capacidadeInformada || (totalPrateleiras * porPrateleira);
+ const mapaGarrafas3D = garrafasAdega3D(adega, capacidadeVisual);
+ const slotsAdega3D = mapaGarrafas3D.slots;
+ const garrafasExcedentes = mapaGarrafas3D.semPosicao.length;
+ const pill = document.getElementById("adega3dResumoPill");
+ if(pill){
+   const nomeAdega = adega?.nome || "Adega padrão";
+   const ocupacao = `${slotsAdega3D.filter(Boolean).length}/${capacidadeVisual}`;
+   pill.innerText = `${nomeAdega} • ${ocupacao} lugares${garrafasExcedentes ? ` • +${garrafasExcedentes} fora` : ""}`;
+ }
+
+ if(!adega){
+   rack.innerHTML = `<div class="harmonizacao-empty">Cadastre uma adega em Configurações para usar a visualização 3D.</div>`;
    const detalhe = document.getElementById("adega3dDetalhe");
-   if(detalhe) detalhe.innerHTML = `<div class="adega3d-detail-empty">Nenhuma garrafa encontrada para este filtro.</div>`;
+   if(detalhe) detalhe.innerHTML = `<div class="adega3d-detail-empty">Nenhuma adega selecionada.</div>`;
    return;
  }
 
  let html = "";
+
  for(let p=0; p<totalPrateleiras; p++){
    const inicio = p * porPrateleira;
-   const itens = garrafas.slice(inicio, inicio + porPrateleira);
+   const itens = slotsAdega3D.slice(inicio, inicio + porPrateleira);
    html += `<div class="adega3d-shelf">
      <div class="shelf-number">${p+1}</div>
      <div class="shelf-label">Prateleira ${p+1}</div>
-     <div class="bottle-row">`;
+     <div class="bottle-row" style="grid-template-columns:repeat(${porPrateleira},minmax(0,1fr))">`;
    for(let pos=0; pos<porPrateleira; pos++){
-     const item = itens[pos];
+     const slotAbsoluto = inicio + pos;
+     const item = slotAbsoluto < capacidadeVisual ? itens[pos] : null;
      if(item){
        const v = item.vinho;
        const titulo = `${v.nome} ${v.safra ? "• " + v.safra : ""}`;
-       html += `<button class="bottle-slot" id="bottle3d-${inicio+pos}" title="${titulo}" onclick="selecionarGarrafa3D(${item.index}, ${p+1}, ${pos+1}, 'bottle3d-${inicio+pos}')">
+       html += `<button class="bottle-slot" id="bottle3d-${slotAbsoluto}" title="${titulo}" onclick="selecionarGarrafa3D(${item.index}, ${item.aquisicaoIndex}, ${p+1}, ${pos+1}, 'bottle3d-${slotAbsoluto}')">
          <span class="bottle-css ${classeTipoAdega3D(v.tipo)}"></span>
        </button>`;
-     }else{
+     }else if(slotAbsoluto < capacidadeVisual){
        html += `<div class="bottle-slot"><span class="bottle-empty"></span></div>`;
      }
    }
@@ -8382,14 +9080,21 @@ function renderizarAdega3D(){
  rack.innerHTML = html;
 
  const selecionadaAtual = document.querySelector(".bottle-slot.selected");
- if(!selecionadaAtual && garrafas[0]) selecionarGarrafa3D(garrafas[0].index, 1, 1, "bottle3d-0", false);
+ const primeiroIndex = slotsAdega3D.findIndex(Boolean);
+ if(!selecionadaAtual && primeiroIndex >= 0){
+   const primeiro = slotsAdega3D[primeiroIndex];
+   const prateleiraInicial = Math.floor(primeiroIndex / porPrateleira) + 1;
+   const posicaoInicial = (primeiroIndex % porPrateleira) + 1;
+   selecionarGarrafa3D(primeiro.index, primeiro.aquisicaoIndex, prateleiraInicial, posicaoInicial, `bottle3d-${primeiroIndex}`, false);
+ }
 }
 
-function selecionarGarrafa3D(index, prateleira, posicao, elementId, scroll=true){
+function selecionarGarrafa3D(index, aquisicaoIndex, prateleira, posicao, elementId, scroll=true){
  document.querySelectorAll(".bottle-slot.selected").forEach(el=>el.classList.remove("selected"));
  const el = document.getElementById(elementId);
  if(el) el.classList.add("selected");
  const v = garantirEstrutura(vinhos[index]);
+ const garrafa3D = v.aquisicoes?.[aquisicaoIndex] || null;
  const detalhe = document.getElementById("adega3dDetalhe");
  if(!detalhe) return;
  const flag = bandeiraPais(v.detalhes?.pais || "");
@@ -8403,12 +9108,12 @@ function selecionarGarrafa3D(index, prateleira, posicao, elementId, scroll=true)
      ${thumb}
      <div>
        <h3>${v.nome} ${v.safra ? "• " + v.safra : ""}</h3>
-       <div class="adega3d-detail-meta">${flag ? flag + " " : ""}${v.detalhes?.pais || "-"} • ${v.tipo || "-"}<br>Prateleira ${prateleira} • Posição ${posicao}</div>
+       <div class="adega3d-detail-meta">${flag ? flag + " " : ""}${v.detalhes?.pais || "-"} • ${v.tipo || "-"}<br>${obterAdega3DSelecionada()?.nome || "Adega"} • posição ${garrafa3D?.posicaoAdega || (letraPrateleira(prateleira-1) + posicao)}</div>
      </div>
    </div>
    <div class="adega3d-detail-badges">
      ${nota ? `<span class="hist-badge star">⭐ ${nota.toFixed(1)}</span>` : ""}
-     <span class="hist-badge adega">${v.quantidade || 0} garrafa${Number(v.quantidade) === 1 ? "" : "s"}</span>
+     <span class="hist-badge adega">${garrafa3D?.posicaoAdega || "Sem posição"}</span>
      <span class="guarda-badge ${info.classe}">${info.icone} ${info.status}</span>
    </div>
    <div class="adega3d-detail-grid">
