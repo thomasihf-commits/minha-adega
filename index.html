@@ -2413,6 +2413,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 .stats-hero-card::after{
   content:"";
   position:absolute;
+  pointer-events:none;
   right:-44px;
   bottom:-70px;
   width:190px;
@@ -4705,6 +4706,118 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+
+/* ===============================
+   EXCLUIR GARRAFA INDIVIDUAL
+   =============================== */
+.garrafa-card .garrafa-card-head{
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  gap:10px!important;
+  align-items:start!important;
+  margin-bottom:6px!important;
+}
+.garrafa-card .garrafa-card-head strong{
+  margin-bottom:0!important;
+}
+.garrafa-remove-btn{
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:12px;
+  background:#fff1f1;
+  color:#8b1e1e;
+  font-size:15px;
+  font-weight:950;
+  cursor:pointer;
+  display:inline-grid;
+  place-items:center;
+  transition:transform .16s ease, background .16s ease, box-shadow .16s ease;
+}
+.garrafa-remove-btn:hover{
+  background:#ffe7e7;
+  box-shadow:0 5px 14px rgba(139,30,30,.12);
+}
+.garrafa-remove-btn:active{
+  transform:scale(.96);
+}
+.garrafa-remove-btn:disabled{
+  opacity:.55;
+  cursor:wait;
+}
+@media(max-width:650px){
+  .garrafa-remove-btn{
+    width:32px;
+    height:32px;
+    border-radius:11px;
+  }
+}
+
+/* ===============================
+   PRIVACIDADE DOS VALORES
+   =============================== */
+/* Correção: o círculo decorativo do card não pode bloquear o clique no olhinho */
+.stats-hero-card::after{
+  pointer-events:none!important;
+}
+.stats-hero-top{
+  position:relative!important;
+  z-index:3!important;
+}
+.btn-toggle-valores{
+  position:relative!important;
+  z-index:4!important;
+  pointer-events:auto!important;
+}
+
+.stats-hero-top{
+  justify-content:space-between;
+}
+.stats-hero-title{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  min-width:0;
+}
+.btn-toggle-valores{
+  width:38px;
+  height:38px;
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:15px;
+  background:rgba(255,255,255,.13);
+  color:#fff;
+  display:inline-grid;
+  place-items:center;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  transition:transform .16s ease, background .16s ease;
+}
+.btn-toggle-valores:active{
+  transform:scale(.96);
+}
+.btn-toggle-valores:hover{
+  background:rgba(255,255,255,.20);
+}
+.valor-protegido{
+  letter-spacing:2px;
+}
+.valor-fade{
+  transition:opacity .18s ease, filter .18s ease;
+}
+.valor-fade.trocando{
+  opacity:.25;
+  filter:blur(2px);
+}
+@media(max-width:560px){
+  .btn-toggle-valores{
+    width:36px;
+    height:36px;
+    border-radius:14px;
+    font-size:17px;
+  }
+}
+
 </style>
 </head>
 
@@ -4815,18 +4928,21 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     <div class="stats-dashboard stats-modern">
       <div class="stats-hero-card">
         <div class="stats-hero-top">
-          <span class="stats-hero-icon">🍷</span>
-          <span>Patrimônio da adega</span>
+          <span class="stats-hero-title">
+            <span class="stats-hero-icon">🍷</span>
+            <span>Patrimônio da adega</span>
+          </span>
+          <button id="btnToggleValores" class="btn-toggle-valores" type="button" onclick="toggleValoresFinanceiros(event)" aria-label="Ocultar valores">👁️</button>
         </div>
-        <strong id="kpiValorInvestido">-</strong>
+        <strong id="kpiValorInvestido" class="valor-fade">-</strong>
         <p id="statsHeroResumo">-</p>
       </div>
 
       <div class="stats-kpis stats-kpis-modern">
-        <div class="stats-kpi"><small>Em estoque</small><strong id="kpiValorEstoque">-</strong><span>Valor ainda na adega</span></div>
+        <div class="stats-kpi"><small>Em estoque</small><strong id="kpiValorEstoque" class="valor-fade">-</strong><span>Valor ainda na adega</span></div>
         <div class="stats-kpi"><small>Compradas</small><strong id="kpiGarrafasCompradas">-</strong><span>Total registrado</span></div>
         <div class="stats-kpi"><small>Consumidas</small><strong id="kpiGarrafasConsumidas">-</strong><span>Adega + externo</span></div>
-        <div class="stats-kpi"><small>Ticket médio</small><strong id="kpiTicketMedio">-</strong><span>Por garrafa comprada</span></div>
+        <div class="stats-kpi"><small>Ticket médio</small><strong id="kpiTicketMedio" class="valor-fade">-</strong><span>Por garrafa comprada</span></div>
       </div>
 
       <div class="stats-insights-grid">
@@ -5634,6 +5750,42 @@ let intervaloSincronizacao = null;
 let rotuloIAAtual = null;
 let rotuloFotoUrlAtual = "";
 let fotoUrlPreCadastro = "";
+
+let mostrarValoresFinanceiros = localStorage.getItem("aj_mostrar_valores_financeiros") !== "false";
+
+function valorFinanceiro(valor){
+ return mostrarValoresFinanceiros ? moeda(valor) : "••••••";
+}
+
+function atualizarBotaoPrivacidadeValores(){
+ const btn = document.getElementById("btnToggleValores");
+ if(!btn) return;
+ btn.innerText = mostrarValoresFinanceiros ? "👁️" : "🙈";
+ btn.setAttribute("aria-label", mostrarValoresFinanceiros ? "Ocultar valores" : "Mostrar valores");
+ btn.title = mostrarValoresFinanceiros ? "Ocultar valores" : "Mostrar valores";
+}
+
+function aplicarFadeValores(){
+ ["kpiValorInvestido","kpiValorEstoque","kpiTicketMedio"].forEach(id=>{
+   const el = document.getElementById(id);
+   if(!el) return;
+   el.classList.add("trocando");
+   setTimeout(()=>el.classList.remove("trocando"), 180);
+ });
+}
+
+function toggleValoresFinanceiros(event){
+ if(event){
+   event.preventDefault();
+   event.stopPropagation();
+ }
+ mostrarValoresFinanceiros = !mostrarValoresFinanceiros;
+ localStorage.setItem("aj_mostrar_valores_financeiros", String(mostrarValoresFinanceiros));
+ aplicarFadeValores();
+ atualizarBotaoPrivacidadeValores();
+ renderizarEstatisticas();
+}
+
 
 const SUPABASE_URL = "https://ujspshfoydnwvxgzwcbq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_pkPfNfzEcP-xUZXGkrn3OQ_dHea_KEm";
@@ -7326,11 +7478,14 @@ function abrirDetalhes(i){
 
 document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
    ? aquisicoes.map((a,idx)=>`
-     <div class="purchase-card">
-       <strong>
-         ${a.data || "Data não informada"} • ${a.loja || "-"}
-         ${a.consumida ? '<span class="consumida-badge">Consumida</span>' : ""}
-       </strong>
+     <div class="purchase-card garrafa-card">
+       <div class="garrafa-card-head">
+         <strong>
+           ${a.data || "Data não informada"} • ${a.loja || "-"}
+           ${a.consumida ? '<span class="consumida-badge">Consumida</span>' : ""}
+         </strong>
+         <button type="button" class="garrafa-remove-btn" title="Excluir esta garrafa" aria-label="Excluir esta garrafa" onclick="event.stopPropagation(); excluirGarrafa(${i}, ${idx})">🗑</button>
+       </div>
 
        <div class="purchase-meta">
          Quantidade: ${a.quantidade || 0} garrafa${Number(a.quantidade)==1 ? "" : "s"}<br>
@@ -7551,6 +7706,59 @@ async function atualizarDadosConsumo(vinhoIndex, aquisicaoIndex, campo, valor){
  }
 }
 
+
+async function excluirGarrafa(vinhoIndex, aquisicaoIndex){
+ const v = garantirEstrutura(vinhos[vinhoIndex]);
+ if(!v || !v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
+
+ const a = v.aquisicoes[aquisicaoIndex];
+ const descricao = [
+   a.data ? `Compra em ${a.data}` : "Data não informada",
+   a.loja || "",
+   a.localizacao ? `Localização: ${a.localizacao}` : ""
+ ].filter(Boolean).join(" • ");
+
+ const confirma = await confirmarAdega(`Deseja excluir apenas esta garrafa?
+
+${v.nome}${v.safra ? " • Safra " + v.safra : ""}
+${descricao}
+
+O vinho continuará cadastrado na Adega Juliana.`, {
+   titulo:"Excluir garrafa?",
+   icone:"🗑️",
+   confirmar:"Excluir garrafa",
+   cancelar:"Cancelar",
+   perigo:true
+ });
+ if(!confirma) return;
+
+ try{
+   if(a.id){
+     const {error} = await supabaseClient.from("garrafas").delete().eq("id", a.id);
+     if(error) throw error;
+   }else{
+     v.aquisicoes.splice(aquisicaoIndex, 1);
+   }
+
+   await carregarDoSupabase(true);
+   const novoIndex = v.id ? vinhos.findIndex(item=>item.id === v.id) : vinhoIndex;
+
+   if(novoIndex >= 0){
+     abrirDetalhes(novoIndex);
+   }else{
+     fecharDetalhes();
+   }
+
+   renderizar();
+   renderizarAdega3D();
+   mostrarMensagem("A garrafa foi excluída. O vinho continua cadastrado na adega.", {tipo:"sucesso", titulo:"Garrafa excluída", icone:"🗑️", botao:"Perfeito"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível excluir esta garrafa no Supabase.", {tipo:"erro", titulo:"Erro ao excluir garrafa", icone:"❌"});
+ }
+}
+
+
 async function excluirVinho(){
  if(vinhoSelecionado === null) return;
  const v = vinhos[vinhoSelecionado];
@@ -7762,12 +7970,12 @@ function renderBarChart(id, dados, opcoes={}){
            <div class="month-spend-row">
              <div class="month-spend-top">
                <span>${numeroMesLabel(label)}</span>
-               <strong>${moeda(valor)}</strong>
+               <strong>${valorFinanceiro(valor)}</strong>
              </div>
              <div class="month-spend-track"><span class="month-spend-fill" style="width:${largura}%"></span></div>
            </div>`;
        }).join("")}
-       <div class="month-spend-total"><span>Total no período exibido</span><strong>${moeda(totalPeriodo)}</strong></div>
+       <div class="month-spend-total"><span>Total no período exibido</span><strong>${valorFinanceiro(totalPeriodo)}</strong></div>
      </div>`;
    return;
  }
@@ -7775,7 +7983,7 @@ function renderBarChart(id, dados, opcoes={}){
  el.innerHTML = ordenadas.map(([label,valor],idx)=>{
    const largura = Math.max((Number(valor)/max)*100, 4);
    const classe = idx % 3 === 1 ? "secondary" : idx % 3 === 2 ? "rosefill" : "";
-   const valorLabel = opcoes.moeda ? moeda(valor) : Number(valor).toLocaleString("pt-BR");
+   const valorLabel = opcoes.moeda ? valorFinanceiro(valor) : Number(valor).toLocaleString("pt-BR");
    const labelFinal = opcoes.mes ? numeroMesLabel(label) : label;
    return `
      <div class="chart-row">
@@ -7893,6 +8101,7 @@ function renderInsightList(id, dados, classeFn){
 }
 
 function renderizarEstatisticas(){
+ atualizarBotaoPrivacidadeValores();
  const m = coletarMetricas();
  const setTxt = (id, valor) => { const el = document.getElementById(id); if(el) el.innerText = valor; };
  const ticketMedio = m.garrafasCompradas ? m.valorInvestido / m.garrafasCompradas : 0;
@@ -7900,11 +8109,11 @@ function renderizarEstatisticas(){
  const urgentes = vinhosEmEstoqueOrdenadosPorConsumo().filter(v=>["guarda-passou","guarda-limite"].includes(v.infoGuarda.classe)).length;
  const prontos = vinhosEmEstoqueOrdenadosPorConsumo().filter(v=>v.infoGuarda.classe === "guarda-pronto").length;
 
- setTxt("kpiValorInvestido", moeda(m.valorInvestido));
- setTxt("kpiValorEstoque", moeda(m.valorEstoque));
+ setTxt("kpiValorInvestido", valorFinanceiro(m.valorInvestido));
+ setTxt("kpiValorEstoque", valorFinanceiro(m.valorEstoque));
  setTxt("kpiGarrafasCompradas", m.garrafasCompradas);
  setTxt("kpiGarrafasConsumidas", m.garrafasConsumidas);
- setTxt("kpiTicketMedio", moeda(ticketMedio));
+ setTxt("kpiTicketMedio", valorFinanceiro(ticketMedio));
  setTxt("statsHeroResumo", `${totalEstoque} garrafa${totalEstoque === 1 ? "" : "s"} em estoque • ${urgentes} urgente${urgentes === 1 ? "" : "s"} • ${prontos} pronta${prontos === 1 ? "" : "s"}`);
  setTxt("insightTotalEstoque", `${totalEstoque} garrafas`);
  setTxt("insightJanelaStatus", urgentes ? `${urgentes} urgentes` : "Em dia");
