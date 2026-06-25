@@ -1981,6 +1981,121 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   .wishlist-outline-icon{font-size:17px;}
 }
 
+
+
+/* ===============================
+   WISHLIST - REMOVER VINHO DESEJADO
+   =============================== */
+.rec-item.wishlist-item{
+  grid-template-columns:1fr auto auto!important;
+}
+.wishlist-remove-btn{
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:12px;
+  background:#fff1f1;
+  color:#8b1e1e;
+  font-size:15px;
+  font-weight:950;
+  cursor:pointer;
+  display:inline-grid;
+  place-items:center;
+  transition:transform .16s ease, background .16s ease, box-shadow .16s ease;
+}
+.wishlist-remove-btn:hover{
+  background:#ffe7e7;
+  box-shadow:0 5px 14px rgba(139,30,30,.12);
+}
+.wishlist-remove-btn:active{
+  transform:scale(.96);
+}
+.wishlist-remove-btn:disabled{
+  opacity:.55;
+  cursor:wait;
+}
+@media(max-width:650px){
+  .rec-item.wishlist-item{
+    grid-template-columns:1fr auto!important;
+  }
+  .rec-item.wishlist-item .wishlist-badge{
+    justify-self:start;
+  }
+  .rec-item.wishlist-item .wishlist-remove-btn{
+    grid-column:2;
+    grid-row:1 / span 2;
+    align-self:center;
+  }
+}
+
+
+
+/* ===============================
+   VINHOS SEM ESTOQUE
+   =============================== */
+.sem-estoque-section{
+  display:none;
+  margin-top:18px;
+}
+.sem-estoque-toggle{
+  width:100%;
+  min-height:56px;
+  border:1px solid rgba(133,0,43,.13);
+  border-radius:18px;
+  background:linear-gradient(135deg,#fff,#fff7f2);
+  box-shadow:0 8px 22px rgba(70,25,22,.06);
+  color:#2a2225;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 15px;
+  font-weight:950;
+  text-align:left;
+}
+.sem-estoque-toggle small{
+  display:block;
+  margin-top:3px;
+  color:#75696c;
+  font-size:12px;
+  font-weight:800;
+}
+.sem-estoque-chevron{
+  color:var(--vinho);
+  font-size:16px;
+}
+.sem-estoque-section.collapsed .sem-estoque-lista{
+  display:none!important;
+}
+.sem-estoque-lista{
+  margin-top:10px;
+}
+.vinho.sem-estoque{
+  background:linear-gradient(135deg,#fff,#faf6f4)!important;
+  opacity:.78;
+  border-style:dashed!important;
+}
+.vinho.sem-estoque:hover{
+  opacity:.92;
+}
+.sem-estoque-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:2px 7px;
+  border-radius:999px;
+  background:#f1eeee;
+  border:1px solid #ded5d1;
+  color:#6a5e61;
+  font-size:10.5px;
+  font-weight:950;
+  white-space:nowrap;
+}
+@media(max-width:760px){
+  .sem-estoque-section{ margin-top:14px; }
+  .sem-estoque-toggle{ border-radius:16px; }
+}
+
 /* ===============================
    BANDEIRA DO PAÍS NO CARD
    =============================== */
@@ -3907,6 +4022,689 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+
+/* ===============================
+   MENSAGENS ADEGA JULIANA
+   =============================== */
+.aj-message-bg{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:rgba(30,10,15,.54);
+  z-index:120;
+  backdrop-filter:blur(7px);
+  animation:ajFadeIn .16s ease;
+}
+.aj-message-bg.show{
+  display:flex;
+}
+.aj-message-modal{
+  width:min(430px,100%);
+  background:#fff;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.34);
+  border:1px solid rgba(133,0,43,.10);
+  transform:translateY(8px) scale(.98);
+  animation:ajPopIn .18s ease forwards;
+}
+.aj-message-top{
+  min-height:92px;
+  padding:22px 22px 18px;
+  text-align:center;
+  color:#fff;
+  background:
+    radial-gradient(circle at 86% 0%, rgba(216,177,63,.30), transparent 36%),
+    linear-gradient(135deg,var(--vinho),var(--vinho-escuro));
+}
+.aj-message-icon{
+  width:64px;
+  height:64px;
+  margin:0 auto 10px;
+  border-radius:24px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.20);
+  font-size:34px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+}
+.aj-message-body{
+  padding:24px 24px 20px;
+  text-align:center;
+}
+.aj-message-title{
+  margin:0 0 10px;
+  color:#241b1e;
+  font-size:22px;
+  line-height:1.12;
+  letter-spacing:-.3px;
+  font-weight:950;
+}
+.aj-message-text{
+  margin:0;
+  color:#665b5e;
+  font-size:15px;
+  line-height:1.45;
+  font-weight:750;
+  white-space:pre-wrap;
+}
+.aj-message-actions{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  padding:0 24px 24px;
+}
+.aj-message-actions button{
+  min-height:46px;
+  border-radius:16px;
+  border:0;
+  padding:0 18px;
+  font-size:14px;
+  font-weight:950;
+  cursor:pointer;
+}
+.aj-btn-ok{
+  min-width:142px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--vinho),#a00035);
+  box-shadow:0 10px 22px rgba(133,0,43,.18);
+}
+.aj-btn-cancel{
+  color:#463c3f;
+  background:#f1ecea;
+}
+.aj-btn-danger{
+  color:#fff;
+  background:linear-gradient(135deg,#9b2727,#6d1818);
+}
+.aj-message-modal.erro .aj-message-top{
+  background:
+    radial-gradient(circle at 86% 0%, rgba(255,255,255,.18), transparent 36%),
+    linear-gradient(135deg,#9b2727,#5a1111);
+}
+.aj-message-modal.sucesso .aj-message-top{
+  background:
+    radial-gradient(circle at 86% 0%, rgba(216,177,63,.28), transparent 36%),
+    linear-gradient(135deg,#85002b,#4d0018);
+}
+.aj-message-modal.aviso .aj-message-top{
+  background:
+    radial-gradient(circle at 86% 0%, rgba(255,255,255,.20), transparent 36%),
+    linear-gradient(135deg,#b48120,#6e4b10);
+}
+@keyframes ajFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes ajPopIn{to{transform:translateY(0) scale(1)}}
+@media(max-width:650px){
+  .aj-message-bg{
+    padding:18px;
+    align-items:center;
+  }
+  .aj-message-modal{
+    border-radius:26px;
+  }
+  .aj-message-title{
+    font-size:21px;
+  }
+  .aj-message-actions{
+    flex-direction:column-reverse;
+  }
+  .aj-message-actions button{
+    width:100%;
+  }
+}
+
+
+
+/* ===============================
+   DETALHE DO VINHO - LAYOUT MODERNO
+   =============================== */
+.detalhe-vinho-modal{
+  width:min(720px,100%)!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+.detalhe-vinho-modal .modal-header{
+  padding:22px 24px 20px!important;
+  background:
+    radial-gradient(circle at 92% 0%, rgba(216,177,63,.26), transparent 34%),
+    linear-gradient(135deg,#970033 0%,#650020 62%,#360010 100%)!important;
+}
+.detalhe-vinho-modal .modal-header h2{
+  font-size:28px!important;
+  line-height:1.08!important;
+  letter-spacing:-.45px!important;
+  overflow-wrap:anywhere!important;
+}
+.detalhe-vinho-modal .modal-header p{
+  margin:8px 0 0!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:14px!important;
+  font-weight:750!important;
+}
+.detalhe-vinho-body{
+  padding:18px!important;
+  display:grid;
+  gap:14px;
+}
+.detalhe-vinho-modal .detalhe-foto-wrap{
+  margin:0!important;
+  background:linear-gradient(135deg,#fffaf7,#fff4ef)!important;
+  border:1px solid rgba(133,0,43,.12)!important;
+  border-radius:24px!important;
+  padding:12px!important;
+  text-align:center!important;
+  box-shadow:0 10px 24px rgba(70,25,22,.06)!important;
+}
+.detalhe-vinho-modal .detalhe-foto{
+  width:100%!important;
+  max-width:420px!important;
+  max-height:280px!important;
+  object-fit:contain!important;
+  border-radius:20px!important;
+  background:#fff!important;
+  display:block!important;
+  margin:0 auto!important;
+}
+.detalhe-vinho-modal .detalhe-sem-foto{
+  min-height:140px!important;
+  display:grid!important;
+  place-items:center!important;
+  color:#74686b!important;
+  font-size:14px!important;
+  font-weight:850!important;
+}
+.detalhe-vinho-modal .foto-actions{
+  margin:0!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+}
+.detalhe-vinho-modal .foto-actions input[type="file"]{
+  position:absolute!important;
+  left:-9999px!important;
+  width:1px!important;
+  height:1px!important;
+  opacity:0!important;
+}
+.detalhe-vinho-modal .foto-actions .btn-secondary{
+  width:100%!important;
+  min-height:48px!important;
+  border-radius:16px!important;
+  background:linear-gradient(135deg,var(--vinho),#a00035)!important;
+  color:#fff!important;
+  box-shadow:0 10px 22px rgba(133,0,43,.16)!important;
+}
+.detalhe-vinho-modal .detalhes-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.detalhe-vinho-modal .detalhe-box{
+  min-width:0!important;
+  border-radius:18px!important;
+  padding:13px!important;
+  background:rgba(255,250,247,.96)!important;
+  border:1px solid #f0e4df!important;
+}
+.detalhe-vinho-modal .detalhe-box small{
+  color:#776b6e!important;
+  font-size:10.5px!important;
+  font-weight:950!important;
+  letter-spacing:.25px!important;
+  text-transform:uppercase!important;
+  margin-bottom:6px!important;
+}
+.detalhe-vinho-modal .detalhe-box strong{
+  display:block!important;
+  color:#241b1e!important;
+  font-size:15px!important;
+  line-height:1.28!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+}
+.detalhe-vinho-modal .guarda-info{
+  margin-top:7px!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+}
+.detalhe-section-title{
+  margin:4px 0 -4px!important;
+  color:var(--vinho)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  text-transform:uppercase!important;
+  letter-spacing:.35px!important;
+}
+.detalhe-vinho-modal .purchase-list{
+  gap:10px!important;
+}
+.detalhe-vinho-modal .purchase-card{
+  border-radius:20px!important;
+  padding:13px!important;
+  background:#fff!important;
+  border:1px solid var(--borda)!important;
+  box-shadow:0 8px 20px rgba(70,25,22,.055)!important;
+}
+.detalhe-vinho-modal .purchase-card strong{
+  font-size:14px!important;
+  line-height:1.25!important;
+  color:#241b1e!important;
+  overflow-wrap:anywhere!important;
+}
+.detalhe-vinho-modal .purchase-meta{
+  margin-top:8px!important;
+  color:#62575a!important;
+  font-size:13px!important;
+  line-height:1.55!important;
+  font-weight:750!important;
+  overflow-wrap:anywhere!important;
+}
+.detalhe-vinho-modal .purchase-total{
+  margin-top:0!important;
+  border-radius:20px!important;
+  padding:14px!important;
+  background:linear-gradient(135deg,#fffaf7,#fff3ef)!important;
+  border:1px solid rgba(133,0,43,.12)!important;
+  color:#5f5356!important;
+  line-height:1.5!important;
+}
+.detalhe-vinho-modal #modalNotas{
+  min-height:96px!important;
+  border-radius:18px!important;
+  font-size:14px!important;
+  line-height:1.4!important;
+}
+.detalhe-vinho-modal .modal-actions{
+  position:sticky!important;
+  bottom:0!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.88),#fff)!important;
+  border-top:1px solid #f0e4df!important;
+  padding:12px 18px calc(12px + env(safe-area-inset-bottom))!important;
+  gap:8px!important;
+}
+.detalhe-vinho-modal .modal-actions .btn-secondary{
+  min-height:44px!important;
+  border-radius:15px!important;
+}
+@media(max-width:650px){
+  .detalhe-vinho-modal{
+    width:100%!important;
+    border-radius:24px!important;
+  }
+  .detalhe-vinho-modal .modal-header{
+    padding:20px 18px 18px!important;
+  }
+  .detalhe-vinho-modal .modal-header h2{
+    font-size:25px!important;
+  }
+  .detalhe-vinho-body{
+    padding:14px!important;
+    gap:12px!important;
+  }
+  .detalhe-vinho-modal .detalhe-foto{
+    max-height:230px!important;
+    max-width:100%!important;
+  }
+  .detalhe-vinho-modal .detalhes-grid{
+    grid-template-columns:1fr!important;
+  }
+  .detalhe-vinho-modal .modal-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+  .detalhe-vinho-modal .modal-actions .btn-secondary{
+    width:100%!important;
+  }
+}
+
+
+/* ===============================
+   CORREÇÃO SCROLL - DETALHE DO VINHO
+   =============================== */
+#modalDetalhes{
+  align-items:flex-start!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  padding:14px!important;
+}
+#modalDetalhes .detalhe-vinho-modal{
+  max-height:none!important;
+  overflow:visible!important;
+  margin:0 auto 18px!important;
+}
+#modalDetalhes .detalhe-vinho-body{
+  overflow:visible!important;
+}
+@media(max-width:650px){
+  #modalDetalhes{
+    padding:10px!important;
+  }
+  #modalDetalhes .detalhe-vinho-modal{
+    width:100%!important;
+    margin-bottom:92px!important;
+  }
+}
+
+
+
+/* ===============================
+   AÇÕES DO DETALHE - BOTÕES MODERNOS
+   =============================== */
+.detalhe-vinho-modal .detalhe-actions-modern{
+  position:sticky!important;
+  bottom:0!important;
+  display:grid!important;
+  grid-template-columns:auto 1fr 1.2fr!important;
+  align-items:center!important;
+  gap:10px!important;
+  padding:10px 18px calc(10px + env(safe-area-inset-bottom))!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,.98) 42%,#fff)!important;
+  border-top:1px solid rgba(133,0,43,.10)!important;
+  box-shadow:0 -8px 24px rgba(70,25,22,.07)!important;
+  backdrop-filter:blur(12px)!important;
+}
+
+.detalhe-vinho-modal .detalhe-actions-modern .btn-secondary{
+  min-height:40px!important;
+  height:40px!important;
+  border-radius:999px!important;
+  padding:0 16px!important;
+  font-size:13px!important;
+  font-weight:950!important;
+  letter-spacing:.1px!important;
+  border:1px solid transparent!important;
+  box-shadow:none!important;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease!important;
+}
+
+.detalhe-vinho-modal .detalhe-actions-modern .btn-secondary:active{
+  transform:scale(.97)!important;
+}
+
+.detalhe-vinho-modal .btn-detail-delete{
+  justify-self:start!important;
+  width:auto!important;
+  min-width:104px!important;
+  background:#fff!important;
+  color:#9b2727!important;
+  border-color:#efcaca!important;
+}
+
+.detalhe-vinho-modal .btn-detail-delete:hover{
+  background:#fff5f5!important;
+  border-color:#e4b6b6!important;
+  box-shadow:0 6px 16px rgba(155,39,39,.10)!important;
+}
+
+.detalhe-vinho-modal .btn-detail-cancel{
+  justify-self:end!important;
+  width:auto!important;
+  min-width:104px!important;
+  background:#f3eeee!important;
+  color:#4d4246!important;
+  border-color:#ece2de!important;
+}
+
+.detalhe-vinho-modal .btn-detail-cancel:hover{
+  background:#eee7e4!important;
+}
+
+.detalhe-vinho-modal .btn-detail-save{
+  justify-self:stretch!important;
+  min-width:118px!important;
+  color:#fff!important;
+  background:linear-gradient(135deg,#2f9b5d,#19723f)!important;
+  border-color:transparent!important;
+  box-shadow:0 8px 18px rgba(25,114,63,.18)!important;
+}
+
+.detalhe-vinho-modal .btn-detail-save:hover{
+  box-shadow:0 10px 22px rgba(25,114,63,.24)!important;
+}
+
+@media(max-width:650px){
+  .detalhe-vinho-modal .detalhe-actions-modern{
+    grid-template-columns:auto 1fr 1fr!important;
+    gap:8px!important;
+    padding:9px 12px calc(9px + env(safe-area-inset-bottom))!important;
+  }
+
+  .detalhe-vinho-modal .detalhe-actions-modern .btn-secondary{
+    width:auto!important;
+    min-height:38px!important;
+    height:38px!important;
+    padding:0 12px!important;
+    font-size:12.5px!important;
+  }
+
+  .detalhe-vinho-modal .btn-detail-delete{
+    min-width:44px!important;
+    width:44px!important;
+    padding:0!important;
+    font-size:0!important;
+  }
+
+  .detalhe-vinho-modal .btn-detail-delete::before{
+    content:"🗑";
+    font-size:15px;
+    line-height:1;
+  }
+
+  .detalhe-vinho-modal .btn-detail-cancel{
+    min-width:0!important;
+    justify-self:stretch!important;
+  }
+
+  .detalhe-vinho-modal .btn-detail-save{
+    min-width:0!important;
+  }
+}
+
+
+/* ===============================
+   AJUSTE FINAL - EXCLUIR SEM ÍCONE DUPLICADO
+   =============================== */
+.detalhe-vinho-modal .btn-detail-delete{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  font-size:13px!important;
+}
+.detalhe-vinho-modal .btn-detail-delete::before{
+  content:none!important;
+  display:none!important;
+}
+.detalhe-vinho-modal .btn-detail-delete .delete-icon{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:14px!important;
+  line-height:1!important;
+}
+.detalhe-vinho-modal .btn-detail-delete .delete-label{
+  display:inline!important;
+  font-size:13px!important;
+  line-height:1!important;
+}
+@media(max-width:650px){
+  .detalhe-vinho-modal .btn-detail-delete{
+    min-width:44px!important;
+    width:44px!important;
+    padding:0!important;
+    gap:0!important;
+  }
+  .detalhe-vinho-modal .btn-detail-delete .delete-label{
+    display:none!important;
+  }
+  .detalhe-vinho-modal .btn-detail-delete .delete-icon{
+    font-size:15px!important;
+  }
+}
+
+
+/* ===============================
+   CONSUMO DA GARRAFA - BOTÃO MODERNO
+   =============================== */
+.consumo-action-card{
+  margin-top:12px;
+  padding:12px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fffaf7,#fff3ef);
+  border:1px solid rgba(133,0,43,.12);
+}
+.btn-consumir-garrafa{
+  width:100%;
+  min-height:44px;
+  border:0;
+  border-radius:999px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--vinho),#a00035);
+  box-shadow:0 10px 22px rgba(133,0,43,.16);
+  font-size:13px;
+  font-weight:950;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+.btn-consumir-garrafa:active{
+  transform:scale(.98);
+}
+.consumo-status-card{
+  margin-top:12px;
+  padding:12px;
+  border-radius:18px;
+  background:#eef8ef;
+  border:1px solid #cce8d0;
+  color:#276338;
+}
+.consumo-status-card strong{
+  display:block!important;
+  color:#276338!important;
+  margin-bottom:6px!important;
+  font-size:13px!important;
+}
+.consumo-status-card span{
+  display:block;
+  color:#3d724c;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.45;
+}
+.consumo-modal{
+  width:min(520px,100%)!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+.consumo-modal .modal-header{
+  padding:24px!important;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(216,177,63,.28), transparent 34%),
+    linear-gradient(135deg,#970033,#4d0018)!important;
+}
+.consumo-modal .modal-header h2{
+  font-size:28px!important;
+  letter-spacing:-.45px!important;
+}
+.consumo-modal .modal-header p{
+  margin:8px 0 0!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:14px!important;
+  font-weight:750!important;
+  line-height:1.4!important;
+}
+.consumo-modal .modal-body{
+  display:grid;
+  gap:12px;
+  padding:18px!important;
+}
+.consumo-modal textarea{
+  min-height:92px!important;
+}
+.consumo-modal .modal-actions{
+  padding:0 18px 18px!important;
+}
+.btn-confirmar-consumo{
+  color:#fff!important;
+  background:linear-gradient(135deg,var(--vinho),#a00035)!important;
+  box-shadow:0 10px 22px rgba(133,0,43,.16)!important;
+}
+@media(max-width:650px){
+  .consumo-modal{border-radius:24px!important;}
+  .consumo-modal .modal-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+}
+
+
+/* ===============================
+   ADICIONAR GARRAFAS - MODAL
+   =============================== */
+.btn-adicionar-garrafas{
+  width:100%;
+  min-height:46px;
+  border:0;
+  border-radius:18px;
+  color:#fff;
+  background:linear-gradient(135deg,#b20a42,var(--vinho));
+  box-shadow:0 10px 22px rgba(133,0,43,.16);
+  font-size:14px;
+  font-weight:950;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:8px 0 2px;
+}
+.btn-adicionar-garrafas:active{ transform:scale(.98); }
+.adicionar-garrafas-modal{
+  width:min(560px,100%)!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+.adicionar-garrafas-modal .modal-header{
+  padding:24px!important;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(216,177,63,.28), transparent 34%),
+    linear-gradient(135deg,#970033,#4d0018)!important;
+}
+.adicionar-garrafas-modal .modal-header h2{
+  font-size:28px!important;
+  letter-spacing:-.45px!important;
+}
+.adicionar-garrafas-modal .modal-header p{
+  margin:8px 0 0!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:14px!important;
+  font-weight:750!important;
+  line-height:1.4!important;
+}
+.adicionar-garrafas-modal .modal-body{
+  padding:18px!important;
+}
+.adicionar-garrafas-modal .modal-actions{
+  padding:0 18px 18px!important;
+}
+.btn-confirmar-garrafas{
+  color:#fff!important;
+  background:linear-gradient(135deg,var(--vinho),#a00035)!important;
+  box-shadow:0 10px 22px rgba(133,0,43,.16)!important;
+}
+@media(max-width:650px){
+  .adicionar-garrafas-modal{border-radius:24px!important;}
+  .adicionar-garrafas-modal .modal-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+}
+
 </style>
 </head>
 
@@ -3991,6 +4789,18 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       </div>
     </div>
     <div id="listaVinhos" class="lista"></div>
+  </section>
+
+
+  <section id="secaoVinhosSemEstoque" class="sem-estoque-section collapsed">
+    <button type="button" class="sem-estoque-toggle" onclick="toggleVinhosSemEstoque()">
+      <span>
+        <span id="tituloVinhosSemEstoque">📦 Vinhos sem estoque (0)</span>
+        <small>Rótulos que já fizeram parte da Adega Juliana.</small>
+      </span>
+      <span id="semEstoqueChevron" class="sem-estoque-chevron">▶</span>
+    </button>
+    <div id="listaVinhosSemEstoque" class="lista sem-estoque-lista"></div>
   </section>
 
   <section id="abaEstatisticas" class="aba-estatisticas">
@@ -4246,11 +5056,6 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   <input id="localizacao" placeholder="Localização desta aquisição / garrafa" list="listaLocalizacoes">
 </div>
 
-<div class="consume-line">
-  <input id="consumida" type="checkbox">
-  <label for="consumida">Já foi consumida?</label>
-</div>
-
 <div class="form-full">
   <input id="ocasiao" placeholder="Ocasião / observação da compra">
 </div>
@@ -4363,16 +5168,16 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   <option value="10+ anos">
 </datalist>
 <div id="modalDetalhes" class="modal-bg" onclick="fecharDetalhes()">
-  <div class="modal" onclick="event.stopPropagation()">
+  <div class="modal detalhe-vinho-modal" onclick="event.stopPropagation()">
     <div class="modal-header">
       <h2 id="modalNome">Vinho</h2>
       <p id="modalResumo"></p>
     </div>
-    <div class="modal-body">
+    <div class="modal-body detalhe-vinho-body">
       <div id="modalFotoWrap" class="detalhe-foto-wrap"></div>
       <div class="foto-actions">
         <input id="fotoDetalhe" type="file" accept="image/*" capture="environment" onchange="previewFotoDetalhe(event); atualizarFotoDetalhe();">
-        <button class="btn-secondary btn-save" onclick="atualizarFotoDetalhe()">Atualizar foto</button>
+        <button class="btn-secondary btn-save" type="button" onclick="document.getElementById('fotoDetalhe').click()">📷 Trocar foto do rótulo</button>
       </div>
       <div id="fotoPreviewDetalheWrap" class="detalhe-foto-wrap" style="display:none;margin-top:12px"></div>
       <div class="detalhes-grid">
@@ -4386,17 +5191,95 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
         <div class="detalhe-box guarda-destaque"><small>Janela / status</small><strong id="modalStatusGuarda">-</strong><span id="modalTextoGuarda" class="guarda-info"></span></div>
       </div>
 
-      <p class="side-title" style="margin-top:18px">AQUISIÇÕES</p>
+      <p class="detalhe-section-title">Aquisições</p>
+      <button type="button" class="btn-adicionar-garrafas" onclick="event.stopPropagation(); abrirModalAdicionarGarrafas()">＋ Adicionar garrafas</button>
       <div id="modalAquisicoes" class="purchase-list"></div>
       <div id="modalResumoCompras" class="purchase-total"></div>
 
-      <p class="side-title" style="margin-top:18px">OBSERVAÇÕES / NOTAS</p>
+      <p class="detalhe-section-title">Observações / notas</p>
       <textarea id="modalNotas" placeholder="Ex.: vinho encorpado, ideal para carnes, guardar para ocasião especial..."></textarea>
     </div>
+    <div class="modal-actions detalhe-actions-modern">
+      <button class="btn-secondary btn-detail-delete" onclick="excluirVinho()"><span class="delete-icon" aria-hidden="true">🗑</span><span class="delete-label">Excluir</span></button>
+      <button class="btn-secondary btn-detail-cancel" onclick="fecharDetalhes()">Cancelar</button>
+      <button class="btn-secondary btn-detail-save" onclick="salvarDetalhes()">✓ Salvar</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalAdicionarGarrafas" class="modal-bg" onclick="fecharModalAdicionarGarrafas()">
+  <div class="modal adicionar-garrafas-modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>＋ Adicionar garrafas</h2>
+      <p id="adicionarGarrafasResumo">Registre uma nova compra deste vinho.</p>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <input id="addGarrafaQuantidade" type="number" min="1" placeholder="Quantidade" value="1">
+        <input id="addGarrafaDataCompra" type="date">
+      </div>
+
+      <div class="form-full">
+        <select id="addGarrafaLoja">
+          <option value="">Loja / origem</option>
+          <option>Gran Cru</option>
+          <option>Vivino</option>
+          <option>Evino</option>
+          <option>WhatsApp</option>
+          <option>Prezunic</option>
+          <option>Pão de Açúcar</option>
+          <option>Vianense</option>
+          <option>Zona Sul</option>
+          <option>Outros</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <input id="addGarrafaValorPago" type="number" min="0" step="0.01" placeholder="Valor unitário pago">
+        <select id="addGarrafaCompradoPor" onchange="toggleAddGarrafaPresenteadoPor()">
+          <option value="">Quem comprou?</option>
+          <option>Thomas</option>
+          <option>Juliana</option>
+          <option>Presente</option>
+        </select>
+      </div>
+
+      <div class="form-full">
+        <input id="addGarrafaPresenteadoPor" class="present-field" placeholder="Quem deu o presente?">
+      </div>
+
+      <div class="form-full">
+        <input id="addGarrafaLocalizacao" placeholder="Localização desta aquisição / garrafa" list="listaLocalizacoes">
+      </div>
+
+      <div class="form-full">
+        <input id="addGarrafaOcasiao" placeholder="Ocasião / observação da compra">
+      </div>
+    </div>
     <div class="modal-actions">
-      <button class="btn-secondary btn-danger" onclick="excluirVinho()">Excluir vinho</button>
-      <button class="btn-secondary" onclick="fecharDetalhes()">Fechar</button>
-      <button class="btn-secondary btn-save" onclick="salvarDetalhes()">Salvar detalhes</button>
+      <button class="btn-secondary" onclick="fecharModalAdicionarGarrafas()">Cancelar</button>
+      <button class="btn-secondary btn-confirmar-garrafas" onclick="confirmarAdicionarGarrafas()">✓ Salvar garrafas</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalConsumirGarrafa" class="modal-bg" onclick="fecharModalConsumirGarrafa()">
+  <div class="modal consumo-modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>🍷 Consumir garrafa</h2>
+      <p id="consumoGarrafaResumo">Registre o momento em que esta garrafa foi aberta.</p>
+    </div>
+    <div class="modal-body">
+      <input id="consumoData" type="date">
+      <input id="consumoEvento" placeholder="Ocasião / evento. Ex.: jantar em casa">
+      <input id="consumoComQuem" placeholder="Com quem. Ex.: Juliana, amigos, família">
+      <textarea id="consumoObservacao" placeholder="Observações do consumo, harmonização, impressão pessoal..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharModalConsumirGarrafa()">Cancelar</button>
+      <button class="btn-secondary btn-confirmar-consumo" onclick="confirmarConsumoGarrafa()">✓ Confirmar consumo</button>
     </div>
   </div>
 </div>
@@ -4582,8 +5465,142 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     </div>
   </div>
 </div>
+
+<div id="ajMessageBg" class="aj-message-bg" onclick="fecharMensagemAdega()">
+  <div id="ajMessageModal" class="aj-message-modal" onclick="event.stopPropagation()">
+    <div class="aj-message-top">
+      <div id="ajMessageIcon" class="aj-message-icon">🍷</div>
+    </div>
+    <div class="aj-message-body">
+      <h3 id="ajMessageTitle" class="aj-message-title">Mensagem</h3>
+      <p id="ajMessageText" class="aj-message-text"></p>
+    </div>
+    <div id="ajMessageActions" class="aj-message-actions">
+      <button id="ajMessageOk" class="aj-btn-ok" type="button" onclick="fecharMensagemAdega()">OK</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+
+let ajMessageResolve = null;
+
+function tipoMensagemAdega(texto, tipoInformado){
+ const t = String(texto || "").toLowerCase();
+ if(tipoInformado) return tipoInformado;
+ if(t.includes("não foi possível") || t.includes("erro") || t.includes("inválido") || t.includes("falha")) return "erro";
+ if(t.includes("informe") || t.includes("selecione") || t.includes("fotografe") || t.includes("analise") || t.includes("atenção")) return "aviso";
+ return "sucesso";
+}
+
+function tituloMensagemAdega(texto, tipo){
+ const t = String(texto || "").toLowerCase();
+ if(t.includes("wishlist") || t.includes("desejado")) return tipo === "erro" ? "Não foi possível salvar" : "Adicionado à Wishlist";
+ if(t.includes("supabase ativo") || t.includes("salva automaticamente")) return "Supabase ativo";
+ if(t.includes("carregados do supabase")) return "Dados atualizados";
+ if(t.includes("vinho excluído")) return "Vinho excluído";
+ if(t.includes("backup importado")) return "Backup importado";
+ if(t.includes("rótulo") || t.includes("rotulo")) return tipo === "erro" ? "Problema no rótulo" : "Rótulo";
+ if(t.includes("foto")) return tipo === "erro" ? "Problema na foto" : "Foto";
+ if(t.includes("consumo externo")) return tipo === "erro" ? "Erro no consumo" : "Consumo registrado";
+ if(t.includes("nome do vinho") || t.includes("tipo do vinho")) return "Cadastro incompleto";
+ if(tipo === "erro") return "Algo não saiu como esperado";
+ if(tipo === "aviso") return "Atenção";
+ return "Tudo certo";
+}
+
+function iconeMensagemAdega(tipo, texto){
+ const t = String(texto || "").toLowerCase();
+ if(tipo === "erro") return "❌";
+ if(tipo === "aviso") return "⚠️";
+ if(t.includes("wishlist") || t.includes("desejado")) return "♡";
+ if(t.includes("supabase") || t.includes("nuvem")) return "☁️";
+ if(t.includes("backup")) return "💾";
+ if(t.includes("excluído")) return "🗑️";
+ if(t.includes("rótulo") || t.includes("rotulo")) return "📷";
+ if(t.includes("consumo")) return "🍽️";
+ return "🍷";
+}
+
+function mostrarMensagem(mensagem, opcoes={}){
+ const texto = String(mensagem ?? "");
+ const tipo = tipoMensagemAdega(texto, opcoes.tipo);
+ const titulo = opcoes.titulo || tituloMensagemAdega(texto, tipo);
+ const icone = opcoes.icone || iconeMensagemAdega(tipo, texto);
+ const botao = opcoes.botao || "OK";
+
+ const bg = document.getElementById("ajMessageBg");
+ const modal = document.getElementById("ajMessageModal");
+ const iconEl = document.getElementById("ajMessageIcon");
+ const titleEl = document.getElementById("ajMessageTitle");
+ const textEl = document.getElementById("ajMessageText");
+ const actions = document.getElementById("ajMessageActions");
+
+ if(!bg || !modal || !iconEl || !titleEl || !textEl || !actions){
+   return;
+ }
+
+ modal.className = "aj-message-modal " + tipo;
+ iconEl.innerText = icone;
+ titleEl.innerText = titulo;
+ textEl.innerText = texto;
+ actions.innerHTML = `<button class="aj-btn-ok" type="button" onclick="fecharMensagemAdega()">${botao}</button>`;
+ bg.classList.add("show");
+}
+
+function fecharMensagemAdega(){
+ const bg = document.getElementById("ajMessageBg");
+ if(bg) bg.classList.remove("show");
+ if(ajMessageResolve){
+   const resolver = ajMessageResolve;
+   ajMessageResolve = null;
+   resolver(false);
+ }
+}
+
+function confirmarAdega(mensagem, opcoes={}){
+ return new Promise(resolve=>{
+   const texto = String(mensagem ?? "");
+   const bg = document.getElementById("ajMessageBg");
+   const modal = document.getElementById("ajMessageModal");
+   const iconEl = document.getElementById("ajMessageIcon");
+   const titleEl = document.getElementById("ajMessageTitle");
+   const textEl = document.getElementById("ajMessageText");
+   const actions = document.getElementById("ajMessageActions");
+
+   if(!bg || !modal || !iconEl || !titleEl || !textEl || !actions){
+     resolve(window.confirm(texto));
+     return;
+   }
+
+   ajMessageResolve = resolve;
+   modal.className = "aj-message-modal aviso";
+   iconEl.innerText = opcoes.icone || "⚠️";
+   titleEl.innerText = opcoes.titulo || "Confirmar ação";
+   textEl.innerText = texto;
+   actions.innerHTML = `
+     <button class="aj-btn-cancel" type="button" onclick="responderMensagemAdega(false)">${opcoes.cancelar || "Cancelar"}</button>
+     <button class="${opcoes.perigo ? "aj-btn-danger" : "aj-btn-ok"}" type="button" onclick="responderMensagemAdega(true)">${opcoes.confirmar || "Confirmar"}</button>
+   `;
+   bg.classList.add("show");
+ });
+}
+
+function responderMensagemAdega(valor){
+ const bg = document.getElementById("ajMessageBg");
+ if(bg) bg.classList.remove("show");
+ if(ajMessageResolve){
+   const resolver = ajMessageResolve;
+   ajMessageResolve = null;
+   resolver(!!valor);
+ }
+}
+
+window.alert = function(mensagem){
+ mostrarMensagem(mensagem);
+};
+
 const vinhosBase = [
  {nome:"Petit Chablis Allain Geoffroy", safra:"2022", tipo:"Branco", quantidade:1},
  {nome:"Chablis Gérard Tremblay", safra:"2023", tipo:"Branco", quantidade:1},
@@ -4953,11 +5970,11 @@ async function adicionarWishlistAPartirDoRotulo(){
    await carregarWishlistSupabase();
    renderizarVinhosDesejados();
    setStatusRotulo("✅ Vinho adicionado aos desejados.", "ok");
-   alert("Vinho adicionado aos desejados.");
+   mostrarMensagem("O vinho foi salvo com sucesso na sua lista de desejos.", {tipo:"sucesso", titulo:"Adicionado à Wishlist", icone:"♡", botao:"Perfeito"});
  }catch(e){
    console.error(e);
    setStatusRotulo("❌ Não foi possível adicionar aos vinhos desejados.", "erro");
-   alert("Não foi possível adicionar aos vinhos desejados. Verifique a tabela/policies no Supabase.");
+   mostrarMensagem("Não foi possível adicionar aos vinhos desejados. Verifique a tabela/policies no Supabase.", {tipo:"erro", titulo:"Erro ao salvar na Wishlist", icone:"❌"});
  }finally{
    if(btn){ btn.disabled = false; btn.innerText = textoOriginal || "♡ Vinho desejado"; }
  }
@@ -5835,15 +6852,69 @@ function htmlItemVinhoDesejado(c){
               c.createdAt ? `Adicionado em ${String(c.createdAt).slice(0,10)}` :
               "Data não informada";
  const nota = Number(c.notaVivino || 0);
+ const podeRemover = !!c.id;
+ const origemRemocao = c.origemWishlist === "consumo_externo" ? "consumo_externo" : "wishlist";
 
  return `
-   <div class="rec-item">
+   <div class="rec-item wishlist-item">
      <div>
        <strong>${nome}</strong>
        <span>${detalhes || "Vinho desejado"}<br>${data} • ${origem}</span>
      </div>
      <span class="wishlist-badge">♡ ${nota ? nota.toFixed(1) : "Desejado"}</span>
+     ${podeRemover ? `<button class="wishlist-remove-btn" title="Remover dos desejados" onclick="removerVinhoDesejado(event,'${c.id}','${origemRemocao}','${String(c.nome || "Vinho").replace(/'/g,"\\'") }')">🗑️</button>` : ""}
    </div>`;
+}
+
+
+async function removerVinhoDesejado(event, id, origem="wishlist", nome="Vinho"){
+ if(event){
+   event.preventDefault();
+   event.stopPropagation();
+ }
+ if(!id){
+   mostrarMensagem("Não foi possível identificar este vinho desejado para remoção.", {tipo:"erro", titulo:"Erro ao remover", icone:"❌"});
+   return;
+ }
+
+ const confirmado = await confirmarAdega(`Remover ${nome || "este vinho"} da lista de desejos?`, {
+   titulo:"Remover da Wishlist?",
+   icone:"🗑️",
+   confirmar:"Remover",
+   cancelar:"Cancelar",
+   perigo:true
+ });
+ if(!confirmado) return;
+
+ const btn = event?.target?.closest ? event.target.closest("button") : null;
+ if(btn) btn.disabled = true;
+
+ try{
+   if(origem === "consumo_externo"){
+     const {error} = await supabaseClient
+       .from("consumos_externos")
+       .update({compraria:null})
+       .eq("id", id);
+     if(error) throw error;
+   }else{
+     const {error} = await supabaseClient
+       .from("vinhos_desejados")
+       .delete()
+       .eq("id", id);
+     if(error) throw error;
+   }
+
+   await carregarDoSupabase(true);
+   renderizarVinhosDesejados();
+   const modalAberto = document.getElementById("modalVinhosDesejados")?.style.display === "flex";
+   if(modalAberto) abrirVinhosDesejados();
+   mostrarMensagem("O vinho foi removido com sucesso da sua lista de desejos.", {tipo:"sucesso", titulo:"Removido da Wishlist", icone:"🗑️", botao:"OK"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível remover o vinho da lista de desejos. Verifique a conexão e as permissões no Supabase.", {tipo:"erro", titulo:"Erro ao remover", icone:"❌"});
+ }finally{
+   if(btn) btn.disabled = false;
+ }
 }
 
 function toggleVinhosDesejadosCard(event){
@@ -5961,19 +7032,8 @@ function selecionarOrdenacaoConsumo(){
  renderizar();
 }
 
-function renderizar(){
- const busca = document.getElementById("buscaTopo").value.toLowerCase().trim();
- const ordenacao = document.getElementById("ordenacao").value;
- const lista = document.getElementById("listaVinhos");
-
- let resultado = vinhos
-  .map((v,index)=>({...v,index}))
-  .filter(v=>{
-    const texto = `${v.nome} ${v.safra} ${v.tipo} ${v.detalhes?.produtor || ""} ${v.detalhes?.uva || ""}`.toLowerCase();
-    return (!filtroAtual || v.tipo===filtroAtual) && texto.includes(busca);
-  });
-
- resultado.sort((a,b)=>{
+function ordenarListaVinhos(lista, ordenacao){
+ lista.sort((a,b)=>{
    if(ordenacao==="potencial-consumo" || ordenacao==="consumo-recomendado"){
      const pa = prioridadeConsumo(a);
      const pb = prioridadeConsumo(b);
@@ -5987,31 +7047,19 @@ function renderizar(){
    if(ordenacao==="vivino") return Number(b.detalhes?.notaVivino || 0) - Number(a.detalhes?.notaVivino || 0);
    return a.nome.localeCompare(b.nome);
  });
+ return lista;
+}
 
- lista.innerHTML = "";
- if(resultado.length===0){
-   lista.innerHTML = `<div class="empty">Nenhum vinho encontrado.</div>`;
-   atualizarResumo();
-   setMenuAtivo();
-   renderizarRecomendacoesConsumo();
-   renderizarVinhosDesejados();
-   return;
- }
-
- resultado.forEach(v=>{
-   lista.innerHTML += `
-   <div class="vinho" onclick="abrirDetalhes(${v.index})">
+function htmlCardVinhoLista(v, semEstoque=false){
+ return `
+   <div class="vinho ${semEstoque ? "sem-estoque" : ""}" onclick="abrirDetalhes(${v.index})">
      ${htmlBandeiraPais(v)}
      <div>
       <div class="titulo-vinho">
-  <strong>${v.nome}</strong>
-
-  ${
-    v.detalhes?.notaVivino
-      ? `<span class="vivino-badge">⭐ ${v.detalhes.notaVivino.toFixed(1)}</span>`
-      : ""
-  }
-</div>
+        <strong>${v.nome}</strong>
+        ${v.detalhes?.notaVivino ? `<span class="vivino-badge">⭐ ${v.detalhes.notaVivino.toFixed(1)}</span>` : ""}
+        ${semEstoque ? `<span class="sem-estoque-badge">Sem estoque</span>` : ""}
+      </div>
        <div class="meta">Safra ${v.safra || "-"} &nbsp;•&nbsp; ${v.tipo} &nbsp;•&nbsp; ${v.quantidade || 0} garrafa${Number(v.quantidade)==1 ? "" : "s"} &nbsp;•&nbsp; ${htmlBadgeGuarda(v)}</div>
      </div>
 
@@ -6026,20 +7074,66 @@ function renderizar(){
 
      <div class="arrow">›</div>
    </div>`;
- });
+}
+
+function toggleVinhosSemEstoque(){
+ const secao = document.getElementById("secaoVinhosSemEstoque");
+ const chevron = document.getElementById("semEstoqueChevron");
+ if(!secao) return;
+ const expandido = secao.classList.toggle("expanded");
+ secao.classList.toggle("collapsed", !expandido);
+ if(chevron) chevron.innerText = expandido ? "▼" : "▶";
+}
+
+function renderizar(){
+ const busca = document.getElementById("buscaTopo").value.toLowerCase().trim();
+ const ordenacao = document.getElementById("ordenacao").value;
+ const lista = document.getElementById("listaVinhos");
+ const listaSemEstoque = document.getElementById("listaVinhosSemEstoque");
+ const secaoSemEstoque = document.getElementById("secaoVinhosSemEstoque");
+ const tituloSemEstoque = document.getElementById("tituloVinhosSemEstoque");
+ const abaAdegaAtual = document.getElementById("abaAdega");
+ const adegaVisivel = !abaAdegaAtual || abaAdegaAtual.style.display !== "none";
+
+ let resultado = vinhos
+  .map((v,index)=>({...v,index}))
+  .filter(v=>{
+    const texto = `${v.nome} ${v.safra} ${v.tipo} ${v.detalhes?.produtor || ""} ${v.detalhes?.uva || ""}`.toLowerCase();
+    return (!filtroAtual || v.tipo===filtroAtual) && texto.includes(busca);
+  });
+
+ const emEstoque = ordenarListaVinhos(resultado.filter(v=>Number(v.quantidade || 0) > 0), ordenacao);
+ const semEstoque = ordenarListaVinhos(resultado.filter(v=>Number(v.quantidade || 0) <= 0), ordenacao);
+
+ lista.innerHTML = "";
+ if(emEstoque.length===0){
+   lista.innerHTML = `<div class="empty">Nenhum vinho em estoque encontrado.</div>`;
+ }else{
+   lista.innerHTML = emEstoque.map(v=>htmlCardVinhoLista(v,false)).join("");
+ }
+
+ if(secaoSemEstoque && listaSemEstoque){
+   if(semEstoque.length){
+     secaoSemEstoque.style.display = adegaVisivel ? "block" : "none";
+     if(tituloSemEstoque){
+       tituloSemEstoque.innerText = `📦 Vinhos sem estoque (${semEstoque.length})`;
+     }
+     listaSemEstoque.innerHTML = semEstoque.map(v=>htmlCardVinhoLista(v,true)).join("");
+   }else{
+     secaoSemEstoque.style.display = "none";
+     listaSemEstoque.innerHTML = "";
+   }
+ }
 
  atualizarResumo();
  setMenuAtivo();
  renderizarRecomendacoesConsumo();
  renderizarVinhosDesejados();
  const abaEstatisticas = document.getElementById("abaEstatisticas");
- const abaJantar = document.getElementById("abaJantar");
- const abaAdega3D = document.getElementById("abaAdega3D");
  if(abaEstatisticas && abaEstatisticas.style.display === "block") renderizarEstatisticas();
  const abaAdega3DAtual = document.getElementById("abaAdega3D");
  if(abaAdega3DAtual && abaAdega3DAtual.style.display === "block") renderizarAdega3D();
 }
-
 function filtrarTodos(){
  filtroAtual = "";
  document.getElementById("buscaTopo").value = "";
@@ -6091,8 +7185,6 @@ function moeda(valor){
 }
 
 function criarAquisicaoAtual(){
- const consumida = document.getElementById("consumida").checked;
-
  return {
    data: document.getElementById("dataCompra").value || "",
    loja: document.getElementById("loja").value.trim() || "-",
@@ -6101,8 +7193,8 @@ function criarAquisicaoAtual(){
    compradoPor: document.getElementById("compradoPor").value,
    presenteadoPor: document.getElementById("presenteadoPor").value.trim(),
    localizacao: document.getElementById("localizacao").value.trim(),
-   consumida: consumida,
-   dataConsumo: consumida ? new Date().toISOString().slice(0,10) : "",
+   consumida: false,
+   dataConsumo: "",
    eventoConsumo: "",
    observacaoConsumo: "",
    ocasiao: document.getElementById("ocasiao").value.trim()
@@ -6117,7 +7209,6 @@ function limparFormulario(){
  document.getElementById("quantidade").value = "";
  document.getElementById("tipo").value = "";
  document.getElementById("compradoPor").value = "";
- document.getElementById("consumida").checked = false;
  document.getElementById("dataCompra").value =
    new Date().toISOString().split("T")[0];
 
@@ -6247,42 +7338,17 @@ document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
          Valor unitário: ${moeda(a.valorUnitario)}<br>
          Origem: ${a.compradoPor || "-"}${a.compradoPor==="Presente" && a.presenteadoPor ? " • Presente de " + a.presenteadoPor : ""}
          ${a.ocasiao ? "<br>Ocasião da compra: " + a.ocasiao : ""}
-         ${a.consumida && a.dataConsumo ? "<br>Consumida em: " + a.dataConsumo : ""}
-         ${a.consumida && a.eventoConsumo ? "<br>Evento: " + a.eventoConsumo : ""}
-
-         <div class="consume-line">
-           <input 
-             type="checkbox" 
-             ${a.consumida ? "checked" : ""} 
-             onchange="event.stopPropagation(); atualizarConsumo(${i}, ${idx}, this.checked)"
-           >
-           <span>Consumida</span>
-         </div>
-
          ${a.consumida ? `
-           <div class="form-row" style="margin-top:10px">
-             <input 
-               type="date" 
-               value="${a.dataConsumo || ""}" 
-               onclick="event.stopPropagation()"
-               onchange="event.stopPropagation(); atualizarDadosConsumo(${i}, ${idx}, 'dataConsumo', this.value)"
-             >
-
-             <input 
-               placeholder="Evento do consumo" 
-               value="${a.eventoConsumo || ""}" 
-               onclick="event.stopPropagation()"
-               onchange="event.stopPropagation(); atualizarDadosConsumo(${i}, ${idx}, 'eventoConsumo', this.value)"
-             >
+           <div class="consumo-status-card">
+             <strong>✅ Consumida${a.dataConsumo ? " em " + a.dataConsumo : ""}</strong>
+             ${a.eventoConsumo ? `<span>Ocasião: ${a.eventoConsumo}</span>` : ""}
+             ${a.observacaoConsumo ? `<span>${a.observacaoConsumo}</span>` : ""}
            </div>
-
-           <textarea 
-             style="margin-top:8px;min-height:70px" 
-             placeholder="Observações do consumo"
-             onclick="event.stopPropagation()"
-             onchange="event.stopPropagation(); atualizarDadosConsumo(${i}, ${idx}, 'observacaoConsumo', this.value)"
-           >${a.observacaoConsumo || ""}</textarea>
-         ` : ""}
+         ` : `
+           <div class="consumo-action-card">
+             <button type="button" class="btn-consumir-garrafa" onclick="event.stopPropagation(); abrirModalConsumirGarrafa(${i}, ${idx})">🍷 Consumir garrafa</button>
+           </div>
+         `}
        </div>
      </div>
    `).join("")
@@ -6296,16 +7362,156 @@ document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
    Valor total pago conhecido: ${moeda(totalPago)}
  `;
 
- document.getElementById("modalDetalhes").style.display = "flex";
+ const modalDetalhesEl = document.getElementById("modalDetalhes");
+ modalDetalhesEl.style.display = "flex";
+ modalDetalhesEl.scrollTop = 0;
 }
 
-async function atualizarConsumo(vinhoIndex, aquisicaoIndex, consumida){
+
+let consumoGarrafaPendente = null;
+let adicionarGarrafasVinhoId = null;
+
+function limparFormularioAdicionarGarrafas(){
+ const hoje = new Date().toISOString().slice(0,10);
+ const campos = {
+   addGarrafaQuantidade:"1",
+   addGarrafaDataCompra:hoje,
+   addGarrafaLoja:"",
+   addGarrafaValorPago:"",
+   addGarrafaCompradoPor:"",
+   addGarrafaPresenteadoPor:"",
+   addGarrafaLocalizacao:"",
+   addGarrafaOcasiao:""
+ };
+ Object.entries(campos).forEach(([id,valor])=>{
+   const el = document.getElementById(id);
+   if(el) el.value = valor;
+ });
+ toggleAddGarrafaPresenteadoPor();
+}
+
+function toggleAddGarrafaPresenteadoPor(){
+ const origem = document.getElementById("addGarrafaCompradoPor")?.value || "";
+ const campo = document.getElementById("addGarrafaPresenteadoPor");
+ if(!campo) return;
+ campo.style.display = origem === "Presente" ? "block" : "none";
+ if(origem !== "Presente") campo.value = "";
+}
+
+function abrirModalAdicionarGarrafas(){
+ if(vinhoSelecionado === null) return;
+ const v = garantirEstrutura(vinhos[vinhoSelecionado]);
+ if(!v || !v.id){
+   mostrarMensagem("Não foi possível identificar o vinho para adicionar garrafas.", {tipo:"erro", titulo:"Erro ao adicionar", icone:"❌"});
+   return;
+ }
+ adicionarGarrafasVinhoId = v.id;
+ limparFormularioAdicionarGarrafas();
+ const resumo = document.getElementById("adicionarGarrafasResumo");
+ if(resumo) resumo.innerText = `${v.nome} • Safra ${v.safra || "-"}`;
+ document.getElementById("modalAdicionarGarrafas").style.display = "flex";
+}
+
+function fecharModalAdicionarGarrafas(){
+ const modal = document.getElementById("modalAdicionarGarrafas");
+ if(modal) modal.style.display = "none";
+ adicionarGarrafasVinhoId = null;
+}
+
+function criarAquisicoesAdicionarGarrafas(){
+ const quantidade = parseInt(document.getElementById("addGarrafaQuantidade")?.value || "1", 10) || 1;
+ const qtdFinal = Math.max(1, quantidade);
+ const base = {
+   data: document.getElementById("addGarrafaDataCompra")?.value || "",
+   loja: document.getElementById("addGarrafaLoja")?.value || "-",
+   quantidade: 1,
+   valorUnitario: Number(document.getElementById("addGarrafaValorPago")?.value || 0),
+   compradoPor: document.getElementById("addGarrafaCompradoPor")?.value || "",
+   presenteadoPor: document.getElementById("addGarrafaPresenteadoPor")?.value.trim() || "",
+   localizacao: document.getElementById("addGarrafaLocalizacao")?.value.trim() || "",
+   consumida: false,
+   dataConsumo: "",
+   eventoConsumo: "",
+   observacaoConsumo: "",
+   ocasiao: document.getElementById("addGarrafaOcasiao")?.value.trim() || ""
+ };
+ return Array.from({length:qtdFinal}, (_,idx)=>({...base, identificador:`Nova garrafa ${idx+1}`}));
+}
+
+async function confirmarAdicionarGarrafas(){
+ if(!adicionarGarrafasVinhoId){
+   mostrarMensagem("Não foi possível identificar o vinho para adicionar garrafas.", {tipo:"erro", titulo:"Erro ao adicionar", icone:"❌"});
+   return;
+ }
+ const quantidade = parseInt(document.getElementById("addGarrafaQuantidade")?.value || "1", 10) || 1;
+ if(quantidade < 1){
+   mostrarMensagem("Informe uma quantidade válida de garrafas.", {tipo:"aviso", titulo:"Quantidade inválida", icone:"⚠️"});
+   return;
+ }
+ const aquisicoes = criarAquisicoesAdicionarGarrafas();
+ const vinhoId = adicionarGarrafasVinhoId;
+ try{
+   await inserirGarrafas(vinhoId, aquisicoes);
+   fecharModalAdicionarGarrafas();
+   await carregarDoSupabase(true);
+   const novoIndex = vinhos.findIndex(v=>v.id === vinhoId);
+   if(novoIndex >= 0) abrirDetalhes(novoIndex);
+   renderizar();
+   mostrarMensagem(`${aquisicoes.length} garrafa${aquisicoes.length === 1 ? "" : "s"} adicionada${aquisicoes.length === 1 ? "" : "s"} à adega.`, {tipo:"sucesso", titulo:"Garrafas adicionadas", icone:"🍷", botao:"Perfeito"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível adicionar as garrafas no Supabase.", {tipo:"erro", titulo:"Erro ao adicionar", icone:"❌"});
+ }
+}
+
+function abrirModalConsumirGarrafa(vinhoIndex, aquisicaoIndex){
+ const v = garantirEstrutura(vinhos[vinhoIndex]);
+ if(!v || !v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
+ const a = v.aquisicoes[aquisicaoIndex];
+ if(a.consumida){
+   mostrarMensagem("Esta garrafa já foi marcada como consumida.", {tipo:"aviso", titulo:"Garrafa já consumida", icone:"🍷"});
+   return;
+ }
+ consumoGarrafaPendente = {vinhoIndex, aquisicaoIndex};
+ const hoje = new Date().toISOString().slice(0,10);
+ document.getElementById("consumoData").value = hoje;
+ document.getElementById("consumoEvento").value = "";
+ document.getElementById("consumoComQuem").value = "";
+ document.getElementById("consumoObservacao").value = "";
+ const resumo = document.getElementById("consumoGarrafaResumo");
+ if(resumo) resumo.innerText = `${v.nome} • Safra ${v.safra || "-"} • ${a.loja || "-"}`;
+ document.getElementById("modalConsumirGarrafa").style.display = "flex";
+}
+
+function fecharModalConsumirGarrafa(){
+ document.getElementById("modalConsumirGarrafa").style.display = "none";
+ consumoGarrafaPendente = null;
+}
+
+async function confirmarConsumoGarrafa(){
+ if(!consumoGarrafaPendente) return;
+ const {vinhoIndex, aquisicaoIndex} = consumoGarrafaPendente;
+ const data = document.getElementById("consumoData").value || new Date().toISOString().slice(0,10);
+ const evento = document.getElementById("consumoEvento").value.trim();
+ const comQuem = document.getElementById("consumoComQuem").value.trim();
+ const obs = document.getElementById("consumoObservacao").value.trim();
+ const observacaoFinal = [comQuem ? `Com quem: ${comQuem}` : "", obs].filter(Boolean).join("\n");
+ await atualizarConsumo(vinhoIndex, aquisicaoIndex, true, {dataConsumo:data, eventoConsumo:evento, observacaoConsumo:observacaoFinal});
+ fecharModalConsumirGarrafa();
+ mostrarMensagem("Garrafa marcada como consumida e histórico atualizado.", {tipo:"sucesso", titulo:"Consumo registrado", icone:"🍷", botao:"Perfeito"});
+}
+
+async function atualizarConsumo(vinhoIndex, aquisicaoIndex, consumida, dadosConsumo={}){
  const v = garantirEstrutura(vinhos[vinhoIndex]);
  if(!v.aquisicoes || !v.aquisicoes[aquisicaoIndex]) return;
 
  const a = v.aquisicoes[aquisicaoIndex];
  a.consumida = consumida;
- if(consumida && !a.dataConsumo) a.dataConsumo = new Date().toISOString().slice(0,10);
+ if(consumida){
+   a.dataConsumo = dadosConsumo.dataConsumo || a.dataConsumo || new Date().toISOString().slice(0,10);
+   a.eventoConsumo = dadosConsumo.eventoConsumo ?? a.eventoConsumo ?? "";
+   a.observacaoConsumo = dadosConsumo.observacaoConsumo ?? a.observacaoConsumo ?? "";
+ }
  if(!consumida){ a.dataConsumo = ""; a.eventoConsumo = ""; a.observacaoConsumo = ""; }
 
  try{
@@ -6350,9 +7556,15 @@ async function excluirVinho(){
  const v = vinhos[vinhoSelecionado];
  if(!v) return;
 
- const confirma = confirm(`Tem certeza que deseja excluir o vinho "${v.nome}"?
+ const confirma = await confirmarAdega(`Tem certeza que deseja excluir o vinho "${v.nome}"?
 
-Essa ação remove o vinho e todas as aquisições/consumos associados a ele.`);
+Essa ação remove o vinho e todas as aquisições/consumos associados a ele.`, {
+   titulo:"Excluir vinho?",
+   icone:"🗑️",
+   confirmar:"Excluir",
+   cancelar:"Cancelar",
+   perigo:true
+ });
  if(!confirma) return;
 
  try{
@@ -7004,6 +8216,8 @@ function mostrarAba(aba){
  if(cardRecomendacoes) cardRecomendacoes.style.display = aba === "adega" && vinhosEmEstoqueOrdenadosPorConsumo().length ? "block" : "none";
  const cardDesejados = document.getElementById("cardVinhosDesejados");
  if(cardDesejados) cardDesejados.style.display = aba === "adega" ? "block" : "none";
+ const secaoSemEstoque = document.getElementById("secaoVinhosSemEstoque");
+ if(secaoSemEstoque) secaoSemEstoque.style.display = aba === "adega" && secaoSemEstoque.querySelector(".vinho") ? "block" : "none";
  if(abaEstatisticas) abaEstatisticas.style.display = aba === "estatisticas" ? "block" : "none";
  if(abaJantar) abaJantar.style.display = aba === "jantar" ? "block" : "none";
  if(abaAdega3D) abaAdega3D.style.display = aba === "adega3d" ? "block" : "none";
