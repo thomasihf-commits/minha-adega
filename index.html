@@ -4799,6 +4799,19 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 .btn-toggle-valores:hover{
   background:rgba(255,255,255,.20);
 }
+.btn-toggle-valores .icon-eye{
+  width:21px;
+  height:21px;
+  display:block;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.btn-toggle-valores .icon-eye .slash{
+  stroke-width:2.2;
+}
 .valor-protegido{
   letter-spacing:2px;
 }
@@ -4932,7 +4945,12 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
             <span class="stats-hero-icon">🍷</span>
             <span>Patrimônio da adega</span>
           </span>
-          <button id="btnToggleValores" class="btn-toggle-valores" type="button" onclick="toggleValoresFinanceiros(event)" aria-label="Ocultar valores">👁️</button>
+          <button id="btnToggleValores" class="btn-toggle-valores" type="button" onclick="toggleValoresFinanceiros(event)" aria-label="Ocultar valores">
+            <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2.1 12s3.4-6.5 9.9-6.5S21.9 12 21.9 12s-3.4 6.5-9.9 6.5S2.1 12 2.1 12Z"></path>
+              <circle cx="12" cy="12" r="3.2"></circle>
+            </svg>
+          </button>
         </div>
         <strong id="kpiValorInvestido" class="valor-fade">-</strong>
         <p id="statsHeroResumo">-</p>
@@ -5757,10 +5775,26 @@ function valorFinanceiro(valor){
  return mostrarValoresFinanceiros ? moeda(valor) : "••••••";
 }
 
+function iconePrivacidadeValoresSvg(visivel){
+ if(visivel){
+   return `
+     <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+       <path d="M2.1 12s3.4-6.5 9.9-6.5S21.9 12 21.9 12s-3.4 6.5-9.9 6.5S2.1 12 2.1 12Z"></path>
+       <circle cx="12" cy="12" r="3.2"></circle>
+     </svg>`;
+ }
+ return `
+   <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+     <path d="M2.1 12s3.4-6.5 9.9-6.5S21.9 12 21.9 12s-3.4 6.5-9.9 6.5S2.1 12 2.1 12Z"></path>
+     <circle cx="12" cy="12" r="3.2"></circle>
+     <path class="slash" d="M4 4l16 16"></path>
+   </svg>`;
+}
+
 function atualizarBotaoPrivacidadeValores(){
  const btn = document.getElementById("btnToggleValores");
  if(!btn) return;
- btn.innerText = mostrarValoresFinanceiros ? "👁️" : "🙈";
+ btn.innerHTML = iconePrivacidadeValoresSvg(mostrarValoresFinanceiros);
  btn.setAttribute("aria-label", mostrarValoresFinanceiros ? "Ocultar valores" : "Mostrar valores");
  btn.title = mostrarValoresFinanceiros ? "Ocultar valores" : "Mostrar valores";
 }
