@@ -4888,6 +4888,183 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   }
 }
 
+
+/* ===============================
+   ADEGA 3D - POSICIONAR EM ESPAÇO VAZIO
+   =============================== */
+.bottle-slot.empty-slot{
+  cursor:pointer;
+}
+.bottle-slot.empty-slot:hover .bottle-empty,
+.bottle-slot.empty-slot.selected-empty .bottle-empty{
+  opacity:.75;
+  border-color:rgba(255,236,204,.62);
+  box-shadow:0 0 0 5px rgba(255,220,150,.08), 0 8px 18px rgba(0,0,0,.22);
+}
+.bottle-slot.empty-slot:hover::after{
+  content:"＋";
+  position:absolute;
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  color:#fff7df;
+  background:rgba(133,0,43,.72);
+  border:1px solid rgba(255,236,204,.28);
+  font-size:15px;
+  font-weight:950;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+.posicionar-garrafa-modal{
+  width:min(620px,100%)!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+.posicionar-garrafa-modal .modal-header{
+  padding:24px!important;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(216,177,63,.28), transparent 34%),
+    linear-gradient(135deg,#970033,#4d0018)!important;
+}
+.posicionar-garrafa-modal .modal-header h2{
+  font-size:28px!important;
+  letter-spacing:-.45px!important;
+}
+.posicionar-garrafa-modal .modal-header p{
+  margin:8px 0 0!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:14px!important;
+  font-weight:750!important;
+  line-height:1.4!important;
+}
+.posicionar-garrafa-modal .modal-body{
+  display:grid;
+  gap:12px;
+  padding:18px!important;
+}
+.posicionar-resumo{
+  background:linear-gradient(135deg,#fffaf7,#fff3ef);
+  border:1px solid rgba(133,0,43,.12);
+  border-radius:18px;
+  padding:12px 14px;
+  color:#4b4245;
+  font-size:13px;
+  font-weight:850;
+  line-height:1.45;
+}
+.posicionar-resumo b{
+  color:var(--vinho);
+}
+.posicionar-busca{
+  position:relative;
+}
+.posicionar-busca input{
+  height:48px;
+  border-radius:16px;
+  padding-right:42px;
+  font-weight:800;
+}
+.posicionar-busca span{
+  position:absolute;
+  right:15px;
+  top:13px;
+  color:#75696c;
+}
+.posicionar-lista{
+  display:grid;
+  gap:9px;
+  max-height:360px;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-right:2px;
+}
+.posicionar-item{
+  width:100%;
+  border:1px solid var(--borda);
+  border-radius:18px;
+  background:#fff;
+  padding:11px 12px;
+  display:grid;
+  grid-template-columns:44px 1fr auto;
+  gap:11px;
+  align-items:center;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:0 7px 18px rgba(70,25,22,.055);
+}
+.posicionar-item:hover{
+  border-color:rgba(133,0,43,.22);
+  background:#fffaf7;
+}
+.posicionar-thumb{
+  width:40px;
+  height:52px;
+  border-radius:12px;
+  object-fit:cover;
+  background:#fff7f2;
+  border:1px solid var(--borda);
+}
+.posicionar-thumb-placeholder{
+  width:40px;
+  height:52px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#fff7f2,#f3e5df);
+  border:1px solid var(--borda);
+  color:var(--vinho);
+  font-size:21px;
+}
+.posicionar-main{
+  min-width:0;
+}
+.posicionar-main strong{
+  display:block;
+  color:#241b1e;
+  font-size:14.5px;
+  line-height:1.2;
+  margin-bottom:4px;
+}
+.posicionar-main span{
+  display:block;
+  color:#62575a;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.35;
+}
+.posicionar-badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:25px;
+  padding:0 9px;
+  border-radius:999px;
+  background:#fff7db;
+  border:1px solid #ead483;
+  color:#7a5700;
+  font-size:11px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.posicionar-empty{
+  background:#fffaf7;
+  border:1px dashed var(--borda);
+  border-radius:18px;
+  padding:18px;
+  color:#6b6063;
+  text-align:center;
+  font-size:13px;
+  font-weight:850;
+  line-height:1.45;
+}
+@media(max-width:650px){
+  .posicionar-garrafa-modal{border-radius:24px!important;}
+  .posicionar-lista{max-height:420px;}
+  .posicionar-item{grid-template-columns:42px 1fr; align-items:start;}
+  .posicionar-badge{grid-column:2; justify-self:start;}
+  .posicionar-garrafa-modal .modal-actions{display:grid!important;grid-template-columns:1fr!important;}
+}
+
 /* ===============================
    PRIVACIDADE DOS VALORES
    =============================== */
@@ -5076,6 +5253,653 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
   .adega-card{grid-template-columns:1fr;}
   .adega-card-actions{justify-content:flex-start;}
   .adegas-modal .modal-actions{display:grid!important;grid-template-columns:1fr!important;}
+}
+
+
+/* ===============================
+   ADEGA 3D - MOVER GARRAFA
+   =============================== */
+.btn-mover-garrafa-3d{
+  color:#fff!important;
+  background:linear-gradient(135deg,var(--vinho),#a00035)!important;
+  box-shadow:0 10px 22px rgba(133,0,43,.16)!important;
+}
+.btn-remover-posicao-3d{
+  background:#fff7f2!important;
+  border:1px solid rgba(133,0,43,.12)!important;
+  color:var(--vinho)!important;
+}
+.mover-garrafa-modal{
+  width:min(560px,100%)!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+.mover-garrafa-modal .modal-header{
+  padding:24px!important;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(216,177,63,.28), transparent 34%),
+    linear-gradient(135deg,#970033,#4d0018)!important;
+}
+.mover-garrafa-modal .modal-header h2{
+  font-size:28px!important;
+  letter-spacing:-.45px!important;
+}
+.mover-garrafa-modal .modal-header p{
+  margin:8px 0 0!important;
+  color:rgba(255,255,255,.86)!important;
+  font-size:14px!important;
+  font-weight:750!important;
+  line-height:1.4!important;
+}
+.mover-garrafa-modal .modal-body{
+  display:grid;
+  gap:12px;
+  padding:18px!important;
+}
+.mover-garrafa-resumo{
+  background:linear-gradient(135deg,#fffaf7,#fff3ef);
+  border:1px solid rgba(133,0,43,.12);
+  border-radius:18px;
+  padding:12px 14px;
+  color:#4b4245;
+  font-size:13px;
+  font-weight:850;
+  line-height:1.45;
+}
+.mover-garrafa-resumo b{
+  color:var(--vinho);
+}
+.mover-garrafa-grid{
+  display:grid;
+  grid-template-columns:1fr 140px;
+  gap:10px;
+}
+.mover-garrafa-grid select{
+  min-height:46px!important;
+  height:46px!important;
+  border-radius:15px!important;
+  font-weight:850;
+}
+.btn-confirmar-mover{
+  color:#fff!important;
+  background:linear-gradient(135deg,var(--vinho),#a00035)!important;
+  box-shadow:0 10px 22px rgba(133,0,43,.16)!important;
+}
+@media(max-width:650px){
+  .mover-garrafa-modal{border-radius:24px!important;}
+  .mover-garrafa-grid{grid-template-columns:1fr;}
+  .mover-garrafa-modal .modal-actions{display:grid!important;grid-template-columns:1fr!important;}
+}
+
+
+/* ===============================
+   CORREÇÃO SCROLL - POSICIONAR GARRAFA NA ADEGA 3D
+   Mantém o botão Cancelar sempre acessível no modal
+   =============================== */
+#modalPosicionarGarrafa3D{
+  align-items:flex-start!important;
+  justify-content:center!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  padding:14px!important;
+}
+
+#modalPosicionarGarrafa3D .posicionar-garrafa-modal{
+  width:min(620px,100%)!important;
+  max-height:calc(100dvh - 28px)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+  margin:0 auto!important;
+}
+
+#modalPosicionarGarrafa3D .posicionar-garrafa-modal .modal-header{
+  flex:0 0 auto!important;
+}
+
+#modalPosicionarGarrafa3D .posicionar-garrafa-modal .modal-body{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+
+#modalPosicionarGarrafa3D .posicionar-lista{
+  flex:1 1 auto!important;
+  min-height:170px!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  padding-right:4px!important;
+  padding-bottom:8px!important;
+}
+
+#modalPosicionarGarrafa3D .posicionar-garrafa-modal .modal-actions{
+  flex:0 0 auto!important;
+  position:sticky!important;
+  bottom:0!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.88),#fff)!important;
+  border-top:1px solid #f0e4df!important;
+  padding:12px 18px calc(12px + env(safe-area-inset-bottom))!important;
+  z-index:2!important;
+}
+
+@media(max-width:650px){
+  #modalPosicionarGarrafa3D{
+    padding:10px!important;
+  }
+
+  #modalPosicionarGarrafa3D .posicionar-garrafa-modal{
+    width:100%!important;
+    max-height:calc(100dvh - 20px)!important;
+    border-radius:24px!important;
+  }
+
+  #modalPosicionarGarrafa3D .posicionar-garrafa-modal .modal-header{
+    padding:20px 18px 18px!important;
+  }
+
+  #modalPosicionarGarrafa3D .posicionar-garrafa-modal .modal-body{
+    padding:14px!important;
+    gap:10px!important;
+  }
+
+  #modalPosicionarGarrafa3D .posicionar-lista{
+    min-height:180px!important;
+  }
+
+  #modalPosicionarGarrafa3D .posicionar-garrafa-modal .modal-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom))!important;
+  }
+
+  #modalPosicionarGarrafa3D .posicionar-garrafa-modal .modal-actions .btn-secondary{
+    width:100%!important;
+    min-height:46px!important;
+  }
+}
+
+
+/* ===============================
+   HISTÓRICO MINIMALISTA - ACORDEÃO
+   =============================== */
+.historico-modal-minimal{
+  width:min(760px,100%)!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+}
+#modalHistorico{
+  align-items:flex-start!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  padding:14px!important;
+}
+#modalHistorico .historico-modal-minimal{
+  max-height:calc(100dvh - 28px)!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+#modalHistorico .modal-header,
+#modalHistorico .modal-actions{
+  flex:0 0 auto!important;
+}
+#modalHistorico .modal-body{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#modalHistorico .modal-actions{
+  position:sticky!important;
+  bottom:0!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.88),#fff)!important;
+  border-top:1px solid #f0e4df!important;
+  padding:12px 18px calc(12px + env(safe-area-inset-bottom))!important;
+}
+.hist-minimal-summary{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.hist-minimal-pill{
+  display:inline-flex;
+  align-items:center;
+  min-height:30px;
+  padding:0 11px;
+  border-radius:999px;
+  background:#fffaf7;
+  border:1px solid #f0e4df;
+  color:#62575a;
+  font-size:12px;
+  font-weight:950;
+}
+.hist-minimal-pill b{
+  color:var(--vinho);
+  margin-right:4px;
+}
+.hist-search{
+  position:relative;
+  margin-bottom:14px;
+}
+.hist-search input{
+  height:46px;
+  border-radius:16px;
+  padding:0 42px 0 14px;
+  font-size:14px;
+  font-weight:800;
+}
+.hist-search span{
+  position:absolute;
+  right:14px;
+  top:12px;
+  color:#75696c;
+  font-size:17px;
+}
+.hist-month-group{
+  display:grid;
+  gap:8px;
+  margin-bottom:14px;
+}
+.hist-month-title{
+  margin:8px 2px 2px;
+  color:var(--vinho);
+  font-size:12px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
+.hist-mini-card{
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:17px;
+  box-shadow:0 7px 18px rgba(70,25,22,.055);
+  overflow:hidden;
+}
+.hist-mini-card[open]{
+  border-color:rgba(133,0,43,.18);
+  box-shadow:0 10px 24px rgba(70,25,22,.08);
+}
+.hist-mini-card summary{
+  list-style:none;
+  cursor:pointer;
+  padding:12px 13px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:11px;
+  align-items:center;
+}
+.hist-mini-card summary::-webkit-details-marker{
+  display:none;
+}
+.hist-date-badge{
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fff7f2,#fff0eb);
+  border:1px solid rgba(133,0,43,.10);
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:var(--vinho);
+  font-weight:950;
+  line-height:1.05;
+  flex:0 0 auto;
+}
+.hist-date-badge b{
+  display:block;
+  font-size:17px;
+  letter-spacing:-.2px;
+}
+.hist-date-badge span{
+  display:block;
+  font-size:10px;
+  text-transform:uppercase;
+}
+.hist-mini-main{
+  min-width:0;
+}
+.hist-mini-title{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+  color:#241b1e;
+  font-size:15px;
+  font-weight:950;
+  line-height:1.15;
+}
+.hist-mini-title .nome{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width:100%;
+}
+.hist-mini-sub{
+  margin-top:5px;
+  color:#6b6063;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.3;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.hist-mini-side{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.hist-mini-origin{
+  display:inline-flex;
+  align-items:center;
+  min-height:24px;
+  padding:0 8px;
+  border-radius:999px;
+  font-size:10.5px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.hist-mini-origin.adega{
+  background:#fff0f3;
+  border:1px solid #ecc6d0;
+  color:var(--vinho);
+}
+.hist-mini-origin.externo{
+  background:#eef2ff;
+  border:1px solid #d9defa;
+  color:#3b4a8f;
+}
+.hist-mini-chevron{
+  color:var(--vinho);
+  font-size:13px;
+  transition:transform .16s ease;
+}
+.hist-mini-card[open] .hist-mini-chevron{
+  transform:rotate(90deg);
+}
+.hist-mini-detail{
+  border-top:1px solid #f0e4df;
+  padding:12px 13px 13px;
+  background:linear-gradient(135deg,#fffaf7,#fff6f2);
+}
+.hist-mini-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.hist-mini-box{
+  background:#fff;
+  border:1px solid #f0e4df;
+  border-radius:14px;
+  padding:9px 10px;
+}
+.hist-mini-box small{
+  display:block;
+  color:#7a6f72;
+  font-size:9.5px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.2px;
+  margin-bottom:4px;
+}
+.hist-mini-box strong{
+  display:block;
+  color:#2a2225;
+  font-size:12.5px;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+.hist-mini-note{
+  margin-top:9px;
+  background:#fff;
+  border:1px solid #f0e4df;
+  border-radius:14px;
+  padding:10px;
+  color:#5f5356;
+  font-size:12.5px;
+  line-height:1.45;
+  font-weight:750;
+}
+.hist-mini-actions{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+}
+.hist-mini-actions .btn-secondary{
+  min-height:36px!important;
+  border-radius:999px!important;
+  padding:0 13px!important;
+  font-size:12px!important;
+}
+@media(max-width:650px){
+  #modalHistorico{
+    padding:10px!important;
+  }
+  #modalHistorico .historico-modal-minimal{
+    width:100%!important;
+    max-height:calc(100dvh - 20px)!important;
+    border-radius:24px!important;
+  }
+  #modalHistorico .modal-header{
+    padding:20px 18px 18px!important;
+  }
+  #modalHistorico .modal-body{
+    padding:14px!important;
+  }
+  .hist-mini-card summary{
+    grid-template-columns:auto 1fr;
+    gap:10px;
+  }
+  .hist-mini-side{
+    grid-column:2;
+    justify-content:space-between;
+  }
+  .hist-mini-grid{
+    grid-template-columns:1fr;
+  }
+  .hist-mini-title .nome{
+    white-space:normal;
+  }
+  .hist-mini-sub{
+    white-space:normal;
+  }
+  #modalHistorico .modal-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom))!important;
+  }
+  #modalHistorico .modal-actions .btn-secondary{
+    width:100%!important;
+    min-height:46px!important;
+  }
+}
+
+
+/* ===============================
+   HISTÓRICO - FILTRO POR DATA
+   =============================== */
+.hist-filter-panel{
+  display:grid;
+  gap:10px;
+  margin-bottom:14px;
+  background:linear-gradient(135deg,#fffaf7,#fff3ef);
+  border:1px solid rgba(133,0,43,.12);
+  border-radius:20px;
+  padding:12px;
+}
+.hist-filter-dates{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.hist-date-field{
+  display:grid;
+  gap:5px;
+}
+.hist-date-field label{
+  color:#6b6063;
+  font-size:10.5px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.25px;
+}
+.hist-date-field input{
+  height:42px;
+  min-height:42px;
+  border-radius:14px;
+  font-size:13px;
+  font-weight:850;
+  background:#fff;
+}
+.hist-filter-shortcuts{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.hist-filter-shortcuts button{
+  min-height:34px;
+  border:1px solid #f0e4df;
+  border-radius:999px;
+  background:#fff;
+  color:#5f5356;
+  padding:0 11px;
+  font-size:11.5px;
+  font-weight:950;
+  cursor:pointer;
+}
+.hist-filter-shortcuts button:hover{
+  border-color:rgba(133,0,43,.22);
+  color:var(--vinho);
+}
+.hist-filter-shortcuts button.active{
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(135deg,var(--vinho),#a00035);
+  box-shadow:0 6px 16px rgba(133,0,43,.13);
+}
+.hist-filter-status{
+  color:#6b6063;
+  font-size:12px;
+  font-weight:850;
+  line-height:1.35;
+}
+.hist-filter-status b{
+  color:var(--vinho);
+}
+@media(max-width:650px){
+  .hist-filter-panel{
+    border-radius:18px;
+    padding:11px;
+  }
+  .hist-filter-dates{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .hist-filter-shortcuts{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    padding-bottom:2px;
+    scrollbar-width:none;
+  }
+  .hist-filter-shortcuts::-webkit-scrollbar{display:none;}
+  .hist-filter-shortcuts button{
+    flex:0 0 auto;
+    white-space:nowrap;
+  }
+}
+
+
+
+/* ===============================
+   ADEGA 3D - ARRASTAR E SOLTAR
+   =============================== */
+.bottle-slot{
+  touch-action:none;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.bottle-slot.drag-source .bottle-css{
+  opacity:.45;
+  filter:drop-shadow(0 0 12px rgba(255,205,120,.80));
+}
+.adega3d-rack.dragging-3d .bottle-slot.empty-slot .bottle-empty{
+  opacity:.68;
+  border-color:rgba(255,236,204,.58);
+  box-shadow:0 0 0 5px rgba(255,220,150,.08);
+}
+.adega3d-rack.dragging-3d .bottle-slot.empty-slot.drop-target .bottle-empty{
+  opacity:1;
+  border-color:rgba(145,255,180,.95);
+  box-shadow:0 0 0 7px rgba(80,210,120,.16), 0 12px 22px rgba(0,0,0,.28);
+}
+.adega3d-rack.dragging-3d .bottle-slot.empty-slot.drop-target::after{
+  content:"Soltar";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  min-width:54px;
+  height:24px;
+  padding:0 8px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  background:rgba(39,99,56,.92);
+  border:1px solid rgba(220,255,230,.35);
+  font-size:10.5px;
+  font-weight:950;
+  box-shadow:0 8px 18px rgba(0,0,0,.24);
+  z-index:5;
+}
+.adega3d-drag-ghost{
+  position:fixed;
+  left:0;
+  top:0;
+  width:74px;
+  height:36px;
+  pointer-events:none;
+  z-index:160;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform:translate(-999px,-999px);
+  filter:drop-shadow(0 16px 22px rgba(0,0,0,.34));
+}
+.adega3d-drag-ghost .bottle-css{
+  transform:rotate(-12deg) scale(1.08);
+}
+.adega3d-drag-hint{
+  position:fixed;
+  left:50%;
+  bottom:calc(86px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  z-index:159;
+  max-width:calc(100vw - 28px);
+  padding:10px 14px;
+  border-radius:999px;
+  color:#fff;
+  background:rgba(77,0,24,.92);
+  box-shadow:0 12px 28px rgba(0,0,0,.24);
+  font-size:12px;
+  font-weight:950;
+  white-space:nowrap;
+  pointer-events:none;
+}
+@media(min-width:801px){
+  .adega3d-drag-hint{ bottom:24px; }
+}
+
+/* Ajuste de estabilidade do arrastar no Android */
+.adega3d-rack.dragging-3d,
+.adega3d-rack.dragging-3d *{
+  touch-action:none!important;
+  -webkit-user-select:none!important;
+  user-select:none!important;
 }
 
 </style>
@@ -5310,7 +6134,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
       </div>
 
       <aside id="adega3dDetalhe" class="adega3d-side-card">
-        <div class="adega3d-detail-empty">Selecione uma garrafa na prateleira para ver os detalhes.</div>
+        <div class="adega3d-detail-empty">Selecione uma garrafa para ver os detalhes ou toque em um espaço vazio para posicionar uma garrafa.</div>
       </aside>
     </div>
   </section>
@@ -5746,15 +6570,39 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
 </div>
 
 <div id="modalHistorico" class="modal-bg" onclick="fecharHistoricoConsumo()">
-  <div class="modal" onclick="event.stopPropagation()">
+  <div class="modal historico-modal-minimal" onclick="event.stopPropagation()">
     <div class="modal-header">
       <h2>Histórico de consumo</h2>
-      <p>Garrafas já consumidas da Adega Juliana.</p>
+      <p>Toque em um vinho para abrir os detalhes do consumo.</p>
     </div>
 
     <div class="modal-body">
-      <div id="historicoResumo" class="purchase-total"></div>
-      <div id="historicoLista" class="purchase-list"></div>
+      <div id="historicoResumo"></div>
+      <div class="hist-search">
+        <input id="buscaHistorico" placeholder="Buscar no histórico..." oninput="renderizarHistoricoMinimalista()">
+        <span>🔎</span>
+      </div>
+      <div class="hist-filter-panel">
+        <div class="hist-filter-dates">
+          <div class="hist-date-field">
+            <label for="histDataInicio">De</label>
+            <input id="histDataInicio" type="date" onchange="marcarAtalhoHistorico('custom'); renderizarHistoricoMinimalista()">
+          </div>
+          <div class="hist-date-field">
+            <label for="histDataFim">Até</label>
+            <input id="histDataFim" type="date" onchange="marcarAtalhoHistorico('custom'); renderizarHistoricoMinimalista()">
+          </div>
+        </div>
+        <div class="hist-filter-shortcuts" id="histAtalhosPeriodo">
+          <button type="button" data-periodo="hoje" onclick="aplicarPeriodoHistorico('hoje')">Hoje</button>
+          <button type="button" data-periodo="mes" onclick="aplicarPeriodoHistorico('mes')">Mês</button>
+          <button type="button" data-periodo="3m" onclick="aplicarPeriodoHistorico('3m')">3 meses</button>
+          <button type="button" data-periodo="ano" onclick="aplicarPeriodoHistorico('ano')">Ano</button>
+          <button type="button" data-periodo="todos" onclick="aplicarPeriodoHistorico('todos')">Todos</button>
+        </div>
+        <div id="histFiltroStatus" class="hist-filter-status">Todos os consumos registrados.</div>
+      </div>
+      <div id="historicoLista"></div>
     </div>
 
     <div class="modal-actions">
@@ -5883,6 +6731,47 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     </div>
     <div class="modal-actions">
       <button class="btn-secondary" onclick="fecharCadastroAdegas()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div id="modalPosicionarGarrafa3D" class="modal-bg" onclick="fecharModalPosicionarGarrafa3D()">
+  <div class="modal posicionar-garrafa-modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>📍 Esta posição está vazia</h2>
+      <p id="posicionarGarrafaResumo">Qual garrafa deseja colocar aqui?</p>
+    </div>
+    <div class="modal-body">
+      <div id="posicionarGarrafaInfo" class="posicionar-resumo"></div>
+      <div class="posicionar-busca">
+        <input id="buscaGarrafaPosicionar" placeholder="Buscar garrafa..." oninput="renderizarListaGarrafasParaPosicionar()">
+        <span>🔎</span>
+      </div>
+      <div id="listaGarrafasParaPosicionar" class="posicionar-lista"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharModalPosicionarGarrafa3D()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalMoverGarrafa3D" class="modal-bg" onclick="fecharModalMoverGarrafa3D()">
+  <div class="modal mover-garrafa-modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>🔄 Mover garrafa</h2>
+      <p id="moverGarrafa3DSubtitulo">Transfira esta garrafa para outra posição ou outra adega.</p>
+    </div>
+    <div class="modal-body">
+      <div id="moverGarrafa3DResumo" class="mover-garrafa-resumo"></div>
+      <div class="mover-garrafa-grid">
+        <select id="moverGarrafa3DAdega" onchange="atualizarPosicoesMoverGarrafa3D()"></select>
+        <select id="moverGarrafa3DPosicao"></select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="fecharModalMoverGarrafa3D()">Cancelar</button>
+      <button class="btn-secondary btn-confirmar-mover" onclick="confirmarMoverGarrafa3D()">✓ Mover garrafa</button>
     </div>
   </div>
 </div>
@@ -6051,6 +6940,10 @@ let consumosExternos = [];
 let vinhosDesejadosTabela = [];
 let adegas = [];
 let adega3DSelecionadaId = localStorage.getItem("aj_adega3d_selecionada_id") || "";
+let posicaoVazia3DSelecionada = null;
+let garrafa3DSelecionadaMover = null;
+let arrastoAdega3D = null;
+let suprimirCliqueAdega3D = false;
 let salvandoNaNuvem = false;
 let carregandoDaNuvem = false;
 let intervaloSincronizacao = null;
@@ -6702,7 +7595,7 @@ function renderizarSelectAdegas3D(){
    adega3DSelecionadaId = String(ativas[0].id);
    localStorage.setItem("aj_adega3d_selecionada_id", adega3DSelecionadaId);
  }
- select.innerHTML = ativas.map(a=>`<option value="${a.id}">${a.nome || "Adega"} • ${Number(a.capacidade || 0)} lugares</option>`).join("");
+ select.innerHTML = ativas.map(a=>`<option value="${a.id}">${a.nome || "Adega"} • ${capacidadeVisualAdega(a)} lugares</option>`).join("");
  select.value = adega3DSelecionadaId;
 }
 
@@ -7029,62 +7922,102 @@ function htmlComprariaHistorico(valor){
  return `<div class="hist-buy-decision ${classe}">${icone} ${texto}</div>`;
 }
 
-function htmlHistoricoCard(c){
+
+let historicoConsumosCache = [];
+
+function textoBuscaHistorico(c){
+ return [
+   c.vinho, c.safra, c.tipo, c.produtor, c.uva, c.pais, c.regiao,
+   c.eventoConsumo, c.localConsumo, c.comQuem, c.observacaoConsumo,
+   c.origem, c.loja, c.compraria
+ ].join(" ").toLowerCase();
+}
+
+function parseDataHistoricoLocal(data){
+ if(!data) return null;
+ const partes = String(data).split("-");
+ if(partes.length === 3){
+   const y = Number(partes[0]), m = Number(partes[1]), d = Number(partes[2]);
+   if(y && m && d) return new Date(y, m - 1, d);
+ }
+ const dt = new Date(data);
+ return isNaN(dt.getTime()) ? null : dt;
+}
+
+function chaveMesHistorico(data){
+ const d = parseDataHistoricoLocal(data);
+ if(!d) return "Sem data";
+ const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+ return `${meses[d.getMonth()]}/${d.getFullYear()}`;
+}
+
+function diaMesHistorico(data){
+ const d = parseDataHistoricoLocal(data);
+ if(!d) return {dia:"--", mes:"---"};
+ const meses = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+ return {dia:String(d.getDate()).padStart(2,"0"), mes:meses[d.getMonth()]};
+}
+
+function htmlHistoricoCard(c, idx){
  const flag = bandeiraPais(c.pais);
+ const dataBadge = diaMesHistorico(c.dataConsumo);
  const titulo = `${c.vinho || "-"} ${c.safra && c.safra !== "-" ? "• " + c.safra : ""}`;
- const origemBadge = c.origem === "Externo"
-   ? `<span class="hist-badge external">Externo</span>`
-   : `<span class="hist-badge adega">Adega</span>`;
- const notaBadge = c.notaVivino ? `<span class="hist-badge star">⭐ ${Number(c.notaVivino).toFixed(1)}</span>` : "";
- const valor = moeda(c.valorUnitario);
+ const origemClasse = c.origem === "Externo" ? "externo" : "adega";
+ const origemTexto = c.origem === "Externo" ? "Externo" : "Adega";
  const local = c.localConsumo || c.loja || "-";
  const evento = c.eventoConsumo || "-";
  const comQuem = c.comQuem || "-";
  const observacao = c.observacaoConsumo || "";
+ const nota = c.notaVivino ? `⭐ ${Number(c.notaVivino).toFixed(1)}` : "-";
+ const valor = c.valorUnitario ? moeda(c.valorUnitario) : "-";
+ const compraria = c.compraria ? c.compraria : "-";
+ const resumo = [evento, comQuem !== "-" ? comQuem : "", local].filter(Boolean).join(" • ");
 
  return `
-   <div class="historico-card">
-     <div class="hist-card-head">
-       ${htmlThumbHistorico(c)}
-       <div class="hist-title-wrap">
-         <span class="hist-date">${formatarDataHistorico(c.dataConsumo)}</span>
-         <div class="hist-title">${flag ? `<span title="${c.pais}">${flag}</span>` : ""}<span>${titulo}</span></div>
-         <div class="hist-meta">${c.tipo || "-"} • ${c.pais || "-"} • ${c.regiao || "-"}</div>
+   <details class="hist-mini-card" data-hist-idx="${idx}">
+     <summary>
+       <div class="hist-date-badge"><div><b>${dataBadge.dia}</b><span>${dataBadge.mes}</span></div></div>
+       <div class="hist-mini-main">
+         <div class="hist-mini-title">
+           ${flag ? `<span title="${c.pais}">${flag}</span>` : ""}
+           <span class="nome">${titulo}</span>
+         </div>
+         <div class="hist-mini-sub">${resumo || `${c.tipo || "-"} • ${c.pais || "-"}`}</div>
        </div>
-       <div class="hist-badges">
-         ${origemBadge}
-         ${notaBadge}
+       <div class="hist-mini-side">
+         <span class="hist-mini-origin ${origemClasse}">${origemTexto}</span>
+         <span class="hist-mini-chevron">▶</span>
        </div>
+     </summary>
+
+     <div class="hist-mini-detail">
+       <div class="hist-mini-grid">
+         <div class="hist-mini-box"><small>Data</small><strong>${formatarDataHistorico(c.dataConsumo)}</strong></div>
+         <div class="hist-mini-box"><small>Ocasião</small><strong>${evento}</strong></div>
+         <div class="hist-mini-box"><small>Com quem</small><strong>${comQuem}</strong></div>
+         <div class="hist-mini-box"><small>Local</small><strong>${local}</strong></div>
+         <div class="hist-mini-box"><small>Vinho</small><strong>${c.tipo || "-"} • ${c.pais || "-"} • ${c.regiao || "-"}</strong></div>
+         <div class="hist-mini-box"><small>Produtor</small><strong>${c.produtor || "-"}</strong></div>
+         <div class="hist-mini-box"><small>Uva / corte</small><strong>${c.uva || "-"}</strong></div>
+         <div class="hist-mini-box"><small>Vivino</small><strong>${nota}</strong></div>
+         <div class="hist-mini-box"><small>Quantidade</small><strong>${c.quantidade} garrafa${c.quantidade == 1 ? "" : "s"}</strong></div>
+         <div class="hist-mini-box"><small>Valor unitário</small><strong>${valor}</strong></div>
+         <div class="hist-mini-box"><small>Origem</small><strong>${c.origem}${c.compradoPor && c.origem==="Adega" ? " • " + c.compradoPor : ""}</strong></div>
+         <div class="hist-mini-box"><small>Compraria?</small><strong>${compraria}</strong></div>
+       </div>
+
+       ${observacao ? `<div class="hist-mini-note"><b>Observações:</b><br>${observacao}</div>` : ""}
+
+       ${c.vinhoId ? `
+         <div class="hist-mini-actions">
+           <button class="btn-secondary" onclick="event.stopPropagation(); abrirVinhoDoHistorico('${c.vinhoId}')">Abrir vinho</button>
+         </div>
+       ` : ""}
      </div>
-
-     <div class="hist-info-grid">
-       <div class="hist-info-box"><small>Produtor</small><strong>${c.produtor || "-"}</strong></div>
-       <div class="hist-info-box"><small>Uva / corte</small><strong>${c.uva || "-"}</strong></div>
-       <div class="hist-info-box"><small>Quantidade</small><strong>${c.quantidade} garrafa${c.quantidade == 1 ? "" : "s"}</strong></div>
-       <div class="hist-info-box"><small>Local</small><strong>${local}</strong></div>
-       <div class="hist-info-box"><small>Evento</small><strong>${evento}</strong></div>
-       <div class="hist-info-box"><small>Com quem</small><strong>${comQuem}</strong></div>
-       <div class="hist-info-box"><small>Valor unitário</small><strong>${valor}</strong></div>
-       <div class="hist-info-box"><small>Origem</small><strong>${c.origem}${c.compradoPor && c.origem==="Adega" ? " • " + c.compradoPor : ""}</strong></div>
-       <div class="hist-info-box"><small>Loja / compra</small><strong>${c.loja || "-"}</strong></div>
-     </div>
-
-     ${htmlComprariaHistorico(c.compraria)}
-
-     ${observacao ? `
-       <div class="hist-observacao">
-         <details>
-           <summary>📝 Observações da degustação</summary>
-           <p>${observacao}</p>
-         </details>
-       </div>
-     ` : ""}
-   </div>`;
+   </details>`;
 }
 
-
-function abrirHistoricoConsumo(){
- setBottomNavAtivo("historico");
+function montarConsumosHistorico(){
  const consumos = [];
 
  vinhos.forEach(v=>{
@@ -7094,6 +8027,7 @@ function abrirHistoricoConsumo(){
      if(a.consumida){
        consumos.push({
          origem:"Adega",
+         vinhoId: v.id,
          vinho: v.nome,
          safra: v.safra || "-",
          tipo: v.tipo || "-",
@@ -7113,7 +8047,7 @@ function abrirHistoricoConsumo(){
          eventoConsumo: a.eventoConsumo || "",
          observacaoConsumo: a.observacaoConsumo || "",
          localConsumo:"Casa / Adega Juliana",
-         comQuem:""
+         comQuem: a.comQuem || ""
        });
      }
    });
@@ -7122,6 +8056,7 @@ function abrirHistoricoConsumo(){
  consumosExternos.forEach(c=>{
    consumos.push({
      origem:"Externo",
+     vinhoId:"",
      vinho:c.nome || "-",
      safra:c.safra || "-",
      tipo:c.tipo || "-",
@@ -7146,30 +8081,156 @@ function abrirHistoricoConsumo(){
    });
  });
 
- consumos.sort((a,b)=>{
-   return String(b.dataConsumo || "").localeCompare(String(a.dataConsumo || ""));
+ consumos.sort((a,b)=>String(b.dataConsumo || "").localeCompare(String(a.dataConsumo || "")));
+ return consumos;
+}
+
+function formatarDataInputHistorico(date){
+ const y = date.getFullYear();
+ const m = String(date.getMonth() + 1).padStart(2,"0");
+ const d = String(date.getDate()).padStart(2,"0");
+ return `${y}-${m}-${d}`;
+}
+
+function marcarAtalhoHistorico(periodo){
+ document.querySelectorAll("#histAtalhosPeriodo button").forEach(btn=>{
+   btn.classList.toggle("active", btn.dataset.periodo === periodo);
+ });
+}
+
+function aplicarPeriodoHistorico(periodo){
+ const inicio = document.getElementById("histDataInicio");
+ const fim = document.getElementById("histDataFim");
+ if(!inicio || !fim) return;
+
+ const hoje = new Date();
+ let dtInicio = null;
+ let dtFim = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+ if(periodo === "hoje"){
+   dtInicio = new Date(dtFim);
+ }else if(periodo === "mes"){
+   dtInicio = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+ }else if(periodo === "3m"){
+   dtInicio = new Date(dtFim);
+   dtInicio.setDate(dtInicio.getDate() - 89);
+ }else if(periodo === "ano"){
+   dtInicio = new Date(hoje.getFullYear(), 0, 1);
+ }else{
+   dtInicio = null;
+   dtFim = null;
+ }
+
+ inicio.value = dtInicio ? formatarDataInputHistorico(dtInicio) : "";
+ fim.value = dtFim ? formatarDataInputHistorico(dtFim) : "";
+ marcarAtalhoHistorico(periodo);
+ renderizarHistoricoMinimalista();
+}
+
+function obterFiltrosHistorico(){
+ const termo = (document.getElementById("buscaHistorico")?.value || "").trim().toLowerCase();
+ const inicioValor = document.getElementById("histDataInicio")?.value || "";
+ const fimValor = document.getElementById("histDataFim")?.value || "";
+ const inicio = inicioValor ? parseDataHistoricoLocal(inicioValor) : null;
+ const fim = fimValor ? parseDataHistoricoLocal(fimValor) : null;
+ if(fim) fim.setHours(23,59,59,999);
+ return {termo, inicio, fim, inicioValor, fimValor};
+}
+
+function consumoDentroDoPeriodoHistorico(c, filtros){
+ const data = parseDataHistoricoLocal(c.dataConsumo);
+ if((filtros.inicio || filtros.fim) && !data) return false;
+ if(filtros.inicio && data < filtros.inicio) return false;
+ if(filtros.fim && data > filtros.fim) return false;
+ return true;
+}
+
+function textoPeriodoHistorico(filtros){
+ if(filtros.inicioValor && filtros.fimValor) return `${formatarDataHistorico(filtros.inicioValor)} a ${formatarDataHistorico(filtros.fimValor)}`;
+ if(filtros.inicioValor) return `a partir de ${formatarDataHistorico(filtros.inicioValor)}`;
+ if(filtros.fimValor) return `até ${formatarDataHistorico(filtros.fimValor)}`;
+ return "todos os períodos";
+}
+
+function atualizarStatusFiltroHistorico(total, filtrados, filtros){
+ const el = document.getElementById("histFiltroStatus");
+ if(!el) return;
+ const partes = [];
+ partes.push(`<b>${filtrados}</b> de ${total} consumo${total === 1 ? "" : "s"}`);
+ partes.push(`período: <b>${textoPeriodoHistorico(filtros)}</b>`);
+ if(filtros.termo) partes.push(`busca: <b>${filtros.termo}</b>`);
+ el.innerHTML = partes.join(" • ");
+}
+
+function renderizarHistoricoMinimalista(){
+ const lista = document.getElementById("historicoLista");
+ if(!lista) return;
+
+ const filtros = obterFiltrosHistorico();
+ const filtrados = historicoConsumosCache.filter(c=>{
+   const matchTexto = !filtros.termo || textoBuscaHistorico(c).includes(filtros.termo);
+   return matchTexto && consumoDentroDoPeriodoHistorico(c, filtros);
  });
 
- const totalGarrafas = consumos.reduce((s,c)=>s + Number(c.quantidade || 0),0);
- const totalAdega = consumos.filter(c=>c.origem==="Adega").reduce((s,c)=>s + Number(c.quantidade || 0),0);
- const totalExterno = consumos.filter(c=>c.origem==="Externo").reduce((s,c)=>s + Number(c.quantidade || 0),0);
- const valorConsumido = consumos.reduce((s,c)=>s + Number(c.quantidade || 0) * Number(c.valorUnitario || 0),0);
+ atualizarStatusFiltroHistorico(historicoConsumosCache.length, filtrados.length, filtros);
+
+ if(!filtrados.length){
+   lista.innerHTML = `<div class="empty">Nenhum consumo encontrado para os filtros selecionados.</div>`;
+   return;
+ }
+
+ const grupos = {};
+ filtrados.forEach((c,idx)=>{
+   const chave = chaveMesHistorico(c.dataConsumo);
+   if(!grupos[chave]) grupos[chave] = [];
+   grupos[chave].push({c, idx});
+ });
+
+ lista.innerHTML = Object.entries(grupos).map(([mes, itens])=>`
+   <section class="hist-month-group">
+     <h3 class="hist-month-title">${mes}</h3>
+     ${itens.map(({c, idx})=>htmlHistoricoCard(c, idx)).join("")}
+   </section>
+ `).join("");
+}
+
+function abrirHistoricoConsumo(){
+ setBottomNavAtivo("historico");
+
+ historicoConsumosCache = montarConsumosHistorico();
+
+ const totalGarrafas = historicoConsumosCache.reduce((s,c)=>s + Number(c.quantidade || 0),0);
+ const totalAdega = historicoConsumosCache.filter(c=>c.origem==="Adega").reduce((s,c)=>s + Number(c.quantidade || 0),0);
+ const totalExterno = historicoConsumosCache.filter(c=>c.origem==="Externo").reduce((s,c)=>s + Number(c.quantidade || 0),0);
+ const ultimo = historicoConsumosCache[0]?.dataConsumo ? formatarDataHistorico(historicoConsumosCache[0].dataConsumo) : "-";
 
  document.getElementById("historicoResumo").innerHTML = `
-   <div class="historico-resumo-modern">
-     <div class="hist-resumo-item"><small>Garrafas</small><strong>${totalGarrafas}</strong></div>
-     <div class="hist-resumo-item"><small>Da adega</small><strong>${totalAdega}</strong></div>
-     <div class="hist-resumo-item"><small>Externos</small><strong>${totalExterno}</strong></div>
-     <div class="hist-resumo-item"><small>Valor conhecido</small><strong>${moeda(valorConsumido)}</strong></div>
+   <div class="hist-minimal-summary">
+     <span class="hist-minimal-pill"><b>${totalGarrafas}</b> consumos</span>
+     <span class="hist-minimal-pill"><b>${totalAdega}</b> da adega</span>
+     <span class="hist-minimal-pill"><b>${totalExterno}</b> externos</span>
+     <span class="hist-minimal-pill">Último: <b>${ultimo}</b></span>
    </div>
  `;
 
- document.getElementById("historicoLista").className = "purchase-list historico-lista-modern";
- document.getElementById("historicoLista").innerHTML = consumos.length
-   ? consumos.map(htmlHistoricoCard).join("")
-   : `<div class="empty">Nenhuma garrafa consumida registrada ainda.</div>`;
+ const busca = document.getElementById("buscaHistorico");
+ if(busca) busca.value = "";
+ const histDataInicio = document.getElementById("histDataInicio");
+ const histDataFim = document.getElementById("histDataFim");
+ if(histDataInicio) histDataInicio.value = "";
+ if(histDataFim) histDataFim.value = "";
+ marcarAtalhoHistorico("todos");
 
+ renderizarHistoricoMinimalista();
  document.getElementById("modalHistorico").style.display = "flex";
+ setTimeout(()=>document.getElementById("buscaHistorico")?.focus(),120);
+}
+
+function abrirVinhoDoHistorico(vinhoId){
+ const idx = vinhos.findIndex(v=>String(v.id) === String(vinhoId));
+ if(idx < 0) return;
+ fecharHistoricoConsumo();
+ abrirDetalhes(idx);
 }
 
 function fecharHistoricoConsumo(){
@@ -7964,9 +9025,23 @@ function letraPrateleira(idx){
  return `P${n+1}`;
 }
 
+function capacidadeVisualAdega(adega){
+ if(!adega) return 0;
+ const capacidade = Math.max(0, Number(adega.capacidade || 0));
+ const prateleiras = Math.max(1, Number(adega.prateleiras || 1));
+ const porPrateleira = Math.max(1, Number(adega.garrafasPorPrateleira || Math.ceil((capacidade || 1) / prateleiras)));
+ const capacidadePorLayout = prateleiras * porPrateleira;
+
+ // Quando a adega é editada aumentando prateleiras/colunas, a visualização
+ // precisa criar também os novos nichos clicáveis. Antes o app continuava
+ // limitado ao campo capacidade, então as novas prateleiras apareciam, mas
+ // não geravam espaços para incluir/mover garrafas.
+ return Math.max(capacidade, capacidadePorLayout);
+}
+
 function gerarPosicoesAdega(adega){
  if(!adega) return [];
- const capacidade = Math.max(0, Number(adega.capacidade || 0));
+ const capacidade = capacidadeVisualAdega(adega);
  const prateleiras = Math.max(1, Number(adega.prateleiras || 1));
  const porPrateleira = Math.max(1, Number(adega.garrafasPorPrateleira || Math.ceil((capacidade || 1) / prateleiras)));
  const posicoes = [];
@@ -9035,7 +10110,7 @@ function renderizarAdega3D(){
  const porPrateleira = Math.max(1, Number(adega?.garrafasPorPrateleira || 5));
  const capacidadeInformada = Math.max(0, Number(adega?.capacidade || 0));
  const totalPrateleiras = Math.max(1, Number(adega?.prateleiras || Math.ceil((capacidadeInformada || 1) / porPrateleira)));
- const capacidadeVisual = capacidadeInformada || (totalPrateleiras * porPrateleira);
+ const capacidadeVisual = adega ? capacidadeVisualAdega(adega) : (capacidadeInformada || (totalPrateleiras * porPrateleira));
  const mapaGarrafas3D = garrafasAdega3D(adega, capacidadeVisual);
  const slotsAdega3D = mapaGarrafas3D.slots;
  const garrafasExcedentes = mapaGarrafas3D.semPosicao.length;
@@ -9068,11 +10143,13 @@ function renderizarAdega3D(){
      if(item){
        const v = item.vinho;
        const titulo = `${v.nome} ${v.safra ? "• " + v.safra : ""}`;
-       html += `<button class="bottle-slot" id="bottle3d-${slotAbsoluto}" title="${titulo}" onclick="selecionarGarrafa3D(${item.index}, ${item.aquisicaoIndex}, ${p+1}, ${pos+1}, 'bottle3d-${slotAbsoluto}')">
+       html += `<button class="bottle-slot" id="bottle3d-${slotAbsoluto}" title="${titulo}" data-slot-index="${slotAbsoluto}" onpointerdown="iniciarArrastoGarrafa3D(event, ${item.index}, ${item.aquisicaoIndex}, ${slotAbsoluto}, 'bottle3d-${slotAbsoluto}')" onclick="selecionarGarrafa3D(${item.index}, ${item.aquisicaoIndex}, ${p+1}, ${pos+1}, 'bottle3d-${slotAbsoluto}')">
          <span class="bottle-css ${classeTipoAdega3D(v.tipo)}"></span>
        </button>`;
      }else if(slotAbsoluto < capacidadeVisual){
-       html += `<div class="bottle-slot"><span class="bottle-empty"></span></div>`;
+       html += `<button class="bottle-slot empty-slot" id="empty3d-${slotAbsoluto}" title="Posição vazia" data-empty-slot="true" data-slot-index="${slotAbsoluto}" data-prateleira="${p+1}" data-posicao="${pos+1}" onclick="abrirModalPosicionarGarrafa3D(${slotAbsoluto}, ${p+1}, ${pos+1}, 'empty3d-${slotAbsoluto}')">
+         <span class="bottle-empty"></span>
+       </button>`;
      }
    }
    html += `</div></div>`;
@@ -9089,7 +10166,481 @@ function renderizarAdega3D(){
  }
 }
 
+
+function textoSeguroHtml(valor){
+ return String(valor ?? "")
+   .replace(/&/g,"&amp;")
+   .replace(/</g,"&lt;")
+   .replace(/>/g,"&gt;")
+   .replace(/"/g,"&quot;")
+   .replace(/'/g,"&#039;");
+}
+
+function posicaoPorIndiceAdega3D(slotIndex, adega){
+ const porPrateleira = Math.max(1, Number(adega?.garrafasPorPrateleira || 5));
+ const prateleira = Math.floor(Number(slotIndex || 0) / porPrateleira);
+ const posicao = (Number(slotIndex || 0) % porPrateleira) + 1;
+ return `${letraPrateleira(prateleira)}${posicao}`;
+}
+
+function garrafasDisponiveisParaPosicionar3D(){
+ const busca = String(document.getElementById("buscaGarrafaPosicionar")?.value || "").trim().toLowerCase();
+ const lista = [];
+ vinhos.forEach((v,index)=>{
+   garantirEstrutura(v);
+   (v.aquisicoes || []).forEach((a,aquisicaoIndex)=>{
+     if(a.consumida || !a.id) return;
+     if(a.adegaId && a.posicaoAdega) return;
+     const texto = `${v.nome || ""} ${v.safra || ""} ${v.tipo || ""} ${v.detalhes?.uva || ""} ${v.detalhes?.pais || ""}`.toLowerCase();
+     if(busca && !texto.includes(busca)) return;
+     lista.push({vinho:v, index, garrafa:a, aquisicaoIndex});
+   });
+ });
+ return lista.sort((a,b)=>String(a.vinho.nome || "").localeCompare(String(b.vinho.nome || ""), "pt-BR"));
+}
+
+function abrirModalPosicionarGarrafa3D(slotIndex, prateleira, posicao, elementId){
+ if(suprimirCliqueAdega3D) return;
+ const adega = obterAdega3DSelecionada();
+ if(!adega){
+   mostrarMensagem("Cadastre uma adega antes de posicionar garrafas.", {tipo:"aviso", titulo:"Nenhuma adega cadastrada", icone:"⚠️"});
+   return;
+ }
+ const posicaoCodigo = posicaoPorIndiceAdega3D(slotIndex, adega);
+ document.querySelectorAll(".bottle-slot.selected, .bottle-slot.selected-empty").forEach(el=>el.classList.remove("selected","selected-empty"));
+ const el = document.getElementById(elementId);
+ if(el) el.classList.add("selected-empty");
+ posicaoVazia3DSelecionada = {
+   adegaId: adega.id,
+   adegaNome: adega.nome || "Adega",
+   slotIndex,
+   prateleira,
+   posicao,
+   posicaoCodigo,
+   elementId
+ };
+ const resumo = document.getElementById("posicionarGarrafaResumo");
+ if(resumo) resumo.innerText = "Qual garrafa deseja colocar aqui?";
+ const info = document.getElementById("posicionarGarrafaInfo");
+ if(info) info.innerHTML = `Você selecionou <b>${textoSeguroHtml(adega.nome || "Adega")}</b> • posição <b>${textoSeguroHtml(posicaoCodigo)}</b>.`;
+ const busca = document.getElementById("buscaGarrafaPosicionar");
+ if(busca) busca.value = "";
+ renderizarListaGarrafasParaPosicionar();
+ const modal = document.getElementById("modalPosicionarGarrafa3D");
+ if(modal) modal.style.display = "flex";
+ setTimeout(()=>document.getElementById("buscaGarrafaPosicionar")?.focus(), 120);
+}
+
+function fecharModalPosicionarGarrafa3D(){
+ const modal = document.getElementById("modalPosicionarGarrafa3D");
+ if(modal) modal.style.display = "none";
+ document.querySelectorAll(".bottle-slot.selected-empty").forEach(el=>el.classList.remove("selected-empty"));
+ posicaoVazia3DSelecionada = null;
+}
+
+function renderizarListaGarrafasParaPosicionar(){
+ const box = document.getElementById("listaGarrafasParaPosicionar");
+ if(!box) return;
+ const lista = garrafasDisponiveisParaPosicionar3D();
+ if(!lista.length){
+   box.innerHTML = `<div class="posicionar-empty">Nenhuma garrafa sem posição foi encontrada. Para mover uma garrafa que já está posicionada, remova ou altere a posição no detalhe do vinho.</div>`;
+   return;
+ }
+ box.innerHTML = lista.map(item=>{
+   const v = item.vinho;
+   const nota = Number(v.detalhes?.notaVivino || 0);
+   const flag = bandeiraPais(v.detalhes?.pais || "");
+   const thumb = v.fotoUrl
+     ? `<img class="posicionar-thumb" src="${textoSeguroHtml(v.fotoUrl)}" alt="Foto de ${textoSeguroHtml(v.nome)}" loading="lazy">`
+     : `<div class="posicionar-thumb-placeholder">${iconeTipo(v.tipo)}</div>`;
+   const meta = `${flag ? flag + " " : ""}${v.tipo || "-"}${v.safra ? " • " + v.safra : ""}${v.detalhes?.uva ? " • " + v.detalhes.uva : ""}`;
+   return `<button type="button" class="posicionar-item" onclick="posicionarGarrafaNoSlot3D(${item.index}, ${item.aquisicaoIndex})">
+     ${thumb}
+     <span class="posicionar-main">
+       <strong>${textoSeguroHtml(v.nome || "Vinho sem nome")}</strong>
+       <span>${textoSeguroHtml(meta)}</span>
+     </span>
+     <span class="posicionar-badge">${nota ? "⭐ " + nota.toFixed(1) : "Sem posição"}</span>
+   </button>`;
+ }).join("");
+}
+
+async function posicionarGarrafaNoSlot3D(vinhoIndex, aquisicaoIndex){
+ const destino = posicaoVazia3DSelecionada;
+ if(!destino){
+   mostrarMensagem("Não foi possível identificar a posição selecionada.", {tipo:"erro", titulo:"Posição não encontrada", icone:"❌"});
+   return;
+ }
+ const v = garantirEstrutura(vinhos[vinhoIndex]);
+ const a = v?.aquisicoes?.[aquisicaoIndex];
+ if(!v || !a || !a.id){
+   mostrarMensagem("Não foi possível identificar esta garrafa.", {tipo:"erro", titulo:"Garrafa não encontrada", icone:"❌"});
+   return;
+ }
+ const ocupada = posicaoOcupadaEmOutraGarrafa(destino.adegaId, destino.posicaoCodigo, a.id);
+ if(ocupada){
+   mostrarMensagem(`A posição ${destino.posicaoCodigo} acabou de ser ocupada por ${ocupada.vinho.nome}.`, {tipo:"aviso", titulo:"Posição ocupada", icone:"⚠️"});
+   renderizarAdega3D();
+   fecharModalPosicionarGarrafa3D();
+   return;
+ }
+
+ const nomeVinho = `${v.nome || "Vinho sem nome"}${v.safra ? " • " + v.safra : ""}`;
+ const confirmacao = await confirmarAdega(
+   `Inserir ${nomeVinho} na posição ${destino.posicaoCodigo}?
+
+Adega: ${destino.adegaNome || "Adega"}
+Posição: ${destino.posicaoCodigo}`,
+   {
+     titulo:"Inserir garrafa",
+     icone:"📍",
+     confirmar:"Inserir",
+     cancelar:"Cancelar"
+   }
+ );
+ if(!confirmacao) return;
+
+ const ocupadaAposConfirmacao = posicaoOcupadaEmOutraGarrafa(destino.adegaId, destino.posicaoCodigo, a.id);
+ if(ocupadaAposConfirmacao){
+   mostrarMensagem(`A posição ${destino.posicaoCodigo} acabou de ser ocupada por ${ocupadaAposConfirmacao.vinho.nome}.`, {tipo:"aviso", titulo:"Posição ocupada", icone:"⚠️"});
+   renderizarAdega3D();
+   fecharModalPosicionarGarrafa3D();
+   return;
+ }
+
+ try{
+   const {error} = await supabaseClient
+     .from("garrafas")
+     .update({adega_id: destino.adegaId || null, posicao_adega: destino.posicaoCodigo || null})
+     .eq("id", a.id);
+   if(error) throw error;
+   fecharModalPosicionarGarrafa3D();
+   await carregarDoSupabase(true);
+   renderizarAdega3D();
+   mostrarMensagem(`${nomeVinho} foi colocada na posição ${destino.posicaoCodigo}.`, {tipo:"sucesso", titulo:"Garrafa posicionada", icone:"🍷"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível posicionar a garrafa no Supabase.", {tipo:"erro", titulo:"Erro ao posicionar", icone:"❌"});
+ }
+}
+
+
+function limparEstadoArrastoAdega3D(){
+ const estado = arrastoAdega3D;
+ if(estado?.timer) clearTimeout(estado.timer);
+ document.removeEventListener("pointermove", moverArrastoGarrafa3D, true);
+ document.removeEventListener("pointerup", finalizarArrastoGarrafa3D, true);
+ document.removeEventListener("pointercancel", cancelarArrastoGarrafa3D, true);
+ document.querySelectorAll(".drop-target").forEach(el=>el.classList.remove("drop-target"));
+ document.querySelectorAll(".drag-source").forEach(el=>el.classList.remove("drag-source"));
+ document.getElementById("adega3dRack")?.classList.remove("dragging-3d");
+ document.getElementById("adega3dDragGhost")?.remove();
+ document.getElementById("adega3dDragHint")?.remove();
+ arrastoAdega3D = null;
+}
+
+function criarGhostArrastoAdega3D(vinho){
+ const ghost = document.createElement("div");
+ ghost.id = "adega3dDragGhost";
+ ghost.className = "adega3d-drag-ghost";
+ ghost.innerHTML = `<span class="bottle-css ${classeTipoAdega3D(vinho?.tipo)}"></span>`;
+ document.body.appendChild(ghost);
+ const hint = document.createElement("div");
+ hint.id = "adega3dDragHint";
+ hint.className = "adega3d-drag-hint";
+ hint.innerText = "Solte em uma posição vazia";
+ document.body.appendChild(hint);
+ return ghost;
+}
+
+function iniciarArrastoGarrafa3D(event, index, aquisicaoIndex, slotIndex, elementId){
+ if(event.button !== undefined && event.button !== 0) return;
+ const origemEl = document.getElementById(elementId);
+ const v = garantirEstrutura(vinhos[index]);
+ const a = v?.aquisicoes?.[aquisicaoIndex];
+ if(!origemEl || !v || !a || !a.id) return;
+ if(arrastoAdega3D) limparEstadoArrastoAdega3D();
+ arrastoAdega3D = {
+   index,
+   aquisicaoIndex,
+   garrafaId:a.id,
+   slotOrigem:slotIndex,
+   elementId,
+   pointerId:event.pointerId,
+   startX:event.clientX,
+   startY:event.clientY,
+   lastX:event.clientX,
+   lastY:event.clientY,
+   ativo:false,
+   ghost:null,
+   target:null,
+   timer:null
+ };
+ try{ origemEl.setPointerCapture?.(event.pointerId); }catch(e){}
+ arrastoAdega3D.timer = setTimeout(()=>{
+   if(!arrastoAdega3D || arrastoAdega3D.pointerId !== event.pointerId) return;
+   arrastoAdega3D.ativo = true;
+   origemEl.classList.add("drag-source");
+   document.getElementById("adega3dRack")?.classList.add("dragging-3d");
+   arrastoAdega3D.ghost = criarGhostArrastoAdega3D(v);
+   posicionarGhostArrastoAdega3D(arrastoAdega3D.lastX || event.clientX, arrastoAdega3D.lastY || event.clientY);
+   if(navigator.vibrate) navigator.vibrate(35);
+ }, 360);
+ document.addEventListener("pointermove", moverArrastoGarrafa3D, true);
+ document.addEventListener("pointerup", finalizarArrastoGarrafa3D, true);
+ document.addEventListener("pointercancel", cancelarArrastoGarrafa3D, true);
+}
+
+function posicionarGhostArrastoAdega3D(x, y){
+ const ghost = arrastoAdega3D?.ghost;
+ if(!ghost) return;
+ ghost.style.transform = `translate(${x - 37}px, ${y - 18}px)`;
+}
+
+function alvoVazioArrastoAdega3D(x, y){
+ const ghost = arrastoAdega3D?.ghost;
+ if(ghost) ghost.style.display = "none";
+ const el = document.elementFromPoint(x, y);
+ if(ghost) ghost.style.display = "flex";
+ return el?.closest?.(".bottle-slot.empty-slot") || null;
+}
+
+function moverArrastoGarrafa3D(event){
+ const estado = arrastoAdega3D;
+ if(!estado || event.pointerId !== estado.pointerId) return;
+ estado.lastX = event.clientX;
+ estado.lastY = event.clientY;
+ const dx = Math.abs(event.clientX - estado.startX);
+ const dy = Math.abs(event.clientY - estado.startY);
+
+ // Antes do toque longo ativar, não cancelamos mais o arrasto por movimento.
+ // No celular, qualquer pequeno deslocamento ao segurar a garrafa podia cancelar o pointer
+ // e fazia parecer que o recurso "parava" quando o usuário começava a arrastar.
+ if(!estado.ativo){
+   if(dx > 4 || dy > 4) event.preventDefault();
+   return;
+ }
+
+ event.preventDefault();
+ posicionarGhostArrastoAdega3D(event.clientX, event.clientY);
+ const alvo = alvoVazioArrastoAdega3D(event.clientX, event.clientY);
+ if(estado.target && estado.target !== alvo) estado.target.classList.remove("drop-target");
+ estado.target = alvo;
+ if(alvo) alvo.classList.add("drop-target");
+}
+
+function cancelarArrastoGarrafa3D(event){
+ const estado = arrastoAdega3D;
+ if(!estado || event.pointerId !== estado.pointerId) return;
+ limparEstadoArrastoAdega3D();
+}
+
+async function finalizarArrastoGarrafa3D(event){
+ const estado = arrastoAdega3D;
+ if(!estado || event.pointerId !== estado.pointerId) return;
+ if(estado.timer) clearTimeout(estado.timer);
+ if(!estado.ativo){
+   limparEstadoArrastoAdega3D();
+   return;
+ }
+ event.preventDefault();
+ event.stopPropagation();
+ const alvo = estado.target || alvoVazioArrastoAdega3D(event.clientX, event.clientY);
+ const destino = alvo ? {
+   slotIndex:Number(alvo.dataset.slotIndex || -1),
+   prateleira:Number(alvo.dataset.prateleira || 0),
+   posicao:Number(alvo.dataset.posicao || 0),
+   elementId:alvo.id
+ } : null;
+ suprimirCliqueAdega3D = true;
+ setTimeout(()=>{ suprimirCliqueAdega3D = false; }, 450);
+ limparEstadoArrastoAdega3D();
+ if(!destino || destino.slotIndex < 0) return;
+ await confirmarMoverGarrafaPorArrasto3D(estado, destino);
+}
+
+async function confirmarMoverGarrafaPorArrasto3D(origem, destino){
+ const adega = obterAdega3DSelecionada();
+ const v = garantirEstrutura(vinhos[origem.index]);
+ const a = v?.aquisicoes?.[origem.aquisicaoIndex];
+ if(!adega || !v || !a || !a.id){
+   mostrarMensagem("Não foi possível identificar a garrafa ou a adega selecionada.", {tipo:"erro", titulo:"Movimento não realizado", icone:"❌"});
+   return;
+ }
+ const novaPosicao = posicaoPorIndiceAdega3D(destino.slotIndex, adega);
+ const posicaoAtual = a.posicaoAdega || posicaoPorIndiceAdega3D(origem.slotOrigem, adega);
+ if(String(novaPosicao || "") === String(posicaoAtual || "") && String(a.adegaId || "") === String(adega.id || "")) return;
+ const ocupada = posicaoOcupadaEmOutraGarrafa(adega.id, novaPosicao, a.id);
+ if(ocupada){
+   mostrarMensagem(`A posição ${novaPosicao} já está ocupada por ${ocupada.vinho.nome}${ocupada.vinho.safra ? " • " + ocupada.vinho.safra : ""}.`, {tipo:"aviso", titulo:"Posição ocupada", icone:"⚠️"});
+   renderizarAdega3D();
+   return;
+ }
+ const nomeVinho = `${v.nome || "Vinho sem nome"}${v.safra ? " • " + v.safra : ""}`;
+ const confirmado = await confirmarAdega(
+   `Mover ${nomeVinho}?
+
+De: ${nomeAdegaPorId(a.adegaId || adega.id)} • posição ${posicaoAtual || "-"}
+Para: ${adega.nome || "Adega"} • posição ${novaPosicao}`,
+   {titulo:"Confirmar mudança", icone:"🔄", confirmar:"Mover", cancelar:"Cancelar"}
+ );
+ if(!confirmado){
+   renderizarAdega3D();
+   return;
+ }
+ const ocupadaAposConfirmacao = posicaoOcupadaEmOutraGarrafa(adega.id, novaPosicao, a.id);
+ if(ocupadaAposConfirmacao){
+   mostrarMensagem(`A posição ${novaPosicao} acabou de ser ocupada por ${ocupadaAposConfirmacao.vinho.nome}.`, {tipo:"aviso", titulo:"Posição ocupada", icone:"⚠️"});
+   renderizarAdega3D();
+   return;
+ }
+ try{
+   const {error} = await supabaseClient
+     .from("garrafas")
+     .update({adega_id: adega.id || null, posicao_adega: novaPosicao || null})
+     .eq("id", a.id);
+   if(error) throw error;
+   await carregarDoSupabase(true);
+   renderizarAdega3D();
+   mostrarMensagem(`${nomeVinho} foi movida para ${adega.nome || "Adega"} • posição ${novaPosicao}.`, {tipo:"sucesso", titulo:"Garrafa movida", icone:"🍷"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível mover a garrafa no Supabase.", {tipo:"erro", titulo:"Erro ao mover", icone:"❌"});
+ }
+}
+
+
+function abrirModalMoverGarrafa3D(index, aquisicaoIndex){
+ const v = garantirEstrutura(vinhos[index]);
+ const a = v?.aquisicoes?.[aquisicaoIndex];
+ if(!v || !a || !a.id){
+   mostrarMensagem("Não foi possível identificar esta garrafa para mover.", {tipo:"erro", titulo:"Garrafa não encontrada", icone:"❌"});
+   return;
+ }
+ garrafa3DSelecionadaMover = {index, aquisicaoIndex, garrafaId:a.id};
+ const nomeVinho = `${v.nome || "Vinho sem nome"}${v.safra ? " • " + v.safra : ""}`;
+ const adegaAtual = nomeAdegaPorId(a.adegaId);
+ const posicaoAtual = a.posicaoAdega || "Sem posição";
+ const resumo = document.getElementById("moverGarrafa3DResumo");
+ if(resumo){
+   resumo.innerHTML = `
+     <b>${textoSeguroHtml(nomeVinho)}</b><br>
+     Origem atual: <b>${textoSeguroHtml(adegaAtual)}</b> • posição <b>${textoSeguroHtml(posicaoAtual)}</b><br>
+     Escolha a nova adega e a nova posição.`;
+ }
+ const selectAdega = document.getElementById("moverGarrafa3DAdega");
+ if(selectAdega){
+   selectAdega.innerHTML = htmlOptionsAdegasSelecionada(a.adegaId || obterAdega3DSelecionada()?.id || "");
+   if(!selectAdega.value && obterAdega3DSelecionada()?.id) selectAdega.value = obterAdega3DSelecionada().id;
+ }
+ atualizarPosicoesMoverGarrafa3D(a.posicaoAdega || "");
+ const modal = document.getElementById("modalMoverGarrafa3D");
+ if(modal) modal.style.display = "flex";
+}
+
+function atualizarPosicoesMoverGarrafa3D(posicaoPreferida=""){
+ const selectAdega = document.getElementById("moverGarrafa3DAdega");
+ const selectPosicao = document.getElementById("moverGarrafa3DPosicao");
+ if(!selectAdega || !selectPosicao) return;
+ const valorAtual = posicaoPreferida || selectPosicao.value || "";
+ selectPosicao.innerHTML = htmlOptionsPosicoesAdega(selectAdega.value, valorAtual);
+}
+
+function fecharModalMoverGarrafa3D(){
+ const modal = document.getElementById("modalMoverGarrafa3D");
+ if(modal) modal.style.display = "none";
+ garrafa3DSelecionadaMover = null;
+}
+
+async function confirmarMoverGarrafa3D(){
+ const ref = garrafa3DSelecionadaMover;
+ if(!ref){
+   mostrarMensagem("Não foi possível identificar a garrafa selecionada.", {tipo:"erro", titulo:"Garrafa não encontrada", icone:"❌"});
+   return;
+ }
+ const v = garantirEstrutura(vinhos[ref.index]);
+ const a = v?.aquisicoes?.[ref.aquisicaoIndex];
+ if(!v || !a || !a.id){
+   mostrarMensagem("Não foi possível identificar esta garrafa.", {tipo:"erro", titulo:"Garrafa não encontrada", icone:"❌"});
+   return;
+ }
+ const adegaId = document.getElementById("moverGarrafa3DAdega")?.value || "";
+ const posicao = document.getElementById("moverGarrafa3DPosicao")?.value || "";
+ if(posicao && !adegaId){
+   mostrarMensagem("Escolha a adega antes de informar a posição da garrafa.", {tipo:"aviso", titulo:"Adega não informada", icone:"⚠️"});
+   return;
+ }
+ if(!adegaId || !posicao){
+   mostrarMensagem("Escolha a adega e a posição para mover a garrafa.", {tipo:"aviso", titulo:"Destino incompleto", icone:"⚠️"});
+   return;
+ }
+ const ocupada = posicaoOcupadaEmOutraGarrafa(adegaId, posicao, a.id);
+ if(ocupada){
+   mostrarMensagem(`A posição ${posicao} já está ocupada por ${ocupada.vinho.nome}${ocupada.vinho.safra ? " • " + ocupada.vinho.safra : ""}.`, {tipo:"aviso", titulo:"Posição ocupada", icone:"⚠️"});
+   return;
+ }
+ const nomeVinho = `${v.nome || "Vinho sem nome"}${v.safra ? " • " + v.safra : ""}`;
+ const nomeAdegaDestino = nomeAdegaPorId(adegaId);
+ const confirmado = await confirmarAdega(
+   `Mover ${nomeVinho} para ${nomeAdegaDestino} • posição ${posicao}?`,
+   {titulo:"Mover garrafa", icone:"🔄", confirmar:"Mover", cancelar:"Cancelar"}
+ );
+ if(!confirmado) return;
+ const ocupadaAposConfirmacao = posicaoOcupadaEmOutraGarrafa(adegaId, posicao, a.id);
+ if(ocupadaAposConfirmacao){
+   mostrarMensagem(`A posição ${posicao} acabou de ser ocupada por ${ocupadaAposConfirmacao.vinho.nome}.`, {tipo:"aviso", titulo:"Posição ocupada", icone:"⚠️"});
+   return;
+ }
+ try{
+   const {error} = await supabaseClient
+     .from("garrafas")
+     .update({adega_id: adegaId || null, posicao_adega: posicao || null})
+     .eq("id", a.id);
+   if(error) throw error;
+   fecharModalMoverGarrafa3D();
+   await carregarDoSupabase(true);
+   if(adega3DSelecionadaId !== String(adegaId)){
+     adega3DSelecionadaId = String(adegaId);
+     localStorage.setItem("aj_adega3d_selecionada_id", adega3DSelecionadaId);
+   }
+   renderizarAdega3D();
+   mostrarMensagem(`${nomeVinho} foi movida para ${nomeAdegaDestino} • posição ${posicao}.`, {tipo:"sucesso", titulo:"Garrafa movida", icone:"🍷"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível mover a garrafa no Supabase.", {tipo:"erro", titulo:"Erro ao mover", icone:"❌"});
+ }
+}
+
+async function removerPosicaoGarrafa3D(index, aquisicaoIndex){
+ const v = garantirEstrutura(vinhos[index]);
+ const a = v?.aquisicoes?.[aquisicaoIndex];
+ if(!v || !a || !a.id){
+   mostrarMensagem("Não foi possível identificar esta garrafa.", {tipo:"erro", titulo:"Garrafa não encontrada", icone:"❌"});
+   return;
+ }
+ const nomeVinho = `${v.nome || "Vinho sem nome"}${v.safra ? " • " + v.safra : ""}`;
+ const confirmado = await confirmarAdega(
+   `Remover a posição de ${nomeVinho}?\n\nA garrafa continuará no estoque, apenas ficará sem posição definida.`,
+   {titulo:"Remover posição", icone:"📍", confirmar:"Remover", cancelar:"Cancelar"}
+ );
+ if(!confirmado) return;
+ try{
+   const {error} = await supabaseClient
+     .from("garrafas")
+     .update({adega_id:null, posicao_adega:null})
+     .eq("id", a.id);
+   if(error) throw error;
+   await carregarDoSupabase(true);
+   renderizarAdega3D();
+   mostrarMensagem(`${nomeVinho} ficou sem posição definida.`, {tipo:"sucesso", titulo:"Posição removida", icone:"📍"});
+ }catch(e){
+   console.error(e);
+   mostrarMensagem("Não foi possível remover a posição da garrafa no Supabase.", {tipo:"erro", titulo:"Erro ao remover posição", icone:"❌"});
+ }
+}
+
 function selecionarGarrafa3D(index, aquisicaoIndex, prateleira, posicao, elementId, scroll=true){
+ if(suprimirCliqueAdega3D) return;
  document.querySelectorAll(".bottle-slot.selected").forEach(el=>el.classList.remove("selected"));
  const el = document.getElementById(elementId);
  if(el) el.classList.add("selected");
@@ -9125,8 +10676,10 @@ function selecionarGarrafa3D(index, aquisicaoIndex, prateleira, posicao, element
      <div class="adega3d-detail-box"><small>Janela</small><strong>${info.resumo || "-"}</strong></div>
    </div>
    <div class="adega3d-actions">
+     <button class="btn-secondary btn-mover-garrafa-3d" onclick="abrirModalMoverGarrafa3D(${index}, ${aquisicaoIndex})">🔄 Mover garrafa</button>
      <button class="btn-secondary" onclick="abrirDetalhes(${index})">👁️ Ver detalhes completos</button>
-     <button class="btn-secondary btn-save" onclick="abrirDetalhes(${index})">🍷 Registrar consumo</button>
+     <button class="btn-secondary btn-save" onclick="abrirModalConsumirGarrafa(${index}, ${aquisicaoIndex})">🍷 Registrar consumo</button>
+     <button class="btn-secondary btn-remover-posicao-3d" onclick="removerPosicaoGarrafa3D(${index}, ${aquisicaoIndex})">📍 Remover posição</button>
    </div>`;
  if(scroll && window.innerWidth <= 900) detalhe.scrollIntoView({behavior:"smooth", block:"start"});
 }
