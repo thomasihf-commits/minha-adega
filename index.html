@@ -708,7 +708,7 @@
     </div>
     <div class="modal-body detalhe-vinho-body">
       <div id="modalFotoWrap" class="detalhe-foto-wrap"></div>
-      <div class="foto-actions">
+      <div class="foto-actions detalhe-edit-only">
         <input id="fotoDetalhe" type="file" accept="image/*" capture="environment" onchange="previewFotoDetalhe(event); atualizarFotoDetalhe();">
         <button class="btn-secondary btn-save" type="button" onclick="document.getElementById('fotoDetalhe').click()">📷 Trocar foto do rótulo</button>
       </div>
@@ -725,7 +725,7 @@
       </div>
 
       <p class="detalhe-section-title">Aquisições</p>
-      <button type="button" class="btn-adicionar-garrafas" onclick="event.stopPropagation(); abrirModalAdicionarGarrafas()">＋ Adicionar garrafas</button>
+      <button type="button" class="btn-adicionar-garrafas detalhe-edit-only" onclick="event.stopPropagation(); abrirModalAdicionarGarrafas()">＋ Adicionar garrafas</button>
       <div id="modalAquisicoes" class="purchase-list"></div>
       <div id="modalResumoCompras" class="purchase-total"></div>
 
@@ -733,10 +733,12 @@
       <textarea id="modalNotas" placeholder="Ex.: vinho encorpado, ideal para carnes, guardar para ocasião especial..."></textarea>
     </div>
     <div class="modal-actions detalhe-actions-modern">
-      <button class="btn-secondary btn-detail-delete" onclick="excluirVinho()"><span class="delete-icon" aria-hidden="true">🗑</span><span class="delete-label">Excluir</span></button>
-      <button class="btn-secondary btn-detail-cancel" onclick="fecharDetalhes()">Cancelar</button>
-      <button class="btn-secondary btn-detail-save" onclick="salvarDetalhes()">✓ Salvar</button>
-    </div>
+      <button id="btnDetalheExcluir" class="btn-secondary btn-detail-delete" onclick="excluirVinho()"><span class="delete-icon" aria-hidden="true"></span><span class="delete-label">Excluir</span></button>
+      <button id="btnDetalheEditar" class="btn-secondary btn-detail-edit" onclick="habilitarEdicaoDetalhes()">✎ Editar</button>
+      <button id="btnDetalheCancelarEdicao" class="btn-secondary btn-detail-cancel" onclick="cancelarEdicaoDetalhes()">Cancelar edição</button>
+      <button id="btnDetalheFechar" class="btn-secondary btn-detail-cancel" onclick="fecharDetalhes()">Fechar</button>
+      <button id="btnDetalheSalvar" class="btn-secondary btn-detail-save" onclick="salvarDetalhes()">✓ Salvar</button>
+
   </div>
 </div>
 
