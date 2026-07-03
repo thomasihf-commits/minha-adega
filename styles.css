@@ -6623,3 +6623,21 @@ body.modo-teste-ativo .modo-teste-banner{display:block}
   .wine-world-map-svg{border-radius:18px!important;}
   .worldmap-ranking{grid-template-columns:1fr!important;}
 }
+#modalDetalhes:not(.modo-edicao) .detalhe-edit-field,
+#modalDetalhes:not(.modo-edicao) textarea {
+  opacity: 1;
+  cursor: default;
+  pointer-events: none;
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+}
+
+#modalDetalhes:not(.modo-edicao) .detalhe-edit-field:disabled,
+#modalDetalhes:not(.modo-edicao) textarea:disabled {
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+}
+
+.btn-detail-edit {
+  font-weight: 700;
+}
