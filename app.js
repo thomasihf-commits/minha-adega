@@ -140,6 +140,7 @@ const vinhosBase = [
 let vinhos = [];
 let filtroAtual = "";
 let vinhoSelecionado = null;
+let detalheEmEdicao = false;
 let consumosExternos = [];
 let vinhosDesejadosTabela = [];
 let adegas = [];
@@ -156,6 +157,47 @@ let rotuloFotoUrlAtual = "";
 let fotoUrlPreCadastro = "";
 
 let mostrarValoresFinanceiros = localStorage.getItem("aj_mostrar_valores_financeiros") !== "false";
+function elementosEdicaoDetalhe(){
+  return Array.from(document.querySelectorAll("#modalDetalhes .detalhe-edit-field, #modalDetalhes textarea"));
+}
+
+function aplicarModoEdicaoDetalhe(ativo){
+  detalheEmEdicao = !!ativo;
+  const modal = document.getElementById("modalDetalhes");
+  if(modal) modal.classList.toggle("modo-edicao", detalheEmEdicao);
+
+  elementosEdicaoDetalhe().forEach(el=>{
+    el.disabled = !detalheEmEdicao;
+  });
+
+  document.querySelectorAll("#modalDetalhes .detalhe-edit-only").forEach(el=>{
+    el.style.display = detalheEmEdicao ? "" : "none";
+  });
+
+  const btnEditar = document.getElementById("btnDetalheEditar");
+  const btnCancelarEdicao = document.getElementById("btnDetalheCancelarEdicao");
+  const btnSalvar = document.getElementById("btnDetalheSalvar");
+  const btnExcluir = document.getElementById("btnDetalheExcluir");
+
+  if(btnEditar) btnEditar.style.display = detalheEmEdicao ? "none" : "";
+  if(btnCancelarEdicao) btnCancelarEdicao.style.display = detalheEmEdicao ? "" : "none";
+  if(btnSalvar) btnSalvar.style.display = detalheEmEdicao ? "" : "none";
+  if(btnExcluir) btnExcluir.style.display = detalheEmEdicao ? "" : "none";
+}
+
+function habilitarEdicaoDetalhes(){
+  aplicarModoEdicaoDetalhe(true);
+  const primeiroCampo = document.querySelector("#modalDetalhes .detalhe-edit-field");
+  if(primeiroCampo) primeiroCampo.focus();
+}
+
+function cancelarEdicaoDetalhes(){
+  if(vinhoSelecionado === null){
+    aplicarModoEdicaoDetalhe(false);
+    return;
+  }
+  abrirDetalhes(vinhoSelecionado);
+}
 
 function valorFinanceiro(valor){
  return mostrarValoresFinanceiros ? moeda(valor) : "••••••";
@@ -2597,6 +2639,7 @@ document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
  const modalDetalhesEl = document.getElementById("modalDetalhes");
  modalDetalhesEl.style.display = "flex";
  modalDetalhesEl.scrollTop = 0;
+ aplicarModoEdicaoDetalhe(false);
 }
 
 
@@ -3017,12 +3060,20 @@ Essa ação remove o vinho e todas as aquisições/consumos associados a ele.`, 
 }
 
 function fecharDetalhes(){
- document.getElementById("modalDetalhes").style.display = "none";
- vinhoSelecionado = null;
+  aplicarModoEdicaoDetalhe(false);
+  document.getElementById("modalDetalhes").style.display = "none";
+  vinhoSelecionado = null;
 }
+
 
 async function salvarDetalhes(){
  if(vinhoSelecionado === null) return;
+
+ if(!detalheEmEdicao){
+  habilitarEdicaoDetalhes();
+  return;
+}
+
  const v = garantirEstrutura(vinhos[vinhoSelecionado]);
  const valorCampoDetalhe = (id)=> (document.getElementById(id)?.value || "").trim();
  v.detalhes.produtor = valorCampoDetalhe("modalEditProdutor") || "-";
