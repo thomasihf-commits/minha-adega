@@ -6800,3 +6800,70 @@ body.modo-teste-ativo .modo-teste-banner{display:block}
     height:26px!important;
   }
 }
+
+/* =====================================================
+   CORREÇÃO FINAL - DETALHE DO VINHO
+   Botões comuns, sem card "Ações do vinho" e sem barra fixa.
+   ===================================================== */
+#modalDetalhes .detalhe-vinho-modal .detalhe-actions-comuns{
+  position:static!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  gap:10px!important;
+  padding:14px 18px 18px!important;
+  margin:0!important;
+  background:#fff!important;
+  border-top:1px solid rgba(133,0,43,.08)!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+}
+#modalDetalhes .detalhe-vinho-modal .detalhe-actions-comuns .btn-secondary{
+  width:auto!important;
+  min-width:auto!important;
+  min-height:40px!important;
+  height:40px!important;
+  border-radius:999px!important;
+  padding:0 16px!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+}
+#modalDetalhes .detalhe-vinho-modal .btn-detail-save{
+  background:linear-gradient(135deg,#2f9b5d,#19723f)!important;
+  color:#fff!important;
+  border-color:transparent!important;
+}
+#modalDetalhes .detalhe-vinho-modal .btn-detail-delete{
+  background:#fff!important;
+  color:#9b2727!important;
+  border:1px solid #efcaca!important;
+}
+#modalDetalhes .detalhe-vinho-modal .btn-detail-cancel,
+#modalDetalhes .detalhe-vinho-modal .btn-detail-edit{
+  background:#f3eeee!important;
+  color:#4d4246!important;
+  border:1px solid #ece2de!important;
+}
+#modalDetalhes:not(.modo-edicao) #btnDetalheCancelarEdicao,
+#modalDetalhes:not(.modo-edicao) #btnDetalheSalvar{
+  display:none!important;
+}
+#modalDetalhes.modo-edicao #btnDetalheEditar,
+#modalDetalhes.modo-edicao #btnDetalheExcluir{
+  display:none!important;
+}
+@media(max-width:650px){
+  #modalDetalhes .detalhe-vinho-modal .detalhe-actions-comuns{
+    justify-content:center!important;
+    padding:12px 12px 16px!important;
+    gap:8px!important;
+  }
+  #modalDetalhes .detalhe-vinho-modal .detalhe-actions-comuns .btn-secondary{
+    height:38px!important;
+    min-height:38px!important;
+    padding:0 13px!important;
+    font-size:12.5px!important;
+  }
+}
