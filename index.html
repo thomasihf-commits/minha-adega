@@ -732,13 +732,52 @@
       <p class="detalhe-section-title">Observações / notas</p>
       <textarea id="modalNotas" placeholder="Ex.: vinho encorpado, ideal para carnes, guardar para ocasião especial..."></textarea>
     </div>
-    <div class="modal-actions detalhe-actions-modern">
-      <button id="btnDetalheExcluir" class="btn-secondary btn-detail-delete" onclick="excluirVinho()"><span class="delete-icon" aria-hidden="true"></span><span class="delete-label">Excluir</span></button>
-      <button id="btnDetalheEditar" class="btn-secondary btn-detail-edit" onclick="habilitarEdicaoDetalhes()">✎ Editar</button>
-      <button id="btnDetalheCancelarEdicao" class="btn-secondary btn-detail-cancel" onclick="cancelarEdicaoDetalhes()">Cancelar edição</button>
-      <button id="btnDetalheFechar" class="btn-secondary btn-detail-cancel" onclick="fecharDetalhes()">Fechar</button>
-      <button id="btnDetalheSalvar" class="btn-secondary btn-detail-save" onclick="salvarDetalhes()">✓ Salvar</button>
+    <div class="modal-actions detalhe-actions-modern detalhe-actions-card">
+      <div class="adega3d-actions adega3d-actions-premium detalhe-actions-premium">
+        <div class="adega3d-actions-title">Ações do vinho</div>
 
+        <button id="btnDetalheEditar" class="adega3d-action-primary" onclick="habilitarEdicaoDetalhes()" type="button">
+          <span class="adega3d-action-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4 11.5-11.5Z"/></svg>
+          </span>
+          <span>
+            <strong>Editar vinho</strong>
+            <small>Liberar os campos para alteração</small>
+          </span>
+        </button>
+
+        <button id="btnDetalheSalvar" class="adega3d-action-primary detalhe-action-save" onclick="salvarDetalhes()" type="button">
+          <span class="adega3d-action-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>
+            <strong>Salvar alterações</strong>
+            <small>Gravar os dados editados</small>
+          </span>
+        </button>
+
+        <div class="adega3d-action-secondary-grid detalhe-secondary-grid">
+          <button id="btnDetalheCancelarEdicao" class="adega3d-action-secondary" onclick="cancelarEdicaoDetalhes()" type="button">
+            <span class="adega3d-action-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+            </span>
+            <strong>Cancelar</strong>
+          </button>
+          <button id="btnDetalheFechar" class="adega3d-action-secondary" onclick="fecharDetalhes()" type="button">
+            <span class="adega3d-action-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M15 18l6-6-6-6"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+            </span>
+            <strong>Fechar</strong>
+          </button>
+          <button id="btnDetalheExcluir" class="adega3d-action-secondary danger" onclick="excluirVinho()" type="button">
+            <span class="adega3d-action-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 14h10l1-14"/><path d="M9 7V4h6v3"/></svg>
+            </span>
+            <strong>Remover</strong>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

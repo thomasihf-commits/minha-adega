@@ -6641,3 +6641,61 @@ body.modo-teste-ativo .modo-teste-banner{display:block}
 .btn-detail-edit {
   font-weight: 700;
 }
+
+/* ===============================
+   DETALHE DO VINHO - AÇÕES NO PADRÃO ADEGA 3D
+   =============================== */
+.detalhe-vinho-modal .detalhe-actions-modern.detalhe-actions-card{
+  position:sticky!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:0!important;
+  display:block!important;
+  padding:10px 18px calc(12px + env(safe-area-inset-bottom))!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.78),#fff 42%)!important;
+  border-top:1px solid rgba(133,0,43,.08)!important;
+  box-shadow:0 -10px 26px rgba(70,25,22,.08)!important;
+  backdrop-filter:blur(12px)!important;
+}
+.detalhe-vinho-modal .detalhe-actions-premium{
+  margin:0!important;
+  box-shadow:0 8px 22px rgba(70,25,22,.06)!important;
+}
+.detalhe-vinho-modal .detalhe-action-save{
+  background:
+    radial-gradient(circle at 88% 0%, rgba(255,255,255,.20), transparent 32%),
+    linear-gradient(135deg,#1e9a5a,#126b3a)!important;
+  box-shadow:0 12px 24px rgba(25,114,63,.20)!important;
+}
+.detalhe-vinho-modal .detalhe-secondary-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.detalhe-vinho-modal:not(.modo-edicao) #btnDetalheCancelarEdicao{
+  display:none!important;
+}
+.detalhe-vinho-modal.modo-edicao #btnDetalheExcluir{
+  display:none!important;
+}
+.detalhe-vinho-modal.modo-edicao .detalhe-secondary-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.detalhe-vinho-modal.modo-edicao #btnDetalheFechar{
+  grid-column:auto;
+}
+@media(max-width:650px){
+  .detalhe-vinho-modal .detalhe-actions-modern.detalhe-actions-card{
+    padding:9px 12px calc(10px + env(safe-area-inset-bottom))!important;
+  }
+  .detalhe-vinho-modal .detalhe-secondary-grid{
+    gap:7px;
+  }
+}
+#modalDetalhes.modo-edicao .detalhe-vinho-modal .detalhe-secondary-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+#modalDetalhes.modo-edicao .detalhe-vinho-modal #btnDetalheExcluir{
+  display:none!important;
+}
+#modalDetalhes:not(.modo-edicao) .detalhe-vinho-modal #btnDetalheCancelarEdicao{
+  display:none!important;
+}
