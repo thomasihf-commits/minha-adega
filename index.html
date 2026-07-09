@@ -27,7 +27,7 @@
     <button class="btn-header btn-new" onclick="abrirCadastro()">＋ Novo vinho</button>
   </div>
 </header>
-<div id="modoTesteBanner" class="modo-teste-banner">🧪 Modo teste ativo — teste funcionalidades sem gravar no Supabase, sem alterar estoque e sem registrar histórico.</div>
+<div id="modoTesteBanner" class="modo-teste-banner">🧪 Modo teste ativo — teste funcionalidades sem gravar na base, sem alterar estoque e sem registrar histórico.</div>
 
 <main class="container">
 
@@ -515,7 +515,7 @@
     min="1"
     max="5"
     step="0.1"
-    placeholder="Vivino"
+    placeholder="Nota Avaliações"
   >
 </div>
 
@@ -562,6 +562,7 @@
     <option>Pão de Açúcar</option>
     <option>Vianense</option>
     <option>Zona Sul</option>
+    <option>World Wine</option>
     <option>Outros</option>
   </select>
 </div>
@@ -875,7 +876,7 @@
 
       <div class="form-row">
         <input id="extNome" placeholder="Nome do vinho">
-        <input id="extNotaVivino" type="number" min="1" max="5" step="0.1" placeholder="Vivino">
+        <input id="extNotaVivino" type="number" min="1" max="5" step="0.1" placeholder="Nota Avaliações">
       </div>
 
       <div class="form-row">
@@ -1057,15 +1058,15 @@
         <div class="modo-teste-config-card">
           <div>
             <strong>🧪 Modo teste</strong>
-            <span>Teste consumo, movimentação, cadastro, exclusão e alterações sem gravar nada no Supabase.</span>
+            <span>Teste consumo, movimentação, cadastro, exclusão e alterações sem gravar nada na base.</span>
           </div>
           <button id="btnModoTeste" type="button" class="modo-teste-switch" onclick="toggleModoTeste()">Desativado</button>
         </div>
         <button class="btn-secondary" onclick="exportarBackup()">Backup JSON</button>
         <button class="btn-secondary" onclick="document.getElementById('importar').click()">Importar JSON</button>
-        <button class="btn-secondary" onclick="carregarDoSupabase(false)">☁️ Recarregar Supabase</button>
+        <button class="btn-secondary" onclick="carregarDoSupabase(false)">☁️ Recarregar base</button>
         <button class="btn-secondary" onclick="abrirCadastroAdegas()">🍷 Minhas adegas</button>
-        <button class="btn-secondary btn-save" onclick="alert('A Adega Juliana agora salva automaticamente no Supabase.')">☁️ Supabase ativo</button>
+        <button class="btn-secondary btn-save" onclick="alert('A Adega Juliana agora salva automaticamente no Supabase.')">☁️ base ativo</button>
       </div>
       <input id="importar" type="file" accept=".json" style="display:none" onchange="importarBackup(event)">
     </div>
