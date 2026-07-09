@@ -1263,6 +1263,33 @@ function diaMesHistorico(data){
  return {dia:String(d.getDate()).padStart(2,"0"), mes:meses[d.getMonth()]};
 }
 
+function abrirFotoMomentoHistorico(urlCodificada, tituloCodificado){
+ const url = decodeURIComponent(urlCodificada || "");
+ const titulo = decodeURIComponent(tituloCodificado || "Foto do momento");
+ if(!url){
+   mostrarMensagem("Este consumo não possui foto do momento registrada.", {tipo:"aviso", titulo:"Sem foto", icone:"📷"});
+   return;
+ }
+ const modal = document.getElementById("modalFotoMomentoHistorico");
+ const img = document.getElementById("modalFotoMomentoHistoricoImg");
+ const tituloEl = document.getElementById("modalFotoMomentoHistoricoTitulo");
+ if(!modal || !img){
+   window.open(url, "_blank");
+   return;
+ }
+ if(tituloEl) tituloEl.innerText = titulo;
+ img.src = url;
+ img.alt = `Foto do momento - ${titulo}`;
+ modal.style.display = "flex";
+}
+
+function fecharFotoMomentoHistorico(){
+ const modal = document.getElementById("modalFotoMomentoHistorico");
+ const img = document.getElementById("modalFotoMomentoHistoricoImg");
+ if(modal) modal.style.display = "none";
+ if(img) img.src = "";
+}
+
 function htmlHistoricoCard(c, idx){
  const flag = bandeiraPais(c.pais);
  const dataBadge = diaMesHistorico(c.dataConsumo);
@@ -1308,7 +1335,14 @@ function htmlHistoricoCard(c, idx){
          ${tags ? `<span class="hist-experience-badge">${tags}</span>` : ""}
        </div>
 
-       ${c.fotoMomentoUrl ? `<div class="hist-experience-photo"><img src="${c.fotoMomentoUrl}" alt="Foto do momento"></div>` : ""}
+       ${c.fotoMomentoUrl ? `
+         <div class="hist-experience-photo">
+           <img src="${c.fotoMomentoUrl}" alt="Foto do momento" loading="lazy">
+         </div>
+         <div class="hist-mini-photo-actions">
+           <button class="btn-secondary" type="button" onclick="event.stopPropagation(); abrirFotoMomentoHistorico('${encodeURIComponent(c.fotoMomentoUrl)}', '${encodeURIComponent(c.vinho || "Vinho consumido")}')">📷 Ver foto do momento</button>
+         </div>
+       ` : ""}
 
        <div class="hist-mini-grid">
          <div class="hist-mini-box"><small>Data</small><strong>${formatarDataHistorico(c.dataConsumo)}</strong></div>
@@ -1329,11 +1363,6 @@ function htmlHistoricoCard(c, idx){
 
        ${observacao ? `<div class="hist-mini-note"><b>Opiniões / lembranças:</b><br>${observacao}</div>` : ""}
 
-       ${c.vinhoId ? `
-         <div class="hist-mini-actions">
-           <button class="btn-secondary" onclick="event.stopPropagation(); abrirVinhoDoHistorico('${c.vinhoId}')">Abrir vinho</button>
-         </div>
-       ` : ""}
      </div>
    </details>`;
 }
