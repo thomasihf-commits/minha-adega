@@ -462,7 +462,7 @@ function renderizarResultadoRotulo(vinhoIA){
          <div class="rotulo-info"><small>Preço estimado</small><strong>${valorRotulo(preco)}</strong></div>
          <div class="rotulo-info"><small>Teor / volume</small><strong>${valorRotulo(vinhoIA.teor_alcoolico)} • ${valorRotulo(vinhoIA.volume_ml)}</strong></div>
        </div>
-       ${vinhoIA.observacoes ? `<div class="rotulo-observacoes"><strong>Observações:</strong> ${vinhoIA.observacoes}</div>` : ""}
+      ${renderDadosSommelier(vinhoIA)}
      </div>
    </div>`;
  el.style.display = "block";
@@ -474,6 +474,107 @@ function renderizarResultadoRotulo(vinhoIA){
  }, 120);
 }
 
+function renderDadosSommelier(vinho) {
+
+  const possuiDados =
+    vinho.temperatura_servico ||
+    vinho.tempo_decanter ||
+    vinho.perfil_sensorial ||
+    vinho.estilo_do_vinho ||
+    (vinho.harmonizacao && vinho.harmonizacao.length) ||
+    (vinho.ocasioes_recomendadas && vinho.ocasioes_recomendadas.length) ||
+    vinho.descricao_sommelier ||
+    vinho.curiosidades;
+
+  if (!possuiDados) return "";
+
+  return `
+  <div class="sommelier-card">
+
+    <button
+      type="button"
+      class="sommelier-header"
+      onclick="toggleDadosSommelier()">
+
+      <span>🍷 Dados do Sommelier</span>
+
+      <span id="sommelierArrow">▼</span>
+
+    </button>
+
+    <div
+      id="sommelierBody"
+      class="sommelier-body"
+      style="display:none;">
+
+      ${(vinho.temperatura_servico || vinho.tempo_decanter) ? `
+      <div class="sommelier-grid">
+
+        ${vinho.temperatura_servico ? `
+        <div class="sommelier-mini-card">
+          <div class="titulo">🌡️ Temperatura</div>
+          <div>${vinho.temperatura_servico}</div>
+        </div>
+        ` : ""}
+
+        ${vinho.tempo_decanter ? `
+        <div class="sommelier-mini-card">
+          <div class="titulo">🫗 Decanter</div>
+          <div>${vinho.tempo_decanter}</div>
+        </div>
+        ` : ""}
+
+      </div>
+      ` : ""}
+
+      ${vinho.estilo_do_vinho ? `
+      <h4>🍷 Estilo</h4>
+      <p>${vinho.estilo_do_vinho}</p>
+      ` : ""}
+
+      ${vinho.perfil_sensorial ? `
+      <h4>👃 Perfil Sensorial</h4>
+      <p>${vinho.perfil_sensorial}</p>
+      ` : ""}
+
+      ${vinho.harmonizacao?.length ? `
+      <h4>🍽️ Harmonização</h4>
+
+      <div class="sommelier-tags">
+
+        ${vinho.harmonizacao.map(item => `
+          <span class="sommelier-tag">${item}</span>
+        `).join("")}
+
+      </div>
+      ` : ""}
+
+      ${vinho.ocasioes_recomendadas?.length ? `
+      <h4>🎯 Ideal para</h4>
+
+      <div class="sommelier-tags">
+
+        ${vinho.ocasioes_recomendadas.map(item => `
+          <span class="sommelier-tag">${item}</span>
+        `).join("")}
+
+      </div>
+      ` : ""}
+
+      ${vinho.descricao_sommelier ? `
+      <h4>⭐ Comentário do Sommelier</h4>
+      <p>${vinho.descricao_sommelier}</p>
+      ` : ""}
+
+      ${vinho.curiosidades ? `
+      <h4>📖 Curiosidade</h4>
+      <p>${vinho.curiosidades}</p>
+      ` : ""}
+
+    </div>
+
+  </div>`;
+}
 async function analisarRotuloComIA(){
  const input = document.getElementById("rotuloFoto");
  const file = input?.files && input.files[0];
@@ -4506,6 +4607,24 @@ function mostrarAba(aba){
  }else{
    if(tabs[0]) tabs[0].classList.add('active');
  }
+}
+
+function toggleDadosSommelier(){
+
+  const body = document.getElementById("sommelierBody");
+
+  const arrow = document.getElementById("sommelierArrow");
+
+  if(!body) return;
+
+  const aberto = body.style.display !== "none";
+
+  body.style.display = aberto ? "none" : "block";
+
+  if(arrow){
+      arrow.textContent = aberto ? "▼" : "▲";
+  }
+
 }
 
 function abrirConfiguracoes(){
