@@ -4560,7 +4560,7 @@ body{background:linear-gradient(180deg,#fffaf7 0%,#f7eee8 100%)!important;}
     gap:0!important;
   }
   .detalhe-vinho-modal .btn-detail-delete .delete-label{
-    display:none!important;
+    display:inline!important;
   }
   .detalhe-vinho-modal .btn-detail-delete .delete-icon{
     font-size:15px!important;
