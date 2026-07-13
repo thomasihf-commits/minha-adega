@@ -1336,13 +1336,19 @@ function htmlHistoricoCard(c, idx){
        </div>
 
        ${c.fotoMomentoUrl ? `
-         <div class="hist-experience-photo">
-           <img src="${c.fotoMomentoUrl}" alt="Foto do momento" loading="lazy">
-         </div>
-         <div class="hist-mini-photo-actions">
-           <button class="btn-secondary" type="button" onclick="event.stopPropagation(); abrirFotoMomentoHistorico('${encodeURIComponent(c.fotoMomentoUrl)}', '${encodeURIComponent(c.vinho || "Vinho consumido")}')">📷 Ver foto do momento</button>
-         </div>
-       ` : ""}
+  <div class="hist-mini-photo-actions">
+    <button
+      class="btn-secondary"
+      type="button"
+      onclick="event.stopPropagation(); abrirFotoMomentoHistorico(
+        '${encodeURIComponent(c.fotoMomentoUrl)}',
+        '${encodeURIComponent(c.vinho || "Vinho consumido")}'
+      )"
+    >
+      📷 Ver foto do momento
+    </button>
+  </div>
+` : ""}
 
        <div class="hist-mini-grid">
          <div class="hist-mini-box"><small>Data</small><strong>${formatarDataHistorico(c.dataConsumo)}</strong></div>
