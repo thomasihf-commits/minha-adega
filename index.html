@@ -1174,6 +1174,37 @@ if ("serviceWorker" in navigator) {
     .then(reg => console.log("SW registrado:", reg.scope))
     .catch(err => alert("Erro no Service Worker: " + err.message));
 }
+
+  <div
+  id="modalFotoMomentoHistorico"
+  class="modal-bg"
+  onclick="fecharFotoMomentoHistorico()"
+  style="display:none;"
+>
+  <div class="modal modal-foto-momento" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2 id="modalFotoMomentoHistoricoTitulo">Foto do momento</h2>
+    </div>
+
+    <div class="modal-body">
+      <img
+        id="modalFotoMomentoHistoricoImg"
+        class="foto-momento-historico-img"
+        alt="Foto do momento"
+      >
+    </div>
+
+    <div class="modal-actions">
+      <button
+        class="btn-secondary"
+        type="button"
+        onclick="fecharFotoMomentoHistorico()"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>
 </script>
 </body>
 </html>
