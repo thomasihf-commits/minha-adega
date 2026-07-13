@@ -6932,3 +6932,72 @@ body.modo-teste-ativo .modo-teste-banner{display:block}
     max-height: 360px;
   }
 }
+
+
+.sommelier-card{
+    margin-top:18px;
+    border:1px solid #eadfd7;
+    border-radius:14px;
+    overflow:hidden;
+    background:#fffdfb;
+}
+
+.sommelier-header{
+    width:100%;
+    border:none;
+    background:#f8f3ef;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 16px;
+    font-size:15px;
+    font-weight:700;
+}
+
+.sommelier-body{
+    padding:16px;
+}
+
+.sommelier-body h4{
+    margin:18px 0 6px;
+    font-size:14px;
+    color:#7b4c2d;
+}
+
+.sommelier-body p{
+    margin:0;
+    line-height:1.55;
+}
+
+.sommelier-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.sommelier-mini-card{
+    background:#faf7f5;
+    border:1px solid #ece3dd;
+    border-radius:12px;
+    padding:12px;
+}
+
+.sommelier-mini-card .titulo{
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.sommelier-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.sommelier-tag{
+    background:#ede4dc;
+    border-radius:999px;
+    padding:6px 12px;
+    font-size:12px;
+}
