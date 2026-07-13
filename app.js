@@ -3375,20 +3375,48 @@ function renderDualChart(id, compras, consumos){
    </div>`;
 }
 function renderTopConsumidos(id, dados){
- const el = document.getElementById(id);
- if(!el) return;
- const top = Object.entries(dados).sort((a,b)=>Number(b[1])-Number(a[1])).slice(0,8);
- if(!top.length){
-   el.innerHTML = `<div class="stats-empty">Nenhum consumo registrado ainda.</div>`;
-   return;
- }
- el.innerHTML = `
-   <table class="stats-table">
-     <thead><tr><th>Vinho</th><th>Garrafas</th></tr></thead>
-     <tbody>
-       ${top.map(([nome,qtd])=>`<tr><td>${nome}</td><td>${qtd}</td></tr>`).join("")}
-     </tbody>
-   </table>`;
+  const el = document.getElementById(id);
+
+  if(!el) return;
+
+  const ranking = Object.entries(dados)
+    .sort((a, b) => Number(b[1]) - Number(a[1]));
+
+  if(!ranking.length){
+    el.innerHTML = `
+      <div class="stats-empty">
+        Nenhum consumo registrado ainda.
+      </div>
+    `;
+    return;
+  }
+
+  el.innerHTML = `
+    <div
+      class="stats-table-scroll"
+      role="region"
+      aria-label="Ranking completo de vinhos consumidos"
+      tabindex="0"
+    >
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Vinho</th>
+            <th>Garrafas</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${ranking.map(([nome, qtd]) => `
+            <tr>
+              <td>${nome}</td>
+              <td>${qtd}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
 
 function classeInsightTipo(label){
