@@ -89,6 +89,10 @@
           <option value="safra-nova">Safra: mais nova</option>
           <option value="nome">Nome</option>
           <option value="quantidade">Quantidade</option>
+          <option value="valor-menor">Valor da garrafa: menor → maior</option>
+          <option value="valor-maior">Valor da garrafa: maior → menor</option>
+          <option value="uva-az">Uva: A → Z</option>
+          <option value="uva-za">Uva: Z → A</option>
         </select>
       </div>
     </div>
@@ -113,7 +117,7 @@
         <span class="eyebrow">Painel da adega</span>
         <h2>Estatísticas</h2>
       </div>
-      <span class="stats-pill">Atualizado agora</span>
+      <span class="stats-pill">Sua adega em números</span>
     </div>
 
     <div class="stats-dashboard stats-modern">
@@ -121,7 +125,7 @@
         <div class="stats-hero-top">
           <span class="stats-hero-title">
             <span class="stats-hero-icon">🍷</span>
-            <span>Patrimônio da adega</span>
+            <span>Total investido na adega</span>
           </span>
           <button id="btnToggleValores" class="btn-toggle-valores" type="button" onclick="toggleValoresFinanceiros(event)" aria-label="Ocultar valores">
             <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
@@ -135,10 +139,10 @@
       </div>
 
       <div class="stats-kpis stats-kpis-modern">
-        <div class="stats-kpi"><small>Em estoque</small><strong id="kpiValorEstoque" class="valor-fade">-</strong><span>Valor ainda na adega</span></div>
-        <div class="stats-kpi"><small>Compradas</small><strong id="kpiGarrafasCompradas">-</strong><span>Total registrado</span></div>
-        <div class="stats-kpi"><small>Consumidas</small><strong id="kpiGarrafasConsumidas">-</strong><span>Adega + externo</span></div>
-        <div class="stats-kpi"><small>Ticket médio</small><strong id="kpiTicketMedio" class="valor-fade">-</strong><span>Por garrafa comprada</span></div>
+        <div class="stats-kpi"><small><span class="kpi-symbol" aria-hidden="true">◈</span>Em estoque</small><strong id="kpiValorEstoque" class="valor-fade">-</strong><span>Valor ainda na adega</span></div>
+        <div class="stats-kpi"><small><span class="kpi-symbol" aria-hidden="true">↗</span>Compradas</small><strong id="kpiGarrafasCompradas">-</strong><span>Total registrado</span></div>
+        <div class="stats-kpi"><small><span class="kpi-symbol" aria-hidden="true">🍷</span>Consumidas</small><strong id="kpiGarrafasConsumidas">-</strong><span>Adega + externo</span></div>
+        <div class="stats-kpi"><small><span class="kpi-symbol" aria-hidden="true">◇</span>Ticket médio</small><strong id="kpiTicketMedio" class="valor-fade">-</strong><span>Por garrafa comprada</span></div>
       </div>
 
       <div class="stats-insights-grid">

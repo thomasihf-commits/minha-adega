@@ -2242,6 +2242,43 @@ function selecionarOrdenacaoConsumo(){
  renderizar();
 }
 
+function valorAquisicaoMaisRecente(vinho){
+ const aquisicoes = Array.isArray(vinho?.aquisicoes) ? vinho.aquisicoes : [];
+ const comValor = aquisicoes
+   .filter(a=>Number(a?.valorUnitario) > 0)
+   .map((a,index)=>({
+     valor:Number(a.valorUnitario),
+     data:a.data ? new Date(`${a.data}T00:00:00`).getTime() : 0,
+     index
+   }))
+   .sort((a,b)=>{
+     if(a.data !== b.data) return b.data - a.data;
+     return b.index - a.index;
+   });
+ return comValor.length ? comValor[0].valor : null;
+}
+
+function compararValoresGarrafas(a,b,direcao=1){
+ const va = valorAquisicaoMaisRecente(a);
+ const vb = valorAquisicaoMaisRecente(b);
+ if(va === null && vb === null) return a.nome.localeCompare(b.nome, "pt-BR", {sensitivity:"base"});
+ if(va === null) return 1;
+ if(vb === null) return -1;
+ if(va !== vb) return (va - vb) * direcao;
+ return a.nome.localeCompare(b.nome, "pt-BR", {sensitivity:"base"});
+}
+
+function compararUvas(a,b,direcao=1){
+ const ua = String(a.detalhes?.uva || "").trim();
+ const ub = String(b.detalhes?.uva || "").trim();
+ if(!ua && !ub) return a.nome.localeCompare(b.nome, "pt-BR", {sensitivity:"base"});
+ if(!ua) return 1;
+ if(!ub) return -1;
+ const comparacao = ua.localeCompare(ub, "pt-BR", {sensitivity:"base"});
+ if(comparacao !== 0) return comparacao * direcao;
+ return a.nome.localeCompare(b.nome, "pt-BR", {sensitivity:"base"});
+}
+
 function ordenarListaVinhos(lista, ordenacao){
  lista.sort((a,b)=>{
    if(ordenacao==="potencial-consumo" || ordenacao==="consumo-recomendado"){
@@ -2255,7 +2292,11 @@ function ordenarListaVinhos(lista, ordenacao){
    if(ordenacao==="safra-nova") return Number(b.safra||0) - Number(a.safra||0);
    if(ordenacao==="quantidade") return Number(b.quantidade||0) - Number(a.quantidade||0);
    if(ordenacao==="vivino") return Number(b.detalhes?.notaVivino || 0) - Number(a.detalhes?.notaVivino || 0);
-   return a.nome.localeCompare(b.nome);
+   if(ordenacao==="valor-menor") return compararValoresGarrafas(a,b,1);
+   if(ordenacao==="valor-maior") return compararValoresGarrafas(a,b,-1);
+   if(ordenacao==="uva-az") return compararUvas(a,b,1);
+   if(ordenacao==="uva-za") return compararUvas(a,b,-1);
+   return a.nome.localeCompare(b.nome, "pt-BR", {sensitivity:"base"});
  });
  return lista;
 }
@@ -3391,23 +3432,19 @@ function renderBarChart(id, dados, opcoes={}){
  const max = Math.max(...ordenadas.map(([_,v])=>Number(v)),1);
 
  if(id === "graficoValorCompras"){
-   const mesesComValor = ordenadas.filter(([_,valor])=>Number(valor)>0).slice(-6);
-   const totalPeriodo = mesesComValor.reduce((s,[_,valor])=>s+Number(valor||0),0);
-   el.innerHTML = `
-     <div class="month-spend-list">
-       ${mesesComValor.map(([label,valor])=>{
-         const largura = Math.max((Number(valor)/max)*100, 5);
-         return `
-           <div class="month-spend-row">
-             <div class="month-spend-top">
-               <span>${numeroMesLabel(label)}</span>
-               <strong>${valorFinanceiro(valor)}</strong>
-             </div>
-             <div class="month-spend-track"><span class="month-spend-fill" style="width:${largura}%"></span></div>
-           </div>`;
-       }).join("")}
-       <div class="month-spend-total"><span>Total no período exibido</span><strong>${valorFinanceiro(totalPeriodo)}</strong></div>
-     </div>`;
+   const meses = Object.entries(dados).slice(-12);
+   const teto = Math.max(...meses.map(([,v])=>Number(v)),1);
+   const pontos = meses.map(([mes,v],i)=>({x:40+i*640/Math.max(meses.length-1,1), y:180-Number(v)/teto*140, mes, v:Number(v)}));
+   const linha = pontos.map(p=>`${p.x},${p.y}`).join(" ");
+   const total = meses.reduce((s,[,v])=>s+Number(v),0);
+   el.innerHTML = `<div class="spend-highlight"><small>Últimos 12 meses</small><strong>${valorFinanceiro(total)}</strong></div>
+     <div class="stats-plot-scroll"><svg class="stats-line-svg" viewBox="0 0 720 220" role="img" aria-label="Valor comprado em cada mês; detalhes na lista abaixo">
+       <defs><linearGradient id="statsSpendGradient" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a44469" stop-opacity=".28"/><stop offset="1" stop-color="#a44469" stop-opacity="0"/></linearGradient></defs>
+       ${[40,110,180].map(y=>`<line x1="40" y1="${y}" x2="680" y2="${y}" stroke="#eee5e8"/>`).join("")}
+       <polygon points="40,180 ${linha} 680,180" fill="url(#statsSpendGradient)"/>
+       <polyline points="${linha}" fill="none" stroke="#8a254c" stroke-width="3" stroke-linejoin="round"/>
+       ${pontos.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="4" fill="#8a254c"><title>${numeroMesLabel(p.mes)}: ${valorFinanceiro(p.v)}</title></circle><text x="${p.x}" y="208" text-anchor="middle">${numeroMesLabel(p.mes)}</text>`).join("")}
+     </svg></div><details class="stats-details"><summary>Ver valores por mês</summary>${meses.map(([mes,v])=>`<div><span>${numeroMesLabel(mes)}</span><strong>${valorFinanceiro(v)}</strong></div>`).join("")}</details>`;
    return;
  }
 
@@ -3415,10 +3452,11 @@ function renderBarChart(id, dados, opcoes={}){
    const largura = Math.max((Number(valor)/max)*100, 4);
    const classe = idx % 3 === 1 ? "secondary" : idx % 3 === 2 ? "rosefill" : "";
    const valorLabel = opcoes.moeda ? valorFinanceiro(valor) : Number(valor).toLocaleString("pt-BR");
-   const labelFinal = opcoes.mes ? numeroMesLabel(label) : label;
+   const labelFinal = opcoes.mes ? numeroMesLabel(label) : statsEscape(label);
+   const flag = id === "graficoConsumoPais" ? (mapaMundiPaisesCoords[normalizarPaisMapa(label)]?.flag || "🌍") + " " : "";
    return `
      <div class="chart-row">
-       <span>${labelFinal}</span>
+       <span>${flag}${labelFinal}</span>
        <div class="chart-track"><div class="chart-fill ${classe}" style="width:${largura}%"></div></div>
        <strong>${valorLabel}</strong>
      </div>`;
@@ -3428,52 +3466,14 @@ function renderBarChart(id, dados, opcoes={}){
 function renderDualChart(id, compras, consumos){
  const el = document.getElementById(id);
  if(!el) return;
- const meses = ultimosMeses(12);
- const movimentos = meses
-   .map(m=>({mes:m, compras:Number(compras[m] || 0), consumos:Number(consumos[m] || 0)}))
-   .filter(x=>x.compras > 0 || x.consumos > 0);
-
- if(!movimentos.length){
+ const movimentos = ultimosMeses(12).map(mes=>({mes, compras:Number(compras[mes]||0), consumos:Number(consumos[mes]||0)}));
+ if(!movimentos.some(x=>x.compras||x.consumos)){
    el.innerHTML = `<div class="stats-empty">Nenhuma compra ou consumo registrado nos últimos 12 meses.</div>`;
    return;
  }
-
- const max = Math.max(...movimentos.flatMap(x=>[x.compras, x.consumos]),1);
- const totalCompras = movimentos.reduce((s,x)=>s+x.compras,0);
- const totalConsumos = movimentos.reduce((s,x)=>s+x.consumos,0);
- const ultimos = movimentos.slice(-6);
-
- el.innerHTML = `
-   <div class="month-movement-list">
-     ${ultimos.map(x=>{
-       const larguraCompra = Math.max((x.compras/max)*100, x.compras ? 5 : 0);
-       const larguraConsumo = Math.max((x.consumos/max)*100, x.consumos ? 5 : 0);
-       const texto = x.consumos
-         ? `${x.compras} compra${x.compras === 1 ? "" : "s"} • ${x.consumos} consumo${x.consumos === 1 ? "" : "s"}`
-         : `${x.compras} compra${x.compras === 1 ? "" : "s"} • nenhum consumo`;
-       return `
-         <div class="month-movement-row">
-           <div class="month-movement-top">
-             <div class="month-movement-month">
-               <strong>${numeroMesLabel(x.mes)}</strong>
-               <span>${texto}</span>
-             </div>
-             <div class="month-movement-kpis">
-               <span class="month-chip buy">● ${x.compras}</span>
-               <span class="month-chip consume">● ${x.consumos}</span>
-             </div>
-           </div>
-           <div class="month-movement-bars">
-             <div class="month-movement-bar"><span style="width:${larguraCompra}%"></span></div>
-             ${x.consumos ? `<div class="month-movement-bar consumo"><span style="width:${larguraConsumo}%"></span></div>` : ""}
-           </div>
-         </div>`;
-     }).join("")}
-     <div class="month-movement-summary">
-       <div><small>Compras no período</small><strong>${totalCompras}</strong></div>
-       <div><small>Consumos no período</small><strong>${totalConsumos}</strong></div>
-     </div>
-   </div>`;
+ const max = Math.max(...movimentos.flatMap(x=>[x.compras,x.consumos]),1);
+ el.innerHTML = `<div class="movement-totals"><span><b>${movimentos.reduce((s,x)=>s+x.compras,0)}</b> compradas</span><span><b>${movimentos.reduce((s,x)=>s+x.consumos,0)}</b> consumidas <small>· últimos 12 meses</small></span></div>
+ <div class="stats-plot-scroll"><div class="movement-columns">${movimentos.map(x=>`<div class="movement-month"><div class="movement-pair"><div class="movement-column buy" style="height:${x.compras/max*100}%"><span>${x.compras||""}</span></div><div class="movement-column consume" style="height:${x.consumos/max*100}%"><span>${x.consumos||""}</span></div></div><small>${numeroMesLabel(x.mes)}</small><span class="sr-only">Compras: ${x.compras}; consumos: ${x.consumos}</span></div>`).join("")}</div></div>`;
 }
 function renderTopConsumidos(id, dados){
   const el = document.getElementById(id);
@@ -3536,30 +3536,23 @@ function classeInsightJanela(label){
  return "";
 }
 
-function renderInsightList(id, dados, classeFn){
- const el = document.getElementById(id);
- if(!el) return;
- const entradas = Object.entries(dados || {}).filter(([_,v])=>Number(v)>0).sort((a,b)=>Number(b[1])-Number(a[1]));
- if(!entradas.length){
-   el.innerHTML = `<div class="stats-empty" style="padding:12px;font-size:12px">Sem dados suficientes.</div>`;
-   return;
- }
- const total = entradas.reduce((s,[_,v])=>s+Number(v||0),0) || 1;
- const max = Math.max(...entradas.map(([_,v])=>Number(v)),1);
- el.innerHTML = entradas.slice(0,5).map(([label,valor])=>{
-   const largura = Math.max((Number(valor)/max)*100, 5);
-   const pct = Math.round((Number(valor)/total)*100);
-   const cls = classeFn ? classeFn(label) : "";
-   return `
-     <div class="insight-row">
-       <label>${label}</label>
-       <strong>${valor} • ${pct}%</strong>
-       <div class="insight-track"><span class="insight-fill ${cls}" style="width:${largura}%"></span></div>
-     </div>`;
- }).join("");
+function statsEscape(value){
+ return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-
-
+function renderInsightList(id, dados, classeFn){
+ const el=document.getElementById(id);
+ if(!el) return;
+ const entradas=Object.entries(dados||{}).filter(([,v])=>Number(v)>0).sort((a,b)=>Number(b[1])-Number(a[1]));
+ const total=entradas.reduce((s,[,v])=>s+Number(v),0);
+ if(!total){el.innerHTML='<div class="stats-empty">Sem dados suficientes.</div>'; return;}
+ const cores={gold:'#d2ae52',rose:'#df8b9c',green:'#518b76',red:'#c26056','':'#852b50'};
+ const rows=entradas.map(([label,v])=>{const cor=cores[classeFn(label)];return `<div class="profile-item" style="--profile-color:${cor}"><span class="profile-dot"></span><span>${statsEscape(label)}</span><strong>${v}<small>${Math.round(Number(v)/total*100)}%</small></strong></div>`;}).join('');
+ if(id==='statsPerfilTipos'){
+   let inicio=0;
+   const segmentos=entradas.map(([label,v])=>{const fim=inicio+Number(v)/total*100;const seg=`${cores[classeFn(label)]} ${inicio}% ${fim}%`;inicio=fim;return seg;});
+   el.innerHTML=`<div class="profile-layout"><div class="profile-donut" style="background:conic-gradient(${segmentos.join(',')})" role="img" aria-label="Composição da adega; quantidades e percentuais ao lado"><div><strong>${total}</strong><small>garrafas</small></div></div><div class="profile-legend">${rows}</div></div>`;
+ }else{el.innerHTML=`<div class="window-status">${rows}</div>`;}
+}
 
 /* ===============================
    MAPA-MÚNDI DETERMINÍSTICO
