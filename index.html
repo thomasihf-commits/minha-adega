@@ -725,6 +725,7 @@
       </div>
 
       <p class="detalhe-section-title">Aquisições</p>
+      <div id="localizarVinhoWrap" class="localizar-vinho-wrap"></div>
       <button type="button" class="btn-adicionar-garrafas detalhe-edit-only" onclick="event.stopPropagation(); abrirModalAdicionarGarrafas()">＋ Adicionar garrafas</button>
       <div id="modalAquisicoes" class="purchase-list"></div>
       <div id="modalResumoCompras" class="purchase-total"></div>
@@ -743,6 +744,25 @@
   </div>
 </div>
 
+<div id="modalLocalizarGarrafa" class="modal-bg modal-localizar-garrafa" onclick="fecharLocalizadorGarrafa()" aria-label="Localizar garrafa">
+  <div class="modal localizar-garrafa-modal" onclick="event.stopPropagation()">
+    <div class="localizar-header">
+      <div><small>LOCALIZAR VINHO</small><h2 id="localizarTitulo">Câmera</h2><p id="localizarInstrucao">Aponte para os suportes e alinhe a imagem.</p></div>
+      <button type="button" class="localizar-fechar" onclick="fecharLocalizadorGarrafa()" aria-label="Fechar">×</button>
+    </div>
+    <div class="camera-stage" id="cameraStage">
+      <video id="cameraVideo" autoplay playsinline muted></video>
+      <canvas id="cameraOverlay" aria-label="Sobreposição das posições das garrafas"></canvas>
+      <div id="cameraEstado" class="camera-estado">Abrindo câmera…</div>
+    </div>
+    <div class="localizar-actions">
+      <button id="btnCalibrarCamera" type="button" class="btn-secondary" onclick="iniciarCalibracaoLocalizador()">Alinhar suportes</button>
+      <button type="button" class="btn-secondary" onclick="fecharLocalizadorGarrafa()">Fechar</button>
+    </div>
+    <div id="localizarPosicoes" class="localizar-posicoes"></div>
+    <p class="localizar-nota">O alinhamento é salvo neste aparelho. Depois de alinhar, mantenha o celular parado para os destaques coincidirem com os suportes.</p>
+  </div>
+</div>
 
 <div id="modalAdicionarGarrafas" class="modal-bg" onclick="fecharModalAdicionarGarrafas()">
   <div class="modal adicionar-garrafas-modal" onclick="event.stopPropagation()">

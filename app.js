@@ -2733,11 +2733,160 @@ function htmlEditorPosicaoGarrafa(a, idx){
        </div>
        <div class="garrafa-posicao-resumo">Atual: <b>${adegaNome}</b>${a.posicaoAdega ? ` • posição <b>${posicao}</b>` : ""}</div>
      </div>
-   </div>`;
+ </div>`;
 }
+
+let localizadorVinhoIndex = null;
+let localizadorStream = null;
+let localizadorCalibracao = null;
+const CHAVE_CALIBRACAO_LOCALIZADOR = "adegaJuliana.camera.supports.v1";
+
+function posicoesAtivasDoVinho(v){
+ const itens = [];
+ (v?.aquisicoes || []).forEach(a=>{
+   if(a.consumida || !a.adegaId || !a.posicaoAdega) return;
+   const adega = adegas.find(x=>String(x.id) === String(a.adegaId));
+   if(!adega) return;
+   itens.push({adegaId:String(adega.id), adegaNome:adega.nome || "Suporte", posicao:String(a.posicaoAdega), vinho:v.nome});
+ });
+ return itens;
+}
+
+function carregarCalibracaoLocalizador(){
+ try{return JSON.parse(localStorage.getItem(CHAVE_CALIBRACAO_LOCALIZADOR) || "{}");}catch(_){return {};}
+}
+
+function salvarCalibracaoLocalizador(calibracao){
+ try{localStorage.setItem(CHAVE_CALIBRACAO_LOCALIZADOR, JSON.stringify(calibracao));}catch(e){console.warn("Não foi possível salvar o alinhamento da câmera",e);}
+}
+
+function abrirLocalizadorGarrafa(){
+ const v = vinhos[localizadorVinhoIndex];
+ if(!v) return;
+ const itens = posicoesAtivasDoVinho(v);
+ if(!itens.length){
+   mostrarMensagem("Este vinho ainda não tem posições ativas cadastradas. Defina uma adega e uma posição em cada garrafa para localizá-lo.",{tipo:"aviso",titulo:"Posição não cadastrada",icone:"📍"});
+   return;
+ }
+ const supports = [...new Set(itens.map(x=>x.adegaId))];
+ const nomes = [...new Set(itens.map(x=>`${x.adegaNome} ${x.posicao}`))];
+ document.getElementById("localizarTitulo").innerText = v.nome;
+ document.getElementById("localizarInstrucao").innerText = `${itens.length} garrafa${itens.length===1?"":"s"} em ${supports.length} suporte${supports.length===1?"":"s"}.`;
+ document.getElementById("localizarPosicoes").innerHTML = itens.map(x=>`<span class="localizar-chip"><b>${x.adegaNome}</b><span>${x.posicao}</span></span>`).join("");
+ localizadorCalibracao = null;
+ const modal = document.getElementById("modalLocalizarGarrafa");
+ modal.style.display = "flex";
+ atualizarDesenhoLocalizador();
+ abrirCameraLocalizador();
+}
+
+async function abrirCameraLocalizador(){
+ const video = document.getElementById("cameraVideo");
+ const estado = document.getElementById("cameraEstado");
+ if(!navigator.mediaDevices?.getUserMedia){
+   estado.innerText = "A câmera exige um navegador compatível e uma conexão segura (HTTPS).";
+   return;
+ }
+ try{
+   localizadorStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
+   video.srcObject = localizadorStream;
+   await video.play();
+   estado.style.display = "none";
+   atualizarDesenhoLocalizador();
+ }catch(e){
+   console.warn("Falha ao abrir câmera",e);
+   estado.style.display = "grid";
+   estado.innerText = e?.name === "NotAllowedError" ? "Permita o acesso à câmera para localizar as garrafas." : "Não foi possível abrir a câmera neste aparelho.";
+ }
+}
+
+function fecharLocalizadorGarrafa(){
+ const modal = document.getElementById("modalLocalizarGarrafa");
+ if(modal) modal.style.display = "none";
+ if(localizadorStream){localizadorStream.getTracks().forEach(t=>t.stop());localizadorStream=null;}
+ const video=document.getElementById("cameraVideo"); if(video) video.srcObject=null;
+ localizadorCalibracao=null;
+ const canvas=document.getElementById("cameraOverlay"); if(canvas) canvas.style.pointerEvents="none";
+}
+
+function iniciarCalibracaoLocalizador(){
+ const v = vinhos[localizadorVinhoIndex];
+ const itens = posicoesAtivasDoVinho(v);
+ const ids = [...new Set(itens.map(x=>x.adegaId))];
+ const suportes = ids.map(id=>adegas.find(a=>String(a.id)===id)).filter(Boolean);
+ if(!suportes.length) return;
+ localizadorCalibracao = {suportes, indice:0, pontos:[], calibracoes:carregarCalibracaoLocalizador()};
+ const canvas=document.getElementById("cameraOverlay"); if(canvas) canvas.style.pointerEvents="auto";
+ document.getElementById("localizarInstrucao").innerText = `Alinhar ${suportes[0].nome}: toque nos quatro cantos do suporte, começando pelo superior esquerdo e seguindo no sentido horário.`;
+ document.getElementById("cameraEstado").style.display = "none";
+ atualizarDesenhoLocalizador();
+}
+
+function pontoBilinear(q,u,v){
+ const [tl,tr,br,bl]=q;
+ return {x:(1-u)*(1-v)*tl.x+u*(1-v)*tr.x+u*v*br.x+(1-u)*v*bl.x,y:(1-u)*(1-v)*tl.y+u*(1-v)*tr.y+u*v*br.y+(1-u)*v*bl.y};
+}
+
+function desenharLocalizador(){
+ const canvas=document.getElementById("cameraOverlay"), stage=document.getElementById("cameraStage");
+ if(!canvas||!stage) return;
+ const rect=stage.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+ canvas.width=Math.max(1,Math.round(rect.width*dpr)); canvas.height=Math.max(1,Math.round(rect.height*dpr));
+ const ctx=canvas.getContext("2d"); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,rect.width,rect.height);
+ const calibs=localizadorCalibracao?.calibracoes || carregarCalibracaoLocalizador();
+ const itens=posicoesAtivasDoVinho(vinhos[localizadorVinhoIndex]);
+ const suportes=[...new Set(itens.map(x=>x.adegaId))];
+ suportes.forEach(id=>{
+   const adega=adegas.find(a=>String(a.id)===id); const q=calibs[id];
+   if(!adega||!q||q.length!==4) return;
+   const slots=gerarPosicoesAdega(adega); const colunas=Math.max(1,Number(adega.garrafasPorPrateleira||3)); const linhas=Math.max(1,Number(adega.prateleiras||3));
+   ctx.lineWidth=2; ctx.strokeStyle="rgba(255,255,255,.88)"; ctx.fillStyle="rgba(255,255,255,.88)";
+   for(let c=0;c<=colunas;c++){const p1=pontoBilinear(q,c/colunas,0),p2=pontoBilinear(q,c/colunas,1);ctx.beginPath();ctx.moveTo(p1.x*rect.width,p1.y*rect.height);ctx.lineTo(p2.x*rect.width,p2.y*rect.height);ctx.stroke();}
+   for(let r=0;r<=linhas;r++){const p1=pontoBilinear(q,0,r/linhas),p2=pontoBilinear(q,1,r/linhas);ctx.beginPath();ctx.moveTo(p1.x*rect.width,p1.y*rect.height);ctx.lineTo(p2.x*rect.width,p2.y*rect.height);ctx.stroke();}
+   itens.filter(x=>x.adegaId===id).forEach(item=>{
+     const n=slots.indexOf(item.posicao); if(n<0) return;
+     const row=Math.floor(n/colunas),col=n%colunas;
+     const p=[pontoBilinear(q,col/colunas,row/linhas),pontoBilinear(q,(col+1)/colunas,row/linhas),pontoBilinear(q,(col+1)/colunas,(row+1)/linhas),pontoBilinear(q,col/colunas,(row+1)/linhas)];
+     ctx.beginPath();p.forEach((a,j)=>j?ctx.lineTo(a.x*rect.width,a.y*rect.height):ctx.moveTo(a.x*rect.width,a.y*rect.height));ctx.closePath();ctx.fillStyle="rgba(185,35,42,.58)";ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=3;ctx.stroke();
+     const mid=pontoBilinear(q,(col+.5)/colunas,(row+.5)/linhas);ctx.fillStyle="#fff";ctx.font="600 14px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(item.posicao,mid.x*rect.width,mid.y*rect.height);
+   });
+ });
+ if(localizadorCalibracao){
+   const q=localizadorCalibracao.pontos; ctx.fillStyle="#ffd66b";q.forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x*rect.width,p.y*rect.height,7,0,Math.PI*2);ctx.fill();ctx.fillStyle="#251a14";ctx.font="bold 12px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(String(i+1),p.x*rect.width,p.y*rect.height);ctx.fillStyle="#ffd66b";});
+ }
+}
+
+function atualizarDesenhoLocalizador(){requestAnimationFrame(desenharLocalizador);}
+
+function registrarToqueCalibracao(event){
+ if(!localizadorCalibracao) return;
+ const canvas=document.getElementById("cameraOverlay"), r=canvas.getBoundingClientRect();
+ localizadorCalibracao.pontos.push({x:Math.max(0,Math.min(1,(event.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(event.clientY-r.top)/r.height))});
+ if(localizadorCalibracao.pontos.length===4){
+   const adega=localizadorCalibracao.suportes[localizadorCalibracao.indice];
+   localizadorCalibracao.calibracoes[String(adega.id)]=localizadorCalibracao.pontos;
+   localizadorCalibracao.indice++;
+   localizadorCalibracao.pontos=[];
+   if(localizadorCalibracao.indice>=localizadorCalibracao.suportes.length){
+     salvarCalibracaoLocalizador(localizadorCalibracao.calibracoes); localizadorCalibracao=null;
+     canvas.style.pointerEvents="none";
+     document.getElementById("localizarInstrucao").innerText="Suportes alinhados. Mantenha o celular parado para os destaques acompanharem as posições.";
+   }else{
+     const next=localizadorCalibracao.suportes[localizadorCalibracao.indice];
+     document.getElementById("localizarInstrucao").innerText=`Alinhar ${next.nome}: toque nos quatro cantos do suporte, começando pelo superior esquerdo e seguindo no sentido horário.`;
+   }
+ }
+ atualizarDesenhoLocalizador();
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+ const canvas=document.getElementById("cameraOverlay"); if(canvas) canvas.addEventListener("click",registrarToqueCalibracao);
+ window.addEventListener("resize",atualizarDesenhoLocalizador);
+});
 
 function abrirDetalhes(i){
  vinhoSelecionado = i;
+ localizadorVinhoIndex = i;
  const v = garantirEstrutura(vinhos[i]);
 
  document.getElementById("modalNome").innerText = v.nome;
@@ -2769,6 +2918,12 @@ function abrirDetalhes(i){
  const totalQtdComprada = aquisicoes.reduce((s,a)=>s + Number(a.quantidade || 0),0);
  const totalConsumidas = aquisicoes.filter(a=>a.consumida).reduce((s,a)=>s + Number(a.quantidade || 0),0);
  const totalNaAdega = aquisicoes.length ? totalQtdComprada - totalConsumidas : Number(v.quantidade || 0);
+
+ const posicoesParaLocalizar = posicoesAtivasDoVinho(v);
+ const localizarWrap = document.getElementById("localizarVinhoWrap");
+ if(localizarWrap) localizarWrap.innerHTML = posicoesParaLocalizar.length
+   ? `<button type="button" class="btn-localizar-vinho" onclick="event.stopPropagation(); abrirLocalizadorGarrafa()"><span aria-hidden="true">⌕</span><span><b>Localizar no suporte</b><small>${posicoesParaLocalizar.length} posição${posicoesParaLocalizar.length===1?"":"ões"} cadastrada${posicoesParaLocalizar.length===1?"":"s"}</small></span></button>`
+   : "";
 
 document.getElementById("modalAquisicoes").innerHTML = aquisicoes.length
    ? aquisicoes.map((a,idx)=>`
