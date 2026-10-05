@@ -7073,3 +7073,201 @@ body.modo-teste-ativo .modo-teste-banner{display:block}
  .movement-totals { gap:12px; }
 }
 @media(max-width:360px){ .profile-layout { flex-direction:column; } .profile-legend { width:100%; } }
+
+/* Lista editorial de vinhos: linhas leves, miniatura discreta e nota alinhada */
+#listaVinhos.lista,
+#listaVinhosSemEstoque.lista{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:0!important;
+}
+#listaVinhos .vinho.wine-editorial,
+#listaVinhosSemEstoque .vinho.wine-editorial{
+  min-height:88px!important;
+  padding:12px 8px!important;
+  display:grid!important;
+  grid-template-columns:42px minmax(0,1fr) 70px!important;
+  align-items:center!important;
+  column-gap:14px!important;
+  border:0!important;
+  border-bottom:1px solid #eee8e5!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+  transition:background .16s ease!important;
+}
+#listaVinhos .vinho.wine-editorial:hover,
+#listaVinhosSemEstoque .vinho.wine-editorial:hover{
+  transform:none!important;
+  background:#faf7f5!important;
+  box-shadow:none!important;
+}
+#listaVinhos .wine-editorial-thumb,
+#listaVinhosSemEstoque .wine-editorial-thumb{
+  grid-column:1!important;
+  grid-row:1!important;
+  width:42px!important;
+  min-height:56px!important;
+  display:grid!important;
+  place-items:center!important;
+}
+#listaVinhos .wine-editorial-thumb .wine-thumb,
+#listaVinhosSemEstoque .wine-editorial-thumb .wine-thumb{
+  display:block!important;
+  width:34px!important;
+  height:50px!important;
+  object-fit:contain!important;
+  border:0!important;
+  border-radius:4px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#listaVinhos .wine-editorial-thumb .wine-thumb-placeholder,
+#listaVinhosSemEstoque .wine-editorial-thumb .wine-thumb-placeholder{
+  width:11px!important;
+  height:11px!important;
+  min-width:11px!important;
+  border-radius:50%!important;
+  font-size:0!important;
+  box-shadow:none!important;
+}
+#listaVinhos .wine-editorial-copy,
+#listaVinhosSemEstoque .wine-editorial-copy{
+  grid-column:2!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-rows:minmax(36px,auto) 18px 16px!important;
+  align-content:center!important;
+  row-gap:2px!important;
+}
+#listaVinhos .wine-editorial-heading,
+#listaVinhosSemEstoque .wine-editorial-heading{
+  min-width:0!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+#listaVinhos .wine-editorial-heading strong,
+#listaVinhosSemEstoque .wine-editorial-heading strong{
+  display:-webkit-box!important;
+  min-width:0!important;
+  max-height:38px!important;
+  overflow:hidden!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  overflow-wrap:anywhere!important;
+  color:#3a2e32!important;
+  font-size:16px!important;
+  font-weight:750!important;
+  line-height:1.2!important;
+  letter-spacing:-.12px!important;
+}
+#listaVinhos .wine-editorial-heading .sem-estoque-badge,
+#listaVinhosSemEstoque .wine-editorial-heading .sem-estoque-badge{
+  flex:0 0 auto!important;
+  padding:2px 6px!important;
+  font-size:9px!important;
+}
+#listaVinhos .wine-editorial-meta,
+#listaVinhosSemEstoque .wine-editorial-meta{
+  min-width:0!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  overflow:hidden!important;
+  color:#786d70!important;
+  font-size:11px!important;
+  font-weight:500!important;
+  line-height:18px!important;
+  white-space:nowrap!important;
+}
+#listaVinhos .wine-editorial-meta span,
+#listaVinhosSemEstoque .wine-editorial-meta span{
+  flex:0 1 auto!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#listaVinhos .wine-editorial-meta i,
+#listaVinhosSemEstoque .wine-editorial-meta i{
+  flex:0 0 auto!important;
+  color:#c0b5b6!important;
+  font-style:normal!important;
+}
+#listaVinhos .wine-editorial-meta .flag-card,
+#listaVinhosSemEstoque .wine-editorial-meta .flag-card{
+  position:static!important;
+  flex:0 0 auto!important;
+  margin-left:2px!important;
+  font-size:12px!important;
+  line-height:1!important;
+  filter:none!important;
+}
+#listaVinhos .wine-editorial-storage,
+#listaVinhosSemEstoque .wine-editorial-storage{
+  min-width:0!important;
+  height:16px!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+}
+#listaVinhos .wine-editorial-storage .guarda-badge,
+#listaVinhosSemEstoque .wine-editorial-storage .guarda-badge{
+  display:inline-block!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#918487!important;
+  font-size:10px!important;
+  font-weight:500!important;
+  line-height:16px!important;
+  text-overflow:ellipsis!important;
+  vertical-align:top!important;
+}
+#listaVinhos .wine-editorial-rating,
+#listaVinhosSemEstoque .wine-editorial-rating{
+  grid-column:3!important;
+  grid-row:1!important;
+  align-self:center!important;
+  justify-self:end!important;
+  min-width:52px!important;
+  text-align:right!important;
+}
+#listaVinhos .wine-editorial-rating .vivino-badge,
+#listaVinhosSemEstoque .wine-editorial-rating .vivino-badge{
+  display:inline!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#82631e!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.wine-rating-empty{color:#b2a8a8;font-size:13px}
+#listaVinhos .wine-editorial .actions,
+#listaVinhosSemEstoque .wine-editorial .actions{display:none!important}
+#listaVinhos .vinho.wine-editorial.sem-estoque,
+#listaVinhosSemEstoque .vinho.wine-editorial.sem-estoque{opacity:.72!important}
+@media(max-width:760px){
+  #listaVinhos .vinho.wine-editorial,
+  #listaVinhosSemEstoque .vinho.wine-editorial{
+    min-height:80px!important;
+    padding:10px 3px!important;
+    grid-template-columns:34px minmax(0,1fr) 48px!important;
+    column-gap:10px!important;
+  }
+  #listaVinhos .wine-editorial-thumb,
+  #listaVinhosSemEstoque .wine-editorial-thumb{width:34px!important;min-height:50px!important}
+  #listaVinhos .wine-editorial-thumb .wine-thumb,
+  #listaVinhosSemEstoque .wine-editorial-thumb .wine-thumb{width:30px!important;height:44px!important}
+  #listaVinhos .wine-editorial-heading strong,
+  #listaVinhosSemEstoque .wine-editorial-heading strong{font-size:15px!important}
+  #listaVinhos .wine-editorial-meta,
+  #listaVinhosSemEstoque .wine-editorial-meta{gap:5px!important;font-size:10px!important}
+}

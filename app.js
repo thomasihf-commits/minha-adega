@@ -2302,28 +2302,27 @@ function ordenarListaVinhos(lista, ordenacao){
 }
 
 function htmlCardVinhoLista(v, semEstoque=false){
+ const notaVivino = Number(v.detalhes?.notaVivino || 0);
  return `
-   <div class="vinho ${semEstoque ? "sem-estoque" : ""}" onclick="abrirDetalhes(${v.index})">
-     ${htmlBandeiraPais(v)}
-     <div>
-      <div class="titulo-vinho">
-        <strong>${v.nome}</strong>
-        ${v.detalhes?.notaVivino ? `<span class="vivino-badge">⭐ ${v.detalhes.notaVivino.toFixed(1)}</span>` : ""}
-        ${semEstoque ? `<span class="sem-estoque-badge">Sem estoque</span>` : ""}
-      </div>
-       <div class="meta">Safra ${v.safra || "-"} &nbsp;•&nbsp; ${v.tipo} &nbsp;•&nbsp; ${v.quantidade || 0} garrafa${Number(v.quantidade)==1 ? "" : "s"} &nbsp;•&nbsp; ${htmlBadgeGuarda(v)}</div>
+   <div class="vinho wine-editorial ${semEstoque ? "sem-estoque" : ""}" onclick="abrirDetalhes(${v.index})">
+     <div class="wine-editorial-thumb">${htmlMiniaturaVinho(v)}</div>
+     <div class="wine-editorial-copy">
+       <div class="wine-editorial-heading">
+         <strong>${v.nome}</strong>
+         ${semEstoque ? `<span class="sem-estoque-badge">Sem estoque</span>` : ""}
+       </div>
+       <div class="wine-editorial-meta">
+         <span>Safra ${v.safra || "-"}</span><i>·</i><span>${v.tipo || "Tipo não informado"}</span><i>·</i>
+         <span>${v.quantidade || 0} garrafa${Number(v.quantidade)==1 ? "" : "s"}</span>${htmlBandeiraPais(v)}
+       </div>
+       <div class="wine-editorial-storage">${htmlBadgeGuarda(v)}</div>
      </div>
-
-     <div class="wine-visual">
-       ${htmlMiniaturaVinho(v)}
-     </div>
+     <div class="wine-editorial-rating">${notaVivino ? `<span class="vivino-badge">★ ${notaVivino.toFixed(1)}</span>` : `<span class="wine-rating-empty">—</span>`}</div>
 
      <div class="actions">
        <button class="btn-card btn-plus" onclick="event.stopPropagation(); alterar(${v.index},1)">+</button>
        <button class="btn-card btn-minus" onclick="event.stopPropagation(); alterar(${v.index},-1)">−</button>
      </div>
-
-     <div class="arrow">›</div>
    </div>`;
 }
 
