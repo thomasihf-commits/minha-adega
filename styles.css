@@ -7271,3 +7271,8 @@ body.modo-teste-ativo .modo-teste-banner{display:block}
   #listaVinhos .wine-editorial-meta,
   #listaVinhosSemEstoque .wine-editorial-meta{gap:5px!important;font-size:10px!important}
 }
+
+/* Preserva o recolhimento inicial da seção de vinhos sem estoque. */
+#secaoVinhosSemEstoque.collapsed #listaVinhosSemEstoque{
+  display:none!important;
+}
