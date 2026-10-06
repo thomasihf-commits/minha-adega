@@ -2787,11 +2787,11 @@ function abrirLocalizadorGarrafa(){
  }
  const modulos=modulosLocalizador12x3();
  const globalizados=itens.map(x=>({...x,global:posicaoGlobalLocalizador(x)})).filter(x=>x.global);
- localizadorConfiguracao12x3Ok=modulos.length===4&&globalizados.length>0;
+ localizadorConfiguracao12x3Ok=globalizados.length>0;
  document.getElementById("localizarTitulo").innerText = v.nome;
  document.getElementById("localizarInstrucao").innerText = localizadorConfiguracao12x3Ok
    ? `${globalizados.length} posição${globalizados.length===1?"":"ões"} na grade única 12 × 3.`
-   : `Câmera aberta. Encontrei ${modulos.length} dos 4 suportes 3 × 3 para montar a grade.`;
+   : `Câmera aberta. Encontrei ${modulos.length} módulos reconhecidos; o alinhamento do conjunto ainda pode ser feito.`;
  document.getElementById("localizarPosicoes").innerHTML = (globalizados.length?globalizados:itens).map(x=>`<span class="localizar-chip"><b>${x.global?"Grade 12 × 3":x.adegaNome}</b><span>${x.global?x.global.codigo:x.posicao}</span>${x.global?`<small>${x.adegaNome} · ${x.posicao}</small>`:""}</span>`).join("");
  localizadorCalibracao = null;
  const modal = document.getElementById("modalLocalizarGarrafa");
@@ -2830,11 +2830,6 @@ function fecharLocalizadorGarrafa(){
 }
 
 function iniciarCalibracaoLocalizador(){
- const modulos=modulosLocalizador12x3();
- if(!localizadorConfiguracao12x3Ok){
-   document.getElementById("localizarInstrucao").innerText=`A câmera está aberta, mas encontrei ${modulos.length} dos 4 suportes 3 × 3. Confira o cadastro para alinhar a grade 12 × 3.`;
-   return;
- }
  localizadorCalibracao = {suportes:[{id:CHAVE_CALIBRACAO_LOCALIZADOR,nome:"conjunto 12 × 3"}], indice:0, pontos:[], calibracoes:carregarCalibracaoLocalizador()};
  const canvas=document.getElementById("cameraOverlay"); if(canvas) canvas.style.pointerEvents="auto";
  document.getElementById("localizarInstrucao").innerText = `Considere Suporte 1 à esquerda e Suporte 4 à direita. Toque nos quatro cantos externos do conjunto, começando pelo superior esquerdo e seguindo no sentido horário.`;
