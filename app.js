@@ -2739,11 +2739,14 @@ function htmlEditorPosicaoGarrafa(a, idx){
 let localizadorVinhoIndex = null;
 let localizadorStream = null;
 let localizadorCalibracao = null;
+let localizadorConfiguracao12x3Ok = false;
 const CHAVE_CALIBRACAO_LOCALIZADOR = "adegaJuliana.camera.rack12x3.v1";
 
 function modulosLocalizador12x3(){
  return adegas
-   .filter(a=>a.ativa !== false && Number(a.prateleiras) === 3 && Number(a.garrafasPorPrateleira) === 3 && Number(a.capacidade) === 9)
+   // A capacidade salva pode não ser exatamente 9 (ou vir vazia); a geometria
+   // 3 × 3 é suficiente para reconhecer os módulos externos.
+   .filter(a=>a.ativa !== false && Number(a.prateleiras) === 3 && (Number(a.garrafasPorPrateleira) === 3 || Number(a.capacidade) === 9))
    .slice()
    .sort((a,b)=>String(a.nome||"").localeCompare(String(b.nome||""),"pt-BR",{numeric:true,sensitivity:"base"}));
 }
@@ -2783,18 +2786,13 @@ function abrirLocalizadorGarrafa(){
    return;
  }
  const modulos=modulosLocalizador12x3();
- if(modulos.length!==4){
-   mostrarMensagem("O localizador em grade 12 × 3 precisa encontrar exatamente quatro adegas ativas com 3 prateleiras, 3 posições por prateleira e capacidade 9.",{tipo:"aviso",titulo:"Confira os quatro suportes",icone:"📍"});
-   return;
- }
  const globalizados=itens.map(x=>({...x,global:posicaoGlobalLocalizador(x)})).filter(x=>x.global);
- if(!globalizados.length){
-   mostrarMensagem("As posições cadastradas para este vinho não pertencem aos quatro suportes 3 × 3.",{tipo:"aviso",titulo:"Posição fora do conjunto",icone:"📍"});
-   return;
- }
+ localizadorConfiguracao12x3Ok=modulos.length===4&&globalizados.length>0;
  document.getElementById("localizarTitulo").innerText = v.nome;
- document.getElementById("localizarInstrucao").innerText = `${globalizados.length} posição${globalizados.length===1?"":"ões"} na grade única 12 × 3.`;
- document.getElementById("localizarPosicoes").innerHTML = globalizados.map(x=>`<span class="localizar-chip"><b>Grade 12 × 3</b><span>${x.global.codigo}</span><small>${x.adegaNome} · ${x.posicao}</small></span>`).join("");
+ document.getElementById("localizarInstrucao").innerText = localizadorConfiguracao12x3Ok
+   ? `${globalizados.length} posição${globalizados.length===1?"":"ões"} na grade única 12 × 3.`
+   : `Câmera aberta. Encontrei ${modulos.length} dos 4 suportes 3 × 3 para montar a grade.`;
+ document.getElementById("localizarPosicoes").innerHTML = (globalizados.length?globalizados:itens).map(x=>`<span class="localizar-chip"><b>${x.global?"Grade 12 × 3":x.adegaNome}</b><span>${x.global?x.global.codigo:x.posicao}</span>${x.global?`<small>${x.adegaNome} · ${x.posicao}</small>`:""}</span>`).join("");
  localizadorCalibracao = null;
  const modal = document.getElementById("modalLocalizarGarrafa");
  modal.style.display = "flex";
@@ -2833,7 +2831,10 @@ function fecharLocalizadorGarrafa(){
 
 function iniciarCalibracaoLocalizador(){
  const modulos=modulosLocalizador12x3();
- if(!modulos.length) return;
+ if(!localizadorConfiguracao12x3Ok){
+   document.getElementById("localizarInstrucao").innerText=`A câmera está aberta, mas encontrei ${modulos.length} dos 4 suportes 3 × 3. Confira o cadastro para alinhar a grade 12 × 3.`;
+   return;
+ }
  localizadorCalibracao = {suportes:[{id:CHAVE_CALIBRACAO_LOCALIZADOR,nome:"conjunto 12 × 3"}], indice:0, pontos:[], calibracoes:carregarCalibracaoLocalizador()};
  const canvas=document.getElementById("cameraOverlay"); if(canvas) canvas.style.pointerEvents="auto";
  document.getElementById("localizarInstrucao").innerText = `Considere Suporte 1 à esquerda e Suporte 4 à direita. Toque nos quatro cantos externos do conjunto, começando pelo superior esquerdo e seguindo no sentido horário.`;
