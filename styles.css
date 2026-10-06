@@ -7303,5 +7303,6 @@ body.modo-teste-ativo .modo-teste-banner{display:block}
 .localizar-posicoes{display:flex;flex-wrap:wrap;gap:7px}
 .localizar-chip{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #e4d9d2;border-radius:999px;background:white;color:#514644;font-size:12px}
 .localizar-chip span{font-weight:700;color:#8d2730}
+.localizar-chip small{color:#897e79;font-size:10px}
 .localizar-nota{margin:12px 0 0;color:#897e79;font-size:11px;line-height:1.45}
 @media(max-width:600px){.localizar-garrafa-modal{padding:14px}.camera-stage{height:52dvh;min-height:230px}.localizar-actions{flex-direction:column}.localizar-actions button{width:100%}}

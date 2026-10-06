@@ -2739,7 +2739,21 @@ function htmlEditorPosicaoGarrafa(a, idx){
 let localizadorVinhoIndex = null;
 let localizadorStream = null;
 let localizadorCalibracao = null;
-const CHAVE_CALIBRACAO_LOCALIZADOR = "adegaJuliana.camera.supports.v1";
+const CHAVE_CALIBRACAO_LOCALIZADOR = "adegaJuliana.camera.rack12x3.v1";
+
+function modulosLocalizador12x3(){
+ return adegas
+   .filter(a=>a.ativa !== false && Number(a.prateleiras) === 3 && Number(a.garrafasPorPrateleira) === 3 && Number(a.capacidade) === 9)
+   .slice()
+   .sort((a,b)=>String(a.nome||"").localeCompare(String(b.nome||""),"pt-BR",{numeric:true,sensitivity:"base"}));
+}
+
+function posicaoGlobalLocalizador(item, modulos=modulosLocalizador12x3()){
+ const moduloIndex=modulos.findIndex(a=>String(a.id)===String(item?.adegaId||""));
+ const m=String(item?.posicao||"").trim().toUpperCase().match(/^([A-C])([1-3])$/);
+ if(moduloIndex<0||!m) return null;
+ return {codigo:`${m[1]}${moduloIndex*3+Number(m[2])}`,linha:"ABC".indexOf(m[1]),coluna:moduloIndex*3+Number(m[2])-1,moduloIndex};
+}
 
 function posicoesAtivasDoVinho(v){
  const itens = [];
@@ -2768,11 +2782,19 @@ function abrirLocalizadorGarrafa(){
    mostrarMensagem("Este vinho ainda não tem posições ativas cadastradas. Defina uma adega e uma posição em cada garrafa para localizá-lo.",{tipo:"aviso",titulo:"Posição não cadastrada",icone:"📍"});
    return;
  }
- const supports = [...new Set(itens.map(x=>x.adegaId))];
- const nomes = [...new Set(itens.map(x=>`${x.adegaNome} ${x.posicao}`))];
+ const modulos=modulosLocalizador12x3();
+ if(modulos.length!==4){
+   mostrarMensagem("O localizador em grade 12 × 3 precisa encontrar exatamente quatro adegas ativas com 3 prateleiras, 3 posições por prateleira e capacidade 9.",{tipo:"aviso",titulo:"Confira os quatro suportes",icone:"📍"});
+   return;
+ }
+ const globalizados=itens.map(x=>({...x,global:posicaoGlobalLocalizador(x)})).filter(x=>x.global);
+ if(!globalizados.length){
+   mostrarMensagem("As posições cadastradas para este vinho não pertencem aos quatro suportes 3 × 3.",{tipo:"aviso",titulo:"Posição fora do conjunto",icone:"📍"});
+   return;
+ }
  document.getElementById("localizarTitulo").innerText = v.nome;
- document.getElementById("localizarInstrucao").innerText = `${itens.length} garrafa${itens.length===1?"":"s"} em ${supports.length} suporte${supports.length===1?"":"s"}.`;
- document.getElementById("localizarPosicoes").innerHTML = itens.map(x=>`<span class="localizar-chip"><b>${x.adegaNome}</b><span>${x.posicao}</span></span>`).join("");
+ document.getElementById("localizarInstrucao").innerText = `${globalizados.length} posição${globalizados.length===1?"":"ões"} na grade única 12 × 3.`;
+ document.getElementById("localizarPosicoes").innerHTML = globalizados.map(x=>`<span class="localizar-chip"><b>Grade 12 × 3</b><span>${x.global.codigo}</span><small>${x.adegaNome} · ${x.posicao}</small></span>`).join("");
  localizadorCalibracao = null;
  const modal = document.getElementById("modalLocalizarGarrafa");
  modal.style.display = "flex";
@@ -2810,14 +2832,11 @@ function fecharLocalizadorGarrafa(){
 }
 
 function iniciarCalibracaoLocalizador(){
- const v = vinhos[localizadorVinhoIndex];
- const itens = posicoesAtivasDoVinho(v);
- const ids = [...new Set(itens.map(x=>x.adegaId))];
- const suportes = ids.map(id=>adegas.find(a=>String(a.id)===id)).filter(Boolean);
- if(!suportes.length) return;
- localizadorCalibracao = {suportes, indice:0, pontos:[], calibracoes:carregarCalibracaoLocalizador()};
+ const modulos=modulosLocalizador12x3();
+ if(!modulos.length) return;
+ localizadorCalibracao = {suportes:[{id:CHAVE_CALIBRACAO_LOCALIZADOR,nome:"conjunto 12 × 3"}], indice:0, pontos:[], calibracoes:carregarCalibracaoLocalizador()};
  const canvas=document.getElementById("cameraOverlay"); if(canvas) canvas.style.pointerEvents="auto";
- document.getElementById("localizarInstrucao").innerText = `Alinhar ${suportes[0].nome}: toque nos quatro cantos do suporte, começando pelo superior esquerdo e seguindo no sentido horário.`;
+ document.getElementById("localizarInstrucao").innerText = `Considere Suporte 1 à esquerda e Suporte 4 à direita. Toque nos quatro cantos externos do conjunto, começando pelo superior esquerdo e seguindo no sentido horário.`;
  document.getElementById("cameraEstado").style.display = "none";
  atualizarDesenhoLocalizador();
 }
@@ -2834,23 +2853,20 @@ function desenharLocalizador(){
  canvas.width=Math.max(1,Math.round(rect.width*dpr)); canvas.height=Math.max(1,Math.round(rect.height*dpr));
  const ctx=canvas.getContext("2d"); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,rect.width,rect.height);
  const calibs=localizadorCalibracao?.calibracoes || carregarCalibracaoLocalizador();
- const itens=posicoesAtivasDoVinho(vinhos[localizadorVinhoIndex]);
- const suportes=[...new Set(itens.map(x=>x.adegaId))];
- suportes.forEach(id=>{
-   const adega=adegas.find(a=>String(a.id)===id); const q=calibs[id];
-   if(!adega||!q||q.length!==4) return;
-   const slots=gerarPosicoesAdega(adega); const colunas=Math.max(1,Number(adega.garrafasPorPrateleira||3)); const linhas=Math.max(1,Number(adega.prateleiras||3));
-   ctx.lineWidth=2; ctx.strokeStyle="rgba(255,255,255,.88)"; ctx.fillStyle="rgba(255,255,255,.88)";
+ const q=calibs[CHAVE_CALIBRACAO_LOCALIZADOR];
+ const itens=posicoesAtivasDoVinho(vinhos[localizadorVinhoIndex]).map(x=>({...x,global:posicaoGlobalLocalizador(x)})).filter(x=>x.global);
+ if(q&&q.length===4){
+   const colunas=12,linhas=3;
+   ctx.lineWidth=2;ctx.strokeStyle="rgba(255,255,255,.88)";ctx.fillStyle="rgba(255,255,255,.88)";
    for(let c=0;c<=colunas;c++){const p1=pontoBilinear(q,c/colunas,0),p2=pontoBilinear(q,c/colunas,1);ctx.beginPath();ctx.moveTo(p1.x*rect.width,p1.y*rect.height);ctx.lineTo(p2.x*rect.width,p2.y*rect.height);ctx.stroke();}
    for(let r=0;r<=linhas;r++){const p1=pontoBilinear(q,0,r/linhas),p2=pontoBilinear(q,1,r/linhas);ctx.beginPath();ctx.moveTo(p1.x*rect.width,p1.y*rect.height);ctx.lineTo(p2.x*rect.width,p2.y*rect.height);ctx.stroke();}
-   itens.filter(x=>x.adegaId===id).forEach(item=>{
-     const n=slots.indexOf(item.posicao); if(n<0) return;
-     const row=Math.floor(n/colunas),col=n%colunas;
-     const p=[pontoBilinear(q,col/colunas,row/linhas),pontoBilinear(q,(col+1)/colunas,row/linhas),pontoBilinear(q,(col+1)/colunas,(row+1)/linhas),pontoBilinear(q,col/colunas,(row+1)/linhas)];
+   itens.forEach(item=>{
+     const {linha,coluna,codigo}=item.global;
+     const p=[pontoBilinear(q,coluna/colunas,linha/linhas),pontoBilinear(q,(coluna+1)/colunas,linha/linhas),pontoBilinear(q,(coluna+1)/colunas,(linha+1)/linhas),pontoBilinear(q,coluna/colunas,(linha+1)/linhas)];
      ctx.beginPath();p.forEach((a,j)=>j?ctx.lineTo(a.x*rect.width,a.y*rect.height):ctx.moveTo(a.x*rect.width,a.y*rect.height));ctx.closePath();ctx.fillStyle="rgba(185,35,42,.58)";ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=3;ctx.stroke();
-     const mid=pontoBilinear(q,(col+.5)/colunas,(row+.5)/linhas);ctx.fillStyle="#fff";ctx.font="600 14px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(item.posicao,mid.x*rect.width,mid.y*rect.height);
+     const mid=pontoBilinear(q,(coluna+.5)/colunas,(linha+.5)/linhas);ctx.fillStyle="#fff";ctx.font="600 13px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(codigo,mid.x*rect.width,mid.y*rect.height);
    });
- });
+ }
  if(localizadorCalibracao){
    const q=localizadorCalibracao.pontos; ctx.fillStyle="#ffd66b";q.forEach((p,i)=>{ctx.beginPath();ctx.arc(p.x*rect.width,p.y*rect.height,7,0,Math.PI*2);ctx.fill();ctx.fillStyle="#251a14";ctx.font="bold 12px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(String(i+1),p.x*rect.width,p.y*rect.height);ctx.fillStyle="#ffd66b";});
  }
@@ -2870,10 +2886,7 @@ function registrarToqueCalibracao(event){
    if(localizadorCalibracao.indice>=localizadorCalibracao.suportes.length){
      salvarCalibracaoLocalizador(localizadorCalibracao.calibracoes); localizadorCalibracao=null;
      canvas.style.pointerEvents="none";
-     document.getElementById("localizarInstrucao").innerText="Suportes alinhados. Mantenha o celular parado para os destaques acompanharem as posições.";
-   }else{
-     const next=localizadorCalibracao.suportes[localizadorCalibracao.indice];
-     document.getElementById("localizarInstrucao").innerText=`Alinhar ${next.nome}: toque nos quatro cantos do suporte, começando pelo superior esquerdo e seguindo no sentido horário.`;
+     document.getElementById("localizarInstrucao").innerText="Conjunto alinhado. Mantenha o celular parado para os destaques coincidirem com as posições.";
    }
  }
  atualizarDesenhoLocalizador();
