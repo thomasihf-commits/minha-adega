@@ -755,12 +755,21 @@
       <canvas id="cameraOverlay" aria-label="Sobreposição das posições das garrafas"></canvas>
       <div id="cameraEstado" class="camera-estado">Abrindo câmera…</div>
     </div>
+    <div class="led-localizador-controls">
+      <label for="esp32BaseUrl">Endereço do ESP32 na rede Wi‑Fi</label>
+      <div class="led-localizador-config">
+        <input id="esp32BaseUrl" type="url" inputmode="url" placeholder="http://192.168.0.163" aria-label="Endereço local do ESP32">
+        <button type="button" class="btn-secondary" onclick="salvarEnderecoEsp32Localizador()">Salvar</button>
+      </div>
+      <button type="button" class="btn-secondary led-localizador-action" onclick="acionarLedsVinho()">Acender posições deste vinho</button>
+      <p id="esp32LedStatus" class="led-localizador-status" role="status" aria-live="polite">Pronto para enviar a posição ao ESP32.</p>
+    </div>
     <div class="localizar-actions">
       <button id="btnCalibrarCamera" type="button" class="btn-secondary" onclick="iniciarCalibracaoLocalizador()">Alinhar conjunto 12 × 3</button>
       <button type="button" class="btn-secondary" onclick="fecharLocalizadorGarrafa()">Fechar</button>
     </div>
     <div id="localizarPosicoes" class="localizar-posicoes"></div>
-    <p class="localizar-nota">O conjunto precisa aparecer inteiro na câmera, com os suportes 1, 2, 3 e 4 da esquerda para a direita. O alinhamento é salvo neste aparelho; depois, mantenha o celular parado.</p>
+    <p class="localizar-nota">A grade única tem 3 fileiras (A–C) e 12 posições por fileira (1–12). Enquadre os quatro módulos juntos; o alinhamento é salvo neste aparelho.</p>
   </div>
 </div>
 
@@ -1191,7 +1200,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=20261006-camera-align-fix"></script>
+<script src="app.js?v=20261025-esp32-led-locator"></script>
 <script>
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js")

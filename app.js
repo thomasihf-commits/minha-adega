@@ -2741,21 +2741,73 @@ let localizadorStream = null;
 let localizadorCalibracao = null;
 let localizadorConfiguracao12x3Ok = false;
 const CHAVE_CALIBRACAO_LOCALIZADOR = "adegaJuliana.camera.rack12x3.v1";
+const CHAVE_ESP32_LOCALIZADOR = "adegaJuliana.esp32.url.v1";
+const ESP32_URL_PADRAO = "http://192.168.0.163";
 
 function modulosLocalizador12x3(){
  return adegas
-   // A capacidade salva pode não ser exatamente 9 (ou vir vazia); a geometria
-   // 3 × 3 é suficiente para reconhecer os módulos externos.
-   .filter(a=>a.ativa !== false && Number(a.prateleiras) === 3 && (Number(a.garrafasPorPrateleira) === 3 || Number(a.capacidade) === 9))
-   .slice()
-   .sort((a,b)=>String(a.nome||"").localeCompare(String(b.nome||""),"pt-BR",{numeric:true,sensitivity:"base"}));
+   .filter(a=>a.ativa !== false && Number(a.prateleiras) === 3 && Number(a.garrafasPorPrateleira) >= 12);
 }
 
-function posicaoGlobalLocalizador(item, modulos=modulosLocalizador12x3()){
- const moduloIndex=modulos.findIndex(a=>String(a.id)===String(item?.adegaId||""));
- const m=String(item?.posicao||"").trim().toUpperCase().match(/^([A-C])([1-3])$/);
- if(moduloIndex<0||!m) return null;
- return {codigo:`${m[1]}${moduloIndex*3+Number(m[2])}`,linha:"ABC".indexOf(m[1]),coluna:moduloIndex*3+Number(m[2])-1,moduloIndex};
+function posicaoGlobalLocalizador(item){
+ const adega=adegas.find(a=>String(a.id)===String(item?.adegaId||""));
+ if(!adega || !modulosLocalizador12x3().some(a=>String(a.id)===String(adega.id))) return null;
+ const m=String(item?.posicao||"").trim().toUpperCase().match(/^([A-C])(1[0-2]|[1-9])$/);
+ if(!m) return null;
+ const coluna=Number(m[2]);
+ return {codigo:`${m[1]}${coluna}`,linha:"ABC".indexOf(m[1]),coluna:coluna-1,moduloIndex:0};
+}
+
+function carregarEnderecoEsp32Localizador(){
+ const campo=document.getElementById("esp32BaseUrl");
+ if(campo) campo.value=localStorage.getItem(CHAVE_ESP32_LOCALIZADOR)||ESP32_URL_PADRAO;
+}
+
+function salvarEnderecoEsp32Localizador(){
+ const campo=document.getElementById("esp32BaseUrl");
+ const status=document.getElementById("esp32LedStatus");
+ try{
+   const endereco=new URL(String(campo?.value||"").trim());
+   if(endereco.protocol!=="http:") throw new Error("Use o endereço HTTP local do ESP32.");
+   const base=endereco.origin;
+   localStorage.setItem(CHAVE_ESP32_LOCALIZADOR,base);
+   if(campo) campo.value=base;
+   if(status) status.innerText="Endereço do ESP32 salvo neste aparelho.";
+   return base;
+ }catch(e){
+   if(status) status.innerText=e?.message||"Informe um endereço válido, como http://192.168.0.163.";
+   return "";
+ }
+}
+
+async function acionarLedsVinho(){
+ const status=document.getElementById("esp32LedStatus");
+ const vinho=vinhos[localizadorVinhoIndex];
+ const codigos=[...new Set(posicoesAtivasDoVinho(vinho)
+   .map(item=>posicaoGlobalLocalizador(item)?.codigo)
+   .filter(Boolean))];
+ if(!codigos.length){
+   if(status) status.innerText="Este vinho não tem posições A1–C12 na adega 12 × 3 cadastrada.";
+   return;
+ }
+
+ const base=salvarEnderecoEsp32Localizador();
+ if(!base) return;
+ if(status) status.innerText=`Enviando comando para ${codigos.join(", ")}…`;
+
+ // Cada posição é enviada em uma chamada simples. O firmware deve apagar a
+ // grade uma vez e preservar os LEDs acesos nas chamadas seguintes.
+ const opcoes={method:"GET",mode:"no-cors",cache:"no-store",targetAddressSpace:"local"};
+ try{
+   await fetch(`${base}/apagar`,opcoes);
+   for(const codigo of codigos){
+     await fetch(`${base}/localizar?pos=${encodeURIComponent(codigo)}`,opcoes);
+   }
+   if(status) status.innerText=`Comandos enviados para ${codigos.length} posição${codigos.length===1?"":"ões"}: ${codigos.join(", ")}.`;
+ }catch(e){
+   console.warn("Não foi possível enviar comandos ao ESP32",e);
+   if(status) status.innerText="Não consegui acessar o ESP32. Confira o Wi‑Fi, o endereço e a permissão de rede local do navegador.";
+ }
 }
 
 function posicoesAtivasDoVinho(v){
@@ -2793,6 +2845,9 @@ function abrirLocalizadorGarrafa(){
    ? `${globalizados.length} posição${globalizados.length===1?"":"ões"} na grade única 12 × 3.`
    : `Câmera aberta. Encontrei ${modulos.length} módulos reconhecidos; o alinhamento do conjunto ainda pode ser feito.`;
  document.getElementById("localizarPosicoes").innerHTML = (globalizados.length?globalizados:itens).map(x=>`<span class="localizar-chip"><b>${x.global?"Grade 12 × 3":x.adegaNome}</b><span>${x.global?x.global.codigo:x.posicao}</span>${x.global?`<small>${x.adegaNome} · ${x.posicao}</small>`:""}</span>`).join("");
+ carregarEnderecoEsp32Localizador();
+ const ledStatus=document.getElementById("esp32LedStatus");
+ if(ledStatus) ledStatus.innerText="Pronto para enviar a posição ao ESP32.";
  localizadorCalibracao = null;
  const modal = document.getElementById("modalLocalizarGarrafa");
  modal.style.display = "flex";
@@ -2832,7 +2887,7 @@ function fecharLocalizadorGarrafa(){
 function iniciarCalibracaoLocalizador(){
  localizadorCalibracao = {suportes:[{id:CHAVE_CALIBRACAO_LOCALIZADOR,nome:"conjunto 12 × 3"}], indice:0, pontos:[], calibracoes:carregarCalibracaoLocalizador()};
  const canvas=document.getElementById("cameraOverlay"); if(canvas) canvas.style.pointerEvents="auto";
- document.getElementById("localizarInstrucao").innerText = `Considere Suporte 1 à esquerda e Suporte 4 à direita. Toque nos quatro cantos externos do conjunto, começando pelo superior esquerdo e seguindo no sentido horário.`;
+ document.getElementById("localizarInstrucao").innerText = `Enquadre os quatro suportes como uma única grade. Toque nos quatro cantos externos do conjunto, começando pelo superior esquerdo e seguindo no sentido horário.`;
  document.getElementById("cameraEstado").style.display = "none";
  atualizarDesenhoLocalizador();
 }

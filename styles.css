@@ -7306,3 +7306,13 @@ body.modo-teste-ativo .modo-teste-banner{display:block}
 .localizar-chip small{color:#897e79;font-size:10px}
 .localizar-nota{margin:12px 0 0;color:#897e79;font-size:11px;line-height:1.45}
 @media(max-width:600px){.localizar-garrafa-modal{padding:14px}.camera-stage{height:52dvh;min-height:230px}.localizar-actions{flex-direction:column}.localizar-actions button{width:100%}}
+
+/* Envio de localização para o ESP32 */
+.led-localizador-controls{display:grid;gap:8px;margin:12px 0;padding:12px;border:1px solid #e8ded7;border-radius:12px;background:#fff}
+.led-localizador-controls>label{color:#756967;font-size:12px;font-weight:650}
+.led-localizador-config{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.led-localizador-config input{min-width:0;min-height:40px;padding:9px 11px;border:1px solid #ded4ce;border-radius:9px;background:#fff;color:#382927;font:inherit;font-size:13px}
+.led-localizador-config button,.led-localizador-action{min-height:40px;padding:8px 13px;border:1px solid #8d2730;border-radius:9px;background:#fff;color:#8d2730;font:inherit;font-size:13px;font-weight:650;cursor:pointer}
+.led-localizador-action{background:#8d2730;color:#fff}
+.led-localizador-status{min-height:16px;margin:0;color:#756967;font-size:12px;line-height:1.4}
+@media(max-width:600px){.led-localizador-config{grid-template-columns:minmax(0,1fr) auto}}
