@@ -2797,16 +2797,20 @@ async function acionarLedsVinho(){
 
  // Cada posição é enviada em uma chamada simples. O firmware deve apagar a
  // grade uma vez e preservar os LEDs acesos nas chamadas seguintes.
- const opcoes={method:"GET",mode:"no-cors",cache:"no-store",targetAddressSpace:"local"};
+ const opcoes={method:"GET",mode:"cors",cache:"no-store",targetAddressSpace:"local"};
  try{
-   await fetch(`${base}/apagar`,opcoes);
+   const respostaApagar=await fetch(`${base}/apagar`,opcoes);
+   if(!respostaApagar.ok) throw new Error(`ESP32 respondeu ${respostaApagar.status} ao apagar os LEDs.`);
+   await respostaApagar.text();
    for(const codigo of codigos){
-     await fetch(`${base}/localizar?pos=${encodeURIComponent(codigo)}`,opcoes);
+     const resposta=await fetch(`${base}/localizar?pos=${encodeURIComponent(codigo)}`,opcoes);
+     const mensagem=await resposta.text();
+     if(!resposta.ok) throw new Error(mensagem || `ESP32 respondeu ${resposta.status} para ${codigo}.`);
    }
-   if(status) status.innerText=`Comandos enviados para ${codigos.length} posição${codigos.length===1?"":"ões"}: ${codigos.join(", ")}.`;
+   if(status) status.innerText=`ESP32 confirmou o comando para ${codigos.length} posição${codigos.length===1?"":"ões"}: ${codigos.join(", ")}.`;
  }catch(e){
    console.warn("Não foi possível enviar comandos ao ESP32",e);
-   if(status) status.innerText="Não consegui acessar o ESP32. Confira o Wi‑Fi, o endereço e a permissão de rede local do navegador.";
+   if(status) status.innerText=`Não consegui confirmar o comando no ESP32. ${e?.message || "Confira o Wi‑Fi, o endereço e a permissão de rede local do navegador."}`;
  }
 }
 
